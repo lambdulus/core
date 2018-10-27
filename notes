@@ -1,0 +1,5 @@
+! no-global
+  - pravidlo, ktere zakazuje nedefinovane variables
+  - predstavuju si, ze v tele lambdy, kdyz narazi na promennou, ktera je volna, vyhodi error
+
+
