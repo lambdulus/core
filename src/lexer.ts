@@ -1,15 +1,13 @@
 enum TokenType {
-  // WhiteSpace,
-  Lambda,
-  Dot,
-  Symbol, // Number
-  Identifier, // Variable ?
-  Operator,
-  LeftParen,
-  RightParen,
+  Lambda, // = 0
+  Dot, // = 1
+  Identifier, // = 2 // Variable ?
+  Macro, // = 3 // operators, numbers, booleans
+  LeftParen, // = 4
+  RightParen, // = 5
 }
 
-class Token {
+export class Token {
   constructor (
     public readonly type : TokenType,
     public readonly value : string,
@@ -20,8 +18,7 @@ class Token {
 type CodeStyle = {
   singleLetterVars : boolean,
   lambdaLetters : Array<string>,
-  operators : Array<string>,
-  symbols : Array<string>,
+  macros : Array<string>,
 }
 
 function isWhiteSpace (char : string) : boolean {
@@ -42,7 +39,7 @@ function isAlphabetic (char : string) : boolean {
   return (
     char >= 'a' && char <= 'z'
       ||
-    char <= 'A' && char <= 'Z'
+    char >= 'A' && char <= 'Z'
   )
 }
 
@@ -70,7 +67,6 @@ function readDot (source : Source) : Token {
 
 function readLambda (source : Source) : Token {
   return readCharToken(source, TokenType.Lambda)
-
 }
 
 
@@ -81,25 +77,40 @@ class InvalidIdentifier extends Error {
     ) { super() }
 }
 
-function readIdentifier (source : Source, config : CodeStyle) : Token {
+function readIdentifierOrMacro (source : Source, config : CodeStyle, isMacro : (string) => boolean) : Token {
   const identifier : Array<string> = []
   let { char : top, ...position } = source.shift()
   const { singleLetterVars : shortVars } = config
+  let topPosition
 
+  // alphabetic part
   while (isAlphabetic(top)) {
     if (shortVars) {
       return new Token(TokenType.Identifier, top, position)
     }
 
-    ({ char : top, ...position } = source.shift())
     identifier.push(top)
+    ;({ char : top, ...topPosition } = source.shift())
   }
 
-  ({ char : top } = source[0])
-  const id : string = identifier.join()
+  // optional numeric part
+  while (isNumeric(top)) {
+    identifier.push(top)
+    ;({ char : top, ...topPosition } = source.shift())
+  }
 
-  if ( ! isWhiteSpace(top) || ! isRightParen(top)) {
-    throw new InvalidIdentifier(`${ identifier.join() }${ id }`, position)
+  const id : string = identifier.join('')
+
+    if ( ! isWhiteSpace(top) && ! isRightParen(top)) {
+    throw new InvalidIdentifier(`${ id }${ top }`, position)
+  }
+
+  if (isMacro(id)) {
+    return new Token(TokenType.Macro, id, position)
+  }
+
+  if (isRightParen(top)) {
+    source.unshift({ char : top, ...topPosition })
   }
 
   return new Token(TokenType.Identifier, id, position)
@@ -115,21 +126,25 @@ class InvalidNumber extends Error {
 
 function readNumber (source : Source) : Token {
   const number : Array<string> = []
-  let { char : top, ...position } = source[0]
+  let { char : top, ...position } = source.shift()
+  let topPosition
 
   while (isNumeric(top)) {
-    ({ char : top } = source.shift())
     number.push(top)
+    ;({ char : top, ...topPosition } = source.shift())
   }
 
-  ({ char : top } = source[0])
-  const n : string = number.join()
+  const n : string = number.join('')
 
-  if ( ! isWhiteSpace(top) || ! isRightParen(top)) {
-    throw new InvalidNumber(`${ number.join() }${ n }`, position)
+    if ( ! isWhiteSpace(top) && ! isRightParen(top)) {
+    throw new InvalidNumber(`${ n }${ top }`, position)
   }
 
-  return new Token(TokenType.Symbol, n, position)
+  if (isRightParen(top)) {
+    source.unshift({ char : top, ...topPosition })
+  }
+
+  return new Token(TokenType.Macro, n, position)
 }
 
 class InvalidOperator extends Error {
@@ -160,26 +175,32 @@ function hintOperator (error : InvalidOperator, operators : Array<string>) : str
 
 function readOperator (source : Source, operators : Array<string>) : Token {
   const operator : Array<string> = []
-  let { char : top, ...position } = source[0]
+  let { char : top, ...position } = source.shift()
+  let topPosition
 
-  // maybe also '(' i.e. +(EXPR) A
-  // but then also +A B should be parsable
+  // maybe also '(' i.e. +(EXPR) A                                      YES SHOULD BE
+  // but then also +A B should be parsable                              NO SHOULD NOT BE
   // for now it will yield error and try to detect what went wrong
-  // for now something like +3 would work,
+  // for now something like +3 would work,                              NO WONT BECAUSE I DECLARE OPERATORS
   // because user may be able to declare their own operator abstraction -
   // in this case probably function which sums 3 numbers
+
   while ( ! isWhiteSpace(top) && ! isRightParen(top)) {
-    ({ char : top } = source.shift())
     operator.push(top)
+    ;({ char : top, ...topPosition } = source.shift())
   }
 
-  const op = operator.join()
+  const op = operator.join('')
 
   if (operators.indexOf(op) === -1) {
-    throw { value : op, position, }
+    throw new InvalidOperator(op, position)
   }
 
-  return new Token(TokenType.Symbol, op, position)
+  if (isRightParen(top)) {
+    source.unshift({ char : top, ...topPosition })
+  }
+
+  return new Token(TokenType.Macro, op, position)
 }
 
 
@@ -209,17 +230,25 @@ function markInput (input : string) : Array<MarkedChar> {
   return flat
 }
 
-export function tokenize (input : string, config : CodeStyle) : Array<Token> {
-  const source : Array<MarkedChar> = markInput(input)
+function skipOne (source : Array<MarkedChar>) : void {
+  source.shift()
+}
+
+export default function tokenize (input : string, config : CodeStyle) : Array<Token> {
+  const operators : Array<string> = [ '+', '-', '*', '/', ]
+  const source : Array<MarkedChar> = markInput(input + ' ')
   const tokens : Array<Token> = []
 
-  const { lambdaLetters, operators, symbols } = config
+  const { lambdaLetters, macros } = config
 
   const isLambda : (string) => boolean
     = (char) => lambdaLetters.indexOf(char) !== -1
 
   const isIdentifier : (string) => boolean
     = (char) => isAlphabetic(char)
+  
+  const isMacro : (string) => boolean
+    = (id) => macros.indexOf(id) !== -1
 
   const isOperator : (string) => boolean
     = (char) => !! operators.find((operator) => char === operator[0])
@@ -232,6 +261,9 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
 
     try {
       switch (true) {
+        case isWhiteSpace(current) :
+          skipOne(source)
+          break
         case current === '(' :
           tokens.push(readLeftParen(source))
           break
@@ -245,7 +277,7 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
           tokens.push(readLambda(source))
           break
         case isIdentifier(current) :
-          tokens.push(readIdentifier(source, config))
+          tokens.push(readIdentifierOrMacro(source, config, isMacro)) // transform IDs to Macros if needed
           break
         case isOperator(current) :
           tokens.push(readOperator(source, operators))
@@ -289,6 +321,7 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
 
         throw error
       }
+      throw error      
     }
    
 
