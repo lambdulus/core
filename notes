@@ -1,5 +1,5 @@
 ! no-global
   - pravidlo, ktere zakazuje nedefinovane variables
   - predstavuju si, ze v tele lambdy, kdyz narazi na promennou, ktera je volna, vyhodi error
-
+ peta: To bych asi nedelal, free variables jsou soucasti vetsiny lambda vyrazu a neni na nich nic spatnyho jako takovejch.
 
