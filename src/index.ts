@@ -13,7 +13,6 @@ const inputs : Array<string> = [
 const tokens : Array<Token> = tokenize(inputs[0], {
   singleLetterVars : false,
   lambdaLetters : [ 'λ' ],
-  macros : [ ],
 })
 
 tokens.forEach(token => console.log(token))
