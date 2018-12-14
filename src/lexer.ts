@@ -172,15 +172,13 @@ class Lexer {
 
   readNumber () : void {
     // decimalni build rovnou cisla zadny pole, zadny string
-    const characters : Array<string> = []
+    let n : number = 0
     let topPosition = this.position.toRecord()
   
     while (this.isNumeric()) {
-      characters.push(this.pop())
+      n = n * 10 + Number(this.pop())
     }
   
-    const n : string = characters.join('')
-
     if (this.isAlphabetic()) {
       throw new InvalidNumber(`${ n }${ top }`, topPosition)
     }
