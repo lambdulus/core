@@ -190,30 +190,30 @@ class Lexer {
   }
 
   // delte uplne nahradit ve switchy
-  readOperator () : void {
-    const operator : Array<string> = []
-    let topPosition : PositionRecord = this.position.toRecord()
+  // readOperator () : void {
+  //   const operator : Array<string> = []
+  //   let topPosition : PositionRecord = this.position.toRecord()
 
-    // maybe also '(' i.e. +(EXPR) A                                      YES SHOULD BE
-    // but then also +A B should be parsable                              NO SHOULD NOT BE
-    // for now it will yield error and try to detect what went wrong
-    // for now something like +3 would work,                              NO WONT BECAUSE I DECLARE OPERATORS
-    // because user may be able to declare their own operator abstraction -
-    // in this case probably function which sums 3 numbers
+  //   // maybe also '(' i.e. +(EXPR) A                                      YES SHOULD BE
+  //   // but then also +A B should be parsable                              NO SHOULD NOT BE
+  //   // for now it will yield error and try to detect what went wrong
+  //   // for now something like +3 would work,                              NO WONT BECAUSE I DECLARE OPERATORS
+  //   // because user may be able to declare their own operator abstraction -
+  //   // in this case probably function which sums 3 numbers
   
 
-    while ( ! this.isWhiteSpace() && ! this.isRightParen()) {
-      operator.push(this.pop())
-    }
+  //   while ( ! this.isWhiteSpace() && ! this.isRightParen()) {
+  //     operator.push(this.pop())
+  //   }
   
-    const op = operator.join('')
+  //   const op = operator.join('')
   
-    if (this.operators.indexOf(op) === -1) {
-      throw new InvalidOperator(op, topPosition)
-    }
+  //   if (this.operators.indexOf(op) === -1) {
+  //     throw new InvalidOperator(op, topPosition)
+  //   }
   
-    this.tokens.push(new Token(TokenType.Operator, op, topPosition))
-  }
+  //   this.tokens.push(new Token(TokenType.Operator, op, topPosition))
+  // }
 
 
   mayBeLambda () : boolean {
@@ -238,70 +238,68 @@ class Lexer {
 
   tokenize () : Array<Token> {  
     while (this.position.position < this.source.length) {
-      try {
-        // todo: zrusit case funkce()
-        // nahradit casy primitiv
-        // v defaultu otestovat ifem ty slozitejsi
-        switch (true) {
-          case this.isWhiteSpace() :
-            this.pop()
-            break
-          case this.isLeftParen() :
-            this.readLeftParen()
-            break
-          case this.isRightParen() :
-            this.readRightParen()
-            break
-          case this.isDot() :
-            this.readDot()
-            break
-          case this.mayBeLambda() :
-            this.readLambda()
-            break
-          case this.mayBeIdentifier() :
-            this.readIdentifier()
-            break
-          case this.mayBeOperator() :
-            this.readOperator()
-            break
-          case this.mayBeNumber() :
-            this.readNumber()
-            break
-          default  :
-            console.error(`Invalid character ${ this.position.toRecord } \
-            at row ${ this.position.row } column ${ this.position.column }.`)
-        }
+      switch (this.top()) {
+        case '(' :
+          this.readLeftParen()
+          break
+        case ')' :
+          this.readRightParen()
+          break
+        case '.' :
+          this.readDot()
+          break
+        case '+' :
+        case '-' :
+        case '*' :
+        case '/' :
+          const operator : string = this.pop()
+          let topPosition : PositionRecord = this.position.toRecord()
+                
+          this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+          break
+        default  :
+        if (this.mayBeNumber())
+          this.readNumber()
+        if (this.mayBeIdentifier())
+          this.readIdentifier()
+        if (this.mayBeLambda())
+          this.readLambda()
+        if (this.isWhiteSpace())
+          this.pop()
+        else
+          console.error(`Invalid character ${ this.position.toRecord } \
+          at row ${ this.position.row } column ${ this.position.column }.`)
       }
       // nechytat chybu tady
       // nechat ji probublat ven z tohohle modulu
       // odchyti si ji super modul kerej tohle pouziva
       // hint nech v erroru a super modul uz jenom vypise chybu a hint a zaformatuje
-      catch (error) {
-        if (error instanceof InvalidNumber) {
-          const { value } = error
-          const { row, column } = this.position.toRecord()
+      // catch (error) {
+      //   if (error instanceof InvalidNumber) {
+      //     const { value } = error
+      //     const { row, column } = this.position.toRecord()
   
-          console.error(`Invalid character when expecting valid Number \
-          at row ${ row } column ${ column }
+      //     console.error(`Invalid character when expecting valid Number \
+      //     at row ${ row } column ${ column }
           
-          you probably misstyped ${ value }`)
-        }
-        if (error instanceof InvalidOperator) {
-          const { value } = error
-          const { row, column } = this.position.toRecord()
+      //     you probably misstyped ${ value }`)
+      //   }
+      //   if (error instanceof InvalidOperator) {
+      //     const { value } = error
+      //     const { row, column } = this.position.toRecord()
   
-          console.error(`Invalid character when expecting valid Operator \
-          at row ${ row } column ${ column }
+      //     console.error(`Invalid character when expecting valid Operator \
+      //     at row ${ row } column ${ column }
   
-          you probably misstyped ${ value }
+      //     you probably misstyped ${ value }
           
-          ${ hintOperator(error, this.operators) }`)
-        }
-        if (error instanceof InvalidIdentifier) {
-          // TODO: implement
-        }
-        throw error      
-      }  
+      //     ${ hintOperator(error, this.operators) }`)
+      //   }
+      //   if (error instanceof InvalidIdentifier) {
+      //     // TODO: implement
+      //   }
+      //   throw error      
+      // }
     }
 
     return this.tokens
