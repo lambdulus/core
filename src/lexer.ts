@@ -14,7 +14,7 @@ enum TokenType {
 export class Token {
   constructor (
     public readonly type : TokenType,
-    public readonly value : string,
+    public readonly value : string | number,
     public readonly position : PositionRecord,
     ) {}
 }
@@ -58,12 +58,12 @@ class Lexer {
     readonly config : CodeStyle,
   ) {}
 
-  peek () : string {
+  top () : string {
     return this.source[this.position.position]
   }
 
-  read () : string {
-    const current : string = this.peek()
+  pop () : string {
+    const current : string = this.top()
 
     if (current === '\n') {
       this.position.newLine()
@@ -75,39 +75,32 @@ class Lexer {
     return current
   }
 
-  // DEPRECATED - NOT NEEDED
-  // unread () : void {
-  //   this.position.rewind()
-  // }
-
-  ////////////////////////////////////////////////////////////////////
-  
   isWhiteSpace () : boolean {
-    const top = this.peek()
+    const top = this.top()
 
     return top.trim() !== top
   }
 
   isLeftParen () : boolean {
-    return this.peek() === '('
+    return this.top() === '('
   }
 
   isRightParen () : boolean {
-    return this.peek() === ')'
+    return this.top() === ')'
   }
 
   isDot () : boolean {
-    return this.peek() === '.'
+    return this.top() === '.'
   }
 
   isNumeric () : boolean {
-    const top : string = this.peek()
+    const top : string = this.top()
 
     return top >= '0' && top <= '9'
   }
 
   isAlphabetic () : boolean {
-    const top : string = this.peek()
+    const top : string = this.top()
 
     return (
       top >= 'a' && top <= 'z'
@@ -116,11 +109,10 @@ class Lexer {
     )
   }
 
-  ////////////////////////////////////////////////////////////////////////////////////
 
   getCharToken (kind : TokenType) : Token {
     const position : PositionRecord = this.position.toRecord()
-    const char = this.read()
+    const char = this.pop()
     
     return new Token(kind, char, position)
   }
@@ -150,7 +142,7 @@ class Lexer {
   }
 
   readIdentifier () : void {
-    const characters : Array<string> = []
+    let id : string = ''
     let topPosition = this.position.toRecord()
   
     // alphabetic part
@@ -158,17 +150,18 @@ class Lexer {
       // if (this.config.singleLetterVars) {
       //   return new Token(TokenType.Identifier, top, position)
       // }
-      characters.push(this.read())
+      // v pripade single letter id - single alpha + any number of digit
+      id += this.pop()
     }
   
     // optional numeric part
     while (this.isNumeric()) {
-      characters.push(this.read())
+      id += this.pop()
     }
   
-    const id : string = characters.join('')
-  
-    if ( ! this.isWhiteSpace() && ! this.isRightParen()) {
+    // whitespace neni nutny
+    // kontrolovat to co vadi [ alphabetic ]
+    if (this.isAlphabetic()) {
       throw new InvalidIdentifier(`${ id }${ top }`, topPosition)
     }
   
@@ -178,24 +171,27 @@ class Lexer {
   }
 
   readNumber () : void {
+    // decimalni build rovnou cisla zadny pole, zadny string
     const characters : Array<string> = []
     let topPosition = this.position.toRecord()
   
     while (this.isNumeric()) {
-      characters.push(this.read())
+      characters.push(this.pop())
     }
   
     const n : string = characters.join('')
 
-    if ( ! this.isWhiteSpace() && ! this.isRightParen()) {
+    if (this.isAlphabetic()) {
       throw new InvalidNumber(`${ n }${ top }`, topPosition)
     }
   
+    
     const number : Token = new Token(TokenType.Number, n, topPosition)
 
     this.tokens.push(number)
   }
 
+  // delte uplne nahradit ve switchy
   readOperator () : void {
     const operator : Array<string> = []
     let topPosition : PositionRecord = this.position.toRecord()
@@ -209,7 +205,7 @@ class Lexer {
   
 
     while ( ! this.isWhiteSpace() && ! this.isRightParen()) {
-      operator.push(this.read())
+      operator.push(this.pop())
     }
   
     const op = operator.join('')
@@ -221,10 +217,9 @@ class Lexer {
     this.tokens.push(new Token(TokenType.Operator, op, topPosition))
   }
 
-///////////////////////////////////////////////////////////////////////////////////////////
 
   mayBeLambda () : boolean {
-    const top = this.peek()
+    const top = this.top()
     
     return this.config.lambdaLetters.indexOf(top) !== -1
   }
@@ -234,7 +229,7 @@ class Lexer {
   }
   
   mayBeOperator () : boolean {
-    const top = this.peek()
+    const top = this.top()
 
     return !! this.operators.find((operator) => top === operator[0])
   }
@@ -246,9 +241,12 @@ class Lexer {
   tokenize () : Array<Token> {  
     while (this.position.position < this.source.length) {
       try {
+        // todo: zrusit case funkce()
+        // nahradit casy primitiv
+        // v defaultu otestovat ifem ty slozitejsi
         switch (true) {
           case this.isWhiteSpace() :
-            this.read()
+            this.pop()
             break
           case this.isLeftParen() :
             this.readLeftParen()
@@ -276,6 +274,10 @@ class Lexer {
             at row ${ this.position.row } column ${ this.position.column }.`)
         }
       }
+      // nechytat chybu tady
+      // nechat ji probublat ven z tohohle modulu
+      // odchyti si ji super modul kerej tohle pouziva
+      // hint nech v erroru a super modul uz jenom vypise chybu a hint a zaformatuje
       catch (error) {
         if (error instanceof InvalidNumber) {
           const { value } = error
