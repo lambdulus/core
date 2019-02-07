@@ -1,3 +1,8 @@
+// todo: refactor position - counter and so
+// we only need something like InterFace positon {} with column and row
+// also with absolute position for indexing in whole string
+// also some way to convert it to simple record object
+
 import Counter, { PositionRecord } from './counter'
 
 
@@ -19,11 +24,14 @@ export class Token {
     ) {}
 }
 
+
+// ---------------------------------------------------
 type CodeStyle = {
   singleLetterVars : boolean,
   lambdaLetters : Array<string>,
 }
 
+// ---------------------------------------------------
 class InvalidIdentifier extends Error {
   constructor (
     public readonly value : string,
@@ -44,12 +52,13 @@ class InvalidOperator extends Error {
     public readonly position : PositionRecord
     ) { super() }
 }
+// ---------------------------------------------------
 
 
 class Lexer {
-  readonly operators : Array<string> = [ '+', '-', '*', '/', ]
+  // readonly operators : Array<string> = [ '+', '-', '*', '/', ]
 
-  position : Counter = new Counter
+  position : Counter = new Counter // todo: replace with simple object or na, IDK
 
   tokens : Array<Token> = []
 
@@ -75,40 +84,33 @@ class Lexer {
     return current
   }
 
-  isWhiteSpace () : boolean {
-    const top = this.top()
-
-    return top.trim() !== top
+  isWhiteSpace (char : string) : boolean {
+    return char.trim() !== char
   }
 
-  isLeftParen () : boolean {
-    return this.top() === '('
+  isLeftParen (char : string) : boolean {
+    return char === '('
   }
 
-  isRightParen () : boolean {
-    return this.top() === ')'
+  isRightParen (char : string) : boolean {
+    return char === ')'
   }
 
-  isDot () : boolean {
-    return this.top() === '.'
+  isDot (char : string) : boolean {
+    return char === '.'
   }
 
-  isNumeric () : boolean {
-    const top : string = this.top()
-
-    return top >= '0' && top <= '9'
+  isNumeric (char : string) : boolean {
+    return char >= '0' && char <= '9'
   }
 
-  isAlphabetic () : boolean {
-    const top : string = this.top()
-
+  isAlphabetic (char : string) : boolean {
     return (
-      top >= 'a' && top <= 'z'
-        ||
-        top >= 'A' && top <= 'Z'
+      char >= 'a' && char <= 'z'
+      ||
+      char >= 'A' && char <= 'Z'
     )
   }
-
 
   getCharToken (kind : TokenType) : Token {
     const position : PositionRecord = this.position.toRecord()
@@ -146,7 +148,7 @@ class Lexer {
     let topPosition = this.position.toRecord()
   
     // alphabetic part
-    while (this.isAlphabetic()) {
+    while (this.isAlphabetic(this.top())) {
       // if (this.config.singleLetterVars) {
       //   return new Token(TokenType.Identifier, top, position)
       // }
@@ -155,13 +157,13 @@ class Lexer {
     }
   
     // optional numeric part
-    while (this.isNumeric()) {
+    while (this.isNumeric(this.top())) {
       id += this.pop()
     }
   
     // whitespace neni nutny
     // kontrolovat to co vadi [ alphabetic ]
-    if (this.isAlphabetic()) {
+    if (this.isAlphabetic(this.top())) {
       throw new InvalidIdentifier(`${ id }${ top }`, topPosition)
     }
   
@@ -171,15 +173,14 @@ class Lexer {
   }
 
   readNumber () : void {
-    // decimalni build rovnou cisla zadny pole, zadny string
     let n : number = 0
     let topPosition = this.position.toRecord()
   
-    while (this.isNumeric()) {
+    while (this.isNumeric(this.top())) {
       n = n * 10 + Number(this.pop())
     }
   
-    if (this.isAlphabetic()) {
+    if (this.isAlphabetic(this.top())) {
       throw new InvalidNumber(`${ n }${ top }`, topPosition)
     }
   
@@ -216,24 +217,22 @@ class Lexer {
   // }
 
 
-  mayBeLambda () : boolean {
-    const top = this.top()
-    
-    return this.config.lambdaLetters.indexOf(top) !== -1
+  mayBeLambda (char : string) : boolean {
+    return this.config.lambdaLetters.indexOf(char) !== -1
   }
 
-  mayBeIdentifier () : boolean {
-    return this.isAlphabetic()
+  mayBeIdentifier (char : string) : boolean {
+    return this.isAlphabetic(this.top())
   }
   
-  mayBeOperator () : boolean {
-    const top = this.top()
+  // mayBeOperator () : boolean {
+  //   const top = this.top()
 
-    return !! this.operators.find((operator) => top === operator[0])
-  }
+  //   return !! this.operators.find((operator) => top === operator[0])
+  // }
  
-  mayBeNumber () : boolean {
-    return this.isNumeric()
+  mayBeNumber (char : string) : boolean {
+    return this.isNumeric(char)
   }
 
   tokenize () : Array<Token> {  
@@ -258,16 +257,16 @@ class Lexer {
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
           break
         default  :
-        if (this.mayBeNumber())
+        if (this.mayBeNumber(this.top()))
           this.readNumber()
-        if (this.mayBeIdentifier())
+        if (this.mayBeIdentifier(this.top()))
           this.readIdentifier()
-        if (this.mayBeLambda())
+        if (this.mayBeLambda(this.top()))
           this.readLambda()
-        if (this.isWhiteSpace())
+        if (this.isWhiteSpace(this.top()))
           this.pop()
         else
-          console.error(`Invalid character ${ this.position.toRecord } \
+          console.error(`Invalid character ${ this.position.toRecord() } \
           at row ${ this.position.row } column ${ this.position.column }.`)
       }
       // nechytat chybu tady
