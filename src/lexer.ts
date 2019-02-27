@@ -1,12 +1,7 @@
-// todo: refactor position - counter and so
-// we only need something like InterFace positon {} with column and row
-// also with absolute position for indexing in whole string
-// also some way to convert it to simple record object
-
 import Counter, { PositionRecord } from './counter'
 
 
-enum TokenType {
+export enum TokenType {
   Lambda, // = 0
   Dot, // = 1
   Identifier, // = 2 // variables, booleans
@@ -26,7 +21,7 @@ export class Token {
 
 
 // ---------------------------------------------------
-type CodeStyle = {
+export type CodeStyle = {
   singleLetterVars : boolean,
   lambdaLetters : Array<string>,
 }
@@ -56,8 +51,6 @@ class InvalidOperator extends Error {
 
 
 class Lexer {
-  // readonly operators : Array<string> = [ '+', '-', '*', '/', ]
-
   position : Counter = new Counter // todo: replace with simple object or na, IDK
 
   tokens : Array<Token> = []
@@ -149,11 +142,13 @@ class Lexer {
   
     // alphabetic part
     while (this.isAlphabetic(this.top())) {
-      // if (this.config.singleLetterVars) {
-      //   return new Token(TokenType.Identifier, top, position)
-      // }
-      // v pripade single letter id - single alpha + any number of digit
       id += this.pop()
+
+      // todo: implement this
+      // v pripade single letter id - single alpha + any number of digit
+      // if (this.config.singleLetterVars) {
+      //   new Token(TokenType.Identifier, this.pop(), topPosition)
+      // }
     }
   
     // optional numeric part
@@ -190,33 +185,6 @@ class Lexer {
     this.tokens.push(number)
   }
 
-  // delte uplne nahradit ve switchy
-  // readOperator () : void {
-  //   const operator : Array<string> = []
-  //   let topPosition : PositionRecord = this.position.toRecord()
-
-  //   // maybe also '(' i.e. +(EXPR) A                                      YES SHOULD BE
-  //   // but then also +A B should be parsable                              NO SHOULD NOT BE
-  //   // for now it will yield error and try to detect what went wrong
-  //   // for now something like +3 would work,                              NO WONT BECAUSE I DECLARE OPERATORS
-  //   // because user may be able to declare their own operator abstraction -
-  //   // in this case probably function which sums 3 numbers
-  
-
-  //   while ( ! this.isWhiteSpace() && ! this.isRightParen()) {
-  //     operator.push(this.pop())
-  //   }
-  
-  //   const op = operator.join('')
-  
-  //   if (this.operators.indexOf(op) === -1) {
-  //     throw new InvalidOperator(op, topPosition)
-  //   }
-  
-  //   this.tokens.push(new Token(TokenType.Operator, op, topPosition))
-  // }
-
-
   mayBeLambda (char : string) : boolean {
     return this.config.lambdaLetters.indexOf(char) !== -1
   }
@@ -224,12 +192,6 @@ class Lexer {
   mayBeIdentifier (char : string) : boolean {
     return this.isAlphabetic(this.top())
   }
-  
-  // mayBeOperator () : boolean {
-  //   const top = this.top()
-
-  //   return !! this.operators.find((operator) => top === operator[0])
-  // }
  
   mayBeNumber (char : string) : boolean {
     return this.isNumeric(char)
@@ -251,23 +213,39 @@ class Lexer {
         case '-' :
         case '*' :
         case '/' :
+        case '=' : {
           const operator : string = this.pop()
           let topPosition : PositionRecord = this.position.toRecord()
                 
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
           break
+        }
+        case '<' :
+        case '>' : {
+          // TODO: implement <= >=
+          let operator : string = this.pop()
+          let topPosition : PositionRecord = this.position.toRecord()
+          
+          if (this.top() === '=') {
+            operator += this.pop()
+          }
+
+          this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+          break
+        }
         default  :
         if (this.mayBeNumber(this.top()))
           this.readNumber()
-        if (this.mayBeIdentifier(this.top()))
+        else if (this.mayBeIdentifier(this.top()))
           this.readIdentifier()
-        if (this.mayBeLambda(this.top()))
+        else if (this.mayBeLambda(this.top()))
           this.readLambda()
-        if (this.isWhiteSpace(this.top()))
+        else if (this.isWhiteSpace(this.top()))
           this.pop()
-        else
+        else {
           console.error(`Invalid character ${ this.position.toRecord() } \
           at row ${ this.position.row } column ${ this.position.column }.`)
+        }
       }
       // nechytat chybu tady
       // nechat ji probublat ven z tohohle modulu
@@ -326,8 +304,14 @@ function hintOperator (error : InvalidOperator, operators : Array<string>) : str
 }
 
 
-export default function tokenize (input : string, config : CodeStyle) : Array<Token> {
+export function tokenize (input : string, config : CodeStyle) : Array<Token> {
   const lexer : Lexer = new Lexer(input + ' ', config)
 
   return lexer.tokenize()
+}
+
+export default {
+  // Token,
+  // TokenType,
+  tokenize,
 }

@@ -1,0 +1,64 @@
+Gramatika pro Honzu:
+
+[] = mozna
+{} = n krat (n muze byt i 0)
+| = nebo
+
+Lexer: -------------------------------------------------------------------------
+
+number := digit { digit }
+operator := + | - | * | /
+ident := letter { letter } { digit }
+keywords := lambda | '(' | ')' | '.' 
+
+(lambda muze byt \ nebo ten reckej ...)
+
+Parser: ------------------------------------------------------------------------
+
+LEXPR := SINGLE { SINGLE }
+
+
+SINGLE := number
+       := operator
+       := ident
+       := '(' lambda ident { ident } '.' LEXPR ')'
+       := '(' LEXPR ')'
+
+
+AST: ---------------------------------------------------------------------------
+
+Lambda:
+- argument = ident
+- body = AST
+
+Macro:
+- name = ident | number | operator
+- can expand to the contents of the macro
+
+Variable
+- ident
+
+Application
+- lambda
+- argument
+
+
+AZ PO SEM BY MELO BYT HOTOVY DO VANOC
+
+
+do konce zkouskovyho:
+
+umet to nahore vyhodnotit (vcetne expanze maker on demand)
+
+Pak dalsi semestr:
+
+graficky rozhrani, debugovani
+
+
+
+
+
+Mozna:
+
+- ast na breakpopint, atd...
+
