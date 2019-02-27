@@ -23,7 +23,9 @@ export class Application implements AST {
     else if (this.lambda instanceof Lambda) {
       const freeVar : string | null = this.argument.freeVarName([])
 
-      if (freeVar && this.lambda.isBound(freeVar)) {
+      if (freeVar && this.lambda.isBound(freeVar) && this.lambda.argument.name() !== freeVar) {
+        // TODO: refactor condition PLS it looks awful
+        // second third mainly
         // TODO: find truly original non conflicting new name probably using number postfixes
         const left : AST = this.lambda.alphaConvert(freeVar, `_${freeVar}`)
         const tree : AST = new Application(left, this.argument)

@@ -5,7 +5,8 @@ import Parser, { AST, parse, ReductionResult } from './parser/parser'
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+  '2 s z',
   '+ (* 4 5) D',
   'Y (λ f n . (< n 2) 1 (* n (f (- n 1))) ) 3',
   '(λ a b c d . - a b) 11 6 7 8',
@@ -14,7 +15,6 @@ const inputs : Array<string> = [
   'A (B +) C',
   '(+ A B)',
   '+ 555 6',
-  '2 s z',
  // 'A B C () E', // netusim jestli tohle chci mit jako validni
  // 'A (B C) D ()', // ani tohle netusim
 ]
@@ -44,8 +44,10 @@ let e = 0
 
 while (true) {
   let { tree, reduced, reduction, currentSubtree } : ReductionResult = i.reduceNormal()
-//  console.log({ reduced, reduction })
-//  console.log(tree.print())
+  // console.log()
+  // console.log({ reduced, reduction })
+  // console.log(tree.print())
+  // console.log()
 
   i = tree
   e++
