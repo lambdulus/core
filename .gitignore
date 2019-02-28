@@ -1,2 +1,2 @@
-dist
+#dist # only non ignored because I need to "publish" on GIT instead of NPM
 node_modules
