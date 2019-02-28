@@ -9,7 +9,7 @@ export { AST, ReductionResult } from './parser/parser'
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
   '2 s z',
   '+ (* 4 5) D',
   'Y (λ f n . (< n 2) 1 (* n (f (- n 1))) ) 3',
