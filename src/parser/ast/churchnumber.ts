@@ -6,7 +6,7 @@ export class ChurchNumber implements AST, Expandable {
     return `${ this.token.value }`
   }
 
-  public readonly ast: AST;
+  // public readonly ast: AST;
 
   constructor (
     public readonly token : Token,
