@@ -3,6 +3,10 @@ import { inspect } from 'util'
 import Lexer, { Token, tokenize } from './lexer'
 import Parser, { AST, parse, ReductionResult } from './parser/parser'
 
+export { Token, tokenize } from './lexer'
+export { AST, ReductionResult } from './parser/parser'
+
+
 
 const inputs : Array<string> = [
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
