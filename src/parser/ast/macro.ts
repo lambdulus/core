@@ -1,7 +1,18 @@
 import Lexer, { Token } from '../../lexer'
-import { AST, ReductionResult, Reduction, Expandable, MacroDef } from '../parser'
+import {
+  AST,
+  ReductionResult,
+  Reduction,
+  Expandable,
+  MacroDef,
+  NextReduction,
+  NextExpansion,
+  Child,
+} from '../parser'
 
 export class Macro implements AST, Expandable {
+  public readonly identifier : symbol = Symbol()
+
   name () : string {
     return `${ this.token.value }`
   }
@@ -15,8 +26,12 @@ export class Macro implements AST, Expandable {
     return new Macro(this.token, this.definition)
   }
 
+  nextNormal (parent : AST | null, child : Child) : NextReduction {
+    return new NextExpansion(parent, child, this) 
+  }
+
   reduceNormal () : ReductionResult {
-    return { tree : this.expand(), reduced : true, reduction : Reduction.expansion, currentSubtree : this }
+    return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
   }
 
   expand () : AST {

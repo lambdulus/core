@@ -1,12 +1,21 @@
 import Lexer, { Token, CodeStyle } from '../../lexer'
-import { AST, ReductionResult, Reduction, Expandable, parse } from '../parser'
+import {
+  AST,
+  ReductionResult,
+  Reduction,
+  Expandable,
+  parse,
+  NextReduction,
+  NextExpansion,
+  Child,
+} from '../parser'
 
 export class ChurchNumber implements AST, Expandable {
+  public readonly identifier : symbol = Symbol()
+
   name () : string {
     return `${ this.token.value }`
   }
-
-  // public readonly ast: AST;
 
   constructor (
     public readonly token : Token,
@@ -15,9 +24,13 @@ export class ChurchNumber implements AST, Expandable {
   clone () : ChurchNumber {
     return new ChurchNumber(this.token)
   }
+
+  nextNormal (parent : AST | null, child : Child) : NextReduction {
+    return new NextExpansion(parent, child, this)
+  }
   
   reduceNormal () : ReductionResult {
-    return { tree : this.expand(), reduced : true, reduction : Reduction.expansion, currentSubtree : this }
+    return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
   }
 
   expand () : AST {

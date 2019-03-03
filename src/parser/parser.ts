@@ -7,7 +7,9 @@ import { Application } from './ast/application'
 
 
 export interface AST {
+  identifier : symbol,
   clone () : AST,
+  nextNormal (parent : AST | null, child : Child) : NextReduction,
   reduceNormal () : ReductionResult,
   reduceApplicative () : ReductionResult,
   print () : string,
@@ -34,11 +36,10 @@ interface MacroTable {
 }
 
 export enum Reduction {
-  alpha, // = 0
-  beta, // = 1
-  expansion, // = 2
-  none, // = 3
-  // partialBeta, // = 4 // jelikoz veskery macro operace prelozim expanzi na pure λ nebudu delat partial
+  Alpha, // = 0
+  Beta, // = 1
+  Expansion, // = 2
+  None, // = 3
 }
 
 export type ReductionResult = {
@@ -48,25 +49,91 @@ export type ReductionResult = {
   currentSubtree : AST,
 }
 
+export enum Child {
+  Left,
+  Right,
+}
+
+
+// TODO: musim vymyslet jak budu resit redukce kde parent je NULL
+// to jsou napriklad situace, kdy redukovana vec je top level EXPR
+// normalne bych vratil ten zredukovanej vyraz
+// jenze jelikoz tady je potreba nic nevracet ale jenom provest redukci a nastavit parentovi
+// pod spravnym memberem redukovany vyraz, nejsem si jistej jak resit situaci, kdyz paret je null
+
+// jedna moznost je, vytvorit si specialni AST Node -> Root
+// jenze ten bude logicky unarni, takze jeho Child hodnota by mela bejt neco tretiho protoze to neni ani left ani right
+//
+// bohuzel neni moznost se obejit bez Child typu
+// protoze ja nedokazu poslat pointer na pointer na ten prvek, musim poslat referenci na parenta a informaci jeslti menim left nebo right
+
+// kdybych dokazal neposilat parenta ... jenze ja ho potrebuju poslat, abych mohl aktualizovat strom
+
+// jediny co mi teda zbyva, aby vlastni update stromu provedl frontend
+// core bude obstaravat informace a logiku
+// frontend musi prevest samotne prepojeni referenci
+// vlastni provedeni redukce muze klidne provest kdokoliv, jde vyzdycky jenom o jedno volani funkce
+// 
+// pokud to necham na fontendu tak se ten problem vyresi nejlip sam
+
+
+
+// TODO: interface Binary, kde bude kazdej uzel muset mit left a right
+// budou to vlastne jenom alias getter a setter pro ucely univerzalniho zachazeni s parentnim uzlem
+// diky tomu nebudu muset zkoumat co je parent zac jestli lambda a jeho right je argument
+// nebo application a ma left a right
+// takze v zasade jde jenom o to, zaridit aby lambda mela taky left a right i guess
+
+export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
+
+export class NextAlpha {
+  constructor (
+    public readonly tree : AST,
+    public readonly child : Child,
+    public readonly oldName : string,
+    public readonly newName : string,
+    // TODO:
+    // taky mnozinu referenci na vyskyty promennych tam, kde se budou nahrazovat
+    // at to nemusi implementace hledat, proste doslova jenom prohazi ??? -> zvazit
+  ) {}
+}
+
+export class NextBeta {
+  constructor (
+    public readonly parent : AST | null,
+    public readonly treeSide : Child, // na jaky strane pro parenta je redukovanej uzel
+    public readonly target : AST, // EXPR ve kterem se provede nahrada
+    public readonly argName : string,
+    public readonly value : AST,
+  ) {}
+}
+
+// TODO: vyresit pro pripady kdy jde o multilambdu
+// pak bude navic drzet mnozinu values a mnozinu arguments
+// spis mnozinu tuples
+
+export class NextExpansion {
+  constructor (
+    public readonly parent : AST | null,
+    public readonly treeSide : Child,
+    tree : AST,
+  ) {}
+}
+
+export class NextNone {}
+
 
 class Parser {
   private position : number = 0
 
-  // TODO: refactor, because this looks terrible
-  public static toAst (definition : string) : AST {
+  // TODO: refactor
+  // maybe put it outside of Parser class inside the Parser module
+  public static toAst (definition : string, macroTable : MacroTable) : AST {
     const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
-    const parser : Parser = new Parser(Lexer.tokenize(definition, codeStyle), {})
+    const parser : Parser = new Parser(Lexer.tokenize(definition, codeStyle), macroTable)
     
     return parser.parse(null)
-  } 
-
-  // pokud budu chtit pridavat uzivatelska makra asi bude lepsi to udelat v constructoru
-  // private static macroTable : MacroTable = {
-  //   'Y' : new MacroDef(Parser.toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`)),
-  //   // 'T' : new MacroDef(Parser.toAst(`(λ t f . t)`)),
-  //   // 'F' : new MacroDef(Parser.toAst(`(λ t f . f)`)),
-  //   // + - / * Zero Pred ...
-  // }
+  }
 
   private isMacro (token : Token) : boolean {
     return token.value in this.macroTable
@@ -194,9 +261,9 @@ class Parser {
   /**
    * LEXPR := SINGLE { SINGLE }
    */
-  parse (leftSide : AST, ) : AST {
+  parse (leftSide : AST | null, ) : AST {
     if (this.exprEnd()) {
-      return leftSide
+      return <AST> leftSide // TODO: lefSide should never ever happen to be null -> check again
     }
     else {
       const expr : AST = this.parseExpression()
@@ -213,24 +280,49 @@ class Parser {
 }
 
 export function parse (tokens : Array<Token>) : AST {
-  // TODO: refactor some global stuff
-  const macroTable : MacroTable = {
-    'Y' : new MacroDef(Parser.toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`)),
-    'T' : new MacroDef(Parser.toAst(`(λ t f . t)`)),
-    'F' : new MacroDef(Parser.toAst(`(λ t f . f)`)),
-    '+' : new MacroDef(Parser.toAst(`(λ x y s z . x s (y s z))`)),
-    '-' : new MacroDef(Parser.toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`)),
-    '*' : new MacroDef(Parser.toAst(`(λ x y z . x (y z))`)),
-    '/' : new MacroDef(Parser.toAst(`(λ n . (λ f . (λ x . f (x x)) (λ x . f (x x))) (λ c n m f x . (λ d . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) d (0 f x) (f (c d m f x))) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) ((λ n s z . s (n s z)) n))`)),
-    'ZERO' : new MacroDef(Parser.toAst(`(λ n . n (λ x . (λ t f . f)) (λ t f . t))`)),
-    'NOT' : new MacroDef(Parser.toAst(`(λ p . p (λ t f . f) (λ t f . t))`)),
-    '>' : new MacroDef(Parser.toAst(`(λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n)))`)),
-    '<' : new MacroDef(Parser.toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`)),
-    '<=' : new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`)),
+  // TODO: refactor macroTable for usage with user defined macro definitions
 
+  const macroTable : MacroTable = {}
 
-    // + - / * Zero Pred ...
-  }
+  macroTable['Y'] = new MacroDef(Parser.toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`, macroTable)),
+
+  macroTable['ZERO'] = new MacroDef(Parser.toAst(`(λ n . n (λ x . (λ t f . f)) (λ t f . t))`, macroTable)),
+  
+  macroTable['PRED'] = new MacroDef(Parser.toAst(`(λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))`, macroTable))
+  macroTable['SUC'] = new MacroDef(Parser.toAst(`(λ n s z . s (n s z))`, macroTable))
+    
+  macroTable['AND'] = new MacroDef(Parser.toAst(`(λ x y . x y x)`, macroTable))
+  macroTable['OR'] = new MacroDef(Parser.toAst(`(λ x y . x x y)`, macroTable))
+  macroTable['NOT'] = new MacroDef(Parser.toAst(`(λ p . p F T)`, macroTable))
+  
+  macroTable['T'] = new MacroDef(Parser.toAst(`(λ t f . t)`, macroTable)),
+  macroTable['F'] = new MacroDef(Parser.toAst(`(λ t f . f)`, macroTable)),
+  
+  macroTable['+'] = new MacroDef(Parser.toAst(`(λ x y s z . x s (y s z))`, macroTable)),
+  macroTable['-'] = new MacroDef(Parser.toAst(`(λ m n . (n PRED) m)`, macroTable))
+  macroTable['*'] = new MacroDef(Parser.toAst(`(λ x y z . x (y z))`, macroTable)),
+  macroTable['/'] = new MacroDef(Parser.toAst(`(λ n . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))`, macroTable))
+  macroTable['^'] = new MacroDef(Parser.toAst(`(λ x y . x y)`, macroTable))
+  
+  macroTable['DELTA'] = new MacroDef(Parser.toAst(`(λ m n . + (- m n) (- n m))`, macroTable))
+  
+  macroTable['='] = new MacroDef(Parser.toAst(`(λ m n . ZERO (DELTA m n))`, macroTable))
+  macroTable['>'] = new MacroDef(Parser.toAst(`(λ m n . NOT (ZERO (- m n)))`, macroTable))
+  macroTable['<'] = new MacroDef(Parser.toAst(`(λ m n . > n m )`, macroTable))
+  macroTable['>='] = new MacroDef(Parser.toAst(`(λ m n . ZERO (- n m))`, macroTable))
+  macroTable['<='] = new MacroDef(Parser.toAst(`(λ m n . ZERO (- m n))`, macroTable))
+
+  // QUICK MACROS - non recursively defined
+  // macroTable['NOT'] = new MacroDef(Parser.toAst(`(λ p . p (λ t f . f) (λ t f . t))`, macroTable))
+  // macroTable['-'] = new MacroDef(Parser.toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`, macroTable))
+  // macroTable['/'] = new MacroDef(Parser.toAst(`(λ n . (λ f . (λ x . f (x x)) (λ x . f (x x))) (λ c n m f x . (λ d . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) d (0 f x) (f (c d m f x))) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) ((λ n s z . s (n s z)) n))`, macroTable))
+  // macroTable['DELTA'] = new MacroDef(Parser.toAst(`(λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m))`, macroTable))
+  // macroTable['='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) m n))`, macroTable))
+  // macroTable['>'] = new MacroDef(Parser.toAst(`(λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n)))`, macroTable))
+  // macroTable['<'] = new MacroDef(Parser.toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`, macroTable))
+  // macroTable['>='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) (- n m))`, macroTable))  
+  // macroTable['<='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`, macroTable))
+
   const parser : Parser = new Parser(tokens, macroTable)
 
   return parser.parse(null)

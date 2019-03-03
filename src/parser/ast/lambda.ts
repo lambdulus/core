@@ -1,21 +1,27 @@
-import { AST, ReductionResult } from '../parser'
+import { AST, ReductionResult, NextReduction, Child } from '../parser'
 import { Variable } from './variable'
 
 export class Lambda implements AST {
+  public readonly identifier : symbol = Symbol()
+
   constructor (
-    public readonly argument : Variable,
-    public readonly body : AST
+    public argument : Variable,
+    public body : AST
   ) {}
 
   clone () : Lambda {
     return new Lambda(this.argument, this.body)
   }
 
-  reduceNormal () : ReductionResult {
-    const { tree : body, reduced, reduction, currentSubtree } : ReductionResult = this.body.clone().reduceNormal()
-    const tree = new Lambda(this.argument.clone(), body)
+  nextNormal (parent : AST | null, child : Child) : NextReduction {
+    return this.body.nextNormal(this, Child.Right)
+  }
 
-    return { tree, reduced, reduction, currentSubtree }
+  reduceNormal () : ReductionResult {
+    const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
+    this.body = tree
+
+    return { tree : this, reduced, reduction, currentSubtree }
   }
 
   reduceApplicative () : ReductionResult {
@@ -23,10 +29,13 @@ export class Lambda implements AST {
   }
   
   alphaConvert (oldName : string, newName : string) : AST {
-    const left : Variable = this.argument.clone().alphaConvert(oldName, newName)
-    const right : AST = this.body.clone().alphaConvert(oldName, newName)
+    const left : Variable = this.argument.alphaConvert(oldName, newName)
+    const right : AST = this.body.alphaConvert(oldName, newName)
 
-    return new Lambda(left, right)
+    this.argument = left
+    this.body = right
+
+    return this
   }
   
   betaReduce (argName : string, value : AST) : AST {
