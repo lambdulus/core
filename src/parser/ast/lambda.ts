@@ -1,7 +1,7 @@
-import { AST, ReductionResult, NextReduction, Child } from '../parser'
+import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser'
 import { Variable } from './variable'
 
-export class Lambda implements AST {
+export class Lambda implements Binary {
   public readonly identifier : symbol = Symbol()
 
   constructor (
@@ -9,11 +9,27 @@ export class Lambda implements AST {
     public body : AST
   ) {}
 
+  public get left () {
+    return this.argument
+  }
+
+  public set left (argument : Variable) {
+    this.argument = argument
+  }
+
+  public get right () {
+    return this.body
+  }
+
+  public set right (body : AST) {
+    this.body = body
+  }
+
   clone () : Lambda {
     return new Lambda(this.argument, this.body)
   }
 
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
     return this.body.nextNormal(this, Child.Right)
   }
 

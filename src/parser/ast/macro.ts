@@ -1,6 +1,7 @@
 import Lexer, { Token } from '../../lexer'
 import {
   AST,
+  Binary,
   ReductionResult,
   Reduction,
   Expandable,
@@ -26,7 +27,7 @@ export class Macro implements AST, Expandable {
     return new Macro(this.token, this.definition)
   }
 
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
     return new NextExpansion(parent, child, this) 
   }
 

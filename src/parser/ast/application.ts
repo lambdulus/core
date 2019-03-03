@@ -1,8 +1,8 @@
-import { AST, ReductionResult, Reduction, NextReduction, Child, NextAlpha, NextBeta } from '../parser'
+import { AST, Binary, ReductionResult, Reduction, NextReduction, Child, NextAlpha, NextBeta } from '../parser'
 import { Variable } from './variable'
 import { Lambda } from './lambda'
 
-export class Application implements AST {
+export class Application implements Binary {
   public readonly identifier : symbol = Symbol()
 
   constructor (
@@ -14,7 +14,7 @@ export class Application implements AST {
     return new Application(this.left.clone(), this.right.clone())
   }
 
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
     if (this.left instanceof Variable) {
       return this.right.nextNormal(this, Child.Right)
     }
