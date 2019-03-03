@@ -29,8 +29,8 @@ var Reduction;
 })(Reduction = exports.Reduction || (exports.Reduction = {}));
 var Child;
 (function (Child) {
-    Child[Child["Left"] = 0] = "Left";
-    Child[Child["Right"] = 1] = "Right";
+    Child["Left"] = "left";
+    Child["Right"] = "right";
 })(Child = exports.Child || (exports.Child = {}));
 var NextAlpha = /** @class */ (function () {
     function NextAlpha(tree, child, oldName, newName) {
@@ -62,6 +62,7 @@ var NextExpansion = /** @class */ (function () {
     function NextExpansion(parent, treeSide, tree) {
         this.parent = parent;
         this.treeSide = treeSide;
+        this.tree = tree;
     }
     return NextExpansion;
 }());

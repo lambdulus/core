@@ -1,12 +1,12 @@
 import { Token } from '../../lexer';
-import { AST, ReductionResult, Expandable, NextReduction, Child } from '../parser';
+import { AST, Binary, ReductionResult, Expandable, NextReduction, Child } from '../parser';
 export declare class ChurchNumber implements AST, Expandable {
     readonly token: Token;
     readonly identifier: symbol;
     name(): string;
     constructor(token: Token);
     clone(): ChurchNumber;
-    nextNormal(parent: AST | null, child: Child | null): NextReduction;
+    nextNormal(parent: Binary | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     expand(): AST;
     reduceApplicative(): ReductionResult;
