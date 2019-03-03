@@ -6,7 +6,7 @@ export declare class Lambda implements AST {
     readonly identifier: symbol;
     constructor(argument: Variable, body: AST);
     clone(): Lambda;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): AST;

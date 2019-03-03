@@ -6,7 +6,7 @@ export declare class ChurchNumber implements AST, Expandable {
     name(): string;
     constructor(token: Token);
     clone(): ChurchNumber;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     expand(): AST;
     reduceApplicative(): ReductionResult;

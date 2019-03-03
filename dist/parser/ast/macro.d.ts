@@ -7,7 +7,7 @@ export declare class Macro implements AST, Expandable {
     name(): string;
     constructor(token: Token, definition: MacroDef);
     clone(): Macro;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     expand(): AST;
     reduceApplicative(): ReductionResult;
