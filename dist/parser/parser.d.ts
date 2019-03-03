@@ -4,7 +4,9 @@ import { Variable } from './ast/variable';
 import { Macro } from './ast/macro';
 import { Application } from './ast/application';
 export interface AST {
+    identifier: symbol;
     clone(): AST;
+    nextNormal(parent: AST | null, child: Child): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     print(): string;
@@ -21,10 +23,10 @@ export declare class MacroDef {
     constructor(ast: AST);
 }
 export declare enum Reduction {
-    alpha = 0,
-    beta = 1,
-    expansion = 2,
-    none = 3
+    Alpha = 0,
+    Beta = 1,
+    Expansion = 2,
+    None = 3
 }
 export declare type ReductionResult = {
     tree: AST;
@@ -32,6 +34,35 @@ export declare type ReductionResult = {
     reduction: Reduction;
     currentSubtree: AST;
 };
+export declare enum Child {
+    Left = 0,
+    Right = 1
+}
+export declare type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone;
+export declare class NextAlpha {
+    readonly tree: AST;
+    readonly child: Child;
+    readonly oldName: string;
+    readonly newName: string;
+    constructor(tree: AST, child: Child, oldName: string, newName: string);
+}
+export declare class NextBeta {
+    readonly parent: AST | null;
+    readonly treeSide: Child;
+    readonly target: AST;
+    readonly argName: string;
+    readonly value: AST;
+    constructor(parent: AST | null, treeSide: Child, // na jaky strane pro parenta je redukovanej uzel
+    target: AST, // EXPR ve kterem se provede nahrada
+    argName: string, value: AST);
+}
+export declare class NextExpansion {
+    readonly parent: AST | null;
+    readonly treeSide: Child;
+    constructor(parent: AST | null, treeSide: Child, tree: AST);
+}
+export declare class NextNone {
+}
 export declare function parse(tokens: Array<Token>): AST;
 declare const _default: {
     parse: typeof parse;

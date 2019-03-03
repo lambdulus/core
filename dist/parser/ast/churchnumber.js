@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lexer_1 = __importDefault(require("../../lexer"));
 var parser_1 = require("../parser");
 var ChurchNumber = /** @class */ (function () {
-    // public readonly ast: AST;
     function ChurchNumber(token) {
         this.token = token;
+        this.identifier = Symbol();
     }
     ChurchNumber.prototype.name = function () {
         return "" + this.token.value;
@@ -16,8 +16,11 @@ var ChurchNumber = /** @class */ (function () {
     ChurchNumber.prototype.clone = function () {
         return new ChurchNumber(this.token);
     };
+    ChurchNumber.prototype.nextNormal = function (parent, child) {
+        return new parser_1.NextExpansion(parent, child, this);
+    };
     ChurchNumber.prototype.reduceNormal = function () {
-        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.expansion, currentSubtree: this };
+        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.Expansion, currentSubtree: this };
     };
     ChurchNumber.prototype.expand = function () {
         var codeStyle = { singleLetterVars: true, lambdaLetters: ['λ'] };
