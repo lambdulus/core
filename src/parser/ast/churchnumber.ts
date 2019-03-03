@@ -25,7 +25,7 @@ export class ChurchNumber implements AST, Expandable {
     return new ChurchNumber(this.token)
   }
 
-  nextNormal (parent : AST | null, child : Child) : NextReduction {
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
     return new NextExpansion(parent, child, this)
   }
   

@@ -9,7 +9,7 @@ import { Application } from './ast/application'
 export interface AST {
   identifier : symbol,
   clone () : AST,
-  nextNormal (parent : AST | null, child : Child) : NextReduction,
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction,
   reduceNormal () : ReductionResult,
   reduceApplicative () : ReductionResult,
   print () : string,
@@ -102,7 +102,7 @@ export class NextAlpha {
 export class NextBeta {
   constructor (
     public readonly parent : AST | null,
-    public readonly treeSide : Child, // na jaky strane pro parenta je redukovanej uzel
+    public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
     public readonly target : AST, // EXPR ve kterem se provede nahrada
     public readonly argName : string,
     public readonly value : AST,
@@ -116,7 +116,7 @@ export class NextBeta {
 export class NextExpansion {
   constructor (
     public readonly parent : AST | null,
-    public readonly treeSide : Child,
+    public readonly treeSide : Child | null,
     tree : AST,
   ) {}
 }

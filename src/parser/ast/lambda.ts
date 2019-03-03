@@ -13,7 +13,7 @@ export class Lambda implements AST {
     return new Lambda(this.argument, this.body)
   }
 
-  nextNormal (parent : AST | null, child : Child) : NextReduction {
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
     return this.body.nextNormal(this, Child.Right)
   }
 
