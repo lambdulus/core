@@ -3,10 +3,14 @@ import { Lambda } from './ast/lambda';
 import { Variable } from './ast/variable';
 import { Macro } from './ast/macro';
 import { Application } from './ast/application';
+export interface Binary extends AST {
+    left: AST;
+    right: AST;
+}
 export interface AST {
     identifier: symbol;
     clone(): AST;
-    nextNormal(parent: AST | null, child: Child | null): NextReduction;
+    nextNormal(parent: Binary | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     print(): string;
@@ -35,31 +39,32 @@ export declare type ReductionResult = {
     currentSubtree: AST;
 };
 export declare enum Child {
-    Left = 0,
-    Right = 1
+    Left = "left",
+    Right = "right"
 }
 export declare type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone;
 export declare class NextAlpha {
-    readonly tree: AST;
+    readonly tree: Application;
     readonly child: Child;
     readonly oldName: string;
     readonly newName: string;
-    constructor(tree: AST, child: Child, oldName: string, newName: string);
+    constructor(tree: Application, child: Child, oldName: string, newName: string);
 }
 export declare class NextBeta {
-    readonly parent: AST | null;
+    readonly parent: Binary | null;
     readonly treeSide: Child | null;
     readonly target: AST;
     readonly argName: string;
     readonly value: AST;
-    constructor(parent: AST | null, treeSide: Child | null, // na jaky strane pro parenta je redukovanej uzel
+    constructor(parent: Binary | null, treeSide: Child | null, // na jaky strane pro parenta je redukovanej uzel
     target: AST, // EXPR ve kterem se provede nahrada
     argName: string, value: AST);
 }
 export declare class NextExpansion {
-    readonly parent: AST | null;
+    readonly parent: Binary | null;
     readonly treeSide: Child | null;
-    constructor(parent: AST | null, treeSide: Child | null, tree: AST);
+    readonly tree: Expandable;
+    constructor(parent: Binary | null, treeSide: Child | null, tree: Expandable);
 }
 export declare class NextNone {
 }

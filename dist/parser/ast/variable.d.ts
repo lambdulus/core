@@ -1,12 +1,12 @@
 import { Token } from '../../lexer';
-import { AST, ReductionResult, NextReduction, Child } from '../parser';
+import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser';
 export declare class Variable implements AST {
     readonly token: Token;
     readonly identifier: symbol;
     name(): string;
     constructor(token: Token);
     clone(): Variable;
-    nextNormal(parent: AST | null, child: Child | null): NextReduction;
+    nextNormal(parent: Binary | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): Variable;

@@ -7,6 +7,26 @@ var Lambda = /** @class */ (function () {
         this.body = body;
         this.identifier = Symbol();
     }
+    Object.defineProperty(Lambda.prototype, "left", {
+        get: function () {
+            return this.argument;
+        },
+        set: function (argument) {
+            this.argument = argument;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Lambda.prototype, "right", {
+        get: function () {
+            return this.body;
+        },
+        set: function (body) {
+            this.body = body;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Lambda.prototype.clone = function () {
         return new Lambda(this.argument, this.body);
     };
