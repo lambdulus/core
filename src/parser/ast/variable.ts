@@ -1,5 +1,5 @@
 import Lexer, { Token } from '../../lexer'
-import { AST, ReductionResult, Reduction, NextReduction, NextNone, Child } from '../parser'
+import { AST, Binary, ReductionResult, Reduction, NextReduction, NextNone, Child } from '../parser'
 
 export class Variable implements AST {
   public readonly identifier : symbol = Symbol()
@@ -16,7 +16,7 @@ export class Variable implements AST {
     return new Variable(this.token)
   }
 
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
     return new NextNone
   }
 

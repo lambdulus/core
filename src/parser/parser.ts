@@ -5,11 +5,15 @@ import { Macro } from './ast/macro'
 import { ChurchNumber } from './ast/churchnumber'
 import { Application } from './ast/application'
 
+export interface Binary extends AST {
+  left : AST,
+  right : AST,
+}
 
 export interface AST {
   identifier : symbol,
   clone () : AST,
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction,
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction,
   reduceNormal () : ReductionResult,
   reduceApplicative () : ReductionResult,
   print () : string,
@@ -51,8 +55,8 @@ export type ReductionResult = {
 }
 
 export enum Child {
-  Left,
-  Right,
+  Left = 'left',
+  Right = 'right',
 }
 
 
@@ -89,7 +93,7 @@ export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
 
 export class NextAlpha {
   constructor (
-    public readonly tree : AST,
+    public readonly tree : Application,
     public readonly child : Child,
     public readonly oldName : string,
     public readonly newName : string,
@@ -101,7 +105,7 @@ export class NextAlpha {
 
 export class NextBeta {
   constructor (
-    public readonly parent : AST | null,
+    public readonly parent : Binary | null,
     public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
     public readonly target : AST, // EXPR ve kterem se provede nahrada
     public readonly argName : string,
@@ -115,9 +119,9 @@ export class NextBeta {
 
 export class NextExpansion {
   constructor (
-    public readonly parent : AST | null,
+    public readonly parent : Binary | null,
     public readonly treeSide : Child | null,
-    tree : AST,
+    public readonly tree : Expandable,
   ) {}
 }
 

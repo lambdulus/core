@@ -1,6 +1,7 @@
 import Lexer, { Token, CodeStyle } from '../../lexer'
 import {
   AST,
+  Binary,
   ReductionResult,
   Reduction,
   Expandable,
@@ -25,7 +26,7 @@ export class ChurchNumber implements AST, Expandable {
     return new ChurchNumber(this.token)
   }
 
-  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
     return new NextExpansion(parent, child, this)
   }
   
