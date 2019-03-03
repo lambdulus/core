@@ -16,7 +16,7 @@ export class Variable implements AST {
     return new Variable(this.token)
   }
 
-  nextNormal (parent : AST | null, child : Child) : NextReduction {
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
     return new NextNone
   }
 

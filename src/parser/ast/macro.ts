@@ -26,7 +26,7 @@ export class Macro implements AST, Expandable {
     return new Macro(this.token, this.definition)
   }
 
-  nextNormal (parent : AST | null, child : Child) : NextReduction {
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
     return new NextExpansion(parent, child, this) 
   }
 

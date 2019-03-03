@@ -14,7 +14,7 @@ export class Application implements AST {
     return new Application(this.left.clone(), this.right.clone())
   }
 
-  nextNormal (parent : AST | null, child : Child) : NextReduction {
+  nextNormal (parent : AST | null, child : Child | null) : NextReduction {
     if (this.left instanceof Variable) {
       return this.right.nextNormal(this, Child.Right)
     }
