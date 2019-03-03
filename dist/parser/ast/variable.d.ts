@@ -6,7 +6,7 @@ export declare class Variable implements AST {
     name(): string;
     constructor(token: Token);
     clone(): Variable;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): Variable;

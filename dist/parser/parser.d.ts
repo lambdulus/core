@@ -6,7 +6,7 @@ import { Application } from './ast/application';
 export interface AST {
     identifier: symbol;
     clone(): AST;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     print(): string;
@@ -48,18 +48,18 @@ export declare class NextAlpha {
 }
 export declare class NextBeta {
     readonly parent: AST | null;
-    readonly treeSide: Child;
+    readonly treeSide: Child | null;
     readonly target: AST;
     readonly argName: string;
     readonly value: AST;
-    constructor(parent: AST | null, treeSide: Child, // na jaky strane pro parenta je redukovanej uzel
+    constructor(parent: AST | null, treeSide: Child | null, // na jaky strane pro parenta je redukovanej uzel
     target: AST, // EXPR ve kterem se provede nahrada
     argName: string, value: AST);
 }
 export declare class NextExpansion {
     readonly parent: AST | null;
-    readonly treeSide: Child;
-    constructor(parent: AST | null, treeSide: Child, tree: AST);
+    readonly treeSide: Child | null;
+    constructor(parent: AST | null, treeSide: Child | null, tree: AST);
 }
 export declare class NextNone {
 }

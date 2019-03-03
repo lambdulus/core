@@ -5,7 +5,7 @@ export declare class Application implements AST {
     readonly identifier: symbol;
     constructor(left: AST, right: AST);
     clone(): Application;
-    nextNormal(parent: AST | null, child: Child): NextReduction;
+    nextNormal(parent: AST | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): AST;
