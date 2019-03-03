@@ -213,7 +213,8 @@ class Lexer {
         case '-' :
         case '*' :
         case '/' :
-        case '=' : {
+        case '=' :
+        case '^' : {
           const operator : string = this.pop()
           let topPosition : PositionRecord = this.position.toRecord()
                 

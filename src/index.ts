@@ -1,4 +1,4 @@
-import { inspect } from 'util'
+// import { inspect } from 'util'
 
 import Lexer, { Token, tokenize } from './lexer'
 import Parser, { AST, parse, ReductionResult } from './parser/parser'
@@ -9,7 +9,8 @@ export { AST, ReductionResult, parse, default as Parser } from './parser/parser'
 
 
 // const inputs : Array<string> = [
-//   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+//   '(Y (λ f n . (= n 1) 1 (* n (f (- n 1))) ) 3)',
+//   '^ 4 4',
 //   '2 s z',
 //   '+ (* 4 5) D',
 //   'Y (λ f n . (< n 2) 1 (* n (f (- n 1))) ) 3',
@@ -60,4 +61,3 @@ export { AST, ReductionResult, parse, default as Parser } from './parser/parser'
 // }
 // console.log('steps: ' + e)
 // console.log(i.print())
-

@@ -1,7 +1,9 @@
 import Lexer, { Token } from '../../lexer'
-import { AST, ReductionResult, Reduction } from '../parser'
+import { AST, ReductionResult, Reduction, NextReduction, NextNone, Child } from '../parser'
 
 export class Variable implements AST {
+  public readonly identifier : symbol = Symbol()
+
   name () : string {
     return `${ this.token.value }`
   }
@@ -10,12 +12,16 @@ export class Variable implements AST {
     public readonly token : Token,
   ) {}
 
-  clone (): Variable {
+  clone () : Variable {
     return new Variable(this.token)
   }
 
+  nextNormal (parent : AST | null, child : Child) : NextReduction {
+    return new NextNone
+  }
+
   reduceNormal () : ReductionResult {
-    return { tree : this.clone(), reduced : false, reduction : Reduction.none, currentSubtree : this }
+    return { tree : this, reduced : false, reduction : Reduction.None, currentSubtree : this }
   }
 
   reduceApplicative () : ReductionResult {
@@ -37,7 +43,7 @@ export class Variable implements AST {
       return value.clone()
     }
     
-    return this // TODO: really not clonning? IDK
+    return this
   }
   
   etaConvert () : AST {
