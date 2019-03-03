@@ -1,4 +1,5 @@
 "use strict";
+// import { inspect } from 'util'
 Object.defineProperty(exports, "__esModule", { value: true });
 var lexer_1 = require("./lexer");
 exports.Token = lexer_1.Token;
@@ -8,7 +9,8 @@ var parser_1 = require("./parser/parser");
 exports.parse = parser_1.parse;
 exports.Parser = parser_1.default;
 // const inputs : Array<string> = [
-//   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+//   '(Y (λ f n . (= n 1) 1 (* n (f (- n 1))) ) 3)',
+//   '^ 4 4',
 //   '2 s z',
 //   '+ (* 4 5) D',
 //   'Y (λ f n . (< n 2) 1 (* n (f (- n 1))) ) 3',

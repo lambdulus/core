@@ -5,6 +5,7 @@ var Macro = /** @class */ (function () {
     function Macro(token, definition) {
         this.token = token;
         this.definition = definition;
+        this.identifier = Symbol();
     }
     Macro.prototype.name = function () {
         return "" + this.token.value;
@@ -12,8 +13,11 @@ var Macro = /** @class */ (function () {
     Macro.prototype.clone = function () {
         return new Macro(this.token, this.definition);
     };
+    Macro.prototype.nextNormal = function (parent, child) {
+        return new parser_1.NextExpansion(parent, child, this);
+    };
     Macro.prototype.reduceNormal = function () {
-        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.expansion, currentSubtree: this };
+        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.Expansion, currentSubtree: this };
     };
     Macro.prototype.expand = function () {
         // TODO: here I lose token - useful for location and origin of macro - should solve this

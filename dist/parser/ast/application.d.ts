@@ -1,9 +1,11 @@
-import { AST, ReductionResult } from '../parser';
+import { AST, ReductionResult, NextReduction, Child } from '../parser';
 export declare class Application implements AST {
-    readonly lambda: AST;
-    readonly argument: AST;
-    constructor(lambda: AST, argument: AST);
+    left: AST;
+    right: AST;
+    readonly identifier: symbol;
+    constructor(left: AST, right: AST);
     clone(): Application;
+    nextNormal(parent: AST | null, child: Child): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): AST;

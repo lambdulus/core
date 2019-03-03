@@ -1,10 +1,12 @@
-import { AST, ReductionResult } from '../parser';
+import { AST, ReductionResult, NextReduction, Child } from '../parser';
 import { Variable } from './variable';
 export declare class Lambda implements AST {
-    readonly argument: Variable;
-    readonly body: AST;
+    argument: Variable;
+    body: AST;
+    readonly identifier: symbol;
     constructor(argument: Variable, body: AST);
     clone(): Lambda;
+    nextNormal(parent: AST | null, child: Child): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;
     alphaConvert(oldName: string, newName: string): AST;

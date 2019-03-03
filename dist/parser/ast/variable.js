@@ -5,6 +5,7 @@ var parser_1 = require("../parser");
 var Variable = /** @class */ (function () {
     function Variable(token) {
         this.token = token;
+        this.identifier = Symbol();
     }
     Variable.prototype.name = function () {
         return "" + this.token.value;
@@ -12,8 +13,11 @@ var Variable = /** @class */ (function () {
     Variable.prototype.clone = function () {
         return new Variable(this.token);
     };
+    Variable.prototype.nextNormal = function (parent, child) {
+        return new parser_1.NextNone;
+    };
     Variable.prototype.reduceNormal = function () {
-        return { tree: this.clone(), reduced: false, reduction: parser_1.Reduction.none, currentSubtree: this };
+        return { tree: this, reduced: false, reduction: parser_1.Reduction.None, currentSubtree: this };
     };
     Variable.prototype.reduceApplicative = function () {
         throw new Error("Method not implemented.");
@@ -29,7 +33,7 @@ var Variable = /** @class */ (function () {
         if (this.name() === argName) {
             return value.clone();
         }
-        return this; // TODO: really not clonning? IDK
+        return this;
     };
     Variable.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");

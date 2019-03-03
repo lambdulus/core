@@ -190,7 +190,8 @@ var Lexer = /** @class */ (function () {
                 case '-':
                 case '*':
                 case '/':
-                case '=': {
+                case '=':
+                case '^': {
                     var operator = this.pop();
                     var topPosition = this.position.toRecord();
                     this.tokens.push(new Token(TokenType.Operator, operator, topPosition));
