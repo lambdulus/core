@@ -13,6 +13,7 @@ export interface AST {
   reduceNormal () : ReductionResult,
   reduceApplicative () : ReductionResult,
   print () : string,
+  // format (fn : function) : string, // TODO: special type of print but invokes formatting function maybe returns type which returns fn
   alphaConvert (oldName : string, newName : string) : AST,
   betaReduce (argName : string, value : AST) : AST,
   etaConvert () : AST,
