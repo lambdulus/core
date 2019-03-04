@@ -25,7 +25,7 @@ export {
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
   '^ 4 4',
   '2 s z',
   '+ (* 4 5) D',
@@ -83,6 +83,7 @@ while (true) {
     const { tree, child, oldName, newName } = nextReduction
     tree[<Child> child] = tree[<Child> child].alphaConvert(oldName, newName)
   }
+  
   else if (nextReduction instanceof NextBeta) {
     const { parent, treeSide, target, argName, value } = nextReduction
     const substituted : AST = target.betaReduce(argName, value)
@@ -94,6 +95,7 @@ while (true) {
       parent[<Child> treeSide] = substituted
     }
   }
+
   else if (nextReduction instanceof NextExpansion) {
     const { parent, treeSide, tree } = nextReduction
     const expanded : AST = tree.expand()
