@@ -26,7 +26,7 @@ exports.NextNone = parser_2.NextNone;
 exports.Child = parser_2.Child;
 exports.Parser = parser_2.default;
 var inputs = [
-    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '^ 4 4',
     '2 s z',
     '+ (* 4 5) D',
