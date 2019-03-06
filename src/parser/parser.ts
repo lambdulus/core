@@ -4,20 +4,27 @@ import { Variable } from './ast/variable'
 import { Macro } from './ast/macro'
 import { ChurchNumber } from './ast/churchnumber'
 import { Application } from './ast/application'
+import { Visitor } from '../visitors/visitor'
 
+// TODO: tak tohle zrusime nahradime logikou visitor patternu
 export interface Binary extends AST {
   left : AST,
   right : AST,
 }
 
-export interface AST {
+export interface Visitable {
+  visit(visitor : Visitor) : void,
+}
+
+// TODO: refactor out features
+// everything will be replaced by visitor 
+export interface AST extends Visitable {
   identifier : symbol,
   clone () : AST,
-  nextNormal (parent : Binary | null, child : Child | null) : NextReduction,
-  reduceNormal () : ReductionResult,
-  reduceApplicative () : ReductionResult,
-  print () : string,
-  // format (fn : function) : string, // TODO: special type of print but invokes formatting function maybe returns type which returns fn
+  nextNormal (parent : Binary | null, child : Child | null) : NextReduction, // TODO: DELETE
+  reduceNormal () : ReductionResult, // TODO: DELETE
+  reduceApplicative () : ReductionResult, // TODO: DELETE
+  // print () : string, // TODO: DELETE
   alphaConvert (oldName : string, newName : string) : AST,
   betaReduce (argName : string, value : AST) : AST,
   etaConvert () : AST,
@@ -26,6 +33,7 @@ export interface AST {
 
 // zvazit jestli je tohle vubec potreba
 // expand je pouzitej jenom uvnitr takze by mohl byt private a pak neni vubec nepotreba Interface
+// ve skutecnosti expand volam zvenku takze OK nechat
 export interface Expandable {
   expand () : AST,
 }
@@ -89,6 +97,10 @@ export enum Child {
 // nebo application a ma left a right
 // takze v zasade jde jenom o to, zaridit aby lambda mela taky left a right i guess
 
+// TODO: tohle nahradi konkretni druh Visitoru neco jako NormalReductionFinder/NormReductionFinder
+// dalsi pripad bude AppReductionFinder
+// dalsi bude TreePrinter
+// a tu spodni informaci bude v sobe drzet konkretni Visitor
 export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
 
 export class NextAlpha {
