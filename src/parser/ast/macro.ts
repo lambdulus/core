@@ -10,6 +10,7 @@ import {
   NextExpansion,
   Child,
 } from '../parser'
+import { Visitor } from '../../visitors/visitor';
 
 export class Macro implements AST, Expandable {
   public readonly identifier : symbol = Symbol()
@@ -25,6 +26,10 @@ export class Macro implements AST, Expandable {
 
   clone () : Macro {
     return new Macro(this.token, this.definition)
+  }
+
+  visit (visitor : Visitor) : void {
+    visitor.onMacro(this)
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
@@ -56,9 +61,9 @@ export class Macro implements AST, Expandable {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    return this.name()
-  }
+  // print () : string {
+  //   return this.name()
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return null

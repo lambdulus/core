@@ -1,8 +1,11 @@
 import { AST, Binary, ReductionResult, Reduction, NextReduction, Child, NextAlpha, NextBeta } from '../parser'
 import { Variable } from './variable'
 import { Lambda } from './lambda'
+import { Visitor } from '../../visitors/visitor'
 
-export class Application implements Binary {
+// TODO: remove Binary cause not needed 
+// TODO: Visitable<any> is not correct
+export class Application implements AST {
   public readonly identifier : symbol = Symbol()
 
   constructor (
@@ -12,6 +15,10 @@ export class Application implements Binary {
 
   clone () : Application {
     return new Application(this.left.clone(), this.right.clone())
+  }
+
+  visit (visitor : Visitor) : void {
+    return visitor.onApplication(this)
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
@@ -105,12 +112,12 @@ export class Application implements Binary {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    if (this.right instanceof Application) {
-      return `${ this.left.print() } (${ this.right.print() })`
-    }
-    return `${ this.left.print() } ${ this.right.print() }`
-  }
+  // print () : string {
+  //   if (this.right instanceof Application) {
+  //     return `${ this.left.print() } (${ this.right.print() })`
+  //   }
+  //   return `${ this.left.print() } ${ this.right.print() }`
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return this.left.freeVarName(bound) || this.right.freeVarName(bound)

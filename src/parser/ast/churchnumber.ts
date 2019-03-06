@@ -10,6 +10,7 @@ import {
   NextExpansion,
   Child,
 } from '../parser'
+import { Visitor } from '../../visitors/visitor';
 
 export class ChurchNumber implements AST, Expandable {
   public readonly identifier : symbol = Symbol()
@@ -24,6 +25,10 @@ export class ChurchNumber implements AST, Expandable {
   
   clone () : ChurchNumber {
     return new ChurchNumber(this.token)
+  }
+
+  visit (visitor : Visitor) : void {
+    visitor.onChurchNumber(this)
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
@@ -58,9 +63,9 @@ export class ChurchNumber implements AST, Expandable {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    return this.name()
-  }
+  // print () : string {
+  //   return this.name()
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return null

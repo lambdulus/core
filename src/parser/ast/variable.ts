@@ -1,5 +1,6 @@
 import Lexer, { Token } from '../../lexer'
 import { AST, Binary, ReductionResult, Reduction, NextReduction, NextNone, Child } from '../parser'
+import { Visitor } from '../../visitors/visitor';
 
 export class Variable implements AST {
   public readonly identifier : symbol = Symbol()
@@ -14,6 +15,10 @@ export class Variable implements AST {
 
   clone () : Variable {
     return new Variable(this.token)
+  }
+
+  visit (visitor : Visitor) : void {
+    visitor.onVariable(this)
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
@@ -50,9 +55,9 @@ export class Variable implements AST {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    return this.name()
-  }
+  // print () : string {
+  //   return this.name()
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     if (bound.includes(this.name())) {

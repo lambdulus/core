@@ -1,5 +1,6 @@
 import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser'
 import { Variable } from './variable'
+import { Visitor } from '../../visitors/visitor';
 
 export class Lambda implements Binary {
   public readonly identifier : symbol = Symbol()
@@ -27,6 +28,10 @@ export class Lambda implements Binary {
 
   clone () : Lambda {
     return new Lambda(this.argument, this.body)
+  }
+
+  visit (visitor : Visitor) : void {
+    visitor.onLambda(this)
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
@@ -66,12 +71,12 @@ export class Lambda implements Binary {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    if (this.body instanceof Lambda) {
-      return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
-    }
-    return `(λ ${ this.argument.print() } . ${ this.body.print() })`
-  }
+  // print () : string {
+  //   if (this.body instanceof Lambda) {
+  //     return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
+  //   }
+  //   return `(λ ${ this.argument.print() } . ${ this.body.print() })`
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return this.body.freeVarName([ ...bound, this.argument.name()])
@@ -89,19 +94,19 @@ export class Lambda implements Binary {
     return false
   }
 
-  printLambdaArguments (accumulator : string) : string {
-    if (this.body instanceof Lambda) {
-      return this.body.printLambdaArguments(`${ accumulator } ${ this.body.argument.name() }`)
-    }
+  // printLambdaArguments (accumulator : string) : string {
+  //   if (this.body instanceof Lambda) {
+  //     return this.body.printLambdaArguments(`${ accumulator } ${ this.body.argument.name() }`)
+  //   }
     
-    return accumulator
-  }
+  //   return accumulator
+  // }
 
-  printLambdaBody () : string {
-    if (this.body instanceof Lambda) {
-      return this.body.printLambdaBody()
-    }
+  // printLambdaBody () : string {
+  //   if (this.body instanceof Lambda) {
+  //     return this.body.printLambdaBody()
+  //   }
 
-    return this.body.print()
-  }
+  //   return this.body.print()
+  // }
 }
