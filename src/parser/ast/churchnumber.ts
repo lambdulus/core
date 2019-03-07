@@ -1,8 +1,8 @@
 import Lexer, { Token, CodeStyle } from '../../lexer'
-import { AST, parse, Expandable } from '..'
+import { AST, parse } from '..'
 import { ASTVisitor } from '../../visitors';
 
-export class ChurchNumber implements AST, Expandable {
+export class ChurchNumber implements AST {
   public readonly identifier : symbol = Symbol()
 
   name () : string {
@@ -21,13 +21,13 @@ export class ChurchNumber implements AST, Expandable {
     visitor.onChurchNumber(this)
   }
 
-  expand () : AST {
-    const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
-    const value : number = <number> this.token.value
-    const churchLiteral : string = `(λ s z .${' (s'.repeat(value)} z)${')'.repeat(value)}`
+  // expand () : AST {
+  //   const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
+  //   const value : number = <number> this.token.value
+  //   const churchLiteral : string = `(λ s z .${' (s'.repeat(value)} z)${')'.repeat(value)}`
 
-    return parse(Lexer.tokenize(churchLiteral, codeStyle))
-  }
+  //   return parse(Lexer.tokenize(churchLiteral, codeStyle))
+  // }
   
   // alphaConvert (oldName : string, newName : string) : AST {
   //   return this

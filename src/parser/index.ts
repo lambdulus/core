@@ -22,9 +22,9 @@ export interface AST extends ASTVisitable {
   freeVarName (bound : Array<string>) : string | null, // TODO: refactor to visitor pattern
 }
 
-export interface Expandable {
-  expand () : AST,
-}
+// export interface Expandable {
+//   expand () : AST,
+// }
 
 export class MacroDef {
   constructor (

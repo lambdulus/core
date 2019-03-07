@@ -4,7 +4,7 @@ import { Application } from "../parser/ast/application";
 import { Lambda } from "../parser/ast/lambda";
 import { Macro } from "../parser/ast/macro";
 import { Variable } from "../parser/ast/variable";
-import { Binary, AST, Expandable } from "../parser";
+import { Binary, AST } from "../parser";
 import { CodeStyle } from "../lexer";
 import { parse } from "../parser";
 import { Lexer } from "..";
@@ -12,7 +12,7 @@ import { Lexer } from "..";
 export class Expandor implements ASTVisitor {
   private readonly parent : Binary | null
   private readonly treeSide : Child | null
-  private readonly target : Expandable & AST
+  private readonly target : AST
 
   private expanded : AST | null = null
   public tree : AST
