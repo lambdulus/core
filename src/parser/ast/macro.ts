@@ -1,8 +1,8 @@
 import Lexer, { Token } from '../../lexer'
-import { AST, Expandable, MacroDef } from '..'
+import { AST, MacroDef } from '..'
 import { ASTVisitor } from '../../visitors';
 
-export class Macro implements AST, Expandable {
+export class Macro implements AST {
   public readonly identifier : symbol = Symbol()
 
   name () : string {
@@ -22,11 +22,11 @@ export class Macro implements AST, Expandable {
     visitor.onMacro(this)
   }
 
-  expand () : AST {
-    // TODO: here I lose token - useful for location and origin of macro - should solve this
-    // also consider not clonning
-    return this.definition.ast.clone()
-  }
+  // expand () : AST {
+  //   // TODO: here I lose token - useful for location and origin of macro - should solve this
+  //   // also consider not clonning
+  //   return this.definition.ast.clone()
+  // }
   
   // alphaConvert (oldName : string, newName : string) : AST {
   //   return this

@@ -1,4 +1,4 @@
-import Parser, { AST, Binary, Expandable } from '../parser'
+import Parser, { AST, Binary } from '../parser'
 import { Application } from '../parser/ast/application'
 import { Lambda } from '../parser/ast/lambda'
 import { ChurchNumber } from '../parser/ast/churchnumber'
@@ -53,7 +53,7 @@ export class NextExpansion implements NextReduction {
   constructor (
     public readonly parent : Binary | null,
     public readonly treeSide : Child | null,
-    public readonly target : Expandable & AST,
+    public readonly target : AST,
   ) {}
 
   visit (visitor : ReductionVisitor) : void {
@@ -76,11 +76,6 @@ export interface ReductionVisitable {
   visit (visitor : ReductionVisitor) : void,
 }
 
-// export interface ExpansionVisitable {
-//   visit (visitor : ExpansionVisitor) : void
-// }
-
-
 
 export interface ASTVisitor {
   onApplication (application : Application) : void,
@@ -96,8 +91,3 @@ export interface ReductionVisitor {
   onExpansion (expansion : NextExpansion) : void,
   onNone (none : NextNone) : void,
 }
-
-// export interface ExpansionVisitor {
-//   onChurchNumber (churchNumber : ChurchNumber) : void,
-//   onMacro (macro : Macro) : void,
-// }
