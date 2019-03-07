@@ -43,10 +43,10 @@ export class Variable implements AST {
   //   throw new Error("Method not implemented.");
   // }
 
-  freeVarName (bound : Array<string>) : string | null {
-    if (bound.includes(this.name())) {
-      return null
-    }    
-    return this.name()
-  }
+  // freeVarName (bound : Array<string>) : string | null {
+  //   if (bound.includes(this.name())) {
+  //     return null
+  //   }    
+  //   return this.name()
+  // }
 }

@@ -15,7 +15,8 @@ export {
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+  '(~ x y z . x y z) y z x',  
   '1 a',
   '^ 4 4',
   '(~ x y z . x y z) 1 2 3',  

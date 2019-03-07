@@ -58,9 +58,9 @@ export class Lambda implements Binary {
   //   throw new Error("Method not implemented.");
   // }
 
-  freeVarName (bound : Array<string>) : string | null {
-    return this.body.freeVarName([ ...bound, this.argument.name()])
-  }
+  // freeVarName (bound : Array<string>) : string | null {
+  //   return this.body.freeVarName([ ...bound, this.argument.name()])
+  // }
 
   isBound (varName : string) : boolean {
     if (this.argument.name() === varName) {
