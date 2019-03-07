@@ -1,5 +1,5 @@
 import { Token } from '../../lexer';
-import { AST } from '../parser';
+import { AST } from '..';
 import { Visitor } from '../../visitors/visitor';
 export declare class Variable implements AST {
     readonly token: Token;

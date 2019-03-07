@@ -1,111 +1,68 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var parser_1 = require("../parser/parser");
-var application_1 = require("../parser/ast/application");
 var lambda_1 = require("../parser/ast/lambda");
 var variable_1 = require("../parser/ast/variable");
-var BasicPrinter = /** @class */ (function () {
-    function BasicPrinter(tree) {
+var Child;
+(function (Child) {
+    Child["Left"] = "left";
+    Child["Right"] = "right";
+})(Child = exports.Child || (exports.Child = {}));
+var NextAlpha = /** @class */ (function () {
+    function NextAlpha(tree, child, oldName, newName) {
         this.tree = tree;
-        this.expression = '';
-        this.tree.visit(this);
+        this.child = child;
+        this.oldName = oldName;
+        this.newName = newName;
     }
-    // TODO: this looks like nonsense
-    // maybe solve it with another Visitor
-    BasicPrinter.prototype.printLambdaBody = function (lambda) {
-        if (lambda.body instanceof lambda_1.Lambda) {
-            this.printLambdaBody(lambda.body);
-        }
-        else {
-            lambda.body.visit(this);
-        }
-    };
-    // TODO: this looks like nonsense
-    // maybe solve it with another Visitor
-    BasicPrinter.prototype.printLambdaArguments = function (lambda, accumulator) {
-        if (lambda.body instanceof lambda_1.Lambda) {
-            this.printLambdaArguments(lambda.body, accumulator + " " + lambda.body.argument.name());
-        }
-        else {
-            this.expression += accumulator;
-        }
-    };
-    BasicPrinter.prototype.print = function () {
-        return this.expression;
-    };
-    // TODO: this is ugly as hell
-    BasicPrinter.prototype.onApplication = function (application) {
-        if (application.right instanceof application_1.Application) {
-            application.left.visit(this);
-            this.expression += " (";
-            application.right.visit(this);
-            this.expression += ")";
-        }
-        else {
-            application.left.visit(this);
-            this.expression += " ";
-            application.right.visit(this);
-        }
-    };
-    // TODO: this is ugly as hell
-    BasicPrinter.prototype.onLambda = function (lambda) {
-        if (lambda.body instanceof lambda_1.Lambda) {
-            this.expression += "(\u03BB ";
-            this.printLambdaArguments(lambda, lambda.argument.name());
-            this.expression += " . ";
-            this.printLambdaBody(lambda);
-            this.expression += ")";
-        }
-        else {
-            this.expression += "(\u03BB ";
-            lambda.argument.visit(this);
-            this.expression += " . ";
-            lambda.body.visit(this);
-            this.expression += ")";
-        }
-    };
-    BasicPrinter.prototype.onChurchNumber = function (churchNumber) {
-        this.expression += churchNumber.name();
-    };
-    BasicPrinter.prototype.onMacro = function (macro) {
-        this.expression += macro.name();
-    };
-    BasicPrinter.prototype.onVariable = function (variable) {
-        this.expression += variable.name();
-    };
-    return BasicPrinter;
+    return NextAlpha;
 }());
-exports.BasicPrinter = BasicPrinter;
-// TODO:
-// myslenka: na kazdou iteraci stromu vytvorim novou instanci NormalEvaluation ?
-// pokud ano - dostanu v konstruktoru strom
-// pri redukci se muze zmenit root, tim se zmeni muj strom
-// az se provede redukce tak si ode me muze vnejsi kod strom zase zpet vzit
-// ulozit ho do statu v reactu nebo podobne
-// v dalsi iteraci si ho zase vzit a znova iterovat
-// jenze je to takovy dost haluz
-// slo by to i jinak
-// vytvorim jednu instanci na celou exekuci stromu
-// ta si drzi strom a kdyz se zavola nextReduction () tak vrati nejakou strukturu s metadaty o redukci
-// taky ma metodu na provedeni redukce
-// i tohle reseni umozni vzit si strom zvenku a pomoci public getteru a private setteru budu moct strom menit jenom zevnitr
-// v reactu si muzu drzet klidne celej tenhle Visitor, protoze proc ne
-// pri redukci mi 
+exports.NextAlpha = NextAlpha;
+var NextBeta = /** @class */ (function () {
+    function NextBeta(parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
+    target, // EXPR ve kterem se provede nahrada
+    argName, value) {
+        this.parent = parent;
+        this.treeSide = treeSide;
+        this.target = target;
+        this.argName = argName;
+        this.value = value;
+    }
+    return NextBeta;
+}());
+exports.NextBeta = NextBeta;
+// TODO: vyresit pro pripady kdy jde o multilambdu
+// pak bude navic drzet mnozinu values a mnozinu arguments
+// spis mnozinu tuples
+var NextExpansion = /** @class */ (function () {
+    function NextExpansion(parent, treeSide, tree) {
+        this.parent = parent;
+        this.treeSide = treeSide;
+        this.tree = tree;
+    }
+    return NextExpansion;
+}());
+exports.NextExpansion = NextExpansion;
+var NextNone = /** @class */ (function () {
+    function NextNone() {
+    }
+    return NextNone;
+}());
+exports.NextNone = NextNone;
 var NormalEvaluation = /** @class */ (function () {
     function NormalEvaluation(tree) {
         this.tree = tree;
         this.parent = null;
         this.child = null;
-        this.nextReduction = parser_1.NextNone;
+        this.nextReduction = NextNone;
         this.tree.visit(this);
     }
     NormalEvaluation.prototype.evaluate = function () {
-        if (this.nextReduction instanceof parser_1.NextAlpha) {
+        if (this.nextReduction instanceof NextAlpha) {
             var _a = this.nextReduction, tree = _a.tree, child = _a.child, oldName = _a.oldName, newName = _a.newName;
             tree[child] = tree[child].alphaConvert(oldName, newName);
             return this.tree;
         }
-        else if (this.nextReduction instanceof parser_1.NextBeta) {
+        else if (this.nextReduction instanceof NextBeta) {
             var _b = this.nextReduction, parent_1 = _b.parent, treeSide = _b.treeSide, target = _b.target, argName = _b.argName, value = _b.value;
             var substituted = target.betaReduce(argName, value);
             if (parent_1 === null) {
@@ -116,7 +73,7 @@ var NormalEvaluation = /** @class */ (function () {
                 return this.tree;
             }
         }
-        else if (this.nextReduction instanceof parser_1.NextExpansion) {
+        else if (this.nextReduction instanceof NextExpansion) {
             var _c = this.nextReduction, parent_2 = _c.parent, treeSide = _c.treeSide, tree = _c.tree;
             var expanded = tree.expand();
             if (parent_2 === null) {
@@ -134,7 +91,7 @@ var NormalEvaluation = /** @class */ (function () {
     NormalEvaluation.prototype.onApplication = function (application) {
         if (application.left instanceof variable_1.Variable) {
             this.parent = application;
-            this.child = parser_1.Child.Right;
+            this.child = Child.Right;
             application.right.visit(this);
         }
         else if (application.left instanceof lambda_1.Lambda) {
@@ -143,34 +100,34 @@ var NormalEvaluation = /** @class */ (function () {
                 // TODO: refactor condition PLS it looks awful
                 // second third mainly
                 // TODO: find truly original non conflicting new name probably using number postfixes
-                this.nextReduction = new parser_1.NextAlpha(application, parser_1.Child.Left, freeVar, "_" + freeVar);
+                this.nextReduction = new NextAlpha(application, Child.Left, freeVar, "_" + freeVar);
             }
             else {
                 // search for free Vars in right which are bound in left OK
                 // if any, do α conversion and return
                 // if none, do β reduction and return
-                this.nextReduction = new parser_1.NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
+                this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
             }
         }
         else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)
             this.parent = application;
-            this.child = parser_1.Child.Left;
+            this.child = Child.Left;
             application.left.visit(this);
         }
     };
     NormalEvaluation.prototype.onLambda = function (lambda) {
         this.parent = lambda;
-        this.child = parser_1.Child.Right;
+        this.child = Child.Right;
         lambda.body.visit(this);
     };
     NormalEvaluation.prototype.onChurchNumber = function (churchNumber) {
-        this.nextReduction = new parser_1.NextExpansion(this.parent, this.child, churchNumber);
+        this.nextReduction = new NextExpansion(this.parent, this.child, churchNumber);
     };
     NormalEvaluation.prototype.onMacro = function (macro) {
-        this.nextReduction = new parser_1.NextExpansion(this.parent, this.child, macro);
+        this.nextReduction = new NextExpansion(this.parent, this.child, macro);
     };
     NormalEvaluation.prototype.onVariable = function (variable) {
-        this.nextReduction = new parser_1.NextNone;
+        this.nextReduction = new NextNone;
     };
     return NormalEvaluation;
 }());

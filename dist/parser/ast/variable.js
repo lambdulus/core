@@ -15,15 +15,6 @@ var Variable = /** @class */ (function () {
     Variable.prototype.visit = function (visitor) {
         visitor.onVariable(this);
     };
-    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    //   return new NextNone
-    // }
-    // reduceNormal () : ReductionResult {
-    //   return { tree : this, reduced : false, reduction : Reduction.None, currentSubtree : this }
-    // }
-    // reduceApplicative () : ReductionResult {
-    //   throw new Error("Method not implemented.");
-    // }
     Variable.prototype.alphaConvert = function (oldName, newName) {
         if (this.name() === oldName) {
             var token = new lexer_1.Token(this.token.type, newName, this.token.position);
@@ -40,9 +31,6 @@ var Variable = /** @class */ (function () {
     Variable.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
     };
-    // print () : string {
-    //   return this.name()
-    // }
     Variable.prototype.freeVarName = function (bound) {
         if (bound.includes(this.name())) {
             return null;

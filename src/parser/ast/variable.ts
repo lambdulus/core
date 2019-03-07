@@ -1,5 +1,5 @@
 import Lexer, { Token } from '../../lexer'
-import { AST, Binary, NextReduction, NextNone, Child } from '../parser'
+import { AST } from '..'
 import { Visitor } from '../../visitors/visitor';
 
 export class Variable implements AST {
@@ -20,18 +20,6 @@ export class Variable implements AST {
   visit (visitor : Visitor) : void {
     visitor.onVariable(this)
   }
-
-  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-  //   return new NextNone
-  // }
-
-  // reduceNormal () : ReductionResult {
-  //   return { tree : this, reduced : false, reduction : Reduction.None, currentSubtree : this }
-  // }
-
-  // reduceApplicative () : ReductionResult {
-  //   throw new Error("Method not implemented.");
-  // }
   
   alphaConvert (oldName : string, newName : string) : Variable {
     if (this.name() === oldName) {
@@ -54,10 +42,6 @@ export class Variable implements AST {
   etaConvert () : AST {
     throw new Error("Method not implemented.");
   }
-
-  // print () : string {
-  //   return this.name()
-  // }
 
   freeVarName (bound : Array<string>) : string | null {
     if (bound.includes(this.name())) {

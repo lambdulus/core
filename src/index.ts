@@ -1,27 +1,15 @@
-import Lexer, { Token, tokenize } from './lexer'
-import Parser, { AST, Binary, parse, NextReduction,
-  NextAlpha,
-  NextBeta,
-  NextExpansion,
-  NextNone,
-  Child, } from './parser/parser'
+import Lexer, { Token } from './lexer'
+import Parser, { AST } from './parser'
 
-import { Visitor, BasicPrinter, NormalEvaluation } from './visitors/visitor'
+import { NormalEvaluation, NextNone } from './visitors/visitor'
+import { BasicPrinter } from './visitors/basicprinter'
 
 export { Token, tokenize, default as Lexer } from './lexer'
 export {
   parse,
   AST,
-  NextReduction,
-  NextAlpha,
-  NextBeta,
-  NextExpansion,
-  NextNone,
-  Child,
-  // ReductionResult,
   default as Parser
-} from './parser/parser'
-
+} from './parser'
 
 
 const inputs : Array<string> = [
@@ -41,8 +29,8 @@ const inputs : Array<string> = [
   '(+ A B)',
   '+ 555 6',
   '(λ _x . x x)', // invalid cause of _x
- // 'A B C () E', // netusim jestli tohle chci mit jako validni
- // 'A (B C) D ()', // ani tohle netusim
+ // 'A B C () E', // netusim jestli tohle chci mit jako validni NECHCI
+ // 'A (B C) D ()', // ani tohle netusim NECHCI
 ]
 
 console.log(inputs[0])

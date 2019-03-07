@@ -15,30 +15,19 @@ var Macro = /** @class */ (function () {
     Macro.prototype.visit = function (visitor) {
         visitor.onMacro(this);
     };
-    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    //   return new NextExpansion(parent, child, this)
-    // }
-    // reduceNormal () : ReductionResult {
-    //   return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
-    // }
     Macro.prototype.expand = function () {
         // TODO: here I lose token - useful for location and origin of macro - should solve this
+        // also consider not clonning
         return this.definition.ast.clone();
     };
-    // reduceApplicative () : ReductionResult {
-    //   throw new Error("Method not implemented.");
-    // }
     Macro.prototype.alphaConvert = function (oldName, newName) {
         return this;
     };
     Macro.prototype.betaReduce = function (argName, value) {
-        return this; // TODO: not clonning? IDK
+        return this;
     };
     Macro.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
-    };
-    Macro.prototype.print = function () {
-        return this.name();
     };
     Macro.prototype.freeVarName = function (bound) {
         return null;
