@@ -36,7 +36,7 @@ export class Application implements AST, Binary {
   //   throw new Error("Method not implemented.");
   // }
 
-  freeVarName (bound : Array<string>) : string | null {
-    return this.left.freeVarName(bound) || this.right.freeVarName(bound)
-  }
+  // freeVarName (bound : Array<string>) : string | null {
+  //   return this.left.freeVarName(bound) || this.right.freeVarName(bound)
+  // }
 }

@@ -40,7 +40,7 @@ export class Macro implements AST {
   //   throw new Error("Method not implemented.");
   // }
 
-  freeVarName (bound : Array<string>) : string | null {
-    return null
-  }
+  // freeVarName (bound : Array<string>) : string | null {
+  //   return null
+  // }
 }

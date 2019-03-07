@@ -5,6 +5,7 @@ import { Variable } from "../parser/ast/variable";
 import { Lambda } from "../parser/ast/lambda";
 import { ChurchNumber } from "../parser/ast/churchnumber";
 import { Macro } from "../parser/ast/macro";
+import { FreeVarsFinder } from "./freevarsfinder";
 
 export class NormalEvaluator implements ASTVisitor {
   private parent : Binary | null = null
@@ -68,21 +69,43 @@ export class NormalEvaluator implements ASTVisitor {
     }
 
     else if (application.left instanceof Lambda) {
-      const freeVar : string | null = application.right.freeVarName([])
+      const freeVarsFinder : FreeVarsFinder = new FreeVarsFinder(application.right)
+      const freeVars : Set<string> = freeVarsFinder.freeVars
 
-      if (freeVar && application.left.isBound(freeVar) && application.left.argument.name() !== freeVar) {
-        // TODO: refactor condition PLS it looks awful
-        // second third mainly
-        // TODO: find truly original non conflicting new name probably using number postfixes
-        this.nextReduction = new NextAlpha(application, Child.Left, freeVar, `_${ freeVar }`)
+      // const freeVar : string | null = application.right.freeVarName([])
+
+      // if (freeVar && application.left.isBound(freeVar) && application.left.argument.name() !== freeVar) {
+      //   // TODO: refactor condition PLS it looks awful
+      //   // second third mainly
+      //   // TODO: find truly original non conflicting new name probably using number postfixes
+      //   this.nextReduction = new NextAlpha(application, Child.Left, freeVar, `_${ freeVar }`)
+      // }
+
+      // TODO: now I rename in loop
+      // for future - do it in single pass, all of them in single Visitor or something
+      // YES in future there has to be something like NextMultiAlpha
+      // which would get Map<string, Set<AST>> :> dictionary keyed by freeVarName with Set of every AST Node
+      // refering to every occurence of this varName
+      // there wont be this loop
+      // only map which will connect varName with Set
+      // then all varNames with empty Sets ( those are unbound ) will be filtered
+      // maybe there is no need for AST Nodes I should think about it
+
+      for (const varName of freeVars) {
+        if (application.left.isBound(varName) && application.left.argument.name() !== varName) {
+          this.nextReduction = new NextAlpha(application, Child.Left, varName, `_${ varName }`)
+          return
+        }
       }
-      else {
+
+
+      // else {
         // search for free Vars in right which are bound in left OK
         // if any, do α conversion and return
   
         // if none, do β reduction and return
-        this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
-      }
+      this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
+      // }
     }
 
     else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)

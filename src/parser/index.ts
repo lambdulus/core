@@ -19,7 +19,7 @@ export interface AST extends ASTVisitable {
   // alphaConvert (oldName : string, newName : string) : AST,
   // betaReduce (argName : string, value : AST) : AST,
   // etaConvert () : AST,
-  freeVarName (bound : Array<string>) : string | null, // TODO: refactor to visitor pattern
+  // freeVarName (bound : Array<string>) : string | null, // TODO: refactor to visitor pattern
 }
 
 // export interface Expandable {
