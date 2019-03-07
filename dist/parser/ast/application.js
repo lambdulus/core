@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var parser_1 = require("../parser");
 var variable_1 = require("./variable");
 var lambda_1 = require("./lambda");
+// TODO: remove Binary cause not needed 
+// TODO: Visitable<any> is not correct
 var Application = /** @class */ (function () {
     function Application(left, right) {
         this.left = left;
@@ -11,6 +13,9 @@ var Application = /** @class */ (function () {
     }
     Application.prototype.clone = function () {
         return new Application(this.left.clone(), this.right.clone());
+    };
+    Application.prototype.visit = function (visitor) {
+        return visitor.onApplication(this);
     };
     Application.prototype.nextNormal = function (parent, child) {
         if (this.left instanceof variable_1.Variable) {

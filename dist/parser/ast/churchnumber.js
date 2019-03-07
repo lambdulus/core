@@ -16,6 +16,9 @@ var ChurchNumber = /** @class */ (function () {
     ChurchNumber.prototype.clone = function () {
         return new ChurchNumber(this.token);
     };
+    ChurchNumber.prototype.visit = function (visitor) {
+        visitor.onChurchNumber(this);
+    };
     ChurchNumber.prototype.nextNormal = function (parent, child) {
         return new parser_1.NextExpansion(parent, child, this);
     };

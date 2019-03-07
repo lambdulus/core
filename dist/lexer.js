@@ -17,15 +17,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var counter_1 = __importDefault(require("./counter"));
+// TODO: remove comments and numbers
 var TokenType;
 (function (TokenType) {
-    TokenType[TokenType["Lambda"] = 0] = "Lambda";
-    TokenType[TokenType["Dot"] = 1] = "Dot";
-    TokenType[TokenType["Identifier"] = 2] = "Identifier";
-    TokenType[TokenType["Number"] = 3] = "Number";
-    TokenType[TokenType["Operator"] = 4] = "Operator";
-    TokenType[TokenType["LeftParen"] = 5] = "LeftParen";
-    TokenType[TokenType["RightParen"] = 6] = "RightParen";
+    TokenType["Lambda"] = "lambda";
+    TokenType["Dot"] = "dot";
+    TokenType["Identifier"] = "identifier";
+    TokenType["Number"] = "number";
+    TokenType["Operator"] = "operator";
+    TokenType["LeftParen"] = "left paren";
+    TokenType["RightParen"] = "right paren";
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
 var Token = /** @class */ (function () {
     function Token(type, value, position) {
@@ -218,7 +219,11 @@ var Lexer = /** @class */ (function () {
                     else if (this.isWhiteSpace(this.top()))
                         this.pop();
                     else {
-                        console.error("Invalid character " + this.position.toRecord() + "           at row " + this.position.row + " column " + this.position.column + ".");
+                        // console.error(`Invalid character ${ this.position.toRecord() } \
+                        // at row ${ this.position.row } column ${ this.position.column }.`)
+                        // TODO: refactor
+                        // I need to send custom Error class containing all information in structured way not string
+                        throw (new Error("Invalid character " + this.position.toRecord() + "           at row " + this.position.row + " column " + this.position.column + "."));
                     }
             }
             // nechytat chybu tady

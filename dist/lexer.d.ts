@@ -1,12 +1,12 @@
 import { PositionRecord } from './counter';
 export declare enum TokenType {
-    Lambda = 0,
-    Dot = 1,
-    Identifier = 2,
-    Number = 3,
-    Operator = 4,
-    LeftParen = 5,
-    RightParen = 6
+    Lambda = "lambda",
+    Dot = "dot",
+    Identifier = "identifier",
+    Number = "number",
+    Operator = "operator",
+    LeftParen = "left paren",
+    RightParen = "right paren"
 }
 export declare class Token {
     readonly type: TokenType;

@@ -3,11 +3,15 @@ import { Lambda } from './ast/lambda';
 import { Variable } from './ast/variable';
 import { Macro } from './ast/macro';
 import { Application } from './ast/application';
+import { Visitor } from '../visitors/visitor';
 export interface Binary extends AST {
     left: AST;
     right: AST;
 }
-export interface AST {
+export interface Visitable {
+    visit(visitor: Visitor): void;
+}
+export interface AST extends Visitable {
     identifier: symbol;
     clone(): AST;
     nextNormal(parent: Binary | null, child: Child | null): NextReduction;

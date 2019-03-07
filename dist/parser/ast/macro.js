@@ -13,6 +13,9 @@ var Macro = /** @class */ (function () {
     Macro.prototype.clone = function () {
         return new Macro(this.token, this.definition);
     };
+    Macro.prototype.visit = function (visitor) {
+        visitor.onMacro(this);
+    };
     Macro.prototype.nextNormal = function (parent, child) {
         return new parser_1.NextExpansion(parent, child, this);
     };

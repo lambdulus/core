@@ -30,6 +30,9 @@ var Lambda = /** @class */ (function () {
     Lambda.prototype.clone = function () {
         return new Lambda(this.argument, this.body);
     };
+    Lambda.prototype.visit = function (visitor) {
+        visitor.onLambda(this);
+    };
     Lambda.prototype.nextNormal = function (parent, child) {
         return this.body.nextNormal(this, parser_1.Child.Right);
     };
