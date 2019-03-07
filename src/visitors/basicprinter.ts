@@ -3,10 +3,10 @@ import { ChurchNumber } from "../parser/ast/churchnumber";
 import { Variable } from "../parser/ast/variable";
 import { Lambda } from "../parser/ast/lambda";
 import { Application } from "../parser/ast/application";
-import { Visitable, Visitor } from "./visitor";
+import { ASTVisitable, ASTVisitor } from ".";
 import { AST } from "../parser";
 
-export class BasicPrinter implements Visitor {
+export class BasicPrinter implements ASTVisitor {
   private expression : string = ''
 
   // TODO: this looks like nonsense
@@ -32,7 +32,7 @@ export class BasicPrinter implements Visitor {
   }
 
   constructor (
-    public readonly tree : AST & Visitable,
+    public readonly tree : AST & ASTVisitable,
     ) {
       this.tree.visit(this)
     }

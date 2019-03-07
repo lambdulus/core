@@ -1,8 +1,10 @@
 import Lexer, { Token } from './lexer'
 import Parser, { AST } from './parser'
 
-import { NormalEvaluation, NextNone } from './visitors/visitor'
+import { NextNone, NextReduction } from './visitors'
 import { BasicPrinter } from './visitors/basicprinter'
+import { NormalEvaluator } from './visitors/normalevaluator'
+import { Reducer } from './visitors/reducer';
 
 export { Token, tokenize, default as Lexer } from './lexer'
 export {
@@ -14,6 +16,7 @@ export {
 
 const inputs : Array<string> = [
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+  '1 a',
   '^ 4 4',
   '(~ x y z . x y z) 1 2 3',  
   '(\\ x y z . x y z)',
@@ -46,13 +49,20 @@ let root : AST = ast
 let e = 0
 
 while (true) {
-  const normal : NormalEvaluation = new NormalEvaluation(root)
+  // console.log('E ==== ', e)
+  const normal : NormalEvaluator = new NormalEvaluator(root)
 
   if (normal.nextReduction instanceof NextNone) {
     break
   }
 
-  root = normal.evaluate()
+  // console.log('REDUCTION TYPE ', normal.nextReduction)
+
+  const nextReduction : NextReduction = normal.nextReduction
+
+  const reducer : Reducer = new Reducer(root, nextReduction)
+
+  root = reducer.tree
   e++
 
   // const printer : BasicPrinter = new BasicPrinter(root)

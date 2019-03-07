@@ -1,6 +1,6 @@
 import Lexer, { Token } from '../../lexer'
 import { AST, Expandable, MacroDef } from '..'
-import { Visitor } from '../../visitors/visitor';
+import { ASTVisitor } from '../../visitors';
 
 export class Macro implements AST, Expandable {
   public readonly identifier : symbol = Symbol()
@@ -18,7 +18,7 @@ export class Macro implements AST, Expandable {
     return new Macro(this.token, this.definition)
   }
 
-  visit (visitor : Visitor) : void {
+  visit (visitor : ASTVisitor) : void {
     visitor.onMacro(this)
   }
 
@@ -28,17 +28,17 @@ export class Macro implements AST, Expandable {
     return this.definition.ast.clone()
   }
   
-  alphaConvert (oldName : string, newName : string) : AST {
-    return this
-  }
+  // alphaConvert (oldName : string, newName : string) : AST {
+  //   return this
+  // }
   
-  betaReduce (argName : string, value : AST) : AST {
-    return this
-  }
+  // betaReduce (argName : string, value : AST) : AST {
+  //   return this
+  // }
   
-  etaConvert () : AST {
-    throw new Error("Method not implemented.");
-  }
+  // etaConvert () : AST {
+  //   throw new Error("Method not implemented.");
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return null
