@@ -3,21 +3,14 @@ import { Lambda } from './ast/lambda';
 import { Variable } from './ast/variable';
 import { Macro } from './ast/macro';
 import { Application } from './ast/application';
-import { Visitable } from '../visitors/visitor';
+import { ASTVisitable } from '../visitors';
 export interface Binary extends AST {
     left: AST;
     right: AST;
 }
-export interface AST extends Visitable {
+export interface AST extends ASTVisitable {
     identifier: symbol;
     clone(): AST;
-    alphaConvert(oldName: string, newName: string): AST;
-    betaReduce(argName: string, value: AST): AST;
-    etaConvert(): AST;
-    freeVarName(bound: Array<string>): string | null;
-}
-export interface Expandable {
-    expand(): AST;
 }
 export declare class MacroDef {
     readonly ast: AST;

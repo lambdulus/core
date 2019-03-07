@@ -1,6 +1,6 @@
 import { AST, Binary } from '..';
 import { Variable } from './variable';
-import { Visitor } from '../../visitors/visitor';
+import { ASTVisitor } from '../../visitors';
 export declare class Lambda implements Binary {
     argument: Variable;
     body: AST;
@@ -9,10 +9,6 @@ export declare class Lambda implements Binary {
     left: Variable;
     right: AST;
     clone(): Lambda;
-    visit(visitor: Visitor): void;
-    alphaConvert(oldName: string, newName: string): AST;
-    betaReduce(argName: string, value: AST): AST;
-    etaConvert(): AST;
-    freeVarName(bound: Array<string>): string | null;
+    visit(visitor: ASTVisitor): void;
     isBound(varName: string): boolean;
 }

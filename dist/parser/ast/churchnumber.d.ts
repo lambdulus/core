@@ -1,16 +1,11 @@
 import { Token } from '../../lexer';
-import { AST, Expandable } from '..';
-import { Visitor } from '../../visitors/visitor';
-export declare class ChurchNumber implements AST, Expandable {
+import { AST } from '..';
+import { ASTVisitor } from '../../visitors';
+export declare class ChurchNumber implements AST {
     readonly token: Token;
     readonly identifier: symbol;
     name(): string;
     constructor(token: Token);
     clone(): ChurchNumber;
-    visit(visitor: Visitor): void;
-    expand(): AST;
-    alphaConvert(oldName: string, newName: string): AST;
-    betaReduce(argName: string, value: AST): AST;
-    etaConvert(): AST;
-    freeVarName(bound: Array<string>): string | null;
+    visit(visitor: ASTVisitor): void;
 }
