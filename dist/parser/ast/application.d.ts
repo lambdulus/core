@@ -1,10 +1,12 @@
 import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser';
-export declare class Application implements Binary {
+import { Visitor } from '../../visitors/visitor';
+export declare class Application implements AST, Binary {
     left: AST;
     right: AST;
     readonly identifier: symbol;
     constructor(left: AST, right: AST);
     clone(): Application;
+    visit(visitor: Visitor): void;
     nextNormal(parent: Binary | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;

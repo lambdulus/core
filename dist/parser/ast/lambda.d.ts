@@ -1,5 +1,6 @@
 import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser';
 import { Variable } from './variable';
+import { Visitor } from '../../visitors/visitor';
 export declare class Lambda implements Binary {
     argument: Variable;
     body: AST;
@@ -8,6 +9,7 @@ export declare class Lambda implements Binary {
     left: Variable;
     right: AST;
     clone(): Lambda;
+    visit(visitor: Visitor): void;
     nextNormal(parent: Binary | null, child: Child | null): NextReduction;
     reduceNormal(): ReductionResult;
     reduceApplicative(): ReductionResult;

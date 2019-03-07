@@ -13,6 +13,9 @@ var Variable = /** @class */ (function () {
     Variable.prototype.clone = function () {
         return new Variable(this.token);
     };
+    Variable.prototype.visit = function (visitor) {
+        visitor.onVariable(this);
+    };
     Variable.prototype.nextNormal = function (parent, child) {
         return new parser_1.NextNone;
     };
