@@ -5,7 +5,7 @@ import { Visitor } from '../../visitors/visitor'
 
 // TODO: remove Binary cause not needed 
 // TODO: Visitable<any> is not correct
-export class Application implements AST {
+export class Application implements AST, Binary {
   public readonly identifier : symbol = Symbol()
 
   constructor (
@@ -112,12 +112,12 @@ export class Application implements AST {
     throw new Error("Method not implemented.");
   }
 
-  // print () : string {
-  //   if (this.right instanceof Application) {
-  //     return `${ this.left.print() } (${ this.right.print() })`
-  //   }
-  //   return `${ this.left.print() } ${ this.right.print() }`
-  // }
+  print () : string {
+    if (this.right instanceof Application) {
+      return `${ this.left.print() } (${ this.right.print() })`
+    }
+    return `${ this.left.print() } ${ this.right.print() }`
+  }
 
   freeVarName (bound : Array<string>) : string | null {
     return this.left.freeVarName(bound) || this.right.freeVarName(bound)

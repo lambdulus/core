@@ -1,14 +1,15 @@
 import Counter, { PositionRecord } from './counter'
 
 
+// TODO: remove comments and numbers
 export enum TokenType {
-  Lambda, // = 0
-  Dot, // = 1
-  Identifier, // = 2 // variables, booleans
-  Number, // = 3 // numbers
-  Operator, // = 4 operators
-  LeftParen, // = 5
-  RightParen, // = 6
+  Lambda = 'lambda', // = 0
+  Dot = 'dot', // = 1
+  Identifier = 'identifier', // = 2 // variables, booleans
+  Number = 'number', // = 3 // numbers
+  Operator = 'operator', // = 4 operators
+  LeftParen = 'left paren', // = 5
+  RightParen = 'right paren', // = 6
 }
 
 export class Token {
@@ -244,8 +245,13 @@ class Lexer {
         else if (this.isWhiteSpace(this.top()))
           this.pop()
         else {
-          console.error(`Invalid character ${ this.position.toRecord() } \
-          at row ${ this.position.row } column ${ this.position.column }.`)
+          // console.error(`Invalid character ${ this.position.toRecord() } \
+          // at row ${ this.position.row } column ${ this.position.column }.`)
+
+          // TODO: refactor
+          // I need to send custom Error class containing all information in structured way not string
+          throw(new Error(`Invalid character ${ this.position.toRecord() } \
+          at row ${ this.position.row } column ${ this.position.column }.`))
         }
       }
       // nechytat chybu tady

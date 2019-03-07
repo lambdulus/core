@@ -63,9 +63,9 @@ export class ChurchNumber implements AST, Expandable {
     throw new Error("Method not implemented.");
   }
 
-  // print () : string {
-  //   return this.name()
-  // }
+  print () : string {
+    return this.name()
+  }
 
   freeVarName (bound : Array<string>) : string | null {
     return null

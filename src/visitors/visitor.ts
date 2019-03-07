@@ -1,4 +1,4 @@
-import Parser, { AST, Visitable } from '../parser/parser'
+import Parser, { AST, Visitable, Child, NextNone, NextAlpha, NextReduction, NextBeta, Binary, NextExpansion } from '../parser/parser'
 import { Application } from '../parser/ast/application'
 import { Lambda } from '../parser/ast/lambda'
 import { ChurchNumber } from '../parser/ast/churchnumber'
@@ -18,22 +18,24 @@ export interface Visitor {
 export class BasicPrinter implements Visitor {
   private expression : string = ''
 
-  // TODO: tohle mozna nebude fungovat, tak s tim musim pocitat jo
+  // TODO: this looks like nonsense
   private printLambdaBody (lambda : Lambda) : void {
     if (lambda.body instanceof Lambda) {
-      return this.printLambdaBody(lambda.body)
+      this.printLambdaBody(lambda.body)
     }
-
-    this.expression += lambda.body.visit(this)
+    else {
+      lambda.body.visit(this)
+    }
   }
 
-  // TODO: tohle muze trpet uplne stejnym problemem
+  // TODO: this looks like nonsense
   private printLambdaArguments (lambda : Lambda, accumulator : string) : void {
     if (lambda.body instanceof Lambda) {
-      return this.printLambdaArguments(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
+      this.printLambdaArguments(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
     }
-    
-    this.expression += accumulator
+    else {
+      this.expression += accumulator
+    }
   }
 
   constructor (
@@ -46,20 +48,37 @@ export class BasicPrinter implements Visitor {
     return this.expression
   }
 
+  // TODO: this is ugly as hell
   onApplication(application: Application): void {
     if (application.right instanceof Application) {
-      this.expression += `${ application.left.visit(this) } (${ application.right.visit(this) })`
+      application.left.visit(this)
+      this.expression += ` (`
+      application.right.visit(this)
+      this.expression += `)`
     }
-
-    this.expression += `${ application.left.visit(this) } ${ application.right.visit(this) }`
+    else {
+      application.left.visit(this)
+      this.expression += ` `
+      application.right.visit(this)
+    }
   }
   
+  // TODO: this is ugly as hell
   onLambda(lambda: Lambda): void {
     if (lambda.body instanceof Lambda) {
-      this.expression += `(λ ${ this.printLambdaArguments(lambda, lambda.argument.name()) } . ${ this.printLambdaBody(lambda) })`
+      this.expression += `(λ `
+      this.printLambdaArguments(lambda, lambda.argument.name())
+      this.expression += ` . `
+      this.printLambdaBody(lambda)
+      this.expression += `)`
     }
-
-    this.expression += `(λ ${ lambda.argument.visit(this) } . ${ lambda.body.visit(this) })`
+    else {
+      this.expression += `(λ `
+      lambda.argument.visit(this)
+      this.expression += ` . `
+      lambda.body.visit(this)
+      this.expression += `)`
+    }
   }
   
   onChurchNumber(churchNumber: ChurchNumber): void {
@@ -92,43 +111,110 @@ export class BasicPrinter implements Visitor {
 // i tohle reseni umozni vzit si strom zvenku a pomoci public getteru a private setteru budu moct strom menit jenom zevnitr
 // v reactu si muzu drzet klidne celej tenhle Visitor, protoze proc ne
 // pri redukci mi 
+
+
 export class NormalEvaluation implements Visitor {
-  // some private prop, where i keep next Reduction struct
+  // some private prop, to work around classic recursion
+  private parent : Binary | null = null
+  private child : Child | null = null
+
+  public nextReduction : NextReduction = NextNone
 
   constructor (
     public readonly tree : AST
     ) {
-    // TODO: here, tree should be traversed and found which reduction should be done
-    // this class has some own state
-    // property foundReduction [ or similar ]
-    // some metadata for that reduction
+      this.tree.visit(this)
   }
 
-  nextReduction () : Reduction {
-    // TODO: implement or implement in constructor ???
-  }
+  evaluate () : AST {
+    if (this.nextReduction instanceof NextAlpha) {
+      const { tree, child, oldName, newName } = this.nextReduction
+      tree[<Child> child] = tree[<Child> child].alphaConvert(oldName, newName)
 
-  evaluate (reduction : Reduction) : void {
-    // TODO: updates tree
+      return this.tree
+    }
+    
+    else if (this.nextReduction instanceof NextBeta) {
+      const { parent, treeSide, target, argName, value } = this.nextReduction
+      const substituted : AST = target.betaReduce(argName, value)
+
+      if (parent === null) {
+        return substituted
+      }
+      else {
+        parent[<Child> treeSide] = substituted
+
+        return this.tree
+      }
+    }
+
+    else if (this.nextReduction instanceof NextExpansion) {
+      const { parent, treeSide, tree } = this.nextReduction
+      const expanded : AST = tree.expand()
+
+      if (parent === null) {
+        return expanded
+      }
+      else {
+        parent[<Child> treeSide] = expanded
+
+        return this.tree
+      }
+    }
+
+    else { // instanceof NextNone
+      return this.tree
+    }  
   }
 
   onApplication(application: Application): void {
-    throw new Error("Method not implemented.");
+    if (application.left instanceof Variable) {
+      this.parent = application
+      this.child = Child.Right
+      application.right.visit(this)
+    }
+
+    else if (application.left instanceof Lambda) {
+      const freeVar : string | null = application.right.freeVarName([])
+
+      if (freeVar && application.left.isBound(freeVar) && application.left.argument.name() !== freeVar) {
+        // TODO: refactor condition PLS it looks awful
+        // second third mainly
+        // TODO: find truly original non conflicting new name probably using number postfixes
+        this.nextReduction = new NextAlpha(application, Child.Left, freeVar, `_${ freeVar }`)
+      }
+      else {
+        // search for free Vars in right which are bound in left OK
+        // if any, do α conversion and return
+  
+        // if none, do β reduction and return
+        this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
+      }
+    }
+
+    else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)
+      this.parent = application
+      this.child = Child.Left
+      application.left.visit(this)
+    }
   }
   
   onLambda(lambda: Lambda): void {
-    throw new Error("Method not implemented.");
+    this.parent = lambda
+    this.child = Child.Right
+
+    lambda.body.visit(this)
   }
 
-  onChurchNumber(churchnumber: ChurchNumber): void {
-    throw new Error("Method not implemented.");
+  onChurchNumber(churchNumber: ChurchNumber): void {
+    this.nextReduction = new NextExpansion(this.parent, this.child, churchNumber)
   }
 
   onMacro(macro: Macro): void {
-    throw new Error("Method not implemented.");
+    this.nextReduction = new NextExpansion(this.parent, this.child, macro)
   }
 
   onVariable(variable: Variable): void {
-    throw new Error("Method not implemented.");
+    this.nextReduction = new NextNone
   }
 }

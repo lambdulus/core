@@ -24,7 +24,7 @@ export interface AST extends Visitable {
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction, // TODO: DELETE
   reduceNormal () : ReductionResult, // TODO: DELETE
   reduceApplicative () : ReductionResult, // TODO: DELETE
-  // print () : string, // TODO: DELETE
+  print () : string, // TODO: DELETE
   alphaConvert (oldName : string, newName : string) : AST,
   betaReduce (argName : string, value : AST) : AST,
   etaConvert () : AST,
@@ -55,6 +55,7 @@ export enum Reduction {
   None, // = 3
 }
 
+// TODO: obsolete --->>> delete
 export type ReductionResult = {
   tree : AST,
   reduced : boolean,
@@ -66,29 +67,6 @@ export enum Child {
   Left = 'left',
   Right = 'right',
 }
-
-
-// TODO: musim vymyslet jak budu resit redukce kde parent je NULL
-// to jsou napriklad situace, kdy redukovana vec je top level EXPR
-// normalne bych vratil ten zredukovanej vyraz
-// jenze jelikoz tady je potreba nic nevracet ale jenom provest redukci a nastavit parentovi
-// pod spravnym memberem redukovany vyraz, nejsem si jistej jak resit situaci, kdyz paret je null
-
-// jedna moznost je, vytvorit si specialni AST Node -> Root
-// jenze ten bude logicky unarni, takze jeho Child hodnota by mela bejt neco tretiho protoze to neni ani left ani right
-//
-// bohuzel neni moznost se obejit bez Child typu
-// protoze ja nedokazu poslat pointer na pointer na ten prvek, musim poslat referenci na parenta a informaci jeslti menim left nebo right
-
-// kdybych dokazal neposilat parenta ... jenze ja ho potrebuju poslat, abych mohl aktualizovat strom
-
-// jediny co mi teda zbyva, aby vlastni update stromu provedl frontend
-// core bude obstaravat informace a logiku
-// frontend musi prevest samotne prepojeni referenci
-// vlastni provedeni redukce muze klidne provest kdokoliv, jde vyzdycky jenom o jedno volani funkce
-// 
-// pokud to necham na fontendu tak se ten problem vyresi nejlip sam
-
 
 
 // TODO: interface Binary, kde bude kazdej uzel muset mit left a right

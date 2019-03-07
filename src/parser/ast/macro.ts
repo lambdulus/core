@@ -33,7 +33,7 @@ export class Macro implements AST, Expandable {
   }
 
   nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    return new NextExpansion(parent, child, this) 
+    return new NextExpansion(parent, child, this)
   }
 
   reduceNormal () : ReductionResult {
@@ -61,9 +61,9 @@ export class Macro implements AST, Expandable {
     throw new Error("Method not implemented.");
   }
 
-  // print () : string {
-  //   return this.name()
-  // }
+  print () : string {
+    return this.name()
+  }
 
   freeVarName (bound : Array<string>) : string | null {
     return null
