@@ -11,6 +11,7 @@ var BasicPrinter = /** @class */ (function () {
         this.tree.visit(this);
     }
     // TODO: this looks like nonsense
+    // maybe solve it with another Visitor
     BasicPrinter.prototype.printLambdaBody = function (lambda) {
         if (lambda.body instanceof lambda_1.Lambda) {
             this.printLambdaBody(lambda.body);
@@ -20,6 +21,7 @@ var BasicPrinter = /** @class */ (function () {
         }
     };
     // TODO: this looks like nonsense
+    // maybe solve it with another Visitor
     BasicPrinter.prototype.printLambdaArguments = function (lambda, accumulator) {
         if (lambda.body instanceof lambda_1.Lambda) {
             this.printLambdaArguments(lambda.body, accumulator + " " + lambda.body.argument.name());
@@ -92,7 +94,6 @@ exports.BasicPrinter = BasicPrinter;
 var NormalEvaluation = /** @class */ (function () {
     function NormalEvaluation(tree) {
         this.tree = tree;
-        // some private prop, to work around classic recursion
         this.parent = null;
         this.child = null;
         this.nextReduction = parser_1.NextNone;

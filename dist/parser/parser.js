@@ -20,13 +20,6 @@ var MacroDef = /** @class */ (function () {
     return MacroDef;
 }());
 exports.MacroDef = MacroDef;
-var Reduction;
-(function (Reduction) {
-    Reduction[Reduction["Alpha"] = 0] = "Alpha";
-    Reduction[Reduction["Beta"] = 1] = "Beta";
-    Reduction[Reduction["Expansion"] = 2] = "Expansion";
-    Reduction[Reduction["None"] = 3] = "None";
-})(Reduction = exports.Reduction || (exports.Reduction = {}));
 var Child;
 (function (Child) {
     Child["Left"] = "left";
@@ -73,19 +66,17 @@ var NextNone = /** @class */ (function () {
     return NextNone;
 }());
 exports.NextNone = NextNone;
+function toAst(definition, macroTable) {
+    var codeStyle = { singleLetterVars: true, lambdaLetters: ['λ'] };
+    var parser = new Parser(lexer_1.default.tokenize(definition, codeStyle), macroTable);
+    return parser.parse(null);
+}
 var Parser = /** @class */ (function () {
     function Parser(tokens, macroTable) {
         this.tokens = tokens;
         this.macroTable = macroTable;
         this.position = 0;
     }
-    // TODO: refactor
-    // maybe put it outside of Parser class inside the Parser module
-    Parser.toAst = function (definition, macroTable) {
-        var codeStyle = { singleLetterVars: true, lambdaLetters: ['λ'] };
-        var parser = new Parser(lexer_1.default.tokenize(definition, codeStyle), macroTable);
-        return parser.parse(null);
-    };
     Parser.prototype.isMacro = function (token) {
         return token.value in this.macroTable;
     };
@@ -142,8 +133,6 @@ var Parser = /** @class */ (function () {
                 return new macro_1.Macro(top, this.macroTable[top.value]);
             case lexer_1.TokenType.Identifier:
                 this.accept(lexer_1.TokenType.Identifier);
-                // todo: I don't like this much, possible more elegant way?
-                // if (top.value in Parser.macroTable) {
                 if (this.isMacro(top)) {
                     return new macro_1.Macro(top, this.macroTable[top.value]);
                 }
@@ -191,39 +180,39 @@ var Parser = /** @class */ (function () {
     };
     return Parser;
 }());
+// TODO: refactor macroTable for usage with user defined macro definitions
 function parse(tokens) {
-    // TODO: refactor macroTable for usage with user defined macro definitions
     var macroTable = {};
-    macroTable['Y'] = new MacroDef(Parser.toAst("(\u03BB f . (\u03BB x . f (x x)) (\u03BB x . f (x x)))", macroTable)),
-        macroTable['ZERO'] = new MacroDef(Parser.toAst("(\u03BB n . n (\u03BB x . (\u03BB t f . f)) (\u03BB t f . t))", macroTable)),
-        macroTable['PRED'] = new MacroDef(Parser.toAst("(\u03BB x s z . x (\u03BB f g . g (f s)) (\u03BB g . z) (\u03BB u . u))", macroTable));
-    macroTable['SUC'] = new MacroDef(Parser.toAst("(\u03BB n s z . s (n s z))", macroTable));
-    macroTable['AND'] = new MacroDef(Parser.toAst("(\u03BB x y . x y x)", macroTable));
-    macroTable['OR'] = new MacroDef(Parser.toAst("(\u03BB x y . x x y)", macroTable));
-    macroTable['NOT'] = new MacroDef(Parser.toAst("(\u03BB p . p F T)", macroTable));
-    macroTable['T'] = new MacroDef(Parser.toAst("(\u03BB t f . t)", macroTable)),
-        macroTable['F'] = new MacroDef(Parser.toAst("(\u03BB t f . f)", macroTable)),
-        macroTable['+'] = new MacroDef(Parser.toAst("(\u03BB x y s z . x s (y s z))", macroTable)),
-        macroTable['-'] = new MacroDef(Parser.toAst("(\u03BB m n . (n PRED) m)", macroTable));
-    macroTable['*'] = new MacroDef(Parser.toAst("(\u03BB x y z . x (y z))", macroTable)),
-        macroTable['/'] = new MacroDef(Parser.toAst("(\u03BB n . Y (\u03BB c n m f x . (\u03BB d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))", macroTable));
-    macroTable['^'] = new MacroDef(Parser.toAst("(\u03BB x y . x y)", macroTable));
-    macroTable['DELTA'] = new MacroDef(Parser.toAst("(\u03BB m n . + (- m n) (- n m))", macroTable));
-    macroTable['='] = new MacroDef(Parser.toAst("(\u03BB m n . ZERO (DELTA m n))", macroTable));
-    macroTable['>'] = new MacroDef(Parser.toAst("(\u03BB m n . NOT (ZERO (- m n)))", macroTable));
-    macroTable['<'] = new MacroDef(Parser.toAst("(\u03BB m n . > n m )", macroTable));
-    macroTable['>='] = new MacroDef(Parser.toAst("(\u03BB m n . ZERO (- n m))", macroTable));
-    macroTable['<='] = new MacroDef(Parser.toAst("(\u03BB m n . ZERO (- m n))", macroTable));
+    macroTable['Y'] = new MacroDef(toAst("(\u03BB f . (\u03BB x . f (x x)) (\u03BB x . f (x x)))", macroTable)),
+        macroTable['ZERO'] = new MacroDef(toAst("(\u03BB n . n (\u03BB x . (\u03BB t f . f)) (\u03BB t f . t))", macroTable)),
+        macroTable['PRED'] = new MacroDef(toAst("(\u03BB x s z . x (\u03BB f g . g (f s)) (\u03BB g . z) (\u03BB u . u))", macroTable));
+    macroTable['SUC'] = new MacroDef(toAst("(\u03BB n s z . s (n s z))", macroTable));
+    macroTable['AND'] = new MacroDef(toAst("(\u03BB x y . x y x)", macroTable));
+    macroTable['OR'] = new MacroDef(toAst("(\u03BB x y . x x y)", macroTable));
+    macroTable['NOT'] = new MacroDef(toAst("(\u03BB p . p F T)", macroTable));
+    macroTable['T'] = new MacroDef(toAst("(\u03BB t f . t)", macroTable)),
+        macroTable['F'] = new MacroDef(toAst("(\u03BB t f . f)", macroTable)),
+        macroTable['+'] = new MacroDef(toAst("(\u03BB x y s z . x s (y s z))", macroTable)),
+        macroTable['-'] = new MacroDef(toAst("(\u03BB m n . (n PRED) m)", macroTable));
+    macroTable['*'] = new MacroDef(toAst("(\u03BB x y z . x (y z))", macroTable)),
+        macroTable['/'] = new MacroDef(toAst("(\u03BB n . Y (\u03BB c n m f x . (\u03BB d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))", macroTable));
+    macroTable['^'] = new MacroDef(toAst("(\u03BB x y . x y)", macroTable));
+    macroTable['DELTA'] = new MacroDef(toAst("(\u03BB m n . + (- m n) (- n m))", macroTable));
+    macroTable['='] = new MacroDef(toAst("(\u03BB m n . ZERO (DELTA m n))", macroTable));
+    macroTable['>'] = new MacroDef(toAst("(\u03BB m n . NOT (ZERO (- m n)))", macroTable));
+    macroTable['<'] = new MacroDef(toAst("(\u03BB m n . > n m )", macroTable));
+    macroTable['>='] = new MacroDef(toAst("(\u03BB m n . ZERO (- n m))", macroTable));
+    macroTable['<='] = new MacroDef(toAst("(\u03BB m n . ZERO (- m n))", macroTable));
     // QUICK MACROS - non recursively defined
-    // macroTable['NOT'] = new MacroDef(Parser.toAst(`(λ p . p (λ t f . f) (λ t f . t))`, macroTable))
-    // macroTable['-'] = new MacroDef(Parser.toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`, macroTable))
-    // macroTable['/'] = new MacroDef(Parser.toAst(`(λ n . (λ f . (λ x . f (x x)) (λ x . f (x x))) (λ c n m f x . (λ d . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) d (0 f x) (f (c d m f x))) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) ((λ n s z . s (n s z)) n))`, macroTable))
-    // macroTable['DELTA'] = new MacroDef(Parser.toAst(`(λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m))`, macroTable))
-    // macroTable['='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) m n))`, macroTable))
-    // macroTable['>'] = new MacroDef(Parser.toAst(`(λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n)))`, macroTable))
-    // macroTable['<'] = new MacroDef(Parser.toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`, macroTable))
-    // macroTable['>='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) (- n m))`, macroTable))  
-    // macroTable['<='] = new MacroDef(Parser.toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`, macroTable))
+    // macroTable['NOT'] = new MacroDef(toAst(`(λ p . p (λ t f . f) (λ t f . t))`, macroTable))
+    // macroTable['-'] = new MacroDef(toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`, macroTable))
+    // macroTable['/'] = new MacroDef(toAst(`(λ n . (λ f . (λ x . f (x x)) (λ x . f (x x))) (λ c n m f x . (λ d . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) d (0 f x) (f (c d m f x))) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) ((λ n s z . s (n s z)) n))`, macroTable))
+    // macroTable['DELTA'] = new MacroDef(toAst(`(λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m))`, macroTable))
+    // macroTable['='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) m n))`, macroTable))
+    // macroTable['>'] = new MacroDef(toAst(`(λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n)))`, macroTable))
+    // macroTable['<'] = new MacroDef(toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`, macroTable))
+    // macroTable['>='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) (- n m))`, macroTable))  
+    // macroTable['<='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`, macroTable))
     var parser = new Parser(tokens, macroTable);
     return parser.parse(null);
 }

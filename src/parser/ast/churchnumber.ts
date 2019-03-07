@@ -2,8 +2,6 @@ import Lexer, { Token, CodeStyle } from '../../lexer'
 import {
   AST,
   Binary,
-  ReductionResult,
-  Reduction,
   Expandable,
   parse,
   NextReduction,
@@ -31,13 +29,13 @@ export class ChurchNumber implements AST, Expandable {
     visitor.onChurchNumber(this)
   }
 
-  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    return new NextExpansion(parent, child, this)
-  }
+  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+  //   return new NextExpansion(parent, child, this)
+  // }
   
-  reduceNormal () : ReductionResult {
-    return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
-  }
+  // reduceNormal () : ReductionResult {
+  //   return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
+  // }
 
   expand () : AST {
     const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
@@ -47,9 +45,9 @@ export class ChurchNumber implements AST, Expandable {
     return parse(Lexer.tokenize(churchLiteral, codeStyle))
   }
 
-  reduceApplicative () : ReductionResult {
-    throw new Error("Method not implemented.");
-  }
+  // reduceApplicative () : ReductionResult {
+  //   throw new Error("Method not implemented.");
+  // }
   
   alphaConvert (oldName : string, newName : string) : AST {
     return this
@@ -63,9 +61,9 @@ export class ChurchNumber implements AST, Expandable {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    return this.name()
-  }
+  // print () : string {
+  //   return this.name()
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return null

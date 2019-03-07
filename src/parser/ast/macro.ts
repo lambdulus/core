@@ -2,8 +2,6 @@ import Lexer, { Token } from '../../lexer'
 import {
   AST,
   Binary,
-  ReductionResult,
-  Reduction,
   Expandable,
   MacroDef,
   NextReduction,
@@ -32,22 +30,22 @@ export class Macro implements AST, Expandable {
     visitor.onMacro(this)
   }
 
-  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    return new NextExpansion(parent, child, this)
-  }
+  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+  //   return new NextExpansion(parent, child, this)
+  // }
 
-  reduceNormal () : ReductionResult {
-    return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
-  }
+  // reduceNormal () : ReductionResult {
+  //   return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
+  // }
 
   expand () : AST {
     // TODO: here I lose token - useful for location and origin of macro - should solve this
     return this.definition.ast.clone()
   }
 
-  reduceApplicative () : ReductionResult {
-    throw new Error("Method not implemented.");
-  }
+  // reduceApplicative () : ReductionResult {
+  //   throw new Error("Method not implemented.");
+  // }
   
   alphaConvert (oldName : string, newName : string) : AST {
     return this

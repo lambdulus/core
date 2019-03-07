@@ -1,4 +1,4 @@
-import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser'
+import { AST, Binary, NextReduction, Child } from '../parser'
 import { Variable } from './variable'
 import { Visitor } from '../../visitors/visitor';
 
@@ -34,20 +34,20 @@ export class Lambda implements Binary {
     visitor.onLambda(this)
   }
 
-  nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    return this.body.nextNormal(this, Child.Right)
-  }
+  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+  //   return this.body.nextNormal(this, Child.Right)
+  // }
 
-  reduceNormal () : ReductionResult {
-    const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
-    this.body = tree
+  // reduceNormal () : ReductionResult {
+  //   const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
+  //   this.body = tree
 
-    return { tree : this, reduced, reduction, currentSubtree }
-  }
+  //   return { tree : this, reduced, reduction, currentSubtree }
+  // }
 
-  reduceApplicative () : ReductionResult {
-    throw new Error("Method not implemented.");
-  }
+  // reduceApplicative () : ReductionResult {
+  //   throw new Error("Method not implemented.");
+  // }
   
   alphaConvert (oldName : string, newName : string) : AST {
     const left : Variable = this.argument.alphaConvert(oldName, newName)
@@ -71,12 +71,12 @@ export class Lambda implements Binary {
     throw new Error("Method not implemented.");
   }
 
-  print () : string {
-    if (this.body instanceof Lambda) {
-      return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
-    }
-    return `(λ ${ this.argument.print() } . ${ this.body.print() })`
-  }
+  // print () : string {
+  //   if (this.body instanceof Lambda) {
+  //     return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
+  //   }
+  //   return `(λ ${ this.argument.print() } . ${ this.body.print() })`
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return this.body.freeVarName([ ...bound, this.argument.name()])
@@ -94,19 +94,19 @@ export class Lambda implements Binary {
     return false
   }
 
-  printLambdaArguments (accumulator : string) : string {
-    if (this.body instanceof Lambda) {
-      return this.body.printLambdaArguments(`${ accumulator } ${ this.body.argument.name() }`)
-    }
+  // printLambdaArguments (accumulator : string) : string {
+  //   if (this.body instanceof Lambda) {
+  //     return this.body.printLambdaArguments(`${ accumulator } ${ this.body.argument.name() }`)
+  //   }
     
-    return accumulator
-  }
+  //   return accumulator
+  // }
 
-  printLambdaBody () : string {
-    if (this.body instanceof Lambda) {
-      return this.body.printLambdaBody()
-    }
+  // printLambdaBody () : string {
+  //   if (this.body instanceof Lambda) {
+  //     return this.body.printLambdaBody()
+  //   }
 
-    return this.body.print()
-  }
+  //   return this.body.print()
+  // }
 }

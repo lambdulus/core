@@ -11,14 +11,13 @@ export interface Visitor {
   onChurchNumber (churchnumber : ChurchNumber) : void,
   onMacro (macro : Macro) : void,
   onVariable (variable : Variable) : void,
-  // asside from that
-  // visitors can have some internal state and private helper methods
 }
 
 export class BasicPrinter implements Visitor {
   private expression : string = ''
 
   // TODO: this looks like nonsense
+  // maybe solve it with another Visitor
   private printLambdaBody (lambda : Lambda) : void {
     if (lambda.body instanceof Lambda) {
       this.printLambdaBody(lambda.body)
@@ -29,6 +28,7 @@ export class BasicPrinter implements Visitor {
   }
 
   // TODO: this looks like nonsense
+  // maybe solve it with another Visitor
   private printLambdaArguments (lambda : Lambda, accumulator : string) : void {
     if (lambda.body instanceof Lambda) {
       this.printLambdaArguments(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
@@ -114,7 +114,6 @@ export class BasicPrinter implements Visitor {
 
 
 export class NormalEvaluation implements Visitor {
-  // some private prop, to work around classic recursion
   private parent : Binary | null = null
   private child : Child | null = null
 

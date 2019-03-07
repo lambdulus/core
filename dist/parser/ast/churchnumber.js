@@ -19,21 +19,21 @@ var ChurchNumber = /** @class */ (function () {
     ChurchNumber.prototype.visit = function (visitor) {
         visitor.onChurchNumber(this);
     };
-    ChurchNumber.prototype.nextNormal = function (parent, child) {
-        return new parser_1.NextExpansion(parent, child, this);
-    };
-    ChurchNumber.prototype.reduceNormal = function () {
-        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.Expansion, currentSubtree: this };
-    };
+    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+    //   return new NextExpansion(parent, child, this)
+    // }
+    // reduceNormal () : ReductionResult {
+    //   return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
+    // }
     ChurchNumber.prototype.expand = function () {
         var codeStyle = { singleLetterVars: true, lambdaLetters: ['λ'] };
         var value = this.token.value;
         var churchLiteral = "(\u03BB s z ." + ' (s'.repeat(value) + " z)" + ')'.repeat(value);
         return parser_1.parse(lexer_1.default.tokenize(churchLiteral, codeStyle));
     };
-    ChurchNumber.prototype.reduceApplicative = function () {
-        throw new Error("Method not implemented.");
-    };
+    // reduceApplicative () : ReductionResult {
+    //   throw new Error("Method not implemented.");
+    // }
     ChurchNumber.prototype.alphaConvert = function (oldName, newName) {
         return this;
     };
@@ -43,9 +43,9 @@ var ChurchNumber = /** @class */ (function () {
     ChurchNumber.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
     };
-    ChurchNumber.prototype.print = function () {
-        return this.name();
-    };
+    // print () : string {
+    //   return this.name()
+    // }
     ChurchNumber.prototype.freeVarName = function (bound) {
         return null;
     };
