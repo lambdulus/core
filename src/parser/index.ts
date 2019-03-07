@@ -4,21 +4,22 @@ import { Variable } from './ast/variable'
 import { Macro } from './ast/macro'
 import { ChurchNumber } from './ast/churchnumber'
 import { Application } from './ast/application'
-import { Visitable } from '../visitors/visitor'
+import { ASTVisitable } from '../visitors'
 
 // TODO: tak tohle zrusime nahradime logikou visitor patternu
+// eh not really
 export interface Binary extends AST {
   left : AST,
   right : AST,
 }
 
-export interface AST extends Visitable {
+export interface AST extends ASTVisitable {
   identifier : symbol,
   clone () : AST,
-  alphaConvert (oldName : string, newName : string) : AST,
-  betaReduce (argName : string, value : AST) : AST,
-  etaConvert () : AST,
-  freeVarName (bound : Array<string>) : string | null, // TODO: consider refactoring to visitor pattern
+  // alphaConvert (oldName : string, newName : string) : AST,
+  // betaReduce (argName : string, value : AST) : AST,
+  // etaConvert () : AST,
+  freeVarName (bound : Array<string>) : string | null, // TODO: refactor to visitor pattern
 }
 
 export interface Expandable {

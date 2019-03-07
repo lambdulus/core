@@ -1,6 +1,6 @@
 import Lexer, { Token, CodeStyle } from '../../lexer'
 import { AST, parse, Expandable } from '..'
-import { Visitor } from '../../visitors/visitor';
+import { ASTVisitor } from '../../visitors';
 
 export class ChurchNumber implements AST, Expandable {
   public readonly identifier : symbol = Symbol()
@@ -17,7 +17,7 @@ export class ChurchNumber implements AST, Expandable {
     return new ChurchNumber(this.token)
   }
 
-  visit (visitor : Visitor) : void {
+  visit (visitor : ASTVisitor) : void {
     visitor.onChurchNumber(this)
   }
 
@@ -29,17 +29,17 @@ export class ChurchNumber implements AST, Expandable {
     return parse(Lexer.tokenize(churchLiteral, codeStyle))
   }
   
-  alphaConvert (oldName : string, newName : string) : AST {
-    return this
-  }
+  // alphaConvert (oldName : string, newName : string) : AST {
+  //   return this
+  // }
   
-  betaReduce (argName : string, value : AST) : AST {
-    return this
-  }
+  // betaReduce (argName : string, value : AST) : AST {
+  //   return this
+  // }
   
-  etaConvert () : AST {
-    throw new Error("Method not implemented.");
-  }
+  // etaConvert () : AST {
+  //   throw new Error("Method not implemented.");
+  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return null
