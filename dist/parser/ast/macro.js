@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var parser_1 = require("../parser");
 var Macro = /** @class */ (function () {
     function Macro(token, definition) {
         this.token = token;
@@ -16,19 +15,19 @@ var Macro = /** @class */ (function () {
     Macro.prototype.visit = function (visitor) {
         visitor.onMacro(this);
     };
-    Macro.prototype.nextNormal = function (parent, child) {
-        return new parser_1.NextExpansion(parent, child, this);
-    };
-    Macro.prototype.reduceNormal = function () {
-        return { tree: this.expand(), reduced: true, reduction: parser_1.Reduction.Expansion, currentSubtree: this };
-    };
+    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+    //   return new NextExpansion(parent, child, this)
+    // }
+    // reduceNormal () : ReductionResult {
+    //   return { tree : this.expand(), reduced : true, reduction : Reduction.Expansion, currentSubtree : this }
+    // }
     Macro.prototype.expand = function () {
         // TODO: here I lose token - useful for location and origin of macro - should solve this
         return this.definition.ast.clone();
     };
-    Macro.prototype.reduceApplicative = function () {
-        throw new Error("Method not implemented.");
-    };
+    // reduceApplicative () : ReductionResult {
+    //   throw new Error("Method not implemented.");
+    // }
     Macro.prototype.alphaConvert = function (oldName, newName) {
         return this;
     };

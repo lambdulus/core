@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var lexer_1 = require("../../lexer");
-var parser_1 = require("../parser");
 var Variable = /** @class */ (function () {
     function Variable(token) {
         this.token = token;
@@ -16,15 +15,15 @@ var Variable = /** @class */ (function () {
     Variable.prototype.visit = function (visitor) {
         visitor.onVariable(this);
     };
-    Variable.prototype.nextNormal = function (parent, child) {
-        return new parser_1.NextNone;
-    };
-    Variable.prototype.reduceNormal = function () {
-        return { tree: this, reduced: false, reduction: parser_1.Reduction.None, currentSubtree: this };
-    };
-    Variable.prototype.reduceApplicative = function () {
-        throw new Error("Method not implemented.");
-    };
+    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+    //   return new NextNone
+    // }
+    // reduceNormal () : ReductionResult {
+    //   return { tree : this, reduced : false, reduction : Reduction.None, currentSubtree : this }
+    // }
+    // reduceApplicative () : ReductionResult {
+    //   throw new Error("Method not implemented.");
+    // }
     Variable.prototype.alphaConvert = function (oldName, newName) {
         if (this.name() === oldName) {
             var token = new lexer_1.Token(this.token.type, newName, this.token.position);
@@ -41,9 +40,9 @@ var Variable = /** @class */ (function () {
     Variable.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
     };
-    Variable.prototype.print = function () {
-        return this.name();
-    };
+    // print () : string {
+    //   return this.name()
+    // }
     Variable.prototype.freeVarName = function (bound) {
         if (bound.includes(this.name())) {
             return null;

@@ -14,10 +14,6 @@ export interface Visitable {
 export interface AST extends Visitable {
     identifier: symbol;
     clone(): AST;
-    nextNormal(parent: Binary | null, child: Child | null): NextReduction;
-    reduceNormal(): ReductionResult;
-    reduceApplicative(): ReductionResult;
-    print(): string;
     alphaConvert(oldName: string, newName: string): AST;
     betaReduce(argName: string, value: AST): AST;
     etaConvert(): AST;
@@ -30,18 +26,6 @@ export declare class MacroDef {
     readonly ast: AST;
     constructor(ast: AST);
 }
-export declare enum Reduction {
-    Alpha = 0,
-    Beta = 1,
-    Expansion = 2,
-    None = 3
-}
-export declare type ReductionResult = {
-    tree: AST;
-    reduced: boolean;
-    reduction: Reduction;
-    currentSubtree: AST;
-};
 export declare enum Child {
     Left = "left",
     Right = "right"

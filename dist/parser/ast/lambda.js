@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var parser_1 = require("../parser");
 var Lambda = /** @class */ (function () {
     function Lambda(argument, body) {
         this.argument = argument;
@@ -33,17 +32,17 @@ var Lambda = /** @class */ (function () {
     Lambda.prototype.visit = function (visitor) {
         visitor.onLambda(this);
     };
-    Lambda.prototype.nextNormal = function (parent, child) {
-        return this.body.nextNormal(this, parser_1.Child.Right);
-    };
-    Lambda.prototype.reduceNormal = function () {
-        var _a = this.body.reduceNormal(), tree = _a.tree, reduced = _a.reduced, reduction = _a.reduction, currentSubtree = _a.currentSubtree;
-        this.body = tree;
-        return { tree: this, reduced: reduced, reduction: reduction, currentSubtree: currentSubtree };
-    };
-    Lambda.prototype.reduceApplicative = function () {
-        throw new Error("Method not implemented.");
-    };
+    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
+    //   return this.body.nextNormal(this, Child.Right)
+    // }
+    // reduceNormal () : ReductionResult {
+    //   const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
+    //   this.body = tree
+    //   return { tree : this, reduced, reduction, currentSubtree }
+    // }
+    // reduceApplicative () : ReductionResult {
+    //   throw new Error("Method not implemented.");
+    // }
     Lambda.prototype.alphaConvert = function (oldName, newName) {
         var left = this.argument.alphaConvert(oldName, newName);
         var right = this.body.alphaConvert(oldName, newName);
@@ -60,12 +59,12 @@ var Lambda = /** @class */ (function () {
     Lambda.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
     };
-    Lambda.prototype.print = function () {
-        if (this.body instanceof Lambda) {
-            return "(\u03BB " + this.printLambdaArguments(this.argument.name()) + " . " + this.printLambdaBody() + ")";
-        }
-        return "(\u03BB " + this.argument.print() + " . " + this.body.print() + ")";
-    };
+    // print () : string {
+    //   if (this.body instanceof Lambda) {
+    //     return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
+    //   }
+    //   return `(λ ${ this.argument.print() } . ${ this.body.print() })`
+    // }
     Lambda.prototype.freeVarName = function (bound) {
         return this.body.freeVarName(bound.concat([this.argument.name()]));
     };
@@ -77,18 +76,6 @@ var Lambda = /** @class */ (function () {
             return this.body.isBound(varName);
         }
         return false;
-    };
-    Lambda.prototype.printLambdaArguments = function (accumulator) {
-        if (this.body instanceof Lambda) {
-            return this.body.printLambdaArguments(accumulator + " " + this.body.argument.name());
-        }
-        return accumulator;
-    };
-    Lambda.prototype.printLambdaBody = function () {
-        if (this.body instanceof Lambda) {
-            return this.body.printLambdaBody();
-        }
-        return this.body.print();
     };
     return Lambda;
 }());
