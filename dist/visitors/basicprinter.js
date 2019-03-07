@@ -1,76 +1,75 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var lambda_1 = require("../parser/ast/lambda");
-var application_1 = require("../parser/ast/application");
-var BasicPrinter = /** @class */ (function () {
-    function BasicPrinter(tree) {
+const lambda_1 = require("../parser/ast/lambda");
+const application_1 = require("../parser/ast/application");
+class BasicPrinter {
+    constructor(tree) {
         this.tree = tree;
         this.expression = '';
         this.tree.visit(this);
     }
     // TODO: this looks like nonsense
     // maybe solve it with another Visitor
-    BasicPrinter.prototype.printLambdaBody = function (lambda) {
+    printLambdaBody(lambda) {
         if (lambda.body instanceof lambda_1.Lambda) {
             this.printLambdaBody(lambda.body);
         }
         else {
             lambda.body.visit(this);
         }
-    };
+    }
     // TODO: this looks like nonsense
     // maybe solve it with another Visitor
-    BasicPrinter.prototype.printLambdaArguments = function (lambda, accumulator) {
+    printLambdaArguments(lambda, accumulator) {
         if (lambda.body instanceof lambda_1.Lambda) {
-            this.printLambdaArguments(lambda.body, accumulator + " " + lambda.body.argument.name());
+            this.printLambdaArguments(lambda.body, `${accumulator} ${lambda.body.argument.name()}`);
         }
         else {
             this.expression += accumulator;
         }
-    };
-    BasicPrinter.prototype.print = function () {
+    }
+    print() {
         return this.expression;
-    };
+    }
     // TODO: this is ugly as hell
-    BasicPrinter.prototype.onApplication = function (application) {
+    onApplication(application) {
         if (application.right instanceof application_1.Application) {
             application.left.visit(this);
-            this.expression += " (";
+            this.expression += ` (`;
             application.right.visit(this);
-            this.expression += ")";
+            this.expression += `)`;
         }
         else {
             application.left.visit(this);
-            this.expression += " ";
+            this.expression += ` `;
             application.right.visit(this);
         }
-    };
+    }
     // TODO: this is ugly as hell
-    BasicPrinter.prototype.onLambda = function (lambda) {
+    onLambda(lambda) {
         if (lambda.body instanceof lambda_1.Lambda) {
-            this.expression += "(\u03BB ";
+            this.expression += `(λ `;
             this.printLambdaArguments(lambda, lambda.argument.name());
-            this.expression += " . ";
+            this.expression += ` . `;
             this.printLambdaBody(lambda);
-            this.expression += ")";
+            this.expression += `)`;
         }
         else {
-            this.expression += "(\u03BB ";
+            this.expression += `(λ `;
             lambda.argument.visit(this);
-            this.expression += " . ";
+            this.expression += ` . `;
             lambda.body.visit(this);
-            this.expression += ")";
+            this.expression += `)`;
         }
-    };
-    BasicPrinter.prototype.onChurchNumber = function (churchNumber) {
+    }
+    onChurchNumber(churchNumber) {
         this.expression += churchNumber.name();
-    };
-    BasicPrinter.prototype.onMacro = function (macro) {
+    }
+    onMacro(macro) {
         this.expression += macro.name();
-    };
-    BasicPrinter.prototype.onVariable = function (variable) {
+    }
+    onVariable(variable) {
         this.expression += variable.name();
-    };
-    return BasicPrinter;
-}());
+    }
+}
 exports.BasicPrinter = BasicPrinter;

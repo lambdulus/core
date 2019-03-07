@@ -1,4 +1,4 @@
-import { AST, Binary, Expandable } from '../parser';
+import { AST, Binary } from '../parser';
 import { Application } from '../parser/ast/application';
 import { Lambda } from '../parser/ast/lambda';
 import { ChurchNumber } from '../parser/ast/churchnumber';
@@ -8,8 +8,9 @@ export declare enum Child {
     Left = "left",
     Right = "right"
 }
-export declare type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone;
-export declare class NextAlpha implements ReductionVisitable {
+export interface NextReduction extends ReductionVisitable {
+}
+export declare class NextAlpha implements NextReduction {
     readonly tree: Application;
     readonly child: Child;
     readonly oldName: string;
@@ -17,7 +18,7 @@ export declare class NextAlpha implements ReductionVisitable {
     constructor(tree: Application, child: Child, oldName: string, newName: string);
     visit(visitor: ReductionVisitor): void;
 }
-export declare class NextBeta implements ReductionVisitable {
+export declare class NextBeta implements NextReduction {
     readonly parent: Binary | null;
     readonly treeSide: Child | null;
     readonly target: AST;
@@ -28,14 +29,14 @@ export declare class NextBeta implements ReductionVisitable {
     argName: string, value: AST);
     visit(visitor: ReductionVisitor): void;
 }
-export declare class NextExpansion implements ReductionVisitable {
+export declare class NextExpansion implements NextReduction {
     readonly parent: Binary | null;
     readonly treeSide: Child | null;
-    readonly tree: Expandable;
-    constructor(parent: Binary | null, treeSide: Child | null, tree: Expandable);
+    readonly target: AST;
+    constructor(parent: Binary | null, treeSide: Child | null, target: AST);
     visit(visitor: ReductionVisitor): void;
 }
-export declare class NextNone implements ReductionVisitable {
+export declare class NextNone implements NextReduction {
     visit(visitor: ReductionVisitor): void;
 }
 export interface ASTVisitable {
@@ -44,16 +45,14 @@ export interface ASTVisitable {
 export interface ReductionVisitable {
     visit(visitor: ReductionVisitor): void;
 }
-export declare abstract class Visitor {
-}
-export interface ASTVisitor extends Visitor {
+export interface ASTVisitor {
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchnumber: ChurchNumber): void;
+    onChurchNumber(churchNumber: ChurchNumber): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
 }
-export interface ReductionVisitor extends Visitor {
+export interface ReductionVisitor {
     onAlpha(alpha: NextAlpha): void;
     onBeta(beta: NextBeta): void;
     onExpansion(expansion: NextExpansion): void;
