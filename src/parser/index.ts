@@ -4,7 +4,7 @@ import { Variable } from './ast/variable'
 import { Macro } from './ast/macro'
 import { ChurchNumber } from './ast/churchnumber'
 import { Application } from './ast/application'
-import { Visitor } from '../visitors/visitor'
+import { Visitable } from '../visitors/visitor'
 
 // TODO: tak tohle zrusime nahradime logikou visitor patternu
 export interface Binary extends AST {
@@ -12,17 +12,9 @@ export interface Binary extends AST {
   right : AST,
 }
 
-export interface Visitable {
-  visit(visitor : Visitor) : void,
-}
-
 export interface AST extends Visitable {
   identifier : symbol,
   clone () : AST,
-  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction, // TODO: DELETE
-  // reduceNormal () : ReductionResult, // TODO: DELETE
-  // reduceApplicative () : ReductionResult, // TODO: DELETE
-  // print () : string, // TODO: DELETE
   alphaConvert (oldName : string, newName : string) : AST,
   betaReduce (argName : string, value : AST) : AST,
   etaConvert () : AST,
@@ -39,76 +31,9 @@ export class MacroDef {
   ) {}
 }
 
-interface MacroTable {
+export interface MacroTable {
   [ name : string ] : MacroDef
 }
-
-export enum Child {
-  Left = 'left',
-  Right = 'right',
-}
-
-// TODO: prolly remove
-// export enum Reduction {
-//   Alpha, // = 0
-//   Beta, // = 1
-//   Expansion, // = 2
-//   None, // = 3
-// }
-
-// TODO: obsolete --->>> delete
-// because not needed anymore
-// export type ReductionResult = {
-//   tree : AST,
-//   reduced : boolean,
-//   reduction : Reduction,
-//   currentSubtree : AST,
-// }
-
-
-
-
-// TODO: tohle nahradi konkretni druh Visitoru neco jako NormalReductionFinder/NormReductionFinder
-// dalsi pripad bude AppReductionFinder
-// dalsi bude TreePrinter
-// a tu spodni informaci bude v sobe drzet konkretni Visitor
-export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
-
-export class NextAlpha {
-  constructor (
-    public readonly tree : Application,
-    public readonly child : Child,
-    public readonly oldName : string,
-    public readonly newName : string,
-    // TODO:
-    // taky mnozinu referenci na vyskyty promennych tam, kde se budou nahrazovat
-    // at to nemusi implementace hledat, proste doslova jenom prohazi ??? -> zvazit
-  ) {}
-}
-
-export class NextBeta {
-  constructor (
-    public readonly parent : Binary | null,
-    public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
-    public readonly target : AST, // EXPR ve kterem se provede nahrada
-    public readonly argName : string,
-    public readonly value : AST,
-  ) {}
-}
-
-// TODO: vyresit pro pripady kdy jde o multilambdu
-// pak bude navic drzet mnozinu values a mnozinu arguments
-// spis mnozinu tuples
-
-export class NextExpansion {
-  constructor (
-    public readonly parent : Binary | null,
-    public readonly treeSide : Child | null,
-    public readonly tree : Expandable,
-  ) {}
-}
-
-export class NextNone {}
 
 function toAst (definition : string, macroTable : MacroTable) : AST {
   const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
@@ -116,7 +41,6 @@ function toAst (definition : string, macroTable : MacroTable) : AST {
   
   return parser.parse(null)
 }
-
 
 class Parser {
   private position : number = 0

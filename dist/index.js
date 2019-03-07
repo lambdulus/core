@@ -2,29 +2,17 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var lexer_1 = __importDefault(require("./lexer"));
-var parser_1 = __importStar(require("./parser/parser"));
+var parser_1 = __importDefault(require("./parser"));
 var visitor_1 = require("./visitors/visitor");
+var basicprinter_1 = require("./visitors/basicprinter");
 var lexer_2 = require("./lexer");
 exports.Token = lexer_2.Token;
 exports.tokenize = lexer_2.tokenize;
 exports.Lexer = lexer_2.default;
-var parser_2 = require("./parser/parser");
+var parser_2 = require("./parser");
 exports.parse = parser_2.parse;
-exports.NextAlpha = parser_2.NextAlpha;
-exports.NextBeta = parser_2.NextBeta;
-exports.NextExpansion = parser_2.NextExpansion;
-exports.NextNone = parser_2.NextNone;
-exports.Child = parser_2.Child;
-// ReductionResult,
 exports.Parser = parser_2.default;
 var inputs = [
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
@@ -54,7 +42,7 @@ var root = ast;
 var e = 0;
 while (true) {
     var normal = new visitor_1.NormalEvaluation(root);
-    if (normal.nextReduction instanceof parser_1.NextNone) {
+    if (normal.nextReduction instanceof visitor_1.NextNone) {
         break;
     }
     root = normal.evaluate();
@@ -64,6 +52,6 @@ while (true) {
     // console.log(s)
 }
 console.log('steps: ' + e);
-var printer = new visitor_1.BasicPrinter(root);
+var printer = new basicprinter_1.BasicPrinter(root);
 var s = printer.print();
 console.log(s);

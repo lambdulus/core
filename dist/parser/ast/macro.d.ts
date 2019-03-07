@@ -1,5 +1,5 @@
 import { Token } from '../../lexer';
-import { AST, Expandable, MacroDef } from '../parser';
+import { AST, Expandable, MacroDef } from '..';
 import { Visitor } from '../../visitors/visitor';
 export declare class Macro implements AST, Expandable {
     readonly token: Token;
@@ -13,6 +13,5 @@ export declare class Macro implements AST, Expandable {
     alphaConvert(oldName: string, newName: string): AST;
     betaReduce(argName: string, value: AST): AST;
     etaConvert(): AST;
-    print(): string;
     freeVarName(bound: Array<string>): string | null;
 }

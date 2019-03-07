@@ -1,4 +1,4 @@
-import { AST, Binary } from '../parser';
+import { AST, Binary } from '..';
 import { Visitor } from '../../visitors/visitor';
 export declare class Application implements AST, Binary {
     left: AST;

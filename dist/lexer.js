@@ -17,7 +17,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var counter_1 = __importDefault(require("./counter"));
-// TODO: remove comments and numbers
 var TokenType;
 (function (TokenType) {
     TokenType["Lambda"] = "lambda";
@@ -37,7 +36,6 @@ var Token = /** @class */ (function () {
     return Token;
 }());
 exports.Token = Token;
-// ---------------------------------------------------
 var InvalidIdentifier = /** @class */ (function (_super) {
     __extends(InvalidIdentifier, _super);
     function InvalidIdentifier(value, position) {
@@ -68,12 +66,11 @@ var InvalidOperator = /** @class */ (function (_super) {
     }
     return InvalidOperator;
 }(Error));
-// ---------------------------------------------------
 var Lexer = /** @class */ (function () {
     function Lexer(source, config) {
         this.source = source;
         this.config = config;
-        this.position = new counter_1.default; // todo: replace with simple object or na, IDK
+        this.position = new counter_1.default; // TODO: replace with simple object or na, IDK
         this.tokens = [];
     }
     Lexer.prototype.top = function () {
@@ -200,7 +197,6 @@ var Lexer = /** @class */ (function () {
                 }
                 case '<':
                 case '>': {
-                    // TODO: implement <= >=
                     var operator = this.pop();
                     var topPosition = this.position.toRecord();
                     if (this.top() === '=') {
@@ -226,6 +222,7 @@ var Lexer = /** @class */ (function () {
                         throw (new Error("Invalid character " + this.position.toRecord() + "           at row " + this.position.row + " column " + this.position.column + "."));
                     }
             }
+            // TODO: implement error handling already
             // nechytat chybu tady
             // nechat ji probublat ven z tohohle modulu
             // odchyti si ji super modul kerej tohle pouziva
@@ -274,7 +271,5 @@ function tokenize(input, config) {
 }
 exports.tokenize = tokenize;
 exports.default = {
-    // Token,
-    // TokenType,
     tokenize: tokenize,
 };

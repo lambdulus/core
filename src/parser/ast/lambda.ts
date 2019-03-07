@@ -1,4 +1,4 @@
-import { AST, Binary, NextReduction, Child } from '../parser'
+import { AST, Binary } from '..'
 import { Variable } from './variable'
 import { Visitor } from '../../visitors/visitor';
 
@@ -27,27 +27,13 @@ export class Lambda implements Binary {
   }
 
   clone () : Lambda {
-    return new Lambda(this.argument, this.body)
+    // TODO: consider not clonning
+    return new Lambda(this.argument.clone(), this.body.clone())
   }
 
   visit (visitor : Visitor) : void {
     visitor.onLambda(this)
   }
-
-  // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-  //   return this.body.nextNormal(this, Child.Right)
-  // }
-
-  // reduceNormal () : ReductionResult {
-  //   const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
-  //   this.body = tree
-
-  //   return { tree : this, reduced, reduction, currentSubtree }
-  // }
-
-  // reduceApplicative () : ReductionResult {
-  //   throw new Error("Method not implemented.");
-  // }
   
   alphaConvert (oldName : string, newName : string) : AST {
     const left : Variable = this.argument.alphaConvert(oldName, newName)
@@ -61,22 +47,16 @@ export class Lambda implements Binary {
   
   betaReduce (argName : string, value : AST) : AST {
     if (this.argument.name() === argName) {
-      return this // TODO: should I create new one? probably
+      return this
     }
 
+    // TODO: clone or not clone ? i'd say CLONE but consider not clonning
     return new Lambda(this.argument.clone(), this.body.betaReduce(argName, value))
   }
   
   etaConvert () : AST {
     throw new Error("Method not implemented.");
   }
-
-  // print () : string {
-  //   if (this.body instanceof Lambda) {
-  //     return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
-  //   }
-  //   return `(λ ${ this.argument.print() } . ${ this.body.print() })`
-  // }
 
   freeVarName (bound : Array<string>) : string | null {
     return this.body.freeVarName([ ...bound, this.argument.name()])
@@ -93,20 +73,4 @@ export class Lambda implements Binary {
 
     return false
   }
-
-  // printLambdaArguments (accumulator : string) : string {
-  //   if (this.body instanceof Lambda) {
-  //     return this.body.printLambdaArguments(`${ accumulator } ${ this.body.argument.name() }`)
-  //   }
-    
-  //   return accumulator
-  // }
-
-  // printLambdaBody () : string {
-  //   if (this.body instanceof Lambda) {
-  //     return this.body.printLambdaBody()
-  //   }
-
-  //   return this.body.print()
-  // }
 }

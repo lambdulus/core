@@ -1,9 +1,61 @@
-import Parser, { AST, Visitable, Child, NextNone, NextAlpha, NextReduction, NextBeta, Binary, NextExpansion } from '../parser/parser'
+import Parser, { AST, Binary, Expandable } from '../parser'
 import { Application } from '../parser/ast/application'
 import { Lambda } from '../parser/ast/lambda'
 import { ChurchNumber } from '../parser/ast/churchnumber'
 import { Macro } from '../parser/ast/macro'
 import { Variable } from '../parser/ast/variable'
+
+export enum Child {
+  Left = 'left',
+  Right = 'right',
+}
+
+// TODO: tohle nahradi konkretni druh Visitoru neco jako NormalReductionFinder/NormReductionFinder
+// dalsi pripad bude AppReductionFinder
+// dalsi bude TreePrinter
+// a tu spodni informaci bude v sobe drzet konkretni Visitor
+export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
+
+export class NextAlpha {
+  constructor (
+    public readonly tree : Application,
+    public readonly child : Child,
+    public readonly oldName : string,
+    public readonly newName : string,
+    // TODO:
+    // taky mnozinu referenci na vyskyty promennych tam, kde se budou nahrazovat
+    // at to nemusi implementace hledat, proste doslova jenom prohazi ??? -> zvazit
+  ) {}
+}
+
+export class NextBeta {
+  constructor (
+    public readonly parent : Binary | null,
+    public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
+    public readonly target : AST, // EXPR ve kterem se provede nahrada
+    public readonly argName : string,
+    public readonly value : AST,
+  ) {}
+}
+
+// TODO: vyresit pro pripady kdy jde o multilambdu
+// pak bude navic drzet mnozinu values a mnozinu arguments
+// spis mnozinu tuples
+
+export class NextExpansion {
+  constructor (
+    public readonly parent : Binary | null,
+    public readonly treeSide : Child | null,
+    public readonly tree : Expandable,
+  ) {}
+}
+
+export class NextNone {}
+
+
+export interface Visitable {
+  visit(visitor : Visitor) : void,
+}
 
 export interface Visitor {
   onApplication (application : Application) : void,
@@ -12,105 +64,6 @@ export interface Visitor {
   onMacro (macro : Macro) : void,
   onVariable (variable : Variable) : void,
 }
-
-export class BasicPrinter implements Visitor {
-  private expression : string = ''
-
-  // TODO: this looks like nonsense
-  // maybe solve it with another Visitor
-  private printLambdaBody (lambda : Lambda) : void {
-    if (lambda.body instanceof Lambda) {
-      this.printLambdaBody(lambda.body)
-    }
-    else {
-      lambda.body.visit(this)
-    }
-  }
-
-  // TODO: this looks like nonsense
-  // maybe solve it with another Visitor
-  private printLambdaArguments (lambda : Lambda, accumulator : string) : void {
-    if (lambda.body instanceof Lambda) {
-      this.printLambdaArguments(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
-    }
-    else {
-      this.expression += accumulator
-    }
-  }
-
-  constructor (
-    public readonly tree : AST & Visitable,
-    ) {
-      this.tree.visit(this)
-    }
-
-  print () : string {
-    return this.expression
-  }
-
-  // TODO: this is ugly as hell
-  onApplication(application: Application): void {
-    if (application.right instanceof Application) {
-      application.left.visit(this)
-      this.expression += ` (`
-      application.right.visit(this)
-      this.expression += `)`
-    }
-    else {
-      application.left.visit(this)
-      this.expression += ` `
-      application.right.visit(this)
-    }
-  }
-  
-  // TODO: this is ugly as hell
-  onLambda(lambda: Lambda): void {
-    if (lambda.body instanceof Lambda) {
-      this.expression += `(λ `
-      this.printLambdaArguments(lambda, lambda.argument.name())
-      this.expression += ` . `
-      this.printLambdaBody(lambda)
-      this.expression += `)`
-    }
-    else {
-      this.expression += `(λ `
-      lambda.argument.visit(this)
-      this.expression += ` . `
-      lambda.body.visit(this)
-      this.expression += `)`
-    }
-  }
-  
-  onChurchNumber(churchNumber: ChurchNumber): void {
-    this.expression += churchNumber.name()
-  }
-  
-  onMacro(macro: Macro): void {
-    this.expression += macro.name()
-  }
-  
-  onVariable(variable: Variable): void {
-    this.expression += variable.name()
-  }
-}
-
-
-// TODO:
-// myslenka: na kazdou iteraci stromu vytvorim novou instanci NormalEvaluation ?
-// pokud ano - dostanu v konstruktoru strom
-// pri redukci se muze zmenit root, tim se zmeni muj strom
-// az se provede redukce tak si ode me muze vnejsi kod strom zase zpet vzit
-// ulozit ho do statu v reactu nebo podobne
-// v dalsi iteraci si ho zase vzit a znova iterovat
-
-// jenze je to takovy dost haluz
-// slo by to i jinak
-// vytvorim jednu instanci na celou exekuci stromu
-// ta si drzi strom a kdyz se zavola nextReduction () tak vrati nejakou strukturu s metadaty o redukci
-// taky ma metodu na provedeni redukce
-// i tohle reseni umozni vzit si strom zvenku a pomoci public getteru a private setteru budu moct strom menit jenom zevnitr
-// v reactu si muzu drzet klidne celej tenhle Visitor, protoze proc ne
-// pri redukci mi 
 
 
 export class NormalEvaluation implements Visitor {

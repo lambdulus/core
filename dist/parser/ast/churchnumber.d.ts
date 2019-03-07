@@ -1,5 +1,5 @@
 import { Token } from '../../lexer';
-import { AST, Expandable } from '../parser';
+import { AST, Expandable } from '..';
 import { Visitor } from '../../visitors/visitor';
 export declare class ChurchNumber implements AST, Expandable {
     readonly token: Token;

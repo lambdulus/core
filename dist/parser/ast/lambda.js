@@ -27,22 +27,12 @@ var Lambda = /** @class */ (function () {
         configurable: true
     });
     Lambda.prototype.clone = function () {
-        return new Lambda(this.argument, this.body);
+        // TODO: consider not clonning
+        return new Lambda(this.argument.clone(), this.body.clone());
     };
     Lambda.prototype.visit = function (visitor) {
         visitor.onLambda(this);
     };
-    // nextNormal (parent : Binary | null, child : Child | null) : NextReduction {
-    //   return this.body.nextNormal(this, Child.Right)
-    // }
-    // reduceNormal () : ReductionResult {
-    //   const { tree, reduced, reduction, currentSubtree } : ReductionResult = this.body.reduceNormal()
-    //   this.body = tree
-    //   return { tree : this, reduced, reduction, currentSubtree }
-    // }
-    // reduceApplicative () : ReductionResult {
-    //   throw new Error("Method not implemented.");
-    // }
     Lambda.prototype.alphaConvert = function (oldName, newName) {
         var left = this.argument.alphaConvert(oldName, newName);
         var right = this.body.alphaConvert(oldName, newName);
@@ -52,19 +42,14 @@ var Lambda = /** @class */ (function () {
     };
     Lambda.prototype.betaReduce = function (argName, value) {
         if (this.argument.name() === argName) {
-            return this; // TODO: should I create new one? probably
+            return this;
         }
+        // TODO: clone or not clone ? i'd say CLONE but consider not clonning
         return new Lambda(this.argument.clone(), this.body.betaReduce(argName, value));
     };
     Lambda.prototype.etaConvert = function () {
         throw new Error("Method not implemented.");
     };
-    // print () : string {
-    //   if (this.body instanceof Lambda) {
-    //     return `(λ ${ this.printLambdaArguments(this.argument.name()) } . ${ this.printLambdaBody() })`
-    //   }
-    //   return `(λ ${ this.argument.print() } . ${ this.body.print() })`
-    // }
     Lambda.prototype.freeVarName = function (bound) {
         return this.body.freeVarName(bound.concat([this.argument.name()]));
     };

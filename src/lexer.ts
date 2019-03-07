@@ -1,15 +1,14 @@
 import Counter, { PositionRecord } from './counter'
 
 
-// TODO: remove comments and numbers
 export enum TokenType {
-  Lambda = 'lambda', // = 0
-  Dot = 'dot', // = 1
-  Identifier = 'identifier', // = 2 // variables, booleans
-  Number = 'number', // = 3 // numbers
-  Operator = 'operator', // = 4 operators
-  LeftParen = 'left paren', // = 5
-  RightParen = 'right paren', // = 6
+  Lambda = 'lambda',
+  Dot = 'dot',
+  Identifier = 'identifier',
+  Number = 'number',
+  Operator = 'operator',
+  LeftParen = 'left paren',
+  RightParen = 'right paren',
 }
 
 export class Token {
@@ -21,13 +20,12 @@ export class Token {
 }
 
 
-// ---------------------------------------------------
+// TODO: I may not need LambdaLetters - frontend could work that for me
 export type CodeStyle = {
   singleLetterVars : boolean,
   lambdaLetters : Array<string>,
 }
 
-// ---------------------------------------------------
 class InvalidIdentifier extends Error {
   constructor (
     public readonly value : string,
@@ -48,11 +46,10 @@ class InvalidOperator extends Error {
     public readonly position : PositionRecord
     ) { super() }
 }
-// ---------------------------------------------------
 
 
 class Lexer {
-  position : Counter = new Counter // todo: replace with simple object or na, IDK
+  position : Counter = new Counter // TODO: replace with simple object or na, IDK
 
   tokens : Array<Token> = []
 
@@ -224,7 +221,6 @@ class Lexer {
         }
         case '<' :
         case '>' : {
-          // TODO: implement <= >=
           let operator : string = this.pop()
           let topPosition : PositionRecord = this.position.toRecord()
           
@@ -254,6 +250,7 @@ class Lexer {
           at row ${ this.position.row } column ${ this.position.column }.`))
         }
       }
+      // TODO: implement error handling already
       // nechytat chybu tady
       // nechat ji probublat ven z tohohle modulu
       // odchyti si ji super modul kerej tohle pouziva
@@ -318,7 +315,5 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
 }
 
 export default {
-  // Token,
-  // TokenType,
   tokenize,
 }
