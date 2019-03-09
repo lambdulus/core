@@ -8,14 +8,15 @@ export declare enum Child {
     Left = "left",
     Right = "right"
 }
-export interface NextReduction extends ReductionVisitable {
+export declare type NextReduction = ReductionVisitable;
+export interface SingleAlpha {
+    tree: Lambda;
+    oldName: string;
+    newName: string;
 }
 export declare class NextAlpha implements NextReduction {
-    readonly tree: Application;
-    readonly child: Child;
-    readonly oldName: string;
-    readonly newName: string;
-    constructor(tree: Application, child: Child, oldName: string, newName: string);
+    readonly conversions: Array<SingleAlpha>;
+    constructor(conversions: Array<SingleAlpha>);
     visit(visitor: ReductionVisitor): void;
 }
 export declare class NextBeta implements NextReduction {

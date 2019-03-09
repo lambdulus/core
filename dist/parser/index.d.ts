@@ -1,8 +1,8 @@
 import { Token } from '../lexer';
-import { Lambda } from './ast/lambda';
-import { Variable } from './ast/variable';
-import { Macro } from './ast/macro';
 import { Application } from './ast/application';
+import { Lambda } from './ast/lambda';
+import { Macro } from './ast/macro';
+import { Variable } from './ast/variable';
 import { ASTVisitable } from '../visitors';
 export interface Binary extends AST {
     left: AST;

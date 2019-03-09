@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// TODO: remove Binary cause not needed 
 class Application {
     constructor(left, right) {
         this.left = left;
