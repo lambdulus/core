@@ -1,5 +1,5 @@
-import Lexer, { Token, CodeStyle } from '../../lexer'
-import { AST, parse } from '..'
+import { Token } from '../../lexer'
+import { AST } from '..'
 import { ASTVisitor } from '../../visitors';
 
 export class ChurchNumber implements AST {

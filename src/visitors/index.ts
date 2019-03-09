@@ -13,7 +13,10 @@ export enum Child {
 // TODO: decide which is prettier
 // export type NextReduction = NextAlpha | NextBeta | NextExpansion | NextNone
 
-export interface NextReduction extends ReductionVisitable {}
+// export interface NextReduction extends ReductionVisitable {}
+
+// TODO: tohle je asi nejlepsi volba
+export type NextReduction = ReductionVisitable
 
 
 // TODO: maybe find better name for it
@@ -34,6 +37,9 @@ export class NextAlpha implements NextReduction {
   }
 }
 
+// TODO: vyresit pro pripady kdy jde o multilambdu
+// pak bude navic drzet mnozinu values a mnozinu arguments
+// spis mnozinu tuples
 export class NextBeta implements NextReduction {
   constructor (
     public readonly parent : Binary | null,
@@ -48,9 +54,6 @@ export class NextBeta implements NextReduction {
   }
 }
 
-// TODO: vyresit pro pripady kdy jde o multilambdu
-// pak bude navic drzet mnozinu values a mnozinu arguments
-// spis mnozinu tuples
 
 export class NextExpansion implements NextReduction {
   constructor (

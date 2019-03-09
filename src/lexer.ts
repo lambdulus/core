@@ -16,7 +16,7 @@ export class Token {
     public readonly type : TokenType,
     public readonly value : string | number,
     public readonly position : PositionRecord,
-    ) {}
+  ) {}
 }
 
 
@@ -30,21 +30,21 @@ class InvalidIdentifier extends Error {
   constructor (
     public readonly value : string,
     public readonly position : PositionRecord,
-    ) { super() }
+  ) { super() }
 }
 
 class InvalidNumber extends Error {
   constructor (
     public readonly value : string,
     public readonly position : PositionRecord
-    ) { super() }
+  ) { super() }
 }
 
 class InvalidOperator extends Error {
   constructor (
     public readonly value : string,
     public readonly position : PositionRecord
-    ) { super() }
+  ) { super() }
 }
 
 

@@ -1,4 +1,4 @@
-import Lexer, { Token } from '../../lexer'
+import { Token } from '../../lexer'
 import { AST } from '..'
 import { ASTVisitor } from '../../visitors';
 
