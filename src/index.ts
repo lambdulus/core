@@ -15,7 +15,10 @@ export {
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+  '((~ x y z . x x y y z) (x y z) A z) ) ) )',
+  '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)', // factorial without accumulator
+  '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci 
   '(~ x y z . x y z) y z x',  
   '1 a',
   '^ 4 4',
@@ -66,9 +69,10 @@ while (true) {
   root = reducer.tree
   e++
 
-  // const printer : BasicPrinter = new BasicPrinter(root)
-  // const s = printer.print()
-  // console.log(s)
+  const printer : BasicPrinter = new BasicPrinter(root)
+  const s = printer.print()
+  console.log(s)
+
 }
 
 
