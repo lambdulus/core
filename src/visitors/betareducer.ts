@@ -4,12 +4,9 @@ import { Application } from "../parser/ast/application";
 import { Lambda } from "../parser/ast/lambda";
 import { Macro } from "../parser/ast/macro";
 import { Variable } from "../parser/ast/variable";
-import { Binary, AST } from "../parser";
+import { AST } from "../parser";
 
 export class BetaReducer implements ASTVisitor {
-  private readonly parent : Binary | null
-  private readonly treeSide : Child | null
-  private readonly target : AST
   private readonly argName : string
   private readonly value : AST
 
@@ -20,9 +17,6 @@ export class BetaReducer implements ASTVisitor {
     { parent, treeSide, target, argName, value } : NextBeta,
     tree : AST,
   ) {
-    this.parent = parent
-    this.treeSide = treeSide
-    this.target = target
     this.argName = argName
     this.value = value
 

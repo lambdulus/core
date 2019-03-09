@@ -23,8 +23,6 @@ export class AlphaConvertor implements ASTVisitor {
       this.oldName = oldName
       this.newName = newName
 
-
-
       tree.argument.visit(this)
       tree.argument = <Variable> this.converted
 
@@ -48,7 +46,9 @@ export class AlphaConvertor implements ASTVisitor {
   onLambda(lambda : Lambda) : void {
     if (lambda.argument.name() !== this.oldName) {
       lambda.body.visit(this)
+      
       const right : AST = <AST> this.converted
+      
       lambda.body = right
       this.converted = lambda
     }

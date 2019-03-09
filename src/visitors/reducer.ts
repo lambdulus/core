@@ -1,4 +1,4 @@
-import { ReductionVisitor, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone, Child } from ".";
+import { ReductionVisitor, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone } from ".";
 import { AST } from "../parser";
 import { Expandor } from "./expandor";
 import { BetaReducer } from "./betareducer";

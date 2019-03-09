@@ -2,7 +2,7 @@ import { AST, Binary } from '..'
 import { Variable } from './variable'
 import { ASTVisitor } from '../../visitors';
 
-export class Lambda implements Binary {
+export class Lambda implements AST, Binary {
   public readonly identifier : symbol = Symbol()
 
   constructor (
@@ -33,17 +33,5 @@ export class Lambda implements Binary {
 
   visit (visitor : ASTVisitor) : void {
     visitor.onLambda(this)
-  }
-
-  isBound (varName : string) : Lambda | null {
-    if (this.argument.name() === varName) {
-      return this
-    }
-
-    if (this.body instanceof Lambda) {
-      return this.body.isBound(varName)
-    }
-
-    return null
   }
 }

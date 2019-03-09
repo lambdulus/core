@@ -33,9 +33,9 @@ export class BasicPrinter implements ASTVisitor {
 
   constructor (
     public readonly tree : AST & ASTVisitable,
-    ) {
-      this.tree.visit(this)
-    }
+  ) {
+    this.tree.visit(this)
+  }
 
   print () : string {
     return this.expression
