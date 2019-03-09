@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
-const variable_1 = require("../parser/ast/variable");
-const lambda_1 = require("../parser/ast/lambda");
 const freevarsfinder_1 = require("./freevarsfinder");
 const varbindfinder_1 = require("./varbindfinder");
+const variable_1 = require("../ast/variable");
+const lambda_1 = require("../ast/lambda");
 class NormalEvaluator {
     constructor(tree) {
         this.tree = tree;

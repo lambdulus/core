@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lambda_1 = require("../parser/ast/lambda");
+const lambda_1 = require("../ast/lambda");
 class VarBindFinder {
     constructor(tree, varName) {
         this.tree = tree;

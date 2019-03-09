@@ -17,8 +17,8 @@ var parser_2 = require("./parser");
 exports.parse = parser_2.parse;
 exports.Parser = parser_2.default;
 const inputs = [
+    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
-    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
     '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
     '(~ x y z . x y z) y z x',

@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
-const variable_1 = require("./ast/variable");
-const lambda_1 = require("./ast/lambda");
-const churchnumber_1 = require("./ast/churchnumber");
-const macro_1 = require("./ast/macro");
-const application_1 = require("./ast/application");
+const variable_1 = require("../ast/variable");
+const lambda_1 = require("../ast/lambda");
+const churchnumber_1 = require("../ast/churchnumber");
+const macro_1 = require("../ast/macro");
+const application_1 = require("../ast/application");
 class Parser {
     constructor(tokens, macroTable) {
         this.tokens = tokens;

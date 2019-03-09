@@ -1,5 +1,5 @@
 import { ReductionVisitor, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone } from ".";
-import { AST } from "../parser";
+import { AST } from "../ast";
 export declare class Reducer implements ReductionVisitor {
     tree: AST;
     readonly nextReduction: NextReduction;

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const application_1 = require("../parser/ast/application");
-const lambda_1 = require("../parser/ast/lambda");
+const application_1 = require("../ast/application");
+const lambda_1 = require("../ast/lambda");
 class BetaReducer {
     constructor({ parent, treeSide, target, argName, value }, tree) {
         this.substituted = null;

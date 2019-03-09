@@ -1,17 +1,9 @@
 import { Token } from '../lexer';
-import { Application } from './ast/application';
-import { Lambda } from './ast/lambda';
-import { Macro } from './ast/macro';
-import { Variable } from './ast/variable';
-import { ASTVisitable } from '../visitors';
-export interface Binary extends AST {
-    left: AST;
-    right: AST;
-}
-export interface AST extends ASTVisitable {
-    identifier: symbol;
-    clone(): AST;
-}
+import { AST } from '../ast';
+import { Application } from '../ast/application';
+import { Lambda } from '../ast/lambda';
+import { Macro } from '../ast/macro';
+import { Variable } from '../ast/variable';
 export declare class MacroDef {
     readonly ast: AST;
     constructor(ast: AST);

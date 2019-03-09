@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const lambda_1 = require("../parser/ast/lambda");
-const application_1 = require("../parser/ast/application");
+const application_1 = require("../ast/application");
+const lambda_1 = require("../ast/lambda");
 class BasicPrinter {
     constructor(tree) {
         this.tree = tree;

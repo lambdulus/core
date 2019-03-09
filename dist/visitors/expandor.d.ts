@@ -1,14 +1,11 @@
+import { AST } from "../ast";
 import { ASTVisitor, NextExpansion } from ".";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Application } from "../parser/ast/application";
-import { Lambda } from "../parser/ast/lambda";
-import { Macro } from "../parser/ast/macro";
-import { Variable } from "../parser/ast/variable";
-import { AST } from "../parser";
+import { Application } from "../ast/application";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
+import { Variable } from "../ast/variable";
 export declare class Expandor implements ASTVisitor {
-    private readonly parent;
-    private readonly treeSide;
-    private readonly target;
     private expanded;
     tree: AST;
     constructor({ parent, treeSide, target }: NextExpansion, tree: AST);
