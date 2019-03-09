@@ -91,6 +91,10 @@ export class NormalEvaluator implements ASTVisitor {
       // then all varNames with empty Sets ( those are unbound ) will be filtered
       // maybe there is no need for AST Nodes I should think about it
 
+      //TODO: IMPORTANT - this is exactly right idea, there is really sense in renaming all of free at once
+      // but as of now I am not doing it at once
+      // maybe NextAlpha should in fact keep ALL needed conversions, that would solve the problem
+
       for (const varName of freeVars) {
         if (application.left.isBound(varName) && application.left.argument.name() !== varName) {
           this.nextReduction = new NextAlpha(application, Child.Left, varName, `_${ varName }`)
@@ -112,14 +116,6 @@ export class NormalEvaluator implements ASTVisitor {
       this.parent = application
       this.child = Child.Left
 
-      if (application.left === null) {
-        console.log('error')
-        console.log(application)
-        console.log()
-        console.log()
-        console.log(this)
-
-      }
       application.left.visit(this)
     }
   }
