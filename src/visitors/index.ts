@@ -15,15 +15,23 @@ export enum Child {
 
 export interface NextReduction extends ReductionVisitable {}
 
+
+// TODO: maybe find better name for it
+export interface SingleAlpha {
+  tree : Lambda,
+  oldName : string,
+  newName : string,
+  // references : Array<Variable> // TODO: references to AST to mutate directly and without further searching
+}
+
 export class NextAlpha implements NextReduction {
   constructor (
-    public readonly tree : Application,
-    public readonly child : Child,
-    public readonly oldName : string,
-    public readonly newName : string,
-    // TODO:
-    // taky mnozinu referenci na vyskyty promennych tam, kde se budou nahrazovat
-    // at to nemusi implementace hledat, proste doslova jenom prohazi ??? -> zvazit
+    public readonly conversions : Array<SingleAlpha>,
+    // public readonly tree : Application,
+    // public readonly child : Child,
+    // public readonly toRename : AlphaMap
+    // public readonly oldName : string, // TODO: remove
+    // public readonly newName : string, // TODO: remove
   ) {}
 
   public visit (visitor : ReductionVisitor) : void {

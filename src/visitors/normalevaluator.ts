@@ -1,4 +1,4 @@
-import { ASTVisitor, Child, NextReduction, NextNone, NextAlpha, NextBeta, NextExpansion } from ".";
+import { ASTVisitor, Child, NextReduction, NextNone, NextAlpha, NextBeta, NextExpansion, SingleAlpha } from ".";
 import { Binary, AST } from "../parser";
 import { Application } from "../parser/ast/application";
 import { Variable } from "../parser/ast/variable";
@@ -6,6 +6,7 @@ import { Lambda } from "../parser/ast/lambda";
 import { ChurchNumber } from "../parser/ast/churchnumber";
 import { Macro } from "../parser/ast/macro";
 import { FreeVarsFinder } from "./freevarsfinder";
+import { BasicPrinter } from "./basicprinter";
 
 export class NormalEvaluator implements ASTVisitor {
   private parent : Binary | null = null
@@ -92,24 +93,27 @@ export class NormalEvaluator implements ASTVisitor {
       // maybe there is no need for AST Nodes I should think about it
 
       //TODO: IMPORTANT - this is exactly right idea, there is really sense in renaming all of free at once
-      // but as of now I am not doing it at once
-      // maybe NextAlpha should in fact keep ALL needed conversions, that would solve the problem
-
+      // const toRename : AlphaMap = new Map
+      const alphas : Array<SingleAlpha> = []
       for (const varName of freeVars) {
-        if (application.left.isBound(varName) && application.left.argument.name() !== varName) {
-          this.nextReduction = new NextAlpha(application, Child.Left, varName, `_${ varName }`)
-          return
+        // TODO: tohle vyresim refactorem isBound()
+        const lambda : Lambda | null = application.left.isBound(varName)
+
+        if (lambda && application.left.argument.name() !== varName) {
+          alphas.push({ tree : <Lambda> lambda, oldName : varName, newName : `_${ varName }` })
         }
       }
 
-
-      // else {
+      if (alphas.length) {
+        this.nextReduction = new NextAlpha(alphas)
+      }
+      else {
         // search for free Vars in right which are bound in left OK
         // if any, do α conversion and return
   
         // if none, do β reduction and return
-      this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
-      // }
+        this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
+      }
     }
 
     else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)

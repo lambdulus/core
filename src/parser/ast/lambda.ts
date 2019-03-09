@@ -62,15 +62,15 @@ export class Lambda implements Binary {
   //   return this.body.freeVarName([ ...bound, this.argument.name()])
   // }
 
-  isBound (varName : string) : boolean {
+  isBound (varName : string) : Lambda | null {
     if (this.argument.name() === varName) {
-      return true
+      return this
     }
 
     if (this.body instanceof Lambda) {
       return this.body.isBound(varName)
     }
 
-    return false
+    return null
   }
 }
