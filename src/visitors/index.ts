@@ -27,11 +27,6 @@ export interface SingleAlpha {
 export class NextAlpha implements NextReduction {
   constructor (
     public readonly conversions : Array<SingleAlpha>,
-    // public readonly tree : Application,
-    // public readonly child : Child,
-    // public readonly toRename : AlphaMap
-    // public readonly oldName : string, // TODO: remove
-    // public readonly newName : string, // TODO: remove
   ) {}
 
   public visit (visitor : ReductionVisitor) : void {

@@ -20,48 +20,6 @@ export class NormalEvaluator implements ASTVisitor {
       this.tree.visit(this)
   }
 
-  // TODO: remove
-  // evaluate () : AST {
-  //   if (this.nextReduction instanceof NextAlpha) {
-  //     const { tree, child, oldName, newName } = this.nextReduction
-  //     tree[<Child> child] = tree[<Child> child].alphaConvert(oldName, newName)
-
-  //     return this.tree
-  //   }
-    
-  //   else if (this.nextReduction instanceof NextBeta) {
-  //     const { parent, treeSide, target, argName, value } = this.nextReduction
-  //     const substituted : AST = target.betaReduce(argName, value)
-
-  //     if (parent === null) {
-  //       return substituted
-  //     }
-  //     else {
-  //       parent[<Child> treeSide] = substituted
-
-  //       return this.tree
-  //     }
-  //   }
-
-  //   else if (this.nextReduction instanceof NextExpansion) {
-  //     const { parent, treeSide, tree } = this.nextReduction
-  //     const expanded : AST = tree.expand()
-
-  //     if (parent === null) {
-  //       return expanded
-  //     }
-  //     else {
-  //       parent[<Child> treeSide] = expanded
-
-  //       return this.tree
-  //     }
-  //   }
-
-  //   else { // instanceof NextNone      
-  //     return this.tree
-  //   }  
-  // }
-
   onApplication(application : Application) : void {
     if (application.left instanceof Variable) {
       this.parent = application

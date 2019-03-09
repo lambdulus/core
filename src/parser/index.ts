@@ -16,15 +16,7 @@ export interface Binary extends AST {
 export interface AST extends ASTVisitable {
   identifier : symbol,
   clone () : AST,
-  // alphaConvert (oldName : string, newName : string) : AST,
-  // betaReduce (argName : string, value : AST) : AST,
-  // etaConvert () : AST,
-  // freeVarName (bound : Array<string>) : string | null, // TODO: refactor to visitor pattern
 }
-
-// export interface Expandable {
-//   expand () : AST,
-// }
 
 export class MacroDef {
   constructor (
