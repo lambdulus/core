@@ -1,5 +1,5 @@
 import { ReductionVisitor, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone } from ".";
-import { AST } from "../parser";
+import { AST } from "../ast";
 import { Expandor } from "./expandor";
 import { BetaReducer } from "./betareducer";
 import { AlphaConvertor } from "./alphaconvertor";

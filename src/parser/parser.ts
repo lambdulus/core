@@ -1,10 +1,11 @@
 import { Token, TokenType } from "../lexer";
-import { MacroTable, AST } from ".";
-import { Variable } from "./ast/variable";
-import { Lambda } from "./ast/lambda";
-import { ChurchNumber } from "./ast/churchnumber";
-import { Macro } from "./ast/macro";
-import { Application } from "./ast/application";
+import { MacroTable } from "./";
+import { Variable } from "../ast/variable";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
+import { Application } from "../ast/application";
+import { AST } from "../ast";
 
 export class Parser {
   private position : number = 0

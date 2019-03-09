@@ -1,6 +1,6 @@
-import { Token } from '../../lexer'
-import { AST } from '..'
-import { ASTVisitor } from '../../visitors';
+import { Token } from '../lexer'
+import { AST } from './'
+import { ASTVisitor } from '../visitors';
 
 export class ChurchNumber implements AST {
   public readonly identifier : symbol = Symbol()

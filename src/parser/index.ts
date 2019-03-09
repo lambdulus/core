@@ -1,22 +1,10 @@
 import Lexer, { Token, CodeStyle } from '../lexer'
 import { Parser } from './parser';
-import { Application } from './ast/application'
-import { Lambda } from './ast/lambda'
-import { Macro } from './ast/macro'
-import { Variable } from './ast/variable'
-import { ASTVisitable } from '../visitors'
-
-// TODO: tak tohle zrusime nahradime logikou visitor patternu
-// eh not really
-export interface Binary extends AST {
-  left : AST,
-  right : AST,
-}
-
-export interface AST extends ASTVisitable {
-  identifier : symbol,
-  clone () : AST,
-}
+import { AST } from '../ast';
+import { Application } from '../ast/application'
+import { Lambda } from '../ast/lambda'
+import { Macro } from '../ast/macro'
+import { Variable } from '../ast/variable'
 
 export class MacroDef {
   constructor (

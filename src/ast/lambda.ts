@@ -1,6 +1,6 @@
-import { AST, Binary } from '..'
+import { AST, Binary } from './'
 import { Variable } from './variable'
-import { ASTVisitor } from '../../visitors';
+import { ASTVisitor } from '../visitors';
 
 export class Lambda implements AST, Binary {
   public readonly identifier : symbol = Symbol()
