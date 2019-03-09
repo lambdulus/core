@@ -62,7 +62,7 @@ class Parser {
   canAccept (type : TokenType) : boolean {
     return (
       this.position < this.tokens.length
-        ||
+        &&
       this.top().type == type
     )
   }
