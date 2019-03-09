@@ -1,12 +1,12 @@
 import { ASTVisitor, Child, NextReduction, NextNone, NextAlpha, NextBeta, NextExpansion, SingleAlpha } from ".";
-import { Binary, AST } from "../parser";
-import { Application } from "../parser/ast/application";
-import { Variable } from "../parser/ast/variable";
-import { Lambda } from "../parser/ast/lambda";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Macro } from "../parser/ast/macro";
 import { FreeVarsFinder } from "./freevarsfinder";
 import { VarBindFinder } from "./varbindfinder";
+import { Binary, AST } from "../ast";
+import { Application } from "../ast/application";
+import { Variable } from "../ast/variable";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
 
 export class NormalEvaluator implements ASTVisitor {
   private parent : Binary | null = null

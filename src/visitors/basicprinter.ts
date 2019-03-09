@@ -1,10 +1,10 @@
-import { Macro } from "../parser/ast/macro";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Variable } from "../parser/ast/variable";
-import { Lambda } from "../parser/ast/lambda";
-import { Application } from "../parser/ast/application";
+import { AST } from "../ast";
+import { Application } from "../ast/application";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
+import { Variable } from "../ast/variable";
 import { ASTVisitable, ASTVisitor } from ".";
-import { AST } from "../parser";
 
 export class BasicPrinter implements ASTVisitor {
   private expression : string = ''

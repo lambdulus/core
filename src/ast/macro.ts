@@ -1,6 +1,7 @@
-import { Token } from '../../lexer'
-import { AST, MacroDef } from '..'
-import { ASTVisitor } from '../../visitors';
+import { Token } from '../lexer'
+import { AST } from './'
+import { MacroDef } from '../parser';
+import { ASTVisitor } from '../visitors';
 
 export class Macro implements AST {
   public readonly identifier : symbol = Symbol()

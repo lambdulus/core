@@ -1,22 +1,20 @@
 import Lexer, { Token } from './lexer'
-import Parser, { AST } from './parser'
+import Parser from './parser'
 
 import { NextNone, NextReduction } from './visitors'
 import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './visitors/normalevaluator'
 import { Reducer } from './visitors/reducer';
+import { AST } from './ast';
 
 export { Token, tokenize, default as Lexer } from './lexer'
-export {
-  parse,
-  AST,
-  default as Parser
-} from './parser'
+export { parse, default as Parser } from './parser'
+export { AST } from './ast'
 
 
 const inputs : Array<string> = [
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci 
   '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
   '(~ x y z . x y z) y z x',  

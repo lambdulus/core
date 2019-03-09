@@ -1,11 +1,11 @@
-import { ASTVisitor, NextAlpha, SingleAlpha } from ".";
-import { Application } from "../parser/ast/application";
-import { Lambda } from "../parser/ast/lambda";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Macro } from "../parser/ast/macro";
-import { Variable } from "../parser/ast/variable";
-import { AST } from "../parser";
 import { Token } from "../lexer";
+import { AST } from "../ast";
+import { Application } from "../ast/application";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
+import { Variable } from "../ast/variable";
+import { ASTVisitor, NextAlpha, SingleAlpha } from ".";
 
 export class AlphaConvertor implements ASTVisitor {
   public readonly conversions : Array<SingleAlpha>

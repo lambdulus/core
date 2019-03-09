@@ -1,19 +1,15 @@
-import { ASTVisitor, NextExpansion, Child } from ".";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Application } from "../parser/ast/application";
-import { Lambda } from "../parser/ast/lambda";
-import { Macro } from "../parser/ast/macro";
-import { Variable } from "../parser/ast/variable";
-import { Binary, AST } from "../parser";
 import { CodeStyle } from "../lexer";
-import { parse } from "../parser";
 import { Lexer } from "..";
+import { Binary, AST } from "../ast";
+import { ASTVisitor, NextExpansion, Child } from ".";
+import { Application } from "../ast/application";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { parse } from "../parser";
+import { Macro } from "../ast/macro";
+import { Variable } from "../ast/variable";
 
 export class Expandor implements ASTVisitor {
-  private readonly parent : Binary | null
-  private readonly treeSide : Child | null
-  private readonly target : AST
-
   private expanded : AST | null = null
   public tree : AST
 
@@ -21,10 +17,6 @@ export class Expandor implements ASTVisitor {
     { parent, treeSide, target } : NextExpansion,
     tree : AST
   ) {
-    this.parent = parent
-    this.treeSide = treeSide
-    this.target = target
-
     target.visit(this)
 
     if (parent === null) {

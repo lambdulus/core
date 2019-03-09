@@ -1,10 +1,10 @@
+import { AST } from "../ast";
+import { Application } from "../ast/application";
+import { Lambda } from "../ast/lambda";
+import { Macro } from "../ast/macro";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Variable } from "../ast/variable";
 import { ASTVisitor, NextBeta, Child } from ".";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Application } from "../parser/ast/application";
-import { Lambda } from "../parser/ast/lambda";
-import { Macro } from "../parser/ast/macro";
-import { Variable } from "../parser/ast/variable";
-import { AST } from "../parser";
 
 export class BetaReducer implements ASTVisitor {
   private readonly argName : string
