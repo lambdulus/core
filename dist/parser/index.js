@@ -5,10 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = __importDefault(require("../lexer"));
 const parser_1 = require("./parser");
-const application_1 = require("./ast/application");
-const lambda_1 = require("./ast/lambda");
-const macro_1 = require("./ast/macro");
-const variable_1 = require("./ast/variable");
+const application_1 = require("../ast/application");
+const lambda_1 = require("../ast/lambda");
+const macro_1 = require("../ast/macro");
+const variable_1 = require("../ast/variable");
 class MacroDef {
     constructor(ast) {
         this.ast = ast;

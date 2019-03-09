@@ -1,5 +1,6 @@
 import { Token, TokenType } from "../lexer";
-import { MacroTable, AST } from ".";
+import { MacroTable } from "./";
+import { AST } from "../ast";
 export declare class Parser {
     private readonly tokens;
     private readonly macroTable;

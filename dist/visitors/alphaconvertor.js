@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const application_1 = require("../parser/ast/application");
-const variable_1 = require("../parser/ast/variable");
 const lexer_1 = require("../lexer");
+const application_1 = require("../ast/application");
+const variable_1 = require("../ast/variable");
 class AlphaConvertor {
     constructor({ conversions }) {
         // Need to do this Nonsense Dance

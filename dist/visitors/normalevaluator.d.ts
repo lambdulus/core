@@ -1,10 +1,10 @@
 import { ASTVisitor, NextReduction } from ".";
-import { AST } from "../parser";
-import { Application } from "../parser/ast/application";
-import { Variable } from "../parser/ast/variable";
-import { Lambda } from "../parser/ast/lambda";
-import { ChurchNumber } from "../parser/ast/churchnumber";
-import { Macro } from "../parser/ast/macro";
+import { AST } from "../ast";
+import { Application } from "../ast/application";
+import { Variable } from "../ast/variable";
+import { Lambda } from "../ast/lambda";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Macro } from "../ast/macro";
 export declare class NormalEvaluator implements ASTVisitor {
     readonly tree: AST;
     private parent;

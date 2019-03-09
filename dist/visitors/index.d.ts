@@ -1,9 +1,9 @@
-import { AST, Binary } from '../parser';
-import { Application } from '../parser/ast/application';
-import { Lambda } from '../parser/ast/lambda';
-import { ChurchNumber } from '../parser/ast/churchnumber';
-import { Macro } from '../parser/ast/macro';
-import { Variable } from '../parser/ast/variable';
+import { Lambda } from "../ast/lambda";
+import { Binary, AST } from "../ast";
+import { Application } from "../ast/application";
+import { ChurchNumber } from "../ast/churchnumber";
+import { Variable } from "../ast/variable";
+import { Macro } from "../ast/macro";
 export declare enum Child {
     Left = "left",
     Right = "right"

@@ -1,13 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const parser_1 = require("../parser");
 const __1 = require("..");
+const parser_1 = require("../parser");
 class Expandor {
     constructor({ parent, treeSide, target }, tree) {
         this.expanded = null;
-        this.parent = parent;
-        this.treeSide = treeSide;
-        this.target = target;
         target.visit(this);
         if (parent === null) {
             this.tree = this.expanded;
