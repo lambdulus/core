@@ -6,17 +6,17 @@ var Child;
     Child["Right"] = "right";
 })(Child = exports.Child || (exports.Child = {}));
 class NextAlpha {
-    constructor(tree, child, oldName, newName) {
-        this.tree = tree;
-        this.child = child;
-        this.oldName = oldName;
-        this.newName = newName;
+    constructor(conversions) {
+        this.conversions = conversions;
     }
     visit(visitor) {
         visitor.onAlpha(this);
     }
 }
 exports.NextAlpha = NextAlpha;
+// TODO: vyresit pro pripady kdy jde o multilambdu
+// pak bude navic drzet mnozinu values a mnozinu arguments
+// spis mnozinu tuples
 class NextBeta {
     constructor(parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
     target, // EXPR ve kterem se provede nahrada
@@ -32,9 +32,6 @@ class NextBeta {
     }
 }
 exports.NextBeta = NextBeta;
-// TODO: vyresit pro pripady kdy jde o multilambdu
-// pak bude navic drzet mnozinu values a mnozinu arguments
-// spis mnozinu tuples
 class NextExpansion {
     constructor(parent, treeSide, target) {
         this.parent = parent;

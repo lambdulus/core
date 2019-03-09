@@ -17,7 +17,10 @@ var parser_2 = require("./parser");
 exports.parse = parser_2.parse;
 exports.Parser = parser_2.default;
 const inputs = [
+    '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
+    '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
+    '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
     '(~ x y z . x y z) y z x',
     '1 a',
     '^ 4 4',
@@ -45,7 +48,6 @@ const ast = parser_1.default.parse(tokens);
 let root = ast;
 let e = 0;
 while (true) {
-    // console.log('E ==== ', e)
     const normal = new normalevaluator_1.NormalEvaluator(root);
     if (normal.nextReduction instanceof visitors_1.NextNone) {
         break;

@@ -5,9 +5,6 @@ const lambda_1 = require("../parser/ast/lambda");
 class BetaReducer {
     constructor({ parent, treeSide, target, argName, value }, tree) {
         this.substituted = null;
-        this.parent = parent;
-        this.treeSide = treeSide;
-        this.target = target;
         this.argName = argName;
         this.value = value;
         target.visit(this);

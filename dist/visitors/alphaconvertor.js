@@ -4,15 +4,20 @@ const application_1 = require("../parser/ast/application");
 const variable_1 = require("../parser/ast/variable");
 const lexer_1 = require("../lexer");
 class AlphaConvertor {
-    constructor({ tree, child, oldName, newName }) {
+    constructor({ conversions }) {
         // Need to do this Nonsense Dance
         this.converted = null;
-        this.tree = tree;
-        this.child = child;
-        this.oldName = oldName;
-        this.newName = newName;
-        tree[child].visit(this);
-        tree[child] = this.converted; // part of the Nonse Dance
+        this.oldName = '';
+        this.newName = '';
+        this.conversions = conversions;
+        for (const { tree, oldName, newName } of this.conversions) {
+            this.oldName = oldName;
+            this.newName = newName;
+            tree.argument.visit(this);
+            tree.argument = this.converted;
+            tree.body.visit(this);
+            tree.body = this.converted;
+        }
     }
     onApplication(application) {
         application.left.visit(this);
@@ -22,13 +27,15 @@ class AlphaConvertor {
         this.converted = new application_1.Application(left, right);
     }
     onLambda(lambda) {
-        lambda.argument.visit(this);
-        const left = this.converted;
-        lambda.body.visit(this);
-        const right = this.converted;
-        lambda.argument = left;
-        lambda.body = right;
-        this.converted = lambda;
+        if (lambda.argument.name() !== this.oldName) {
+            lambda.body.visit(this);
+            const right = this.converted;
+            lambda.body = right;
+            this.converted = lambda;
+        }
+        else {
+            this.converted = lambda;
+        }
     }
     onChurchNumber(churchNumber) {
         this.converted = churchNumber;
