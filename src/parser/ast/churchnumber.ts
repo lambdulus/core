@@ -20,28 +20,4 @@ export class ChurchNumber implements AST {
   visit (visitor : ASTVisitor) : void {
     visitor.onChurchNumber(this)
   }
-
-  // expand () : AST {
-  //   const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
-  //   const value : number = <number> this.token.value
-  //   const churchLiteral : string = `(λ s z .${' (s'.repeat(value)} z)${')'.repeat(value)}`
-
-  //   return parse(Lexer.tokenize(churchLiteral, codeStyle))
-  // }
-  
-  // alphaConvert (oldName : string, newName : string) : AST {
-  //   return this
-  // }
-  
-  // betaReduce (argName : string, value : AST) : AST {
-  //   return this
-  // }
-  
-  // etaConvert () : AST {
-  //   throw new Error("Method not implemented.");
-  // }
-
-  // freeVarName (bound : Array<string>) : string | null {
-  //   return null
-  // }
 }

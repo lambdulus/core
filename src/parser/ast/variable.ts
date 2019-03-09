@@ -20,33 +20,4 @@ export class Variable implements AST {
   visit (visitor : ASTVisitor) : void {
     visitor.onVariable(this)
   }
-  
-  // alphaConvert (oldName : string, newName : string) : Variable {
-  //   if (this.name() === oldName) {
-  //     const token : Token = new Token(this.token.type, newName, this.token.position)
-    
-  //     return new Variable(token)
-  //   }
-
-  //   return this
-  // }
-  
-  // betaReduce (argName : string, value : AST) : AST {
-  //   if (this.name() === argName) {
-  //     return value.clone()
-  //   }
-    
-  //   return this
-  // }
-  
-  // etaConvert () : AST {
-  //   throw new Error("Method not implemented.");
-  // }
-
-  // freeVarName (bound : Array<string>) : string | null {
-  //   if (bound.includes(this.name())) {
-  //     return null
-  //   }    
-  //   return this.name()
-  // }
 }
