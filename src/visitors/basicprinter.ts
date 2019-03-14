@@ -1,9 +1,4 @@
-import { AST } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Macro } from "../ast/macro";
-import { Variable } from "../ast/variable";
+import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
 export class BasicPrinter implements ASTVisitor {

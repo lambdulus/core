@@ -1,9 +1,4 @@
-import { AST, Binary, Child } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { Macro } from "../ast/macro";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Variable } from "../ast/variable";
+import { AST, Binary, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Beta } from "../reductions";
 

@@ -1,8 +1,4 @@
-import { Lambda } from "../ast/lambda";
-import { Application } from "../ast/application";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Variable } from "../ast/variable";
-import { Macro } from "../ast/macro";
+import { Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 
 export abstract class ASTVisitor {
   onApplication (application : Application) : void {}

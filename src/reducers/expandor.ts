@@ -1,10 +1,8 @@
 import { CodeStyle } from "../lexer";
 import { Lexer } from "..";
-import { AST, Binary, Child } from "../ast";
+import { AST, Binary, Child, ChurchNumber, Macro } from "../ast";
 import { ASTVisitor } from "../visitors";
-import { ChurchNumber } from "../ast/churchnumber";
 import { parse } from "../parser";
-import { Macro } from "../ast/macro";
 import { Expansion } from "../reductions";
 
 export class Expandor extends ASTVisitor {

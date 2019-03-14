@@ -1,18 +1,9 @@
 import { ASTVisitor } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
-import { Binary, AST, Child } from "../ast"
-import { Application } from "../ast/application"
-import { Variable } from "../ast/variable"
-import { Lambda } from "../ast/lambda"
-import { ChurchNumber } from "../ast/churchnumber"
-import { Macro } from "../ast/macro"
+import { Binary, AST, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
 import { BoundingFinder } from "./boundingfinder"
 import { ReducerFactory } from "../reducers/reducerfactory";
-import { ASTReduction } from "../reductions";
-import { None } from "../reductions/none";
-import { Alpha } from "../reductions";
-import { Beta } from "../reductions";
-import { Expansion } from "../reductions";
+import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
 
 export interface Reducer {
   tree : AST
