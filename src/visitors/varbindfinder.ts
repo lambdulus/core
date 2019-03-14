@@ -1,6 +1,7 @@
 import { Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
+
 // TODO: mozna vubec nebude potreba -> DELETE
 export class VarBindFinder implements ASTVisitor {
   public lambda : Lambda | null = null

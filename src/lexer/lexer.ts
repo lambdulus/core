@@ -1,4 +1,6 @@
-import Counter, { PositionRecord } from './counter'
+// TODO: refactor to separate files
+
+import { Counter, PositionRecord } from './counter'
 
 
 export enum TokenType {

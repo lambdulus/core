@@ -2,19 +2,19 @@ import { AST, Binary, Child, Application, Lambda, ChurchNumber, Macro, Variable 
 import { ASTVisitor } from "../visitors";
 import { Beta } from "../reductions";
 
-export class BetaReducer extends ASTVisitor {
-  private readonly argName : string
-  private readonly value : AST
 
+export class BetaReducer extends ASTVisitor {
   private substituted : AST | null = null
-  public tree : AST
+
   private parent : Binary | null
   private treeSide : Child | null
   private target : AST
-
+  private readonly argName : string
+  private readonly value : AST
+  
   constructor (
     { parent, treeSide, target, argName, value } : Beta,
-    tree : AST,
+    public tree : AST,
   ) {
     super()
     this.parent = parent

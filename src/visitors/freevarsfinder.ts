@@ -2,6 +2,7 @@ import { AST } from "../ast";
 import { Application, Lambda, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
+
 export class FreeVarsFinder extends ASTVisitor {
   private bound : Set<string> = new Set
 
