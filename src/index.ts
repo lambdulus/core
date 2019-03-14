@@ -1,10 +1,10 @@
 import Lexer, { Token } from './lexer'
 import Parser from './parser'
 
-import { Reductions } from './visitors'
 import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './visitors/normalevaluator'
 import { AST } from './ast'
+import { None } from './reductions/none';
 
 export { Token, tokenize, default as Lexer } from './lexer'
 export { parse, default as Parser } from './parser'
@@ -58,7 +58,7 @@ let e = 0
 while (true) {
   const normal : NormalEvaluator = new NormalEvaluator(root)
 
-  if (normal.nextReduction instanceof Reductions.None) {
+  if (normal.nextReduction instanceof None) {
     break
   }
 

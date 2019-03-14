@@ -4,7 +4,7 @@ import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
-import { ASTVisitable, ASTVisitor } from ".";
+import { ASTVisitor } from ".";
 
 export class BasicPrinter implements ASTVisitor {
   private expression : string = ''
@@ -32,7 +32,7 @@ export class BasicPrinter implements ASTVisitor {
   }
 
   constructor (
-    public readonly tree : AST & ASTVisitable,
+    public readonly tree : AST,
   ) {
     this.tree.visit(this)
   }
