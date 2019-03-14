@@ -1,6 +1,7 @@
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
+
 export class BasicPrinter implements ASTVisitor {
   private expression : string = ''
 

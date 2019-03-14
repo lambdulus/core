@@ -1,6 +1,7 @@
-import Lexer, { Token, CodeStyle } from '../lexer'
+import { Token, CodeStyle, tokenize } from '../lexer'
 import { Parser } from './parser';
 import { AST, Application, Lambda, Macro, Variable } from '../ast';
+
 
 export class MacroDef {
   constructor (
@@ -14,7 +15,7 @@ export interface MacroTable {
 
 function toAst (definition : string, macroTable : MacroTable) : AST {
   const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
-  const parser : Parser = new Parser(Lexer.tokenize(definition, codeStyle), macroTable)
+  const parser : Parser = new Parser(tokenize(definition, codeStyle), macroTable)
   
   return parser.parse(null)
 }

@@ -3,17 +3,18 @@ import { AST } from './'
 import { MacroDef } from '../parser';
 import { ASTVisitor } from '../visitors';
 
+
 export class Macro implements AST {
   public readonly identifier : symbol = Symbol()
-
-  name () : string {
-    return `${ this.token.value }`
-  }
 
   constructor (
     public readonly token : Token,
     public readonly definition : MacroDef,
   ) {}
+
+  name () : string {
+    return `${ this.token.value }`
+  }
 
   clone () : Macro {
     return new Macro(this.token, this.definition)

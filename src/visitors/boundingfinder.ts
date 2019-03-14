@@ -1,6 +1,7 @@
 import { ASTVisitor } from ".";
 import { Application, Lambda, Variable } from "../ast/";
 
+
 export class BoundingFinder extends ASTVisitor {
   public lambdas : Set<Lambda> = new Set
 

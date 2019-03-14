@@ -3,14 +3,15 @@ import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
 import { ASTVisitor } from "../visitors";
 import { Alpha } from "../reductions";
 
-export class AlphaConvertor extends ASTVisitor {
-  public readonly conversions : Set<Lambda>
 
+export class AlphaConvertor extends ASTVisitor {
   // Need to do this Nonsense Dance
   private converted : AST | null = null
 
   private oldName : string = ''
   private newName : string = ''
+
+  public readonly conversions : Set<Lambda>
   
   constructor (
     { conversions } : Alpha,

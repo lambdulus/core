@@ -1,4 +1,4 @@
-import Lexer, { Token } from './lexer'
+import { Token, tokenize } from './lexer'
 import Parser from './parser'
 
 import { BasicPrinter } from './visitors/basicprinter'
@@ -6,7 +6,8 @@ import { NormalEvaluator } from './visitors/normalevaluator'
 import { AST } from './ast'
 import { None } from './reductions/none';
 
-export { Token, tokenize, default as Lexer } from './lexer'
+
+export { Token, tokenize, default as Lexer } from './lexer/lexer'
 export { parse, default as Parser } from './parser'
 export { AST } from './ast'
 
@@ -46,7 +47,7 @@ const inputs : Array<string> = [
 console.log(inputs[0])
 
 
-const tokens : Array<Token> = Lexer.tokenize(inputs[0], {
+const tokens : Array<Token> = tokenize(inputs[0], {
   singleLetterVars : false,
   lambdaLetters : [ 'λ', '\\', '~' ],
 })

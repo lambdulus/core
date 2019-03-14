@@ -1,9 +1,9 @@
-import { CodeStyle } from "../lexer";
-import { Lexer } from "..";
+import { CodeStyle, tokenize } from "../lexer";
 import { AST, Binary, Child, ChurchNumber, Macro } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { parse } from "../parser";
 import { Expansion } from "../reductions";
+
 
 export class Expandor extends ASTVisitor {
   private expanded : AST | null = null
@@ -27,7 +27,7 @@ export class Expandor extends ASTVisitor {
     const value : number = <number> churchNumber.token.value
     const churchLiteral : string = `(λ s z .${' (s'.repeat(value)} z)${')'.repeat(value)}`
 
-    this.expanded = parse(Lexer.tokenize(churchLiteral, codeStyle))
+    this.expanded = parse(tokenize(churchLiteral, codeStyle))
   }
 
   onMacro(macro : Macro) : void {

@@ -5,7 +5,7 @@ export interface PositionRecord {
   position : number
 }
 
-export default class Counter {
+export class Counter {
   public column : number = 0
   public row : number = 0
 

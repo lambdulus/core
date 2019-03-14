@@ -1,6 +1,7 @@
 import { AST, Binary } from './'
 import { ASTVisitor } from '../visitors'
 
+
 export class Application implements AST, Binary {
   public readonly identifier : symbol = Symbol()
 

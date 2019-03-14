@@ -2,6 +2,7 @@ import { Token, TokenType } from "../lexer";
 import { MacroTable } from "./";
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 
+
 export class Parser {
   private position : number = 0
 

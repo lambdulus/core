@@ -2,14 +2,14 @@ import { ASTVisitor } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
 import { Binary, AST, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
 import { BoundingFinder } from "./boundingfinder"
-import { ReducerFactory } from "../reducers/reducerfactory";
+import { constructFor } from "../reducers";
 import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
+
 
 export interface Reducer {
   tree : AST
   perform () : void
 }
-
 
 export class NormalEvaluator extends ASTVisitor {
   private parent : Binary | null = null
@@ -24,7 +24,7 @@ export class NormalEvaluator extends ASTVisitor {
     super()
     this.tree.visit(this)
 
-    this.reducer = ReducerFactory.constructFor(tree, this.nextReduction)
+    this.reducer = constructFor(tree, this.nextReduction)
   }
 
   onApplication (application : Application) : void {
