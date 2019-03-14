@@ -8,7 +8,6 @@ const parser_1 = __importDefault(require("./parser"));
 const visitors_1 = require("./visitors");
 const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
-const reducer_1 = require("./visitors/reducer");
 var lexer_2 = require("./lexer");
 exports.Token = lexer_2.Token;
 exports.tokenize = lexer_2.tokenize;
@@ -17,9 +16,12 @@ var parser_2 = require("./parser");
 exports.parse = parser_2.parse;
 exports.Parser = parser_2.default;
 const inputs = [
-    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
+    '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
+    '(~ x y . (~ z . x) z ) (x y)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
+    '(~ z . z (~ x . (~ x . z))) (x z) 1 2',
+    '(~ z . z (~ x . z)) (x y z)',
     '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
     '(~ x y z . x y z) y z x',
     '1 a',
@@ -48,15 +50,19 @@ const ast = parser_1.default.parse(tokens);
 let root = ast;
 let e = 0;
 while (true) {
+    // TODO: bude vracet instanci Reduceru
+    // reducer bude mit metodu na provedeni - nebude to delat v konstruktoru jako ted
+    // 
     const normal = new normalevaluator_1.NormalEvaluator(root);
-    if (normal.nextReduction instanceof visitors_1.NextNone) {
+    if (normal.nextReduction instanceof visitors_1.Reductions.None) {
         break;
     }
-    // console.log('REDUCTION TYPE ', normal.nextReduction)
-    const nextReduction = normal.nextReduction;
-    const reducer = new reducer_1.Reducer(root, nextReduction);
-    root = reducer.tree;
+    root = normal.perform(); // perform next reduction
     e++;
+    // console.log('REDUCTION TYPE ', normal.nextReduction)
+    // const nextReduction : Reductions.Reduction = normal.nextReduction
+    // const reducer : Reducer = normal.reducer
+    // const reducer : Reducer = new Reducer(root, nextReduction)
     // const printer : BasicPrinter = new BasicPrinter(root)
     // const s = printer.print()
     // console.log(s)

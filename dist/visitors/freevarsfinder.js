@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class FreeVarsFinder {
+const _1 = require(".");
+class FreeVarsFinder extends _1.ASTVisitor {
     constructor(tree) {
+        super();
         this.tree = tree;
         this.bound = new Set;
         this.freeVars = new Set;
@@ -14,12 +16,7 @@ class FreeVarsFinder {
     onLambda(lambda) {
         this.bound.add(lambda.argument.name());
         lambda.body.visit(this);
-    }
-    onChurchNumber(churchNumber) {
-        // nothing
-    }
-    onMacro(macro) {
-        // nothing
+        this.bound.delete(lambda.argument.name());
     }
     onVariable(variable) {
         if (!this.bound.has(variable.name())) {

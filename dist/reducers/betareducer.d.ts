@@ -4,17 +4,12 @@ import { Lambda } from "../ast/lambda";
 import { Macro } from "../ast/macro";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from ".";
-declare class Reducer extends ASTVisitor {
-    tree: AST;
-    constructor(tree: AST);
-    static constructFor(tree: AST, nextReduction: Reductions.ASTReduction): Reducer;
-    perform(): void;
-}
-export declare class BetaReducer extends Reducer {
+import { Reductions, ASTVisitor } from "../visitors";
+export declare class BetaReducer extends ASTVisitor {
     private readonly argName;
     private readonly value;
     private substituted;
+    tree: AST;
     private parent;
     private treeSide;
     private target;
@@ -26,4 +21,3 @@ export declare class BetaReducer extends Reducer {
     onVariable(variable: Variable): void;
     perform(): void;
 }
-export {};

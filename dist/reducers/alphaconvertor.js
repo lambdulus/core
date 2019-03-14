@@ -3,38 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
 const application_1 = require("../ast/application");
 const variable_1 = require("../ast/variable");
-const _1 = require(".");
-// import Reducer from "./reducer";
-const betareducer_1 = require("./betareducer");
-const expandor_1 = require("./expandor");
-class Reducer extends _1.ASTVisitor {
-    constructor(tree) {
+const visitors_1 = require("../visitors");
+class AlphaConvertor extends visitors_1.ASTVisitor {
+    constructor({ conversions }, tree) {
         super();
         this.tree = tree;
-    }
-    static constructFor(tree, nextReduction) {
-        if (nextReduction instanceof _1.Reductions.Beta) {
-            return new betareducer_1.BetaReducer(nextReduction, tree);
-        }
-        else if (nextReduction instanceof _1.Reductions.Alpha) {
-            return new AlphaConvertor(nextReduction, tree);
-        }
-        else if (nextReduction instanceof _1.Reductions.Expansion) {
-            return new expandor_1.Expandor(nextReduction, tree);
-        }
-        else {
-            // throw new Error('There are no Reduction implementations for type' + nextReduction.toString())
-            // or
-            return new Reducer(tree);
-        }
-    }
-    perform() {
-        // nothing
-    }
-}
-class AlphaConvertor extends Reducer {
-    constructor({ conversions }, tree) {
-        super(tree);
         // Need to do this Nonsense Dance
         this.converted = null;
         this.oldName = '';

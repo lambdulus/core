@@ -1,14 +1,9 @@
 import { AST } from "../ast";
-import { Reductions, ASTVisitor } from ".";
+import { Reductions, ASTVisitor } from "../visitors";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
-declare class Reducer extends ASTVisitor {
+export declare class Expandor extends ASTVisitor {
     tree: AST;
-    constructor(tree: AST);
-    static constructFor(tree: AST, nextReduction: Reductions.ASTReduction): Reducer;
-    perform(): void;
-}
-export declare class Expandor extends Reducer {
     private expanded;
     private parent;
     private treeSide;
@@ -18,4 +13,3 @@ export declare class Expandor extends Reducer {
     onMacro(macro: Macro): void;
     perform(): void;
 }
-export {};
