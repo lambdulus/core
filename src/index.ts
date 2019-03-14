@@ -7,7 +7,7 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 
-export { Token, tokenize, default as Lexer } from './lexer/lexer'
+export { Token, tokenize } from './lexer'
 export { parse, default as Parser } from './parser'
 export { AST } from './ast'
 
