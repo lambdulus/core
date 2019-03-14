@@ -1,59 +1,11 @@
-// TODO: refactor to separate files
-
 import { Counter, PositionRecord } from './counter'
-
-
-export enum TokenType {
-  Lambda = 'lambda',
-  Dot = 'dot',
-  Identifier = 'identifier',
-  Number = 'number',
-  Operator = 'operator',
-  LeftParen = 'left paren',
-  RightParen = 'right paren',
-}
-
-export class Token {
-  constructor (
-    public readonly type : TokenType,
-    public readonly value : string | number,
-    public readonly position : PositionRecord,
-  ) {}
-}
-
-
-// TODO: I may not need LambdaLetters - frontend could work that for me
-export type CodeStyle = {
-  singleLetterVars : boolean,
-  lambdaLetters : Array<string>,
-}
-
-class InvalidIdentifier extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord,
-  ) { super() }
-}
-
-class InvalidNumber extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord
-  ) { super() }
-}
-
-class InvalidOperator extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord
-  ) { super() }
-}
+import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './';
 
 
 class Lexer {
-  position : Counter = new Counter // TODO: replace with simple object or na, IDK
+  public position : Counter = new Counter
 
-  tokens : Array<Token> = []
+  public tokens : Array<Token> = []
 
   constructor (
     readonly source : string,
@@ -314,8 +266,4 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
   const lexer : Lexer = new Lexer(input + ' ', config)
 
   return lexer.tokenize()
-}
-
-export default {
-  tokenize,
 }
