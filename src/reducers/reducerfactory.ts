@@ -4,10 +4,7 @@ import { AlphaConvertor } from "./alphaconvertor";
 import { Expandor } from "./expandor";
 import { EmptyReducer } from "./emptyreducer";
 import { Reducer } from "../visitors/normalevaluator";
-import { Beta } from "../reductions/beta";
-import { ASTReduction } from "../reductions";
-import { Alpha } from "../reductions/alpha";
-import { Expansion } from "../reductions/expansion";
+import { ASTReduction, Alpha, Beta, Expansion } from "../reductions";
 
 export namespace ReducerFactory {
   export function constructFor (tree : AST, nextReduction : ASTReduction) : Reducer {

@@ -1,8 +1,5 @@
 import { ASTVisitor } from ".";
-import { Lambda } from "../ast/lambda";
-import { Application } from "../ast/application";
-import { FreeVarsFinder } from "./freevarsfinder";
-import { Variable } from "../ast/variable";
+import { Application, Lambda, Variable } from "../ast/";
 
 export class BoundingFinder extends ASTVisitor {
   public lambdas : Set<Lambda> = new Set

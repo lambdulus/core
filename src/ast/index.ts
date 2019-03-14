@@ -1,4 +1,11 @@
-import { ASTVisitor } from "../visitors";
+import { ASTVisitor } from "../visitors"
+
+export { Application } from './application'
+export { Lambda } from './lambda'
+export { ChurchNumber } from './churchnumber'
+export { Macro } from './macro'
+export { Variable } from './variable'
+
 
 export enum Child {
   Left = 'left',

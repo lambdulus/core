@@ -1,4 +1,4 @@
-import { Lambda } from "../ast/lambda";
+import { Lambda } from "../ast";
 import { ASTReduction } from ".";
 
 export class Alpha extends ASTReduction {
