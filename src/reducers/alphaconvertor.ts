@@ -5,9 +5,11 @@ import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
-import { ASTVisitor, NextAlpha } from ".";
+import { Reductions, ASTVisitor } from "../visitors";
+// import { Reducer } from "./emptyreducer";
 
-export class AlphaConvertor implements ASTVisitor {
+export class AlphaConvertor extends ASTVisitor {
+  public tree : AST
   public readonly conversions : Set<Lambda>
 
   // Need to do this Nonsense Dance
@@ -16,19 +18,10 @@ export class AlphaConvertor implements ASTVisitor {
   private oldName : string = ''
   private newName : string = ''
   
-  constructor ({ conversions } : NextAlpha) {
+  constructor ({ conversions } : Reductions.Alpha, tree : AST) {
+    super()
     this.conversions = conversions
-
-    for (const lambda of this.conversions) {
-      this.oldName = lambda.argument.name()
-      this.newName = `_${this.oldName}` // TODO: create original name
-
-      lambda.argument.visit(this)
-      lambda.argument = <Variable> this.converted
-
-      lambda.body.visit(this)
-      lambda.body = <AST> this.converted
-    }
+    this.tree = tree
   }
 
   onApplication(application : Application) : void {
@@ -73,6 +66,19 @@ export class AlphaConvertor implements ASTVisitor {
     }
     else {
       this.converted = variable
+    }
+  }
+
+  perform () : void {
+    for (const lambda of this.conversions) {
+      this.oldName = lambda.argument.name()
+      this.newName = `_${this.oldName}` // TODO: create original name
+
+      lambda.argument.visit(this)
+      lambda.argument = <Variable> this.converted
+
+      lambda.body.visit(this)
+      lambda.body = <AST> this.converted
     }
   }
 }
