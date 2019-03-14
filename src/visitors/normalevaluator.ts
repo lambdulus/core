@@ -1,6 +1,6 @@
-import { ASTVisitor, Child, Reductions } from "."
+import { ASTVisitor, Reductions } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
-import { Binary, AST } from "../ast"
+import { Binary, AST, Child } from "../ast"
 import { Application } from "../ast/application"
 import { Variable } from "../ast/variable"
 import { Lambda } from "../ast/lambda"
@@ -33,10 +33,6 @@ export class NormalEvaluator extends ASTVisitor {
 
   onApplication (application : Application) : void {
     if (application.left instanceof Variable) {
-      // TODO: fakt to je jenom pokud to nalevo je Var?
-      // co kdyz to nalevo neni var, ale nejde to nijak zjednodusit
-      // nemel bych to nejak osetrit?
-      // napis si na to nejakej TEST
       this.parent = application
       this.child = Child.Right
       application.right.visit(this)
@@ -57,11 +53,19 @@ export class NormalEvaluator extends ASTVisitor {
       }
     }
 
-    else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)
+    // (this.left instanceof Macro || this.left instanceof ChurchNumber || this.left instanceof Application)
+    else {
       this.parent = application
       this.child = Child.Left
 
       application.left.visit(this)
+
+      if (this.nextReduction instanceof Reductions.None) {
+        this.parent = application
+        this.child = Child.Right
+
+        application.right.visit(this)
+      }
     }
   }
   

@@ -1,14 +1,9 @@
 import { Lambda } from "../ast/lambda";
-import { Binary, AST } from "../ast";
+import { Binary, AST, Child } from "../ast";
 import { Application } from "../ast/application";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
 import { Macro } from "../ast/macro";
-
-export enum Child {
-  Left = 'left',
-  Right = 'right',
-}
 
 export namespace Reductions {
   export abstract class ASTReduction {}
@@ -49,13 +44,6 @@ export namespace Reductions {
   export class None extends ASTReduction {}
 
 }
-
-
-// TODO: tohle klidne zrusit, rovnou interface AST tridy budou implementovat visit()
-export interface ASTVisitable {
-  visit (visitor : ASTVisitor) : void,
-}
-
 
 export abstract class ASTVisitor {
   onApplication (application : Application) : void {}

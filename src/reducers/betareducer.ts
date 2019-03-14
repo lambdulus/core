@@ -1,10 +1,10 @@
-import { AST, Binary } from "../ast";
+import { AST, Binary, Child } from "../ast";
 import { Application } from "../ast/application";
 import { Lambda } from "../ast/lambda";
 import { Macro } from "../ast/macro";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
-import { Reductions, Child, ASTVisitor } from "../visitors";
+import { Reductions, ASTVisitor } from "../visitors";
 
 export class BetaReducer extends ASTVisitor {
   private readonly argName : string
