@@ -55,6 +55,12 @@ export function parse (tokens : Array<Token>) : AST {
   macroTable['>='] = new MacroDef(toAst(`(λ m n . ZERO (- n m))`, macroTable))
   macroTable['<='] = new MacroDef(toAst(`(λ m n . ZERO (- m n))`, macroTable))
 
+  macroTable['PAIR'] = new MacroDef(toAst(`(λ f s . (λ g . g f s))`, macroTable))
+  macroTable['FIRST'] = new MacroDef(toAst(`(λ p . p (λ f s . f))`, macroTable))
+  macroTable['PAIR'] = new MacroDef(toAst(`(λ p . p (λ f s . s))`, macroTable))
+  // TODO: chtel bych LIST, CONS, APPEND, GET NTH ITEM, MAP, ...
+
+
   // QUICK MACROS - non recursively defined
   // macroTable['NOT'] = new MacroDef(toAst(`(λ p . p (λ t f . f) (λ t f . t))`, macroTable))
   // macroTable['-'] = new MacroDef(toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`, macroTable))
