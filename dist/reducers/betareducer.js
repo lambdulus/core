@@ -2,52 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const application_1 = require("../ast/application");
 const lambda_1 = require("../ast/lambda");
-const _1 = require(".");
-// import Reducer from "./reducer";
-const alphaconvertor_1 = require("./alphaconvertor");
-const expandor_1 = require("./expandor");
-class Reducer extends _1.ASTVisitor {
-    constructor(tree) {
-        super();
-        this.tree = tree;
-    }
-    static constructFor(tree, nextReduction) {
-        if (nextReduction instanceof _1.Reductions.Beta) {
-            return new BetaReducer(nextReduction, tree);
-        }
-        else if (nextReduction instanceof _1.Reductions.Alpha) {
-            return new alphaconvertor_1.AlphaConvertor(nextReduction, tree);
-        }
-        else if (nextReduction instanceof _1.Reductions.Expansion) {
-            return new expandor_1.Expandor(nextReduction, tree);
-        }
-        else {
-            // throw new Error('There are no Reduction implementations for type ' + nextReduction)
-            // or
-            return new Reducer(tree);
-        }
-    }
-    perform() {
-        // nothing
-    }
-}
-class BetaReducer extends Reducer {
+const visitors_1 = require("../visitors");
+class BetaReducer extends visitors_1.ASTVisitor {
     constructor({ parent, treeSide, target, argName, value }, tree) {
-        super(tree);
+        super();
         this.substituted = null;
         this.parent = parent;
         this.treeSide = treeSide;
         this.target = target;
         this.argName = argName;
         this.value = value;
-        // target.visit(this)
-        // if (parent === null) {
-        //   this.tree = <AST> this.substituted
-        // }
-        // else {
-        //   parent[<Child> treeSide] = <AST> this.substituted
-        //   this.tree = tree
-        // }
+        this.tree = tree;
     }
     onApplication(application) {
         application.left.visit(this);

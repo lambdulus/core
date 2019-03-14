@@ -5,47 +5,52 @@ var Child;
     Child["Left"] = "left";
     Child["Right"] = "right";
 })(Child = exports.Child || (exports.Child = {}));
-class NextAlpha {
-    constructor(conversions) {
-        this.conversions = conversions;
+var Reductions;
+(function (Reductions) {
+    class ASTReduction {
     }
-    visit(visitor) {
-        visitor.onAlpha(this);
+    Reductions.ASTReduction = ASTReduction;
+    class Alpha extends ASTReduction {
+        constructor(conversions) {
+            super();
+            this.conversions = conversions;
+        }
     }
+    Reductions.Alpha = Alpha;
+    // TODO: vyresit pro pripady kdy jde o multilambdu
+    // pak bude navic drzet mnozinu values a mnozinu arguments
+    // spis mnozinu tuples
+    class Beta extends ASTReduction {
+        constructor(parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
+        target, // EXPR ve kterem se provede nahrada
+        argName, value) {
+            super();
+            this.parent = parent;
+            this.treeSide = treeSide;
+            this.target = target;
+            this.argName = argName;
+            this.value = value;
+        }
+    }
+    Reductions.Beta = Beta;
+    class Expansion extends ASTReduction {
+        constructor(parent, treeSide, target) {
+            super();
+            this.parent = parent;
+            this.treeSide = treeSide;
+            this.target = target;
+        }
+    }
+    Reductions.Expansion = Expansion;
+    class None extends ASTReduction {
+    }
+    Reductions.None = None;
+})(Reductions = exports.Reductions || (exports.Reductions = {}));
+class ASTVisitor {
+    onApplication(application) { }
+    onLambda(lambda) { }
+    onChurchNumber(churchNumber) { }
+    onMacro(macro) { }
+    onVariable(variable) { }
 }
-exports.NextAlpha = NextAlpha;
-// TODO: vyresit pro pripady kdy jde o multilambdu
-// pak bude navic drzet mnozinu values a mnozinu arguments
-// spis mnozinu tuples
-class NextBeta {
-    constructor(parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
-    target, // EXPR ve kterem se provede nahrada
-    argName, value) {
-        this.parent = parent;
-        this.treeSide = treeSide;
-        this.target = target;
-        this.argName = argName;
-        this.value = value;
-    }
-    visit(visitor) {
-        visitor.onBeta(this);
-    }
-}
-exports.NextBeta = NextBeta;
-class NextExpansion {
-    constructor(parent, treeSide, target) {
-        this.parent = parent;
-        this.treeSide = treeSide;
-        this.target = target;
-    }
-    visit(visitor) {
-        visitor.onExpansion(this);
-    }
-}
-exports.NextExpansion = NextExpansion;
-class NextNone {
-    visit(visitor) {
-        visitor.onNone(this);
-    }
-}
-exports.NextNone = NextNone;
+exports.ASTVisitor = ASTVisitor;

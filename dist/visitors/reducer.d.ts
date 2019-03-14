@@ -1,11 +1,8 @@
-import { ReductionVisitor, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone } from ".";
+import { Reductions, ASTVisitor } from ".";
 import { AST } from "../ast";
-export declare class Reducer implements ReductionVisitor {
+export default class Reducer extends ASTVisitor {
     tree: AST;
-    readonly nextReduction: NextReduction;
-    constructor(tree: AST, nextReduction: NextReduction);
-    onAlpha(alpha: NextAlpha): void;
-    onBeta(beta: NextBeta): void;
-    onExpansion(expansion: NextExpansion): void;
-    onNone(none: NextNone): void;
+    constructor(tree: AST);
+    static constructFor(tree: AST, nextReduction: Reductions.ASTReduction): Reducer;
+    perform(): void;
 }

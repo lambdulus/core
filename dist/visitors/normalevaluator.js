@@ -2,41 +2,41 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const freevarsfinder_1 = require("./freevarsfinder");
-const varbindfinder_1 = require("./varbindfinder");
 const variable_1 = require("../ast/variable");
 const lambda_1 = require("../ast/lambda");
-class NormalEvaluator {
+const boundingfinder_1 = require("./boundingfinder");
+const reducerfactory_1 = require("../reducers/reducerfactory");
+class NormalEvaluator extends _1.ASTVisitor {
     constructor(tree) {
+        super();
         this.tree = tree;
         this.parent = null;
         this.child = null;
-        this.nextReduction = new _1.NextNone;
+        this.nextReduction = new _1.Reductions.None;
         this.tree.visit(this);
+        this.reducer = reducerfactory_1.ReducerFactory.constructFor(tree, this.nextReduction);
     }
     onApplication(application) {
         if (application.left instanceof variable_1.Variable) {
+            // TODO: fakt to je jenom pokud to nalevo je Var?
+            // co kdyz to nalevo neni var, ale nejde to nijak zjednodusit
+            // nemel bych to nejak osetrit?
+            // napis si na to nejakej TEST
             this.parent = application;
             this.child = _1.Child.Right;
             application.right.visit(this);
         }
         else if (application.left instanceof lambda_1.Lambda) {
             const freeVarsFinder = new freevarsfinder_1.FreeVarsFinder(application.right);
+            console.log('freevarsfinder');
             const freeVars = freeVarsFinder.freeVars;
-            //TODO: IMPORTANT - this is exactly right idea, there is really sense in renaming all of free at once
-            const alphas = [];
-            for (const varName of freeVars) {
-                const binder = new varbindfinder_1.VarBindFinder(application.left, varName);
-                const lambda = binder.lambda;
-                if (lambda && application.left.argument.name() !== varName) {
-                    // TODO: find truly original non conflicting new name probably using number postfixes
-                    alphas.push({ tree: lambda, oldName: varName, newName: `_${varName}` });
-                }
-            }
-            if (alphas.length) {
-                this.nextReduction = new _1.NextAlpha(alphas);
+            const boundingfinder = new boundingfinder_1.BoundingFinder(application.left, freeVars);
+            const lambdas = boundingfinder.lambdas;
+            if (lambdas.size) {
+                this.nextReduction = new _1.Reductions.Alpha(lambdas);
             }
             else {
-                this.nextReduction = new _1.NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
+                this.nextReduction = new _1.Reductions.Beta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
             }
         }
         else { // (this.left instanceof Macro || this.left instanceof ChurchNumber)
@@ -51,13 +51,17 @@ class NormalEvaluator {
         lambda.body.visit(this);
     }
     onChurchNumber(churchNumber) {
-        this.nextReduction = new _1.NextExpansion(this.parent, this.child, churchNumber);
+        this.nextReduction = new _1.Reductions.Expansion(this.parent, this.child, churchNumber);
     }
     onMacro(macro) {
-        this.nextReduction = new _1.NextExpansion(this.parent, this.child, macro);
+        this.nextReduction = new _1.Reductions.Expansion(this.parent, this.child, macro);
     }
     onVariable(variable) {
-        this.nextReduction = new _1.NextNone;
+        this.nextReduction = new _1.Reductions.None;
+    }
+    perform() {
+        this.reducer.perform();
+        return this.reducer.tree;
     }
 }
 exports.NormalEvaluator = NormalEvaluator;

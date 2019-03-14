@@ -1,27 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _1 = require(".");
 const expandor_1 = require("./expandor");
 const betareducer_1 = require("./betareducer");
 const alphaconvertor_1 = require("./alphaconvertor");
-class Reducer {
-    constructor(tree, nextReduction) {
+class Reducer extends _1.ASTVisitor {
+    constructor(tree) {
+        super();
         this.tree = tree;
-        this.nextReduction = nextReduction;
-        nextReduction.visit(this);
     }
-    onAlpha(alpha) {
-        const alphaConvertor = new alphaconvertor_1.AlphaConvertor(alpha);
+    static constructFor(tree, nextReduction) {
+        if (nextReduction instanceof _1.Reductions.Beta) {
+            return new betareducer_1.BetaReducer(nextReduction, tree);
+        }
+        else if (nextReduction instanceof _1.Reductions.Alpha) {
+            return new alphaconvertor_1.AlphaConvertor(nextReduction, tree);
+        }
+        else if (nextReduction instanceof _1.Reductions.Expansion) {
+            return new expandor_1.Expandor(nextReduction, tree);
+        }
+        else {
+            // throw new Error('There are no Reduction implementations for type' + nextReduction.toString())
+            // or
+            return new Reducer(tree);
+        }
     }
-    onBeta(beta) {
-        const betaReducer = new betareducer_1.BetaReducer(beta, this.tree);
-        this.tree = betaReducer.tree;
-    }
-    onExpansion(expansion) {
-        const expander = new expandor_1.Expandor(expansion, this.tree);
-        this.tree = expander.tree;
-    }
-    onNone(none) {
+    perform() {
         // nothing
     }
 }
-exports.Reducer = Reducer;
+exports.default = Reducer;

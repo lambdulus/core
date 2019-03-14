@@ -4,14 +4,9 @@ import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from ".";
-declare class Reducer extends ASTVisitor {
+import { Reductions, ASTVisitor } from "../visitors";
+export declare class AlphaConvertor extends ASTVisitor {
     tree: AST;
-    constructor(tree: AST);
-    static constructFor(tree: AST, nextReduction: Reductions.ASTReduction): Reducer;
-    perform(): void;
-}
-export declare class AlphaConvertor extends Reducer {
     readonly conversions: Set<Lambda>;
     private converted;
     private oldName;
@@ -24,4 +19,3 @@ export declare class AlphaConvertor extends Reducer {
     onVariable(variable: Variable): void;
     perform(): void;
 }
-export {};
