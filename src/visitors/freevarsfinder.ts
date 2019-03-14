@@ -22,6 +22,7 @@ export class FreeVarsFinder implements ASTVisitor {
   onLambda(lambda : Lambda) : void {
     this.bound.add(lambda.argument.name())
     lambda.body.visit(this)
+    this.bound.delete(lambda.argument.name())
   }
 
   onChurchNumber(churchNumber : ChurchNumber) : void {
