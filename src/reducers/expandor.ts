@@ -1,11 +1,11 @@
 import { CodeStyle } from "../lexer";
 import { Lexer } from "..";
-import { AST, Binary } from "../ast";
-import { Reductions, Child, ASTVisitor } from "../visitors";
+import { AST, Binary, Child } from "../ast";
+import { ASTVisitor } from "../visitors";
 import { ChurchNumber } from "../ast/churchnumber";
 import { parse } from "../parser";
 import { Macro } from "../ast/macro";
-// import { Reducer } from "./emptyreducer";
+import { Expansion } from "../reductions";
 
 export class Expandor extends ASTVisitor {
   private expanded : AST | null = null
@@ -15,7 +15,7 @@ export class Expandor extends ASTVisitor {
   private target : AST
 
   constructor (
-    { parent, treeSide, target } : Reductions.Expansion,
+    { parent, treeSide, target } : Expansion,
     public tree : AST
   ) {
     super()

@@ -1,4 +1,4 @@
-import { ASTVisitor, Reductions } from "."
+import { ASTVisitor } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
 import { Binary, AST, Child } from "../ast"
 import { Application } from "../ast/application"
@@ -8,6 +8,11 @@ import { ChurchNumber } from "../ast/churchnumber"
 import { Macro } from "../ast/macro"
 import { BoundingFinder } from "./boundingfinder"
 import { ReducerFactory } from "../reducers/reducerfactory";
+import { ASTReduction } from "../reductions";
+import { None } from "../reductions/none";
+import { Alpha } from "../reductions";
+import { Beta } from "../reductions";
+import { Expansion } from "../reductions";
 
 export interface Reducer {
   tree : AST
@@ -19,7 +24,7 @@ export class NormalEvaluator extends ASTVisitor {
   private parent : Binary | null = null
   private child : Child | null = null
 
-  public nextReduction : Reductions.ASTReduction = new Reductions.None
+  public nextReduction : ASTReduction = new None
   public reducer : Reducer
 
   constructor (
@@ -46,10 +51,10 @@ export class NormalEvaluator extends ASTVisitor {
       const lambdas : Set<Lambda> = boundingfinder.lambdas
 
       if (lambdas.size) {
-        this.nextReduction = new Reductions.Alpha(lambdas)
+        this.nextReduction = new Alpha(lambdas)
       }
       else {
-        this.nextReduction = new Reductions.Beta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
+        this.nextReduction = new Beta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
       }
     }
 
@@ -60,7 +65,7 @@ export class NormalEvaluator extends ASTVisitor {
 
       application.left.visit(this)
 
-      if (this.nextReduction instanceof Reductions.None) {
+      if (this.nextReduction instanceof None) {
         this.parent = application
         this.child = Child.Right
 
@@ -77,15 +82,15 @@ export class NormalEvaluator extends ASTVisitor {
   }
 
   onChurchNumber (churchNumber : ChurchNumber) : void {
-    this.nextReduction = new Reductions.Expansion(this.parent, this.child, churchNumber)
+    this.nextReduction = new Expansion(this.parent, this.child, churchNumber)
   }
 
   onMacro (macro : Macro) : void {
-    this.nextReduction = new Reductions.Expansion(this.parent, this.child, macro)
+    this.nextReduction = new Expansion(this.parent, this.child, macro)
   }
 
   onVariable (variable : Variable) : void {
-    this.nextReduction = new Reductions.None
+    this.nextReduction = new None
   }
 
   perform () : AST {

@@ -4,7 +4,8 @@ import { Lambda } from "../ast/lambda";
 import { Macro } from "../ast/macro";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from "../visitors";
+import { ASTVisitor } from "../visitors";
+import { Beta } from "../reductions";
 
 export class BetaReducer extends ASTVisitor {
   private readonly argName : string
@@ -17,7 +18,7 @@ export class BetaReducer extends ASTVisitor {
   private target : AST
 
   constructor (
-    { parent, treeSide, target, argName, value } : Reductions.Beta,
+    { parent, treeSide, target, argName, value } : Beta,
     tree : AST,
   ) {
     super()

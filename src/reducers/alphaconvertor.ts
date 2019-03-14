@@ -5,7 +5,8 @@ import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from "../visitors";
+import { ASTVisitor } from "../visitors";
+import { Alpha } from "../reductions";
 
 export class AlphaConvertor extends ASTVisitor {
   public readonly conversions : Set<Lambda>
@@ -17,7 +18,7 @@ export class AlphaConvertor extends ASTVisitor {
   private newName : string = ''
   
   constructor (
-    { conversions } : Reductions.Alpha,
+    { conversions } : Alpha,
     public tree : AST
   ) {
     super()
