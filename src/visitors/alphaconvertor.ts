@@ -5,10 +5,10 @@ import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
-import { ASTVisitor, NextAlpha, SingleAlpha } from ".";
+import { ASTVisitor, NextAlpha } from ".";
 
 export class AlphaConvertor implements ASTVisitor {
-  public readonly conversions : Array<SingleAlpha>
+  public readonly conversions : Set<Lambda>
 
   // Need to do this Nonsense Dance
   private converted : AST | null = null
@@ -19,15 +19,15 @@ export class AlphaConvertor implements ASTVisitor {
   constructor ({ conversions } : NextAlpha) {
     this.conversions = conversions
 
-    for (const { tree, oldName, newName } of this.conversions) {
-      this.oldName = oldName
-      this.newName = newName
+    for (const lambda of this.conversions) {
+      this.oldName = lambda.argument.name()
+      this.newName = `_${this.oldName}` // TODO: create original name
 
-      tree.argument.visit(this)
-      tree.argument = <Variable> this.converted
+      lambda.argument.visit(this)
+      lambda.argument = <Variable> this.converted
 
-      tree.body.visit(this)
-      tree.body = <AST> this.converted
+      lambda.body.visit(this)
+      lambda.body = <AST> this.converted
     }
   }
 

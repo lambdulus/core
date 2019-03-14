@@ -1,12 +1,12 @@
-import { ASTVisitor, Child, NextReduction, NextNone, NextAlpha, NextBeta, NextExpansion, SingleAlpha } from ".";
+import { ASTVisitor, Child, NextReduction, NextNone, NextAlpha, NextBeta, NextExpansion } from ".";
 import { FreeVarsFinder } from "./freevarsfinder";
-import { VarBindFinder } from "./varbindfinder";
 import { Binary, AST } from "../ast";
 import { Application } from "../ast/application";
 import { Variable } from "../ast/variable";
 import { Lambda } from "../ast/lambda";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
+import { BoundingFinder } from "./boundingfinder";
 
 export class NormalEvaluator implements ASTVisitor {
   private parent : Binary | null = null
@@ -31,20 +31,22 @@ export class NormalEvaluator implements ASTVisitor {
       const freeVarsFinder : FreeVarsFinder = new FreeVarsFinder(application.right)
       const freeVars : Set<string> = freeVarsFinder.freeVars
 
-      //TODO: IMPORTANT - this is exactly right idea, there is really sense in renaming all of free at once
-      const alphas : Array<SingleAlpha> = []
-      for (const varName of freeVars) {
-        const binder : VarBindFinder = new VarBindFinder(application.left, varName)
-        const lambda : Lambda | null = binder.lambda
+      const boundingfinder : BoundingFinder = new BoundingFinder(application.left, freeVars)
+      const lambdas : Set<Lambda> = boundingfinder.lambdas
+      
 
-        if (lambda && application.left.argument.name() !== varName) {
-          // TODO: find truly original non conflicting new name probably using number postfixes
-          alphas.push({ tree : <Lambda> lambda, oldName : varName, newName : `_${ varName }` })
-        }
-      }
+      // for (const varName of freeVars) {
+      //   const binder : VarBindFinder = new VarBindFinder(application.left, varName)
+      //   const lambda : Lambda | null = binder.lambda
 
-      if (alphas.length) {
-        this.nextReduction = new NextAlpha(alphas)
+      //   if (lambda && application.left.argument.name() !== varName) {
+      //     // TODO: nevytvaret tady novy jmeno, nechat to primo na implementaci alfa konverze
+      //     alphas.push({ tree : <Lambda> lambda, oldName : varName, newName : `_${ varName }` })
+      //   }
+      // }
+
+      if (lambdas.size) {
+        this.nextReduction = new NextAlpha(lambdas)
       }
       else {
         this.nextReduction = new NextBeta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
