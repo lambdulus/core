@@ -9,7 +9,6 @@ import { Macro } from "../ast/macro";
 
 export class Expandor extends ASTVisitor {
   private expanded : AST | null = null
-  public tree : AST
 
   private parent : Binary | null
   private treeSide : Child | null
@@ -17,31 +16,13 @@ export class Expandor extends ASTVisitor {
 
   constructor (
     { parent, treeSide, target } : Reductions.Expansion,
-    tree : AST
+    public tree : AST
   ) {
     super()
     this.parent = parent
     this.treeSide = treeSide
     this.target = target
-    this.tree = tree
-    // target.visit(this)
-
-    // if (parent === null) {
-    //   this.tree = <AST> this.expanded
-    // }
-    // else {
-    //   parent[<Child> treeSide] = <AST> this.expanded
-    //   this.tree = tree
-    // }
   }
-
-  // onApplication(application : Application) : void {
-  //   // nothing
-  // }
-
-  // onLambda(lambda : Lambda) : void {
-  //   // nothing
-  // }
 
   onChurchNumber(churchNumber : ChurchNumber) : void {
     const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
@@ -56,10 +37,6 @@ export class Expandor extends ASTVisitor {
     // also consider not clonning
     this.expanded = macro.definition.ast.clone()
   }
-
-  // onVariable(variable : Variable) : void {
-  //   // nothing
-  // }
 
   perform () : void {
     this.target.visit(this)

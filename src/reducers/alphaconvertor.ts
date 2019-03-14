@@ -6,10 +6,8 @@ import { ChurchNumber } from "../ast/churchnumber";
 import { Macro } from "../ast/macro";
 import { Variable } from "../ast/variable";
 import { Reductions, ASTVisitor } from "../visitors";
-// import { Reducer } from "./emptyreducer";
 
 export class AlphaConvertor extends ASTVisitor {
-  public tree : AST
   public readonly conversions : Set<Lambda>
 
   // Need to do this Nonsense Dance
@@ -18,10 +16,12 @@ export class AlphaConvertor extends ASTVisitor {
   private oldName : string = ''
   private newName : string = ''
   
-  constructor ({ conversions } : Reductions.Alpha, tree : AST) {
+  constructor (
+    { conversions } : Reductions.Alpha,
+    public tree : AST
+  ) {
     super()
     this.conversions = conversions
-    this.tree = tree
   }
 
   onApplication(application : Application) : void {
