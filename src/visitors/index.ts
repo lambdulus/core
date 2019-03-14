@@ -16,20 +16,21 @@ export enum Child {
 // export interface NextReduction extends ReductionVisitable {}
 
 // TODO: tohle je asi nejlepsi volba
+// TODO: odstranit Next z nazvu
 export type NextReduction = ReductionVisitable
 
 
 // TODO: maybe find better name for it
-export interface SingleAlpha {
-  tree : Lambda,
-  oldName : string,
-  newName : string,
-  // references : Array<Variable> // TODO: references to AST to mutate directly and without further searching
-}
+// export interface SingleAlpha {
+//   tree : Lambda,
+//   oldName : string, // TODO: delete, budu si to brat primo z tree.argument.name()
+//   newName : string, // TODO: delete, udela se in place
+//   // references : Array<Variable> // TODO: references to AST to mutate directly and without further searching
+// }
 
 export class NextAlpha implements NextReduction {
   constructor (
-    public readonly conversions : Array<SingleAlpha>,
+    public readonly conversions : Set<Lambda>,
   ) {}
 
   public visit (visitor : ReductionVisitor) : void {
@@ -73,11 +74,11 @@ export class NextNone implements NextReduction {
   }
 }
 
-
+// TODO: tohle klidne zrusit, rovnou interface AST tridy budou implementovat visit()
 export interface ASTVisitable {
   visit (visitor : ASTVisitor) : void,
 }
-
+// TODO: tady to same
 export interface ReductionVisitable {
   visit (visitor : ReductionVisitor) : void,
 }
@@ -91,6 +92,8 @@ export interface ASTVisitor {
   onVariable (variable : Variable) : void,
 }
 
+// TODO: tohle jako materskou tridu, rovnou implementuje vsechny metody jako prazdny, 
+// pak nemusim mit konkretni tridy prazdny 
 export interface ReductionVisitor {
   onAlpha (alpha : NextAlpha) : void,
   onBeta (beta : NextBeta) : void,
