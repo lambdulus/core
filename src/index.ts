@@ -12,10 +12,13 @@ export { AST } from './ast'
 
 
 const inputs : Array<string> = [
-  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 6)', // factorial without accumulator
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
-  '(~ x y . (~ z . x) z ) (x y)',
+  '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci 
+  'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
+  'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
+  '(x 2) (2 s z)',
+  '(~ x y . (~ z . x) z ) (x y)',
   '(~ z . z (~ x . (~ x . z))) (x z) 1 2',
   '(~ z . z (~ x . z)) (x y z)',
   '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
@@ -35,7 +38,7 @@ const inputs : Array<string> = [
   'A (B +) C',
   '(+ A B)',
   '+ 555 6',
-  '(λ _x . x x)', // invalid cause of _x
+  // '(λ _x . x x)', // invalid cause of _x
  // 'A B C () E', // netusim jestli tohle chci mit jako validni NECHCI
  // 'A (B C) D ()', // ani tohle netusim NECHCI
 ]
@@ -53,9 +56,6 @@ let root : AST = ast
 let e = 0
 
 while (true) {
-  // TODO: bude vracet instanci Reduceru
-  // reducer bude mit metodu na provedeni - nebude to delat v konstruktoru jako ted
-  // 
   const normal : NormalEvaluator = new NormalEvaluator(root)
 
   if (normal.nextReduction instanceof Reductions.None) {
@@ -65,25 +65,16 @@ while (true) {
   root = normal.perform() // perform next reduction
 
   e++
-  // console.log('REDUCTION TYPE ', normal.nextReduction)
 
-  
+  // console.log(printTree(root))
+}
 
-  // const nextReduction : Reductions.Reduction = normal.nextReduction
-
-  // const reducer : Reducer = normal.reducer
-
-  // const reducer : Reducer = new Reducer(root, nextReduction)
-
-  
-
-  // const printer : BasicPrinter = new BasicPrinter(root)
-  // const s = printer.print()
-  // console.log(s)
+export function printTree (tree : AST) : string {
+  const printer : BasicPrinter = new BasicPrinter(tree)
+  return printer.print()
 }
 
 
 console.log('steps: ' + e)
-const printer : BasicPrinter = new BasicPrinter(root)
-const s = printer.print()
-console.log(s)
+
+console.log(printTree(root))
