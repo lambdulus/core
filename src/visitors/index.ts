@@ -4,7 +4,6 @@ import { Application } from "../ast/application";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
 import { Macro } from "../ast/macro";
-// import { Reducer } from "./reducer";
 
 export enum Child {
   Left = 'left',
@@ -20,10 +19,6 @@ export namespace Reductions {
     ) {
       super()
     }
-  
-    // public visit (visitor : ReductionVisitor) : void {
-    //   visitor.onAlpha(this)
-    // }
   }
   
   // TODO: vyresit pro pripady kdy jde o multilambdu
@@ -39,13 +34,7 @@ export namespace Reductions {
     ) {
       super()
     }
-
-
-    // visit (visitor : ReductionVisitor) : void {
-    //   visitor.onBeta(this)
-    // }
   }
-  
   
   export class Expansion extends ASTReduction {
     constructor (
@@ -55,10 +44,6 @@ export namespace Reductions {
     ) {
       super()
     }
-  
-    // visit (visitor : ReductionVisitor) : void {
-    //   visitor.onExpansion(this)
-    // }
   }
   
   export class None extends ASTReduction {}
@@ -70,10 +55,6 @@ export namespace Reductions {
 export interface ASTVisitable {
   visit (visitor : ASTVisitor) : void,
 }
-// TODO: tady to same
-// export interface ReductionVisitable {
-//   visit (visitor : ReductionVisitor) : void,
-// }
 
 
 export abstract class ASTVisitor {
@@ -83,12 +64,3 @@ export abstract class ASTVisitor {
   onMacro (macro : Macro) : void {}
   onVariable (variable : Variable) : void {}
 }
-
-// TODO: tohle jako materskou tridu, rovnou implementuje vsechny metody jako prazdny,
-// pak nemusim mit konkretni tridy prazdny
-// export interface ReductionVisitor {
-//   onAlpha (alpha : NextAlpha) : void,
-//   onBeta (beta : NextBeta) : void,
-//   onExpansion (expansion : NextExpansion) : void,
-//   onNone (none : NextNone) : void,
-// }

@@ -48,17 +48,6 @@ export class NormalEvaluator extends ASTVisitor {
 
       const boundingfinder : BoundingFinder = new BoundingFinder(application.left, freeVars)
       const lambdas : Set<Lambda> = boundingfinder.lambdas
-      
-
-      // for (const varName of freeVars) {
-      //   const binder : VarBindFinder = new VarBindFinder(application.left, varName)
-      //   const lambda : Lambda | null = binder.lambda
-
-      //   if (lambda && application.left.argument.name() !== varName) {
-      //     // TODO: nevytvaret tady novy jmeno, nechat to primo na implementaci alfa konverze
-      //     alphas.push({ tree : <Lambda> lambda, oldName : varName, newName : `_${ varName }` })
-      //   }
-      // }
 
       if (lambdas.size) {
         this.nextReduction = new Reductions.Alpha(lambdas)

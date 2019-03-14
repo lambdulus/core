@@ -5,9 +5,8 @@ import { Macro } from "../ast/macro";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
 import { Reductions, Child, ASTVisitor } from "../visitors";
-// import { Reducer } from "./emptyreducer";
 
-export class BetaReducer  extends ASTVisitor {
+export class BetaReducer extends ASTVisitor {
   private readonly argName : string
   private readonly value : AST
 
@@ -28,16 +27,6 @@ export class BetaReducer  extends ASTVisitor {
     this.argName = argName
     this.value = value
     this.tree = tree
-
-    // target.visit(this)
-
-    // if (parent === null) {
-    //   this.tree = <AST> this.substituted
-    // }
-    // else {
-    //   parent[<Child> treeSide] = <AST> this.substituted
-    //   this.tree = tree
-    // }
   }
 
   onApplication(application : Application) : void {
