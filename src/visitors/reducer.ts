@@ -4,7 +4,10 @@ import { Expandor } from "./expandor";
 import { BetaReducer } from "./betareducer";
 import { AlphaConvertor } from "./alphaconvertor";
 
-
+// TODO: zrusit ReductionVisitory
+// implementovat materskou tridu, Reduction, od ni budou alfa beta expanze dedit, implementovat
+// nejakou metodu perform
+// dal uz stejny klidne
 export class Reducer implements ReductionVisitor  {
   constructor (
     public tree : AST,
