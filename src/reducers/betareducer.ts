@@ -1,34 +1,43 @@
-import { AST } from "../ast";
+import { AST, Binary } from "../ast";
 import { Application } from "../ast/application";
 import { Lambda } from "../ast/lambda";
 import { Macro } from "../ast/macro";
 import { ChurchNumber } from "../ast/churchnumber";
 import { Variable } from "../ast/variable";
-import { ASTVisitor, NextBeta, Child } from ".";
+import { Reductions, Child, ASTVisitor } from "../visitors";
+// import { Reducer } from "./emptyreducer";
 
-export class BetaReducer implements ASTVisitor {
+export class BetaReducer  extends ASTVisitor {
   private readonly argName : string
   private readonly value : AST
 
   private substituted : AST | null = null
   public tree : AST
+  private parent : Binary | null
+  private treeSide : Child | null
+  private target : AST
 
   constructor (
-    { parent, treeSide, target, argName, value } : NextBeta,
+    { parent, treeSide, target, argName, value } : Reductions.Beta,
     tree : AST,
   ) {
+    super()
+    this.parent = parent
+    this.treeSide = treeSide
+    this.target = target
     this.argName = argName
     this.value = value
+    this.tree = tree
 
-    target.visit(this)
+    // target.visit(this)
 
-    if (parent === null) {
-      this.tree = <AST> this.substituted
-    }
-    else {
-      parent[<Child> treeSide] = <AST> this.substituted
-      this.tree = tree
-    }
+    // if (parent === null) {
+    //   this.tree = <AST> this.substituted
+    // }
+    // else {
+    //   parent[<Child> treeSide] = <AST> this.substituted
+    //   this.tree = tree
+    // }
   }
 
   onApplication(application : Application) : void {
@@ -71,6 +80,17 @@ export class BetaReducer implements ASTVisitor {
     }
     else {
       this.substituted = variable
+    }
+  }
+
+  perform () : void {
+    this.target.visit(this)
+
+    if (this.parent === null) {
+      this.tree = <AST> this.substituted
+    }
+    else {
+      this.parent[<Child> this.treeSide] = <AST> this.substituted
     }
   }
 }
