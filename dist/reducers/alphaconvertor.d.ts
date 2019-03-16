@@ -1,17 +1,13 @@
-import { AST } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Macro } from "../ast/macro";
-import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from "../visitors";
+import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { ASTVisitor } from "../visitors";
+import { Alpha } from "../reductions";
 export declare class AlphaConvertor extends ASTVisitor {
     tree: AST;
-    readonly conversions: Set<Lambda>;
     private converted;
     private oldName;
     private newName;
-    constructor({ conversions }: Reductions.Alpha, tree: AST);
+    readonly conversions: Set<Lambda>;
+    constructor({ conversions }: Alpha, tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
     onChurchNumber(churchNumber: ChurchNumber): void;

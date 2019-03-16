@@ -19,10 +19,8 @@ class BoundingFinder extends _1.ASTVisitor {
         this.unboundVars = unbounds;
     }
     onLambda(lambda) {
-        // console.log('freevarsfinder')
         lambda.body.visit(this);
         this.unboundVars.delete(lambda.argument.name()); // binding argument name
-        // const freeVarsFinder : FreeVarsFinder = new FreeVarsFinder(lambda.body)
         if (this.unboundVars.has(this.argName)
             &&
                 this.freeVars.has(lambda.argument.name())) {

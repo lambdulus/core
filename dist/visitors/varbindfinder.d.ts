@@ -1,8 +1,4 @@
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { Macro } from "../ast/macro";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Variable } from "../ast/variable";
+import { Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 export declare class VarBindFinder implements ASTVisitor {
     tree: Lambda;

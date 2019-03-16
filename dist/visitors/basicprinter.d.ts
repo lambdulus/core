@@ -1,16 +1,11 @@
-import { AST } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Macro } from "../ast/macro";
-import { Variable } from "../ast/variable";
-import { ASTVisitable, ASTVisitor } from ".";
+import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { ASTVisitor } from ".";
 export declare class BasicPrinter implements ASTVisitor {
-    readonly tree: AST & ASTVisitable;
+    readonly tree: AST;
     private expression;
     private printLambdaBody;
     private printLambdaArguments;
-    constructor(tree: AST & ASTVisitable);
+    constructor(tree: AST);
     print(): string;
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;

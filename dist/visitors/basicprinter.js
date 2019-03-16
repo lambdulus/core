@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const application_1 = require("../ast/application");
-const lambda_1 = require("../ast/lambda");
+const ast_1 = require("../ast");
 class BasicPrinter {
     constructor(tree) {
         this.tree = tree;
@@ -11,7 +10,7 @@ class BasicPrinter {
     // TODO: this looks like nonsense
     // maybe solve it with another Visitor
     printLambdaBody(lambda) {
-        if (lambda.body instanceof lambda_1.Lambda) {
+        if (lambda.body instanceof ast_1.Lambda) {
             this.printLambdaBody(lambda.body);
         }
         else {
@@ -21,7 +20,7 @@ class BasicPrinter {
     // TODO: this looks like nonsense
     // maybe solve it with another Visitor
     printLambdaArguments(lambda, accumulator) {
-        if (lambda.body instanceof lambda_1.Lambda) {
+        if (lambda.body instanceof ast_1.Lambda) {
             this.printLambdaArguments(lambda.body, `${accumulator} ${lambda.body.argument.name()}`);
         }
         else {
@@ -33,7 +32,7 @@ class BasicPrinter {
     }
     // TODO: this is ugly as hell
     onApplication(application) {
-        if (application.right instanceof application_1.Application) {
+        if (application.right instanceof ast_1.Application) {
             application.left.visit(this);
             this.expression += ` (`;
             application.right.visit(this);
@@ -47,7 +46,7 @@ class BasicPrinter {
     }
     // TODO: this is ugly as hell
     onLambda(lambda) {
-        if (lambda.body instanceof lambda_1.Lambda) {
+        if (lambda.body instanceof ast_1.Lambda) {
             this.expression += `(λ `;
             this.printLambdaArguments(lambda, lambda.argument.name());
             this.expression += ` . `;

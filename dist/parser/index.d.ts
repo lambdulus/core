@@ -1,9 +1,5 @@
 import { Token } from '../lexer';
-import { AST } from '../ast';
-import { Application } from '../ast/application';
-import { Lambda } from '../ast/lambda';
-import { Macro } from '../ast/macro';
-import { Variable } from '../ast/variable';
+import { AST, Application, Lambda, Macro, Variable } from '../ast';
 export declare class MacroDef {
     readonly ast: AST;
     constructor(ast: AST);

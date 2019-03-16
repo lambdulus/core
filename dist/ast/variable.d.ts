@@ -4,8 +4,8 @@ import { ASTVisitor } from '../visitors';
 export declare class Variable implements AST {
     readonly token: Token;
     readonly identifier: symbol;
-    name(): string;
     constructor(token: Token);
+    name(): string;
     clone(): Variable;
     visit(visitor: ASTVisitor): void;
 }

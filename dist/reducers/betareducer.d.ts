@@ -1,19 +1,15 @@
-import { AST } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { Macro } from "../ast/macro";
-import { ChurchNumber } from "../ast/churchnumber";
-import { Variable } from "../ast/variable";
-import { Reductions, ASTVisitor } from "../visitors";
+import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { ASTVisitor } from "../visitors";
+import { Beta } from "../reductions";
 export declare class BetaReducer extends ASTVisitor {
-    private readonly argName;
-    private readonly value;
-    private substituted;
     tree: AST;
+    private substituted;
     private parent;
     private treeSide;
     private target;
-    constructor({ parent, treeSide, target, argName, value }: Reductions.Beta, tree: AST);
+    private readonly argName;
+    private readonly value;
+    constructor({ parent, treeSide, target, argName, value }: Beta, tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
     onChurchNumber(churchNumber: ChurchNumber): void;
