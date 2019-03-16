@@ -1,7 +1,5 @@
 import { ASTVisitor } from ".";
-import { Lambda } from "../ast/lambda";
-import { Application } from "../ast/application";
-import { Variable } from "../ast/variable";
+import { Application, Lambda, Variable } from "../ast/";
 export declare class BoundingFinder extends ASTVisitor {
     tree: Lambda;
     freeVars: Set<string>;

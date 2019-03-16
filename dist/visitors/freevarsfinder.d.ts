@@ -1,7 +1,5 @@
 import { AST } from "../ast";
-import { Application } from "../ast/application";
-import { Lambda } from "../ast/lambda";
-import { Variable } from "../ast/variable";
+import { Application, Lambda, Variable } from "../ast";
 import { ASTVisitor } from ".";
 export declare class FreeVarsFinder extends ASTVisitor {
     private readonly tree;

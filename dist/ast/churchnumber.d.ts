@@ -4,8 +4,8 @@ import { ASTVisitor } from '../visitors';
 export declare class ChurchNumber implements AST {
     readonly token: Token;
     readonly identifier: symbol;
-    name(): string;
     constructor(token: Token);
+    name(): string;
     clone(): ChurchNumber;
     visit(visitor: ASTVisitor): void;
 }

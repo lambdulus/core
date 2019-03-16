@@ -1,11 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
-const variable_1 = require("../ast/variable");
-const lambda_1 = require("../ast/lambda");
-const churchnumber_1 = require("../ast/churchnumber");
-const macro_1 = require("../ast/macro");
-const application_1 = require("../ast/application");
+const ast_1 = require("../ast");
 class Parser {
     constructor(tokens, macroTable) {
         this.tokens = tokens;
@@ -42,9 +38,9 @@ class Parser {
                 return this.parse(null); // λ body
             case lexer_1.TokenType.Identifier:
                 this.accept(lexer_1.TokenType.Identifier);
-                const argument = new variable_1.Variable(top);
+                const argument = new ast_1.Variable(top);
                 const body = this.parseLambda();
-                return new lambda_1.Lambda(argument, body);
+                return new ast_1.Lambda(argument, body);
             default:
                 throw "Some invalid token error";
         }
@@ -62,16 +58,16 @@ class Parser {
         switch (top.type) {
             case lexer_1.TokenType.Number:
                 this.accept(lexer_1.TokenType.Number);
-                return new churchnumber_1.ChurchNumber(top);
+                return new ast_1.ChurchNumber(top);
             case lexer_1.TokenType.Operator:
                 this.accept(lexer_1.TokenType.Operator);
-                return new macro_1.Macro(top, this.macroTable[top.value]);
+                return new ast_1.Macro(top, this.macroTable[top.value]);
             case lexer_1.TokenType.Identifier:
                 this.accept(lexer_1.TokenType.Identifier);
                 if (this.isMacro(top)) {
-                    return new macro_1.Macro(top, this.macroTable[top.value]);
+                    return new ast_1.Macro(top, this.macroTable[top.value]);
                 }
-                return new variable_1.Variable(top);
+                return new ast_1.Variable(top);
             case lexer_1.TokenType.LeftParen:
                 this.accept(lexer_1.TokenType.LeftParen);
                 top = this.top();
@@ -79,9 +75,9 @@ class Parser {
                     this.accept(lexer_1.TokenType.Lambda);
                     top = this.top();
                     this.accept(lexer_1.TokenType.Identifier);
-                    const argument = new variable_1.Variable(top);
+                    const argument = new ast_1.Variable(top);
                     const body = this.parseLambda();
-                    const lambda = new lambda_1.Lambda(argument, body);
+                    const lambda = new ast_1.Lambda(argument, body);
                     this.accept(lexer_1.TokenType.RightParen);
                     return lambda;
                 }
@@ -108,7 +104,7 @@ class Parser {
                 return this.parse(expr);
             }
             else {
-                const app = new application_1.Application(leftSide, expr);
+                const app = new ast_1.Application(leftSide, expr);
                 return this.parse(app);
             }
         }

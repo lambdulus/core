@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const application_1 = require("../ast/application");
-const lambda_1 = require("../ast/lambda");
+const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
 class BetaReducer extends visitors_1.ASTVisitor {
     constructor({ parent, treeSide, target, argName, value }, tree) {
         super();
+        this.tree = tree;
         this.substituted = null;
         this.parent = parent;
         this.treeSide = treeSide;
@@ -19,7 +19,7 @@ class BetaReducer extends visitors_1.ASTVisitor {
         const left = this.substituted;
         application.right.visit(this);
         const right = this.substituted;
-        this.substituted = new application_1.Application(left, right);
+        this.substituted = new ast_1.Application(left, right);
     }
     onLambda(lambda) {
         if (lambda.argument.name() === this.argName) {
@@ -29,7 +29,7 @@ class BetaReducer extends visitors_1.ASTVisitor {
             lambda.body.visit(this);
             const body = this.substituted;
             // TODO: clone or not clone ? i'd say CLONE but consider not clonning
-            this.substituted = new lambda_1.Lambda(lambda.argument.clone(), body);
+            this.substituted = new ast_1.Lambda(lambda.argument.clone(), body);
         }
     }
     onChurchNumber(churchNumber) {

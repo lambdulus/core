@@ -1,14 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const lexer_1 = __importDefault(require("../lexer"));
+const lexer_1 = require("../lexer");
 const parser_1 = require("./parser");
-const application_1 = require("../ast/application");
-const lambda_1 = require("../ast/lambda");
-const macro_1 = require("../ast/macro");
-const variable_1 = require("../ast/variable");
+const ast_1 = require("../ast");
 class MacroDef {
     constructor(ast) {
         this.ast = ast;
@@ -17,7 +11,7 @@ class MacroDef {
 exports.MacroDef = MacroDef;
 function toAst(definition, macroTable) {
     const codeStyle = { singleLetterVars: true, lambdaLetters: ['λ'] };
-    const parser = new parser_1.Parser(lexer_1.default.tokenize(definition, codeStyle), macroTable);
+    const parser = new parser_1.Parser(lexer_1.tokenize(definition, codeStyle), macroTable);
     return parser.parse(null);
 }
 // TODO: refactor macroTable for usage with user defined macro definitions
@@ -63,8 +57,8 @@ function parse(tokens) {
 exports.parse = parse;
 exports.default = {
     parse,
-    Lambda: lambda_1.Lambda,
-    Variable: variable_1.Variable,
-    Macro: macro_1.Macro,
-    Application: application_1.Application,
+    Lambda: ast_1.Lambda,
+    Variable: ast_1.Variable,
+    Macro: ast_1.Macro,
+    Application: ast_1.Application,
 };

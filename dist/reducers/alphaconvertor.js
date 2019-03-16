@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
-const application_1 = require("../ast/application");
-const variable_1 = require("../ast/variable");
+const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
 class AlphaConvertor extends visitors_1.ASTVisitor {
     constructor({ conversions }, tree) {
@@ -19,7 +18,7 @@ class AlphaConvertor extends visitors_1.ASTVisitor {
         const left = this.converted;
         application.right.visit(this);
         const right = this.converted;
-        this.converted = new application_1.Application(left, right);
+        this.converted = new ast_1.Application(left, right);
     }
     onLambda(lambda) {
         if (lambda.argument.name() !== this.oldName) {
@@ -41,7 +40,7 @@ class AlphaConvertor extends visitors_1.ASTVisitor {
     onVariable(variable) {
         if (variable.name() === this.oldName) {
             const token = new lexer_1.Token(variable.token.type, this.newName, variable.token.position);
-            this.converted = new variable_1.Variable(token);
+            this.converted = new ast_1.Variable(token);
         }
         else {
             this.converted = variable;
