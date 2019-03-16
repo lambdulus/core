@@ -1,23 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Counter = /** @class */ (function () {
-    function Counter() {
+class Counter {
+    constructor() {
         this.column = 0;
         this.row = 0;
         this.position = 0;
     }
-    Counter.prototype.toRecord = function () {
+    toRecord() {
         return { column: this.column, row: this.row, position: this.position };
-    };
-    Counter.prototype.newLine = function () {
+    }
+    newLine() {
         this.column = 0;
         this.row++;
         this.position++;
-    };
-    Counter.prototype.nextChar = function () {
+    }
+    nextChar() {
         this.column++;
         this.position++;
-    };
-    return Counter;
-}());
+    }
+}
 exports.default = Counter;

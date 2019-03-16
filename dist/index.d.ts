@@ -1,2 +1,11 @@
-export { Token, tokenize, default as Lexer } from './lexer';
-export { parse, AST, NextReduction, NextAlpha, NextBeta, NextExpansion, NextNone, Child, ReductionResult, default as Parser } from './parser/parser';
+export { Token, TokenType, CodeStyle, tokenize } from './lexer';
+export { MacroDef, MacroTable, parse } from './parser';
+export { AST, Application, Lambda, ChurchNumber, Macro, Variable } from './ast';
+export { ASTReduction, Alpha, Beta, Expansion, None } from './reductions';
+export { AlphaConvertor, BetaReducer, Expandor, EmptyReducer, constructFor } from './reducers';
+export { ASTVisitor } from './visitors';
+export { BasicPrinter } from './visitors/basicprinter';
+export { BoundingFinder } from './visitors/boundingfinder';
+export { FreeVarsFinder } from './visitors/freevarsfinder';
+export { NormalEvaluator, Reducer } from './visitors/normalevaluator';
+export { VarBindFinder } from './visitors/varbindfinder';

@@ -1,18 +1,10 @@
-import { AST, Binary, ReductionResult, NextReduction, Child } from '../parser';
-import { Visitor } from '../../visitors/visitor';
+import { AST, Binary } from '..';
+import { ASTVisitor } from '../../visitors';
 export declare class Application implements AST, Binary {
     left: AST;
     right: AST;
     readonly identifier: symbol;
     constructor(left: AST, right: AST);
     clone(): Application;
-    visit(visitor: Visitor): void;
-    nextNormal(parent: Binary | null, child: Child | null): NextReduction;
-    reduceNormal(): ReductionResult;
-    reduceApplicative(): ReductionResult;
-    alphaConvert(oldName: string, newName: string): AST;
-    betaReduce(argName: string, value: AST): AST;
-    etaConvert(): AST;
-    print(): string;
-    freeVarName(bound: Array<string>): string | null;
+    visit(visitor: ASTVisitor): void;
 }

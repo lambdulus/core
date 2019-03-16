@@ -1,23 +1,9 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var counter_1 = __importDefault(require("./counter"));
-// TODO: remove comments and numbers
+const counter_1 = __importDefault(require("./counter"));
 var TokenType;
 (function (TokenType) {
     TokenType["Lambda"] = "lambda";
@@ -28,59 +14,47 @@ var TokenType;
     TokenType["LeftParen"] = "left paren";
     TokenType["RightParen"] = "right paren";
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
-var Token = /** @class */ (function () {
-    function Token(type, value, position) {
+class Token {
+    constructor(type, value, position) {
         this.type = type;
         this.value = value;
         this.position = position;
     }
-    return Token;
-}());
+}
 exports.Token = Token;
-// ---------------------------------------------------
-var InvalidIdentifier = /** @class */ (function (_super) {
-    __extends(InvalidIdentifier, _super);
-    function InvalidIdentifier(value, position) {
-        var _this = _super.call(this) || this;
-        _this.value = value;
-        _this.position = position;
-        return _this;
+class InvalidIdentifier extends Error {
+    constructor(value, position) {
+        super();
+        this.value = value;
+        this.position = position;
     }
-    return InvalidIdentifier;
-}(Error));
-var InvalidNumber = /** @class */ (function (_super) {
-    __extends(InvalidNumber, _super);
-    function InvalidNumber(value, position) {
-        var _this = _super.call(this) || this;
-        _this.value = value;
-        _this.position = position;
-        return _this;
+}
+class InvalidNumber extends Error {
+    constructor(value, position) {
+        super();
+        this.value = value;
+        this.position = position;
     }
-    return InvalidNumber;
-}(Error));
-var InvalidOperator = /** @class */ (function (_super) {
-    __extends(InvalidOperator, _super);
-    function InvalidOperator(value, position) {
-        var _this = _super.call(this) || this;
-        _this.value = value;
-        _this.position = position;
-        return _this;
+}
+class InvalidOperator extends Error {
+    constructor(value, position) {
+        super();
+        this.value = value;
+        this.position = position;
     }
-    return InvalidOperator;
-}(Error));
-// ---------------------------------------------------
-var Lexer = /** @class */ (function () {
-    function Lexer(source, config) {
+}
+class Lexer {
+    constructor(source, config) {
         this.source = source;
         this.config = config;
-        this.position = new counter_1.default; // todo: replace with simple object or na, IDK
+        this.position = new counter_1.default; // TODO: replace with simple object or na, IDK
         this.tokens = [];
     }
-    Lexer.prototype.top = function () {
+    top() {
         return this.source[this.position.position];
-    };
-    Lexer.prototype.pop = function () {
-        var current = this.top();
+    }
+    pop() {
+        const current = this.top();
         if (current === '\n') {
             this.position.newLine();
         }
@@ -88,51 +62,51 @@ var Lexer = /** @class */ (function () {
             this.position.nextChar();
         }
         return current;
-    };
-    Lexer.prototype.isWhiteSpace = function (char) {
+    }
+    isWhiteSpace(char) {
         return char.trim() !== char;
-    };
-    Lexer.prototype.isLeftParen = function (char) {
+    }
+    isLeftParen(char) {
         return char === '(';
-    };
-    Lexer.prototype.isRightParen = function (char) {
+    }
+    isRightParen(char) {
         return char === ')';
-    };
-    Lexer.prototype.isDot = function (char) {
+    }
+    isDot(char) {
         return char === '.';
-    };
-    Lexer.prototype.isNumeric = function (char) {
+    }
+    isNumeric(char) {
         return char >= '0' && char <= '9';
-    };
-    Lexer.prototype.isAlphabetic = function (char) {
+    }
+    isAlphabetic(char) {
         return (char >= 'a' && char <= 'z'
             ||
                 char >= 'A' && char <= 'Z');
-    };
-    Lexer.prototype.getCharToken = function (kind) {
-        var position = this.position.toRecord();
-        var char = this.pop();
+    }
+    getCharToken(kind) {
+        const position = this.position.toRecord();
+        const char = this.pop();
         return new Token(kind, char, position);
-    };
-    Lexer.prototype.readLeftParen = function () {
-        var paren = this.getCharToken(TokenType.LeftParen);
+    }
+    readLeftParen() {
+        const paren = this.getCharToken(TokenType.LeftParen);
         this.tokens.push(paren);
-    };
-    Lexer.prototype.readRightParen = function () {
-        var paren = this.getCharToken(TokenType.RightParen);
+    }
+    readRightParen() {
+        const paren = this.getCharToken(TokenType.RightParen);
         this.tokens.push(paren);
-    };
-    Lexer.prototype.readDot = function () {
-        var dot = this.getCharToken(TokenType.Dot);
+    }
+    readDot() {
+        const dot = this.getCharToken(TokenType.Dot);
         this.tokens.push(dot);
-    };
-    Lexer.prototype.readLambda = function () {
-        var lambda = this.getCharToken(TokenType.Lambda);
+    }
+    readLambda() {
+        const lambda = this.getCharToken(TokenType.Lambda);
         this.tokens.push(lambda);
-    };
-    Lexer.prototype.readIdentifier = function () {
-        var id = '';
-        var topPosition = this.position.toRecord();
+    }
+    readIdentifier() {
+        let id = '';
+        let topPosition = this.position.toRecord();
         // alphabetic part
         while (this.isAlphabetic(this.top())) {
             id += this.pop();
@@ -149,33 +123,33 @@ var Lexer = /** @class */ (function () {
         // whitespace neni nutny
         // kontrolovat to co vadi [ alphabetic ]
         if (this.isAlphabetic(this.top())) {
-            throw new InvalidIdentifier("" + id + top, topPosition);
+            throw new InvalidIdentifier(`${id}${top}`, topPosition);
         }
-        var identifier = new Token(TokenType.Identifier, id, topPosition);
+        const identifier = new Token(TokenType.Identifier, id, topPosition);
         this.tokens.push(identifier);
-    };
-    Lexer.prototype.readNumber = function () {
-        var n = 0;
-        var topPosition = this.position.toRecord();
+    }
+    readNumber() {
+        let n = 0;
+        let topPosition = this.position.toRecord();
         while (this.isNumeric(this.top())) {
             n = n * 10 + Number(this.pop());
         }
         if (this.isAlphabetic(this.top())) {
-            throw new InvalidNumber("" + n + top, topPosition);
+            throw new InvalidNumber(`${n}${top}`, topPosition);
         }
-        var number = new Token(TokenType.Number, n, topPosition);
+        const number = new Token(TokenType.Number, n, topPosition);
         this.tokens.push(number);
-    };
-    Lexer.prototype.mayBeLambda = function (char) {
+    }
+    mayBeLambda(char) {
         return this.config.lambdaLetters.indexOf(char) !== -1;
-    };
-    Lexer.prototype.mayBeIdentifier = function (char) {
+    }
+    mayBeIdentifier(char) {
         return this.isAlphabetic(this.top());
-    };
-    Lexer.prototype.mayBeNumber = function (char) {
+    }
+    mayBeNumber(char) {
         return this.isNumeric(char);
-    };
-    Lexer.prototype.tokenize = function () {
+    }
+    tokenize() {
         while (this.position.position < this.source.length) {
             switch (this.top()) {
                 case '(':
@@ -193,16 +167,15 @@ var Lexer = /** @class */ (function () {
                 case '/':
                 case '=':
                 case '^': {
-                    var operator = this.pop();
-                    var topPosition = this.position.toRecord();
+                    const operator = this.pop();
+                    let topPosition = this.position.toRecord();
                     this.tokens.push(new Token(TokenType.Operator, operator, topPosition));
                     break;
                 }
                 case '<':
                 case '>': {
-                    // TODO: implement <= >=
-                    var operator = this.pop();
-                    var topPosition = this.position.toRecord();
+                    let operator = this.pop();
+                    let topPosition = this.position.toRecord();
                     if (this.top() === '=') {
                         operator += this.pop();
                     }
@@ -223,9 +196,11 @@ var Lexer = /** @class */ (function () {
                         // at row ${ this.position.row } column ${ this.position.column }.`)
                         // TODO: refactor
                         // I need to send custom Error class containing all information in structured way not string
-                        throw (new Error("Invalid character " + this.position.toRecord() + "           at row " + this.position.row + " column " + this.position.column + "."));
+                        throw (new Error(`Invalid character ${this.position.toRecord()} \
+          at row ${this.position.row} column ${this.position.column}.`));
                     }
             }
+            // TODO: implement error handling already
             // nechytat chybu tady
             // nechat ji probublat ven z tohohle modulu
             // odchyti si ji super modul kerej tohle pouziva
@@ -253,28 +228,24 @@ var Lexer = /** @class */ (function () {
             // }
         }
         return this.tokens;
-    };
-    return Lexer;
-}());
+    }
+}
 function hintOperator(error, operators) {
-    var invalid = error.value;
-    var relevant = operators.filter(function (operator) {
-        return operator.indexOf(invalid) !== -1
-            ||
-                invalid.indexOf(operator) !== -1;
-    });
+    const { value: invalid } = error;
+    const relevant = operators.filter((operator) => operator.indexOf(invalid) !== -1
+        ||
+            invalid.indexOf(operator) !== -1);
     if (!relevant.length) {
         return '';
     }
-    return ("Hint: Did you mean to write one of these?\n    " + relevant.map(function (operator) { return operator + "\n"; }));
+    return (`Hint: Did you mean to write one of these?
+    ${relevant.map((operator) => `${operator}\n`)}`);
 }
 function tokenize(input, config) {
-    var lexer = new Lexer(input + ' ', config);
+    const lexer = new Lexer(input + ' ', config);
     return lexer.tokenize();
 }
 exports.tokenize = tokenize;
 exports.default = {
-    // Token,
-    // TokenType,
-    tokenize: tokenize,
+    tokenize,
 };

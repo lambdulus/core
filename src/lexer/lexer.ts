@@ -1,60 +1,11 @@
-import Counter, { PositionRecord } from './counter'
-
-
-// TODO: remove comments and numbers
-export enum TokenType {
-  Lambda = 'lambda', // = 0
-  Dot = 'dot', // = 1
-  Identifier = 'identifier', // = 2 // variables, booleans
-  Number = 'number', // = 3 // numbers
-  Operator = 'operator', // = 4 operators
-  LeftParen = 'left paren', // = 5
-  RightParen = 'right paren', // = 6
-}
-
-export class Token {
-  constructor (
-    public readonly type : TokenType,
-    public readonly value : string | number,
-    public readonly position : PositionRecord,
-    ) {}
-}
-
-
-// ---------------------------------------------------
-export type CodeStyle = {
-  singleLetterVars : boolean,
-  lambdaLetters : Array<string>,
-}
-
-// ---------------------------------------------------
-class InvalidIdentifier extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord,
-    ) { super() }
-}
-
-class InvalidNumber extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord
-    ) { super() }
-}
-
-class InvalidOperator extends Error {
-  constructor (
-    public readonly value : string,
-    public readonly position : PositionRecord
-    ) { super() }
-}
-// ---------------------------------------------------
+import { Counter, PositionRecord } from './counter'
+import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './';
 
 
 class Lexer {
-  position : Counter = new Counter // todo: replace with simple object or na, IDK
+  public position : Counter = new Counter
 
-  tokens : Array<Token> = []
+  public tokens : Array<Token> = []
 
   constructor (
     readonly source : string,
@@ -224,7 +175,6 @@ class Lexer {
         }
         case '<' :
         case '>' : {
-          // TODO: implement <= >=
           let operator : string = this.pop()
           let topPosition : PositionRecord = this.position.toRecord()
           
@@ -254,6 +204,7 @@ class Lexer {
           at row ${ this.position.row } column ${ this.position.column }.`))
         }
       }
+      // TODO: implement error handling already
       // nechytat chybu tady
       // nechat ji probublat ven z tohohle modulu
       // odchyti si ji super modul kerej tohle pouziva
@@ -315,10 +266,4 @@ export function tokenize (input : string, config : CodeStyle) : Array<Token> {
   const lexer : Lexer = new Lexer(input + ' ', config)
 
   return lexer.tokenize()
-}
-
-export default {
-  // Token,
-  // TokenType,
-  tokenize,
 }
