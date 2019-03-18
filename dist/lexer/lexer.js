@@ -25,15 +25,6 @@ class Lexer {
     isWhiteSpace(char) {
         return char.trim() !== char;
     }
-    // isLeftParen (char : string) : boolean {
-    //   return char === '('
-    // }
-    // isRightParen (char : string) : boolean {
-    //   return char === ')'
-    // }
-    // isDot (char : string) : boolean {
-    //   return char === '.'
-    // }
     isNumeric(char) {
         return char >= '0' && char <= '9';
     }
