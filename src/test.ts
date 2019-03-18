@@ -7,6 +7,7 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
+  '+ (23) 4',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci 
@@ -33,6 +34,14 @@ const inputs : Array<string> = [
   'A (B +) C',
   '(+ A B)',
   '+ 555 6',
+  '(  )',// TODO: trying to parse empty expression - forbidden          OK
+  '(', // TODO: one or more missing `)`                                 OK
+  '( a ( b )', // TODO: one or more missing `)`                         OK
+  '( a ( b ', // TODO: one or more missing `)`                          OK
+  '( a ( ', // TODO: one or more missing `)`                            OK
+  '((', // TODO: one or more missing `)`                                OK
+  '( +', // TODO: one or more missing `)`                               OK
+  '( 23', // TODO: one or more missing `)`                              OK
   // '(λ _x . x x)', // invalid cause of _x
  // 'A B C () E', // netusim jestli tohle chci mit jako validni NECHCI
  // 'A (B C) D ()', // ani tohle netusim NECHCI

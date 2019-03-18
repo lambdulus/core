@@ -2,7 +2,7 @@ import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
 import { ASTVisitor } from ".";
 
 
-export class BasicPrinter implements ASTVisitor {
+export class BasicPrinter extends ASTVisitor {
   private expression : string = ''
 
   // TODO: this looks like nonsense
@@ -30,6 +30,7 @@ export class BasicPrinter implements ASTVisitor {
   constructor (
     public readonly tree : AST,
   ) {
+    super()
     this.tree.visit(this)
   }
 
