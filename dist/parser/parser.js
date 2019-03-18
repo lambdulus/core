@@ -28,10 +28,31 @@ class Parser {
         this.position++;
         return top;
     }
+    acceptClosing() {
+        if (this.canAccept(lexer_1.TokenType.RightParen)) {
+            this.openSubexpressions--;
+            this.accept(lexer_1.TokenType.RightParen);
+            return;
+        }
+        if (this.canAccept(lexer_1.TokenType.RightBracket)) {
+            if (this.openSubexpressions > 1) {
+                this.openSubexpressions--;
+                return;
+            }
+            else {
+                this.openSubexpressions--;
+                this.accept(lexer_1.TokenType.RightBracket);
+                return;
+            }
+        }
+        throw "Was expecting `)` or `]`";
+    }
     exprEnd() {
         return (this.position === this.tokens.length
             ||
-                this.top().type === lexer_1.TokenType.RightParen);
+                this.top().type === lexer_1.TokenType.RightParen
+            ||
+                this.top().type === lexer_1.TokenType.RightBracket);
     }
     eof() {
         return this.position === this.tokens.length;
@@ -97,14 +118,16 @@ class Parser {
                 const argument = new ast_1.Variable(id);
                 const body = this.parseLambda();
                 const lambda = new ast_1.Lambda(argument, body);
-                this.accept(lexer_1.TokenType.RightParen);
-                this.openSubexpressions--;
+                this.acceptClosing();
+                // this.accept(TokenType.RightParen)
+                // this.openSubexpressions--
                 return lambda;
             }
             else { // ( LEXPR )
                 const expr = this.parse(null);
-                this.accept(lexer_1.TokenType.RightParen);
-                this.openSubexpressions--;
+                this.acceptClosing();
+                // this.accept(TokenType.RightParen)
+                // this.openSubexpressions--
                 return expr;
             }
         }
