@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
-class BasicPrinter {
+const _1 = require(".");
+class BasicPrinter extends _1.ASTVisitor {
     constructor(tree) {
+        super();
         this.tree = tree;
         this.expression = '';
         this.tree.visit(this);

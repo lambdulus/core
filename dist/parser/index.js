@@ -37,6 +37,7 @@ function parse(tokens) {
     macroTable['<'] = new MacroDef(toAst(`(λ m n . > n m )`, macroTable));
     macroTable['>='] = new MacroDef(toAst(`(λ m n . ZERO (- n m))`, macroTable));
     macroTable['<='] = new MacroDef(toAst(`(λ m n . ZERO (- m n))`, macroTable));
+    macroTable['IF'] = new MacroDef(toAst(`(λ p t e . p t e)`, macroTable));
     macroTable['PAIR'] = new MacroDef(toAst(`(λ f s . (λ g . g f s))`, macroTable));
     macroTable['FIRST'] = new MacroDef(toAst(`(λ p . p (λ f s . f))`, macroTable));
     macroTable['PAIR'] = new MacroDef(toAst(`(λ p . p (λ f s . s))`, macroTable));

@@ -5,12 +5,14 @@ export declare class Parser {
     private readonly tokens;
     private readonly macroTable;
     private position;
+    private openSubexpressions;
     private isMacro;
     constructor(tokens: Array<Token>, macroTable: MacroTable);
     top(): Token;
     canAccept(type: TokenType): boolean;
-    accept(type: TokenType): void;
+    accept(type: TokenType): Token;
     exprEnd(): boolean;
+    eof(): boolean;
     parseLambda(): AST;
     /**
      * SINGLE

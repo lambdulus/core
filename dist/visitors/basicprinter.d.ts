@@ -1,6 +1,6 @@
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
-export declare class BasicPrinter implements ASTVisitor {
+export declare class BasicPrinter extends ASTVisitor {
     readonly tree: AST;
     private expression;
     private printLambdaBody;
