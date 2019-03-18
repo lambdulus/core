@@ -11,6 +11,7 @@ export declare class Parser {
     top(): Token;
     canAccept(type: TokenType): boolean;
     accept(type: TokenType): Token;
+    acceptClosing(): void;
     exprEnd(): boolean;
     eof(): boolean;
     parseLambda(): AST;

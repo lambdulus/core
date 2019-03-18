@@ -1,4 +1,4 @@
-import { Token, TokenType } from "../lexer";
+import { Token, TokenType, tokenize } from "../lexer";
 import { MacroTable } from "./";
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 
@@ -40,11 +40,35 @@ export class Parser {
     return top
   }
 
+  acceptClosing () : void {
+    if (this.canAccept(TokenType.RightParen)) {
+      this.openSubexpressions--
+      this.accept(TokenType.RightParen)
+      return
+    }
+
+    if (this.canAccept(TokenType.RightBracket)) {
+      if (this.openSubexpressions > 1) {
+        this.openSubexpressions--
+        return
+      }
+      else {
+        this.openSubexpressions--
+        this.accept(TokenType.RightBracket)
+        return
+      }
+    }
+
+    throw "Was expecting `)` or `]`" 
+  }
+
   exprEnd () : boolean {
     return (
       this.position === this.tokens.length
         ||
       this.top().type === TokenType.RightParen
+        ||
+      this.top().type === TokenType.RightBracket
     )
   }
 
@@ -135,16 +159,18 @@ export class Parser {
         const body : AST = this.parseLambda()
         const lambda : AST = new Lambda(argument, body)
 
-        this.accept(TokenType.RightParen)
-        this.openSubexpressions--
+        this.acceptClosing()
+        // this.accept(TokenType.RightParen)
+        // this.openSubexpressions--
 
         return lambda
       }
       else { // ( LEXPR )
         const expr : AST = this.parse(null)
 
-        this.accept(TokenType.RightParen)
-        this.openSubexpressions--
+        this.acceptClosing()
+        // this.accept(TokenType.RightParen)
+        // this.openSubexpressions--
 
         return expr
       }
