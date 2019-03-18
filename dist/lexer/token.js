@@ -9,6 +9,7 @@ var TokenType;
     TokenType["Operator"] = "operator";
     TokenType["LeftParen"] = "left paren";
     TokenType["RightParen"] = "right paren";
+    TokenType["RightBracket"] = "right bracket";
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
 class Token {
     constructor(type, value, position) {

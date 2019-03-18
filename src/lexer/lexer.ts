@@ -33,17 +33,17 @@ class Lexer {
     return char.trim() !== char
   }
 
-  isLeftParen (char : string) : boolean {
-    return char === '('
-  }
+  // isLeftParen (char : string) : boolean {
+  //   return char === '('
+  // }
 
-  isRightParen (char : string) : boolean {
-    return char === ')'
-  }
+  // isRightParen (char : string) : boolean {
+  //   return char === ')'
+  // }
 
-  isDot (char : string) : boolean {
-    return char === '.'
-  }
+  // isDot (char : string) : boolean {
+  //   return char === '.'
+  // }
 
   isNumeric (char : string) : boolean {
     return char >= '0' && char <= '9'
@@ -74,6 +74,12 @@ class Lexer {
     const paren : Token = this.getCharToken(TokenType.RightParen)
 
     this.tokens.push(paren)
+  }
+
+  readRightBracket () : void {
+    const bracket : Token = this.getCharToken(TokenType.RightBracket)
+
+    this.tokens.push(bracket)
   }
 
   readDot () : void {
@@ -149,7 +155,7 @@ class Lexer {
     return this.isNumeric(char)
   }
 
-  tokenize () : Array<Token> {  
+  tokenize () : Array<Token> {
     while (this.position.position < this.source.length) {
       switch (this.top()) {
         case '(' :
@@ -157,6 +163,9 @@ class Lexer {
           break
         case ')' :
           this.readRightParen()
+          break
+        case ']' :
+          this.readRightBracket()
           break
         case '.' :
           this.readDot()

@@ -9,6 +9,7 @@ export enum TokenType {
   Operator = 'operator',
   LeftParen = 'left paren',
   RightParen = 'right paren',
+  RightBracket = 'right bracket'
 }
 
 export class Token {
