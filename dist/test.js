@@ -9,6 +9,7 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    '+ (23) 4',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
@@ -35,6 +36,14 @@ const inputs = [
     'A (B +) C',
     '(+ A B)',
     '+ 555 6',
+    '(  )',
+    '(',
+    '( a ( b )',
+    '( a ( b ',
+    '( a ( ',
+    '((',
+    '( +',
+    '( 23',
 ];
 console.log(inputs[0]);
 const tokens = lexer_1.tokenize(inputs[0], {
