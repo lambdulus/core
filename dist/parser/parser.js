@@ -70,21 +70,6 @@ class Parser {
         }
         throw "Was expecting either `.` or some Identifier, but got " + this.top().type;
     }
-    // parseLambda () : AST {
-    //   const top : Token = this.top()
-    //   switch (top.type) {
-    //     case TokenType.Dot:
-    //       this.accept(TokenType.Dot)
-    //       return this.parse(null) // λ body
-    //     case TokenType.Identifier:
-    //       this.accept(TokenType.Identifier)
-    //       const argument : Variable = new Variable(top)
-    //       const body : AST = this.parseLambda()
-    //       return new Lambda(argument, body)
-    //     default:
-    //       throw "Some invalid token error"
-    //   }
-    // }
     /**
      * SINGLE
          := number
@@ -119,61 +104,16 @@ class Parser {
                 const body = this.parseLambda();
                 const lambda = new ast_1.Lambda(argument, body);
                 this.acceptClosing();
-                // this.accept(TokenType.RightParen)
-                // this.openSubexpressions--
                 return lambda;
             }
             else { // ( LEXPR )
                 const expr = this.parse(null);
                 this.acceptClosing();
-                // this.accept(TokenType.RightParen)
-                // this.openSubexpressions--
                 return expr;
             }
         }
         throw "Was expecting one of: Number, Operator, Identifier or `(` but got " + this.top().type;
     }
-    // parseExpression () : AST {
-    //   let top : Token = this.top()
-    //   switch (top.type) {
-    //     case TokenType.Number:
-    //       this.accept(TokenType.Number)
-    //       return new ChurchNumber(top)
-    //     case TokenType.Operator:
-    //       this.accept(TokenType.Operator)
-    //       return new Macro(top, this.macroTable[top.value])
-    //     case TokenType.Identifier:
-    //       this.accept(TokenType.Identifier)
-    //       if (this.isMacro(top)) {
-    //         return new Macro(top, this.macroTable[top.value])
-    //       }
-    //       return new Variable(top)
-    //     case TokenType.LeftParen:
-    //       this.accept(TokenType.LeftParen)
-    //       // TODO: kdyz top uz neni
-    //       // mel bych zavest nejakou logiku acceptAny nebo acceptAnyOf
-    //       // hlavni je aby v pripade ze top je prazdny aby to thrownulo s informaci co jsem ocekaval
-    //       top = this.top()
-    //       if (top.type === TokenType.Lambda) {
-    //         this.accept(TokenType.Lambda)
-    //         top = this.top()
-    //         this.accept(TokenType.Identifier)
-    //         const argument : Variable = new Variable(top)
-    //         const body : AST = this.parseLambda()
-    //         const lambda : AST = new Lambda(argument, body)
-    //         this.accept(TokenType.RightParen)
-    //         return lambda
-    //       }
-    //       else {
-    //         // ( LEXPR )
-    //         const expr : AST = this.parse(null)
-    //         this.accept(TokenType.RightParen)
-    //         return expr
-    //       }
-    //     default:
-    //       throw "Some syntax error"
-    //   }
-    // }
     /**
      * LEXPR := SINGLE { SINGLE }
      */
