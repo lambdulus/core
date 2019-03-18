@@ -33,6 +33,7 @@ class Lexer {
     return char.trim() !== char
   }
 
+  // TODO: delete
   // isLeftParen (char : string) : boolean {
   //   return char === '('
   // }

@@ -94,6 +94,7 @@ export class Parser {
 
     throw "Was expecting either `.` or some Identifier, but got " + this.top().type
   }
+  // TODO: delete
   // parseLambda () : AST {
   //   const top : Token = this.top()
   //   switch (top.type) {
@@ -178,6 +179,7 @@ export class Parser {
 
     throw "Was expecting one of: Number, Operator, Identifier or `(` but got " + this.top().type
   }
+  // TODO: delete
   // parseExpression () : AST {
   //   let top : Token = this.top()
 

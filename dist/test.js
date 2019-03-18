@@ -9,18 +9,8 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
-    '+ (+ 23 (- 42 23] 4',
-    '+ (+ 23 (- 42 23)) 4',
-    '(  ]',
-    '(]',
-    '( a ( ]',
-    '( a ( b ]',
-    '( a ( b )]',
-    '( + ]',
-    '( 23 ]',
-    '(( a ]',
-    '+ (23) 4',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
+    '+ (23) 4',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
     'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
@@ -46,6 +36,7 @@ const inputs = [
     'A (B +) C',
     '(+ A B)',
     '+ 555 6',
+    // invalid exprs
     '((',
     '( +',
     '( 23',
@@ -54,6 +45,17 @@ const inputs = [
     '( a ( ',
     '(',
     '(  )',
+    // ] bracket
+    '+ (+ 23 (- 42 23] 4',
+    '+ (+ 23 (- 42 23)) 4',
+    '(  ]',
+    '(]',
+    '( a ( ]',
+    '( a ( b ]',
+    '( a ( b )]',
+    '( + ]',
+    '( 23 ]',
+    '(( a ]',
 ];
 console.log(inputs[0]);
 const tokens = lexer_1.tokenize(inputs[0], {
