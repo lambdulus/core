@@ -25,15 +25,15 @@ class Lexer {
     isWhiteSpace(char) {
         return char.trim() !== char;
     }
-    isLeftParen(char) {
-        return char === '(';
-    }
-    isRightParen(char) {
-        return char === ')';
-    }
-    isDot(char) {
-        return char === '.';
-    }
+    // isLeftParen (char : string) : boolean {
+    //   return char === '('
+    // }
+    // isRightParen (char : string) : boolean {
+    //   return char === ')'
+    // }
+    // isDot (char : string) : boolean {
+    //   return char === '.'
+    // }
     isNumeric(char) {
         return char >= '0' && char <= '9';
     }
@@ -54,6 +54,10 @@ class Lexer {
     readRightParen() {
         const paren = this.getCharToken(_1.TokenType.RightParen);
         this.tokens.push(paren);
+    }
+    readRightBracket() {
+        const bracket = this.getCharToken(_1.TokenType.RightBracket);
+        this.tokens.push(bracket);
     }
     readDot() {
         const dot = this.getCharToken(_1.TokenType.Dot);
@@ -116,6 +120,9 @@ class Lexer {
                     break;
                 case ')':
                     this.readRightParen();
+                    break;
+                case ']':
+                    this.readRightBracket();
                     break;
                 case '.':
                     this.readDot();

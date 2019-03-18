@@ -6,7 +6,8 @@ export declare enum TokenType {
     Number = "number",
     Operator = "operator",
     LeftParen = "left paren",
-    RightParen = "right paren"
+    RightParen = "right paren",
+    RightBracket = "right bracket"
 }
 export declare class Token {
     readonly type: TokenType;
