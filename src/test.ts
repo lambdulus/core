@@ -7,17 +7,12 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
-  '4',
-  '3',
-  '2',
-  '1',
-  '0',
-  '(~ xyz . zyx ) 1 2 3',
-  '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
+  '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci
+  '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars
   'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
   'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
   '(x 2) (2 s z)',
@@ -41,8 +36,14 @@ const inputs : Array<string> = [
   'A (B +) C',
   '(+ A B)',
   '+ 555 6',
+  '0',
+  '1',
+  '2',
+  '3',
+  '4',
   
   // invalid exprs
+  '11111111111111111111111111111111111111111111111111', // TODO: fail on too much recursion or heap out of memory
   '(λ a b . + a b) )) abc', // TODO: one or more ) non matching         OK
   '((', // TODO: one or more missing `)`                                OK
   '( +', // TODO: one or more missing `)`                               OK
@@ -77,6 +78,10 @@ const tokens : Array<Token> = tokenize(inputs[0], {
   singleLetterVars : false,
   lambdaLetters : [ 'λ', '\\', '~' ],
 })
+
+console.log(tokens.map((token) => token.value).join(' '))
+
+console.log('--------------------')
 
 const ast : AST = Parser.parse(tokens)
 let root : AST = ast

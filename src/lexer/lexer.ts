@@ -86,15 +86,22 @@ class Lexer {
     let id : string = ''
     let topPosition = this.position.toRecord()
   
+    if (this.config.singleLetterVars) {
+      while (this.isAlphabetic(this.top())) {
+        id = this.pop()
+        const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+        this.tokens.push(identifier)
+      }
+
+      if (this.isNumeric(this.top())) {
+        throw new InvalidIdentifier(`${ id }`, topPosition)
+      }
+      return
+    }
+
     // alphabetic part
     while (this.isAlphabetic(this.top())) {
       id += this.pop()
-
-      // todo: implement this
-      // v pripade single letter id - single alpha + any number of digit
-      if (this.config.singleLetterVars) {
-        new Token(TokenType.Identifier, this.pop(), topPosition)
-      }
     }
   
     // optional numeric part
@@ -105,7 +112,7 @@ class Lexer {
     // whitespace neni nutny
     // kontrolovat to co vadi [ alphabetic ]
     if (this.isAlphabetic(this.top())) {
-      throw new InvalidIdentifier(`${ id }${ top }`, topPosition)
+      throw new InvalidIdentifier(`${ id }`, topPosition)
     }
   
     const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
