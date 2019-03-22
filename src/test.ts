@@ -7,10 +7,11 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
+  '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
-  '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci 
+  '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci
   'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
   'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
   '(x 2) (2 s z)',
@@ -18,10 +19,10 @@ const inputs : Array<string> = [
   '(~ z . z (~ x . (~ x . z))) (x z) 1 2',
   '(~ z . z (~ x . z)) (x y z)',
   '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
-  '(~ x y z . x y z) y z x',  
+  '(~ x y z . x y z) y z x',
   '1 a',
   '^ 4 4',
-  '(~ x y z . x y z) 1 2 3',  
+  '(~ x y z . x y z) 1 2 3',
   '(\\ x y z . x y z)',
   '(λ x . x x) A',
   '(λ x . x x)',
@@ -34,8 +35,9 @@ const inputs : Array<string> = [
   'A (B +) C',
   '(+ A B)',
   '+ 555 6',
-
+  
   // invalid exprs
+  '(λ a b . + a b) )) abc', // TODO: one or more ) non matching         OK
   '((', // TODO: one or more missing `)`                                OK
   '( +', // TODO: one or more missing `)`                               OK
   '( 23', // TODO: one or more missing `)`                              OK
@@ -85,7 +87,7 @@ while (true) {
 
   e++
 
-  // console.log(printTree(root))
+  console.log(printTree(root))
 }
 
 export function printTree (tree : AST) : string {
