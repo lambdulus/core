@@ -9,6 +9,7 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '+ (23) 4',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
@@ -37,6 +38,7 @@ const inputs = [
     '(+ A B)',
     '+ 555 6',
     // invalid exprs
+    '(λ a b . + a b) )) abc',
     '((',
     '( +',
     '( 23',
@@ -72,7 +74,7 @@ while (true) {
     }
     root = normal.perform(); // perform next reduction
     e++;
-    // console.log(printTree(root))
+    console.log(printTree(root));
 }
 function printTree(tree) {
     const printer = new basicprinter_1.BasicPrinter(tree);
