@@ -7,6 +7,12 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
+  '4',
+  '3',
+  '2',
+  '1',
+  '0',
+  '(~ xyz . zyx ) 1 2 3',
   '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',

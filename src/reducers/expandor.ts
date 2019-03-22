@@ -1,5 +1,5 @@
-import { CodeStyle, tokenize } from "../lexer";
-import { AST, Binary, Child, ChurchNumber, Macro } from "../ast";
+import { CodeStyle, tokenize, Token, TokenType } from "../lexer";
+import { AST, Binary, Child, ChurchNumber, Macro, Application, Variable, Lambda } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { parse } from "../parser";
 import { Expansion } from "../reductions";
@@ -22,12 +22,31 @@ export class Expandor extends ASTVisitor {
     this.target = target
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
-    const codeStyle : CodeStyle = { singleLetterVars : true, lambdaLetters : [ 'λ' ] }
-    const value : number = <number> churchNumber.token.value
-    const churchLiteral : string = `(λ s z .${' (s'.repeat(value)} z)${')'.repeat(value)}`
+  // TODO: creating dummy token, there should be something like NoPosition
+  recursiveApplication (n : number) : AST {
+    if (n === 0) {
+      return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+    }
 
-    this.expanded = parse(tokenize(churchLiteral, codeStyle))
+    const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+    const right : AST = this.recursiveApplication(n - 1)
+    return new Application(left, right)
+  }
+
+  // TODO: creating dummy token, there should be something like NoPosition
+  churchNumber (tree : AST) : AST {
+    const s : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+    const z : Variable = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+    
+    const body : Lambda = new Lambda(z, tree)
+    return new Lambda(s, body)
+  }
+
+  onChurchNumber(churchNumber : ChurchNumber) : void {
+    const value : number = <number> churchNumber.token.value
+    const churchLiteral : AST = this.churchNumber(this.recursiveApplication(value))
+
+    this.expanded = churchLiteral
   }
 
   onMacro(macro : Macro) : void {
