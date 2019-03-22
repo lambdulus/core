@@ -92,9 +92,9 @@ class Lexer {
 
       // todo: implement this
       // v pripade single letter id - single alpha + any number of digit
-      // if (this.config.singleLetterVars) {
-      //   new Token(TokenType.Identifier, this.pop(), topPosition)
-      // }
+      if (this.config.singleLetterVars) {
+        new Token(TokenType.Identifier, this.pop(), topPosition)
+      }
     }
   
     // optional numeric part
