@@ -9,17 +9,12 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
-    '4',
-    '3',
-    '2',
-    '1',
-    '0',
-    '(~ xyz . zyx ) 1 2 3',
-    '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
+    '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '+ (23) 4',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
+    '(~ xyz . zyx ) 1 2 3',
     'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
     'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
     '(x 2) (2 s z)',
@@ -43,7 +38,13 @@ const inputs = [
     'A (B +) C',
     '(+ A B)',
     '+ 555 6',
+    '0',
+    '1',
+    '2',
+    '3',
+    '4',
     // invalid exprs
+    '11111111111111111111111111111111111111111111111111',
     '(λ a b . + a b) )) abc',
     '((',
     '( +',
@@ -70,6 +71,8 @@ const tokens = lexer_1.tokenize(inputs[0], {
     singleLetterVars: false,
     lambdaLetters: ['λ', '\\', '~'],
 });
+console.log(tokens.map((token) => token.value).join(' '));
+console.log('--------------------');
 const ast = parser_1.default.parse(tokens);
 let root = ast;
 let e = 0;
