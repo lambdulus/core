@@ -9,6 +9,12 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    '4',
+    '3',
+    '2',
+    '1',
+    '0',
+    '(~ xyz . zyx ) 1 2 3',
     '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 6',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '+ (23) 4',

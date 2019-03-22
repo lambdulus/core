@@ -8,6 +8,8 @@ export declare class Expandor extends ASTVisitor {
     private treeSide;
     private target;
     constructor({ parent, treeSide, target }: Expansion, tree: AST);
+    recursiveApplication(n: number): AST;
+    churchNumber(tree: AST): AST;
     onChurchNumber(churchNumber: ChurchNumber): void;
     onMacro(macro: Macro): void;
     perform(): void;
