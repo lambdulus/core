@@ -118,7 +118,15 @@ class Parser {
      * LEXPR := SINGLE { SINGLE }
      */
     parse(leftSide) {
+        // TODO: refactor error catching - this if if if is insane
+        // TODO: uvaha
+        // pokud se nachazim na top level urovni a narazim na zaviraci zavorku
+        // striktne receno - pokud je pocet mejch otevrenejch zavorek 0
+        // a narazim na zaviraci zavorku, tak je neco spatne
         if (this.exprEnd()) {
+            if (!this.eof() && this.openSubexpressions === 0) {
+                throw "It seems you have one or more closing parenthesis non matching.";
+            }
             // TODO: taky by bylo fajn rict, kde
             if (this.eof() && this.openSubexpressions !== 0) {
                 throw "It seems like you forgot to write one or more closing parentheses.";
