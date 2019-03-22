@@ -23,6 +23,53 @@ export class Expandor extends ASTVisitor {
   }
 
   // TODO: creating dummy token, there should be something like NoPosition
+  // TODO: iterative optimization
+  // recursiveApplication (n : number) : AST {
+  //   if (n === 0) {
+  //     return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+  //   }
+
+  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+  //   const root : Application = new Application(left, null as any)
+
+  //   let app : Application = root
+
+  //   while (--n) {
+  //     const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+  //     const root : Application = new Application(left, null as any)
+
+  //     app.right = root
+  //     app = root
+  //   }
+
+  //   app.right = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+
+  //   return root
+  // }
+
+  // TODO: tail call recursion optimization
+  // recursiveApplication (n : number) : AST {
+  //   if (n === 0) {
+  //     return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+  //   }
+
+  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+  //   const root : Application = new Application(left, null as any)
+
+  //   return this.__recursiveApplication(n - 1, root, root)
+  // }
+
+  // __recursiveApplication (n : number, accumulator : Application, root : AST) : AST {
+  //   if (n === 0) {
+  //     accumulator.right = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
+  //     return root
+  //   }
+
+  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
+  //   accumulator.right = new Application(left, null as any)
+  //   return this.__recursiveApplication(n - 1, accumulator.right as Application, root)
+  // }
+
   recursiveApplication (n : number) : AST {
     if (n === 0) {
       return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
