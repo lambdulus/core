@@ -13,6 +13,10 @@ export interface MacroTable {
   [ name : string ] : MacroDef
 }
 
+export interface UserMacroTable {
+  [ name : string ] : string
+}
+
 function toAst (definition : string, macroTable : MacroTable) : AST {
   const codeStyle : CodeStyle = { singleLetterVars : false, lambdaLetters : [ 'λ' ] }
   const parser : Parser = new Parser(tokenize(definition, codeStyle), macroTable)
@@ -21,7 +25,7 @@ function toAst (definition : string, macroTable : MacroTable) : AST {
 }
 
 // TODO: refactor macroTable for usage with user defined macro definitions
-export function parse (tokens : Array<Token>, userMacros : MacroTable) : AST {
+export function parse (tokens : Array<Token>, userMacros : UserMacroTable) : AST {
   const macroTable : MacroTable = {}
 
   macroTable['Y'] = new MacroDef(toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`, macroTable)),
@@ -69,6 +73,10 @@ export function parse (tokens : Array<Token>, userMacros : MacroTable) : AST {
   // macroTable['<'] = new MacroDef(toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`, macroTable))
   // macroTable['>='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) (- n m))`, macroTable))  
   // macroTable['<='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`, macroTable))
+
+  for (const [ name, definition ] of Object.entries(userMacros)) {
+    macroTable[name] = new MacroDef(toAst(definition, macroTable))
+  }
 
   const parser : Parser = new Parser(tokens, macroTable)
 
