@@ -21,7 +21,7 @@ function toAst (definition : string, macroTable : MacroTable) : AST {
 }
 
 // TODO: refactor macroTable for usage with user defined macro definitions
-export function parse (tokens : Array<Token>) : AST {
+export function parse (tokens : Array<Token>, userMacros : MacroTable) : AST {
   const macroTable : MacroTable = {}
 
   macroTable['Y'] = new MacroDef(toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`, macroTable)),
