@@ -15,7 +15,7 @@ function toAst(definition, macroTable) {
     return parser.parse(null);
 }
 // TODO: refactor macroTable for usage with user defined macro definitions
-function parse(tokens) {
+function parse(tokens, userMacros) {
     const macroTable = {};
     macroTable['Y'] = new MacroDef(toAst(`(λ f . (λ x . f (x x)) (λ x . f (x x)))`, macroTable)),
         macroTable['ZERO'] = new MacroDef(toAst(`(λ n . n (λ x . (λ t f . f)) (λ t f . t))`, macroTable)),
