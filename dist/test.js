@@ -73,7 +73,7 @@ const tokens = lexer_1.tokenize(inputs[0], {
 });
 console.log(tokens.map((token) => token.value).join(' '));
 console.log('--------------------');
-const ast = parser_1.default.parse(tokens);
+const ast = parser_1.default.parse(tokens, {});
 let root = ast;
 let e = 0;
 while (true) {
