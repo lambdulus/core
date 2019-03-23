@@ -7,6 +7,7 @@ exports.tokenize = lexer_1.tokenize;
 var parser_1 = require("./parser");
 exports.MacroDef = parser_1.MacroDef;
 exports.parse = parser_1.parse;
+exports.builtinMacros = parser_1.builtinMacros;
 var ast_1 = require("./ast");
 exports.Application = ast_1.Application;
 exports.Lambda = ast_1.Lambda;
