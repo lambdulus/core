@@ -12,7 +12,7 @@ const inputs : Array<string> = [
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci
-  '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars
+  '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
   'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
   'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
   '(x 2) (2 s z)',
@@ -83,7 +83,7 @@ console.log(tokens.map((token) => token.value).join(' '))
 
 console.log('--------------------')
 
-const ast : AST = Parser.parse(tokens)
+const ast : AST = Parser.parse(tokens, {})
 let root : AST = ast
 let e = 0
 

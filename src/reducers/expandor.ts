@@ -1,7 +1,6 @@
-import { CodeStyle, tokenize, Token, TokenType } from "../lexer";
+import { Token, TokenType } from "../lexer";
 import { AST, Binary, Child, ChurchNumber, Macro, Application, Variable, Lambda } from "../ast";
 import { ASTVisitor } from "../visitors";
-import { parse } from "../parser";
 import { Expansion } from "../reductions";
 
 
@@ -22,66 +21,18 @@ export class Expandor extends ASTVisitor {
     this.target = target
   }
 
-  // TODO: creating dummy token, there should be something like NoPosition
-  // TODO: iterative optimization
-  // recursiveApplication (n : number) : AST {
-  //   if (n === 0) {
-  //     return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
-  //   }
-
-  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
-  //   const root : Application = new Application(left, null as any)
-
-  //   let app : Application = root
-
-  //   while (--n) {
-  //     const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
-  //     const root : Application = new Application(left, null as any)
-
-  //     app.right = root
-  //     app = root
-  //   }
-
-  //   app.right = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
-
-  //   return root
-  // }
-
-  // TODO: tail call recursion optimization
-  // recursiveApplication (n : number) : AST {
-  //   if (n === 0) {
-  //     return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
-  //   }
-
-  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
-  //   const root : Application = new Application(left, null as any)
-
-  //   return this.__recursiveApplication(n - 1, root, root)
-  // }
-
-  // __recursiveApplication (n : number, accumulator : Application, root : AST) : AST {
-  //   if (n === 0) {
-  //     accumulator.right = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
-  //     return root
-  //   }
-
-  //   const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
-  //   accumulator.right = new Application(left, null as any)
-  //   return this.__recursiveApplication(n - 1, accumulator.right as Application, root)
-  // }
-
-  recursiveApplication (n : number) : AST {
+  churchNumberBody (n : number) : AST {
     if (n === 0) {
       return new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
     }
 
     const left : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
-    const right : AST = this.recursiveApplication(n - 1)
+    const right : AST = this.churchNumberBody(n - 1)
     return new Application(left, right)
   }
 
   // TODO: creating dummy token, there should be something like NoPosition
-  churchNumber (tree : AST) : AST {
+  churchNumberHeader (tree : AST) : AST {
     const s : Variable = new Variable(new Token(TokenType.Identifier, 's', {column:0,position:0,row:0}))
     const z : Variable = new Variable(new Token(TokenType.Identifier, 'z', {column:0,position:0,row:0}))
     
@@ -91,7 +42,7 @@ export class Expandor extends ASTVisitor {
 
   onChurchNumber(churchNumber : ChurchNumber) : void {
     const value : number = <number> churchNumber.token.value
-    const churchLiteral : AST = this.churchNumber(this.recursiveApplication(value))
+    const churchLiteral : AST = this.churchNumberHeader(this.churchNumberBody(value))
 
     this.expanded = churchLiteral
   }
