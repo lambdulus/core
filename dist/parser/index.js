@@ -56,6 +56,33 @@ function parse(tokens, userMacros) {
     return parser.parse(null);
 }
 exports.parse = parse;
+exports.builtinMacros = [
+    'Y',
+    'ZERO',
+    'PRED',
+    'SUC',
+    'AND',
+    'OR',
+    'NOT',
+    'T',
+    'F',
+    '+',
+    '-',
+    '*',
+    '/',
+    '^',
+    'DELTA',
+    '=',
+    '>',
+    '<',
+    '>=',
+    '<=',
+    'IF',
+    'PAIR',
+    'FIRST',
+    'PAIR',
+];
+// TODO: delete?
 exports.default = {
     parse,
     Lambda: ast_1.Lambda,
