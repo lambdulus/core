@@ -75,6 +75,34 @@ export function parse (tokens : Array<Token>, userMacros : MacroTable) : AST {
   return parser.parse(null)
 }
 
+export const builtinMacros : Array<string> = [
+  'Y',
+  'ZERO',
+  'PRED',
+  'SUC',
+  'AND',
+  'OR',
+  'NOT',
+  'T',
+  'F',
+  '+',
+  '-',
+  '*',
+  '/',
+  '^',
+  'DELTA',
+  '=',
+  '>',
+  '<',
+  '>=',
+  '<=',
+  'IF',
+  'PAIR',
+  'FIRST',
+  'PAIR',
+]
+
+// TODO: delete?
 export default {
   parse,
   Lambda,
