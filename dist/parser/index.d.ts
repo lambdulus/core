@@ -11,7 +11,7 @@ export interface UserMacroTable {
     [name: string]: string;
 }
 export declare function parse(tokens: Array<Token>, userMacros: UserMacroTable): AST;
-export declare const builtinMacros: Array<string>;
+export declare const builtinMacros: Array<Array<string>>;
 declare const _default: {
     parse: typeof parse;
     Lambda: typeof Lambda;
