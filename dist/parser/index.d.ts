@@ -7,11 +7,11 @@ export declare class MacroDef {
 export interface MacroTable {
     [name: string]: MacroDef;
 }
-export interface UserMacroTable {
+export interface MacroMap {
     [name: string]: string;
 }
-export declare function parse(tokens: Array<Token>, userMacros: UserMacroTable): AST;
-export declare const builtinMacros: Array<Array<string>>;
+export declare const builtinMacros: MacroMap;
+export declare function parse(tokens: Array<Token>, userMacros: MacroMap): AST;
 declare const _default: {
     parse: typeof parse;
     Lambda: typeof Lambda;
