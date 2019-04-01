@@ -9,6 +9,9 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    '5 4',
+    '^ 4 5',
+    '+ 4 4',
     '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
     '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6',
     '+ (23) 4',
@@ -76,6 +79,16 @@ console.log('--------------------');
 const ast = parser_1.default.parse(tokens, {});
 let root = ast;
 let e = 0;
+// while (true) {
+//   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
+//   console.log(normal.nextReduction)
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
+//   root = normal.perform() // perform next reduction
+//   e++
+//   console.log(printTree(root))
+// }
 while (true) {
     const normal = new normalevaluator_1.NormalEvaluator(root);
     if (normal.nextReduction instanceof none_1.None) {
@@ -83,7 +96,7 @@ while (true) {
     }
     root = normal.perform(); // perform next reduction
     e++;
-    console.log(printTree(root));
+    // console.log(printTree(root))
 }
 function printTree(tree) {
     const printer = new basicprinter_1.BasicPrinter(tree);

@@ -3,10 +3,14 @@ import Parser from './parser'
 
 import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './visitors/normalevaluator'
+import { NormalAbstractionEvaluator } from './visitors/normalabstractionevaluator';
 import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
+  '5 4',
+  '^ 4 5',
+  '+ 4 4',
   '(λ n .(Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',
@@ -87,6 +91,23 @@ const ast : AST = Parser.parse(tokens, {})
 let root : AST = ast
 let e = 0
 
+// while (true) {
+//   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
+//   console.log(normal.nextReduction)
+
+
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
+
+//   root = normal.perform() // perform next reduction
+
+//   e++
+
+//   console.log(printTree(root))
+// }
+
+
 while (true) {
   const normal : NormalEvaluator = new NormalEvaluator(root)
 
@@ -98,8 +119,11 @@ while (true) {
 
   e++
 
-  console.log(printTree(root))
+  // console.log(printTree(root))
 }
+
+
+
 
 export function printTree (tree : AST) : string {
   const printer : BasicPrinter = new BasicPrinter(tree)

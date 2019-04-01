@@ -6,7 +6,11 @@ import { constructFor, Reducer } from "../reducers";
 import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
 
 
-export class NormalEvaluator extends ASTVisitor {
+
+
+
+////////////////////////////////////////////////////////////
+export class NormalAbstractionEvaluator extends ASTVisitor {
   private parent : Binary | null = null
   private child : Child | null = null
 

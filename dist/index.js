@@ -37,5 +37,7 @@ var freevarsfinder_1 = require("./visitors/freevarsfinder");
 exports.FreeVarsFinder = freevarsfinder_1.FreeVarsFinder;
 var normalevaluator_1 = require("./visitors/normalevaluator");
 exports.NormalEvaluator = normalevaluator_1.NormalEvaluator;
+var normalabstractionevaluator_1 = require("./visitors/normalabstractionevaluator");
+exports.NormalAbstractionEvaluator = normalabstractionevaluator_1.NormalAbstractionEvaluator;
 var varbindfinder_1 = require("./visitors/varbindfinder"); // TODO: tohle asi neni potreba
 exports.VarBindFinder = varbindfinder_1.VarBindFinder;

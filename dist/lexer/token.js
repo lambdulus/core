@@ -11,6 +11,7 @@ var TokenType;
     TokenType["RightParen"] = "right paren";
     TokenType["RightBracket"] = "right bracket";
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
+// TODO: discard readonly?
 class Token {
     constructor(type, value, position) {
         this.type = type;

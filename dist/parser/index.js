@@ -23,7 +23,7 @@ exports.builtinMacros = {
     '-': '(λ m n . (n PRED) m)',
     '*': '(λ x y z . x (y z))',
     '/': '(λ n . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))',
-    '^': '(λ x y . x y)',
+    '^': '(λ x y . y x)',
     'DELTA': '(λ m n . + (- m n) (- n m))',
     '=': '(λ m n . ZERO (DELTA m n))',
     '>': '(λ m n . NOT (ZERO (- m n)))',
@@ -60,6 +60,7 @@ function parse(tokens, userMacros) {
     for (const [name, definition] of Object.entries(userMacros)) {
         if (name in exports.builtinMacros) {
             // TODO: maybe dont throw? better throw, just to be sure :D
+            // zvazit - dovoluju predefinovat cisla
             throw new Error('Cannot redefine built-in Macro ' + name);
         }
         macroTable[name] = new MacroDef(toAst(definition, macroTable));
