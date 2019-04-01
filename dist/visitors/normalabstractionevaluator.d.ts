@@ -2,7 +2,7 @@ import { ASTVisitor } from ".";
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 import { Reducer } from "../reducers";
 import { ASTReduction } from "../reductions";
-export declare class NormalEvaluator extends ASTVisitor {
+export declare class NormalAbstractionEvaluator extends ASTVisitor {
     readonly tree: AST;
     private parent;
     private child;

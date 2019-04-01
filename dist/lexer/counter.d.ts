@@ -3,6 +3,11 @@ export interface PositionRecord {
     row: number;
     position: number;
 }
+export declare const BlankPosition: {
+    column: number;
+    row: number;
+    position: number;
+};
 export declare class Counter {
     column: number;
     row: number;

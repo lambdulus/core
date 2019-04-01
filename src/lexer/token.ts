@@ -12,6 +12,7 @@ export enum TokenType {
   RightBracket = 'right bracket'
 }
 
+// TODO: discard readonly?
 export class Token {
   constructor (
     public readonly type : TokenType,

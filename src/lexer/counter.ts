@@ -5,6 +5,12 @@ export interface PositionRecord {
   position : number
 }
 
+export const BlankPosition = {
+  column : -1,
+  row : -1,
+  position : -1,
+}
+
 export class Counter {
   public column : number = 0
   public row : number = 0
