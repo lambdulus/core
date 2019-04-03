@@ -9,6 +9,7 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    '(λ x y. (< x y) x y) 2 3',
     '5 4',
     '^ 4 5',
     '+ 4 4',

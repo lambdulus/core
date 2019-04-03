@@ -8,6 +8,7 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 const inputs : Array<string> = [
+  '(λ x y. (< x y) x y) 2 3',
   '5 4',
   '^ 4 5',
   '+ 4 4',
