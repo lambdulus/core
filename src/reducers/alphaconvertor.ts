@@ -30,7 +30,7 @@ export class AlphaConvertor extends ASTVisitor {
 
     const right : AST = <AST> this.converted
 
-    this.converted = new Application(left, right)
+    this.converted = new Application(left, right, application.identifier)
   }
 
   onLambda(lambda : Lambda) : void {
@@ -59,7 +59,7 @@ export class AlphaConvertor extends ASTVisitor {
     if (variable.name() === this.oldName) {
       const token : Token = new Token(variable.token.type, this.newName, variable.token.position)
     
-      this.converted = new Variable(token)
+      this.converted = new Variable(token, variable.identifier)
     }
     else {
       this.converted = variable
