@@ -34,7 +34,7 @@ export class BetaReducer extends ASTVisitor {
 
     const right : AST = <AST> this.substituted
 
-    this.substituted = new Application(left, right)
+    this.substituted = new Application(left, right, application.identifier)
   }
 
   onLambda(lambda : Lambda) : void {
@@ -45,9 +45,12 @@ export class BetaReducer extends ASTVisitor {
       lambda.body.visit(this)
       
       const body : AST = <AST> this.substituted
+
+      lambda.body = body
       
+      this.substituted = lambda
       // TODO: clone or not clone ? i'd say CLONE but consider not clonning
-      this.substituted = new Lambda(lambda.argument.clone(), body)
+      // this.substituted = new Lasmbda(lambda.argument.clone(), body, lambda.identifier)
     }
   }
 
