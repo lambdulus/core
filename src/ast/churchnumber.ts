@@ -4,10 +4,11 @@ import { ASTVisitor } from '../visitors';
 
 
 export class ChurchNumber implements AST {
-  public readonly identifier : symbol = Symbol()
+  // public readonly identifier : symbol = Symbol()
 
   constructor (
     public readonly token : Token,
+    public readonly identifier : symbol = Symbol(),
   ) {}
     
   name () : string {
@@ -15,7 +16,7 @@ export class ChurchNumber implements AST {
   }
   
   clone () : ChurchNumber {
-    return new ChurchNumber(this.token)
+    return new ChurchNumber(this.token, this.identifier)
   }
 
   visit (visitor : ASTVisitor) : void {

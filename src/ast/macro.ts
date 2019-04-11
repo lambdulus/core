@@ -5,11 +5,12 @@ import { ASTVisitor } from '../visitors';
 
 
 export class Macro implements AST {
-  public readonly identifier : symbol = Symbol()
+  // public readonly identifier : symbol = Symbol()
 
   constructor (
     public readonly token : Token,
     public readonly definition : MacroDef,
+    public readonly identifier : symbol = Symbol(),
   ) {}
 
   name () : string {
@@ -17,7 +18,7 @@ export class Macro implements AST {
   }
 
   clone () : Macro {
-    return new Macro(this.token, this.definition)
+    return new Macro(this.token, this.definition, this.identifier)
   }
 
   visit (visitor : ASTVisitor) : void {
