@@ -4,11 +4,12 @@ import { ASTVisitor } from '../visitors';
 
 
 export class Lambda implements AST, Binary {
-  public readonly identifier : symbol = Symbol()
+  // public readonly identifier : symbol = Symbol()
 
   constructor (
     public argument : Variable,
-    public body : AST
+    public body : AST,
+    public readonly identifier : symbol = Symbol(),
   ) {}
 
   public get left () {
@@ -29,7 +30,7 @@ export class Lambda implements AST, Binary {
 
   clone () : Lambda {
     // TODO: consider not clonning
-    return new Lambda(this.argument.clone(), this.body.clone())
+    return new Lambda(this.argument.clone(), this.body.clone(), this.identifier)
   }
 
   visit (visitor : ASTVisitor) : void {
