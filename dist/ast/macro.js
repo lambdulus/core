@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Macro {
-    constructor(token, definition) {
+    // public readonly identifier : symbol = Symbol()
+    constructor(token, definition, identifier = Symbol()) {
         this.token = token;
         this.definition = definition;
-        this.identifier = Symbol();
+        this.identifier = identifier;
     }
     name() {
         return `${this.token.value}`;
     }
     clone() {
-        return new Macro(this.token, this.definition);
+        return new Macro(this.token, this.definition, this.identifier);
     }
     visit(visitor) {
         visitor.onMacro(this);

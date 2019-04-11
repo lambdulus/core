@@ -6,7 +6,7 @@ export declare class Macro implements AST {
     readonly token: Token;
     readonly definition: MacroDef;
     readonly identifier: symbol;
-    constructor(token: Token, definition: MacroDef);
+    constructor(token: Token, definition: MacroDef, identifier?: symbol);
     name(): string;
     clone(): Macro;
     visit(visitor: ASTVisitor): void;

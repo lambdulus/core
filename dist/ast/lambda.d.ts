@@ -5,7 +5,7 @@ export declare class Lambda implements AST, Binary {
     argument: Variable;
     body: AST;
     readonly identifier: symbol;
-    constructor(argument: Variable, body: AST);
+    constructor(argument: Variable, body: AST, identifier?: symbol);
     left: Variable;
     right: AST;
     clone(): Lambda;

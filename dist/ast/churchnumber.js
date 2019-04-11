@@ -1,15 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ChurchNumber {
-    constructor(token) {
+    // public readonly identifier : symbol = Symbol()
+    constructor(token, identifier = Symbol()) {
         this.token = token;
-        this.identifier = Symbol();
+        this.identifier = identifier;
     }
     name() {
         return `${this.token.value}`;
     }
     clone() {
-        return new ChurchNumber(this.token);
+        return new ChurchNumber(this.token, this.identifier);
     }
     visit(visitor) {
         visitor.onChurchNumber(this);
