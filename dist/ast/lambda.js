@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Lambda {
-    constructor(argument, body) {
+    // public readonly identifier : symbol = Symbol()
+    constructor(argument, body, identifier = Symbol()) {
         this.argument = argument;
         this.body = body;
-        this.identifier = Symbol();
+        this.identifier = identifier;
     }
     get left() {
         return this.argument;
@@ -20,7 +21,7 @@ class Lambda {
     }
     clone() {
         // TODO: consider not clonning
-        return new Lambda(this.argument.clone(), this.body.clone());
+        return new Lambda(this.argument.clone(), this.body.clone(), this.identifier);
     }
     visit(visitor) {
         visitor.onLambda(this);
