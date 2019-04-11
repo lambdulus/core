@@ -18,7 +18,7 @@ class AlphaConvertor extends visitors_1.ASTVisitor {
         const left = this.converted;
         application.right.visit(this);
         const right = this.converted;
-        this.converted = new ast_1.Application(left, right);
+        this.converted = new ast_1.Application(left, right, application.identifier);
     }
     onLambda(lambda) {
         if (lambda.argument.name() !== this.oldName) {
@@ -40,7 +40,7 @@ class AlphaConvertor extends visitors_1.ASTVisitor {
     onVariable(variable) {
         if (variable.name() === this.oldName) {
             const token = new lexer_1.Token(variable.token.type, this.newName, variable.token.position);
-            this.converted = new ast_1.Variable(token);
+            this.converted = new ast_1.Variable(token, variable.identifier);
         }
         else {
             this.converted = variable;
