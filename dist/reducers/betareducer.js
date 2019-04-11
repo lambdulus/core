@@ -19,7 +19,7 @@ class BetaReducer extends visitors_1.ASTVisitor {
         const left = this.substituted;
         application.right.visit(this);
         const right = this.substituted;
-        this.substituted = new ast_1.Application(left, right);
+        this.substituted = new ast_1.Application(left, right, application.identifier);
     }
     onLambda(lambda) {
         if (lambda.argument.name() === this.argName) {
@@ -28,8 +28,10 @@ class BetaReducer extends visitors_1.ASTVisitor {
         else {
             lambda.body.visit(this);
             const body = this.substituted;
+            lambda.body = body;
+            this.substituted = lambda;
             // TODO: clone or not clone ? i'd say CLONE but consider not clonning
-            this.substituted = new ast_1.Lambda(lambda.argument.clone(), body);
+            // this.substituted = new Lasmbda(lambda.argument.clone(), body, lambda.identifier)
         }
     }
     onChurchNumber(churchNumber) {
