@@ -11,6 +11,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  'A `::` (B `::` (C `::` NIL]',
+  '(3 `*` 2) `-` (1 `+` 2)',
   '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
   'QUICKSORT SHORTLIST',
@@ -109,6 +111,9 @@ console.log('--------------------')
 const ast : AST = Parser.parse(tokens, {})
 let root : AST = ast
 let e = 0
+
+console.log(printTree(root))
+
 
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
