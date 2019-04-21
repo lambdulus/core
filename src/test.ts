@@ -11,6 +11,7 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
   'QUICKSORT SHORTLIST',
   'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
@@ -137,7 +138,7 @@ while (true) {
 
   e++
 
-  // console.log(printTree(root))
+  console.log(printTree(root))
 }
 
 // while (true) {

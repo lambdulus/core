@@ -189,6 +189,22 @@ class Lexer {
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
           break
         }
+        case ':' : {
+          let operator : string = this.pop()
+          let topPosition : PositionRecord = this.position.toRecord()
+
+          if (this.top() === ':') {
+            operator += this.pop()
+          }
+          else {
+            // TODO: error
+            throw(new Error(`Invalid character ${ this.position.toRecord() } \
+          at row ${ this.position.row } column ${ this.position.column }.`))
+          }
+
+          this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+          break
+        }
         default  :
         if (this.mayBeNumber(this.top()))
           this.readNumber()
