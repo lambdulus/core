@@ -179,20 +179,40 @@ export class Parser {
         throw "You are trying to parse empty expression, which is forbidden. " +
         "Check your λ expression for empty perenthesis."
       }
+
       return <AST> leftSide
       // TODO: lefSide should never ever happen to be null -> check again
       // TODO: it can be empty if parsing `( )`
       // could it be caught by simply checking if leftSide is never null in this place?
     }
     else {
+      // mohl bych `` treatovat jako zavorky, akorat se syntaktickym vyznamem, takze bych je proste pridal
+      // do gramatiky - otevrou a uzavrou expression, do AST by se ale nedostaly
+      // takze bych je musel identifikovat uz pred ASTckem
+      let isInfix : boolean = this.canAccept(TokenType.BackTick)
+
+      if (isInfix) {
+        this.accept(TokenType.BackTick)
+      }
+
       const expr : AST = this.parseExpression()
+
+      if (isInfix) {
+        this.accept(TokenType.BackTick)
+      }
       
       if (leftSide === null) {
         return this.parse(expr)
       }
       else {
-        const app : AST = new Application(leftSide, expr)
-        return this.parse(app)
+        if (isInfix) {
+          const app : AST = new Application(expr, leftSide)
+          return this.parse(app)
+        }
+        else {
+          const app : AST = new Application(leftSide, expr)
+          return this.parse(app)
+        }
       }
     }
   }

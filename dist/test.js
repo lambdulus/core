@@ -9,6 +9,8 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    'A `::` (B `::` (C `::` NIL]',
+    '(3 `*` 2) `-` (1 `+` 2)',
     '(:: A (:: B (:: C NIL)))',
     'QUICKSORT MESSLIST',
     'QUICKSORT SHORTLIST',
@@ -95,6 +97,7 @@ console.log('--------------------');
 const ast = parser_1.default.parse(tokens, {});
 let root = ast;
 let e = 0;
+console.log(printTree(root));
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 //   console.log(normal.nextReduction)
