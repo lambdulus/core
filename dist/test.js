@@ -9,7 +9,7 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
-    '(::A (::B (::C NIL)))',
+    '(:: A (:: B (:: C NIL)))',
     'QUICKSORT MESSLIST',
     'QUICKSORT SHORTLIST',
     'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
