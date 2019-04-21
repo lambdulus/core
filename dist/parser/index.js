@@ -47,7 +47,8 @@ exports.builtinMacros = {
     'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
     'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
     'CONNECT': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-    'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (fn (LISTEQ (FIRST list) list)) (fn (LISTGR (FIRST list) list)) ) ) ) )'
+    'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (fn (LISTEQ (FIRST list) list)) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+    '::': 'CONS',
 };
 function toAst(definition, macroTable) {
     const codeStyle = { singleLetterVars: false, lambdaLetters: ['λ'] };
