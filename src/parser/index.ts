@@ -19,6 +19,7 @@ export interface MacroMap {
 
 export const builtinMacros : MacroMap = {
   'Y' : '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
+  'Z' : '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
   'ZERO' : '(λ n . n (λ x . (λ t f . f)) (λ t f . t))',
   'PRED' : '(λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))',
   'SUC' : '(λ n s z . s (n s z))',
@@ -27,6 +28,8 @@ export const builtinMacros : MacroMap = {
   'T' : '(λ t f . t)',
   'F' : '(λ t f . f)',
   'NOT' : '(λ p . p F T)',
+  // 'NOT' : '(λ p a b . p b a)',
+  // 'NOTapp' : '(λ p a b . p b a)',
   '+' : '(λ x y s z . x s (y s z))',
   '-' : '(λ m n . (n PRED) m)',
   '*' : '(λ x y z . x (y z))',
@@ -42,6 +45,18 @@ export const builtinMacros : MacroMap = {
   'PAIR' : '(λ f s . (λ g . g f s))',
   'FIRST' : '(λ p . p (λ f s . f))',
   'SECOND' : '(λ p . p (λ f s . s))',
+  
+  'CONS' : '(λ car cdr . PAIR car cdr)',
+  'NIL' : '(λx. T)',
+  'NULL' : '(λp.p (λx y.F))',
+  'SHORTLIST' : '(CONS 4 (CONS 2 NIL))',
+  'MESSLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+  'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'CONNECT' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (fn (LISTEQ (FIRST list) list)) (fn (LISTGR (FIRST list) list)) ) ) ) )'
 }
 
 function toAst (definition : string, macroTable : MacroTable) : AST {

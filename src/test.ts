@@ -3,16 +3,33 @@ import Parser from './parser'
 
 import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './visitors/normalevaluator'
+import { ApplicativeEvaluator } from './visitors/applicativeevaluator'
 import { NormalAbstractionEvaluator } from './visitors/normalabstractionevaluator';
 import { AST } from './ast'
 import { None } from './reductions/none';
 
+
+
 const inputs : Array<string> = [
+  'QUICKSORT MESSLIST',
+  'QUICKSORT SHORTLIST',
+  'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
+  'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
+  'Z (~ f n . (NOT n) (f (NOT n)) E) F',
+  '(λ p q . q) (   (λ x y z. (x y) z)  (λ w v. w)   )',
+  '(~ x y f . f x y) ((~ y . y m) (n e))',
+  '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
+  'Z (~ f n . (= n 1) 1 (+ n (f (- n 1) )) ) 1',
+  'NOT (ZERO 3)',
+  '(~ m . (~ n . = n 1) m) 1',
+  '< 1 2',
+  '(λx. + x x)((λp. + p 4) 3)',
+  '(~ n . + n 1)(+ 3 2)',
   '(λ x y. (< x y) x y) 2 3',
   '5 4',
   '^ 4 5',
   '+ 4 4',
-  '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
+  '(λ n . (Z (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
@@ -122,6 +139,25 @@ while (true) {
 
   // console.log(printTree(root))
 }
+
+// while (true) {
+//   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
+
+//   if (
+//     // e > 35 ||
+//     applicative.nextReduction instanceof None) {
+//     break
+//   }
+
+//   root = applicative.perform() // perform next reduction
+
+//   e++
+
+//   // console.log('-------------------------------------------------')
+//   // console.log(printTree(root))
+//   console.log('-----------------------' + e + '--------------------------')
+
+// }
 
 
 
