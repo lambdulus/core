@@ -9,6 +9,8 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    'A `:` (B `:` (C `:` [] ]',
+    'A `::` (B `::` (C `::` [] ]',
     '(:: A (:: B (:: C []]',
     '(:: A (:: B (:: C [] ]',
     '(:: A (:: B (:: C [] )))',

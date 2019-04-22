@@ -11,6 +11,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  'A `:` (B `:` (C `:` [] ]',
+  'A `::` (B `::` (C `::` [] ]',
   '(:: A (:: B (:: C []]',
   '(:: A (:: B (:: C [] ]',
   '(:: A (:: B (:: C [] )))',
