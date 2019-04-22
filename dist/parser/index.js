@@ -41,8 +41,6 @@ exports.builtinMacros = {
     'NIL': '(λx. T)',
     'NULL': '(λp.p (λx y.F))',
     '::': 'CONS',
-    'SHORTLIST': '(CONS 4 (CONS 2 NIL))',
-    'MESSLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
 };
 function toAst(definition, macroTable) {
     const codeStyle = { singleLetterVars: false, lambdaLetters: ['λ'] };
