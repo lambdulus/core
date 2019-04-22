@@ -50,6 +50,7 @@ export const builtinMacros : MacroMap = {
   'NIL' : '(λx. T)',
   'NULL' : '(λp.p (λx y.F))',
   '::' : 'CONS',
+  '[]' : '(λx. T)'
 }
 
 function toAst (definition : string, macroTable : MacroTable) : AST {
