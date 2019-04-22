@@ -131,18 +131,24 @@ class Lexer {
                 case '=':
                 case '^': {
                     const operator = this.pop();
-                    let topPosition = this.position.toRecord();
+                    const topPosition = this.position.toRecord();
                     this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
                     break;
                 }
                 case '<':
                 case '>': {
                     let operator = this.pop();
-                    let topPosition = this.position.toRecord();
+                    const topPosition = this.position.toRecord();
                     if (this.top() === '=') {
                         operator += this.pop();
                     }
                     this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
+                    break;
+                }
+                case '`': {
+                    const operator = this.pop();
+                    const topPosition = this.position.toRecord();
+                    this.tokens.push(new _1.Token(_1.TokenType.BackTick, operator, topPosition));
                     break;
                 }
                 case ':': {

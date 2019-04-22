@@ -11,6 +11,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  'A `::` (B `::` (C `::` NIL]',
+  '(3 `*` 2) `-` (1 `+` 2)',
   'QUICKSORT SHORTLIST',
   '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
