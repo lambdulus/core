@@ -141,13 +141,29 @@ class Parser {
             // could it be caught by simply checking if leftSide is never null in this place?
         }
         else {
+            // mohl bych `` treatovat jako zavorky, akorat se syntaktickym vyznamem, takze bych je proste pridal
+            // do gramatiky - otevrou a uzavrou expression, do AST by se ale nedostaly
+            // takze bych je musel identifikovat uz pred ASTckem
+            let isInfix = this.canAccept(lexer_1.TokenType.BackTick);
+            if (isInfix) {
+                this.accept(lexer_1.TokenType.BackTick);
+            }
             const expr = this.parseExpression();
+            if (isInfix) {
+                this.accept(lexer_1.TokenType.BackTick);
+            }
             if (leftSide === null) {
                 return this.parse(expr);
             }
             else {
-                const app = new ast_1.Application(leftSide, expr);
-                return this.parse(app);
+                if (isInfix) {
+                    const app = new ast_1.Application(expr, leftSide);
+                    return this.parse(app);
+                }
+                else {
+                    const app = new ast_1.Application(leftSide, expr);
+                    return this.parse(app);
+                }
             }
         }
     }

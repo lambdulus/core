@@ -172,7 +172,7 @@ class Lexer {
         case '=' :
         case '^' : {
           const operator : string = this.pop()
-          let topPosition : PositionRecord = this.position.toRecord()
+          const topPosition : PositionRecord = this.position.toRecord()
                 
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
           break
@@ -180,13 +180,20 @@ class Lexer {
         case '<' :
         case '>' : {
           let operator : string = this.pop()
-          let topPosition : PositionRecord = this.position.toRecord()
+          const topPosition : PositionRecord = this.position.toRecord()
           
           if (this.top() === '=') {
             operator += this.pop()
           }
 
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+          break
+        }
+        case '`' : {
+          const operator : string = this.pop()
+          const topPosition : PositionRecord = this.position.toRecord()
+
+          this.tokens.push(new Token(TokenType.BackTick, operator, topPosition))
           break
         }
         case ':' : {

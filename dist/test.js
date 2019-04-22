@@ -12,6 +12,8 @@ const inputs = [
     '(:: A (:: B (:: C []]',
     '(:: A (:: B (:: C [] ]',
     '(:: A (:: B (:: C [] )))',
+    'A `::` (B `::` (C `::` NIL]',
+    '(3 `*` 2) `-` (1 `+` 2)',
     'QUICKSORT SHORTLIST',
     'QUICKSORT MESSLIST',
     'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
