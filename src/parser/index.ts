@@ -49,7 +49,7 @@ export const builtinMacros : MacroMap = {
   'CONS' : '(λ car cdr . (λ g . g car cdr))',
   'NIL' : '(λx. T)',
   'NULL' : '(λp.p (λx y.F))',
-  '::' : 'CONS',
+  ':' : 'CONS',
   '[]' : '(λx. T)'
 }
 

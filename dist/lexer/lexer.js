@@ -152,16 +152,8 @@ class Lexer {
                     break;
                 }
                 case ':': {
-                    let operator = this.pop();
+                    const operator = this.pop();
                     let topPosition = this.position.toRecord();
-                    if (this.top() === ':') {
-                        operator += this.pop();
-                    }
-                    else {
-                        // TODO: error
-                        throw (new Error(`Invalid character ${this.position.toRecord()} \
-          at row ${this.position.row} column ${this.position.column}.`));
-                    }
                     this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
                     break;
                 }
