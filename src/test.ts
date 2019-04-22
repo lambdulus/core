@@ -11,10 +11,12 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  '(:: A (:: B (:: C []]',
+  '(:: A (:: B (:: C [] ]',
+  '(:: A (:: B (:: C [] )))',
   'A `::` (B `::` (C `::` NIL]',
   '(3 `*` 2) `-` (1 `+` 2)',
   'QUICKSORT SHORTLIST',
-  '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
   'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
   'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
