@@ -95,7 +95,7 @@ class Lexer {
             n = n * 10 + Number(this.pop());
         }
         if (this.isAlphabetic(this.top())) {
-            throw new _1.InvalidNumber(`${n}${top}`, topPosition);
+            throw new _1.InvalidNumber(`${n}${this.top()}`, topPosition);
         }
         const number = new _1.Token(_1.TokenType.Number, n, topPosition);
         this.tokens.push(number);

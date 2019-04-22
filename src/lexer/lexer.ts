@@ -129,7 +129,7 @@ class Lexer {
     }
   
     if (this.isAlphabetic(this.top())) {
-      throw new InvalidNumber(`${ n }${ top }`, topPosition)
+      throw new InvalidNumber(`${ n }${ this.top() }`, topPosition)
     }
   
     
