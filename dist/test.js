@@ -9,9 +9,9 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    'QUICKSORT SHORTLIST',
     '(:: A (:: B (:: C NIL)))',
     'QUICKSORT MESSLIST',
-    'QUICKSORT SHORTLIST',
     'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
     'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
     'Z (~ f n . (NOT n) (f (NOT n)) E) F',
@@ -95,6 +95,7 @@ console.log('--------------------');
 const ast = parser_1.default.parse(tokens, {});
 let root = ast;
 let e = 0;
+console.log(printTree(root));
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 //   console.log(normal.nextReduction)
@@ -112,7 +113,7 @@ while (true) {
     }
     root = normal.perform(); // perform next reduction
     e++;
-    console.log(printTree(root));
+    // console.log(printTree(root))
 }
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)

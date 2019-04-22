@@ -11,9 +11,9 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  'QUICKSORT SHORTLIST',
   '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
-  'QUICKSORT SHORTLIST',
   'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
   'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
   'Z (~ f n . (NOT n) (f (NOT n)) E) F',
@@ -110,6 +110,9 @@ const ast : AST = Parser.parse(tokens, {})
 let root : AST = ast
 let e = 0
 
+console.log(printTree(root))
+
+
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 //   console.log(normal.nextReduction)
@@ -138,7 +141,7 @@ while (true) {
 
   e++
 
-  console.log(printTree(root))
+  // console.log(printTree(root))
 }
 
 // while (true) {
