@@ -13,9 +13,9 @@ import { None } from './reductions/none';
 const inputs : Array<string> = [
   'A `::` (B `::` (C `::` NIL]',
   '(3 `*` 2) `-` (1 `+` 2)',
+  'QUICKSORT SHORTLIST',
   '(:: A (:: B (:: C NIL)))',
   'QUICKSORT MESSLIST',
-  'QUICKSORT SHORTLIST',
   'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
   'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
   'Z (~ f n . (NOT n) (f (NOT n)) E) F',
@@ -108,7 +108,16 @@ console.log(tokens.map((token) => token.value).join(' '))
 
 console.log('--------------------')
 
-const ast : AST = Parser.parse(tokens, {})
+const ast : AST = Parser.parse(tokens, {
+  'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+  'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+  'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'CONNECT' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+})
 let root : AST = ast
 let e = 0
 
@@ -143,7 +152,7 @@ while (true) {
 
   e++
 
-  console.log(printTree(root))
+  // console.log(printTree(root))
 }
 
 // while (true) {
