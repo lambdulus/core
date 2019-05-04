@@ -1,0 +1,1737 @@
+{
+  "program": {
+    "fileInfos": {
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es6.d.ts": {
+        "version": "c180f01a2aaac7d733001fa1db20f881dc83cf33096b674a1546ca26762e69da",
+        "signature": "c180f01a2aaac7d733001fa1db20f881dc83cf33096b674a1546ca26762e69da"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88",
+        "signature": "c8665e66018917580e71792b91022bcaf53fb946fab4aaf8dfb0738ed564db88"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.d.ts": {
+        "version": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96",
+        "signature": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.d.ts": {
+        "version": "5f217838d25704474d9ef93774f04164889169ca31475fe423a9de6758f058d1",
+        "signature": "5f217838d25704474d9ef93774f04164889169ca31475fe423a9de6758f058d1"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.d.ts": {
+        "version": "459097c7bdd88fc5731367e56591e4f465f2c9de81a35427a7bd473165c34743",
+        "signature": "459097c7bdd88fc5731367e56591e4f465f2c9de81a35427a7bd473165c34743"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.d.ts": {
+        "version": "2edd3ddf436ef8e12df876dcae4ecd6a8748577944c477bf4b20d5596e0c9843",
+        "signature": "2edd3ddf436ef8e12df876dcae4ecd6a8748577944c477bf4b20d5596e0c9843"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376",
+        "signature": "6994c583b66862deca24d7bbf77297d95b9d3da8160dbd9beef6b847cf7c1376"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts": {
+        "version": "4c892766803cef795d73d69aee436dc7a80157163e0cf35e6d0e86917cbd42f3",
+        "signature": "4c892766803cef795d73d69aee436dc7a80157163e0cf35e6d0e86917cbd42f3"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": {
+        "version": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b",
+        "signature": "fe4e59403e34c7ff747abe4ff6abbc7718229556d7c1a5b93473fb53156c913b"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.scripthost.d.ts": {
+        "version": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9",
+        "signature": "b9faa17292f17d2ad75e34fac77dd63a6403af1dba02d39cd0cbb9ffdf3de8b9"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.core.d.ts": {
+        "version": "384f66a3422d80014c51de2682159bb26f1e35854029880ccd5f6d1f00e6a36d",
+        "signature": "384f66a3422d80014c51de2682159bb26f1e35854029880ccd5f6d1f00e6a36d"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+        "version": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0",
+        "signature": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+        "version": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3",
+        "signature": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+        "version": "4d1f39313a169b8599b8817688f504b56ba8204c2ebafd03f66ff77ddb1899a4",
+        "signature": "4d1f39313a169b8599b8817688f504b56ba8204c2ebafd03f66ff77ddb1899a4"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+        "version": "7c07d934680d0e33275a44d22fb11a4ff31d46c8c26a8d056828a478753f1efe",
+        "signature": "7c07d934680d0e33275a44d22fb11a4ff31d46c8c26a8d056828a478753f1efe"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe",
+        "signature": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976",
+        "signature": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+        "version": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230",
+        "signature": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+        "version": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303",
+        "signature": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts": {
+        "version": "3f96f1e570aedbd97bf818c246727151e873125d0512e4ae904330286c721bc0",
+        "signature": "3f96f1e570aedbd97bf818c246727151e873125d0512e4ae904330286c721bc0"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.object.d.ts": {
+        "version": "ff8ad203e83338289b0f5defc1a5b5c253fb7d251b464db497383f915a0df3f4",
+        "signature": "ff8ad203e83338289b0f5defc1a5b5c253fb7d251b464db497383f915a0df3f4"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": {
+        "version": "b8667586a618c5cf64523d4e500ae39e781428abfb28f3de441fc66b56144b6f",
+        "signature": "b8667586a618c5cf64523d4e500ae39e781428abfb28f3de441fc66b56144b6f"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.string.d.ts": {
+        "version": "21df2e0059f14dcb4c3a0e125859f6b6ff01332ee24b0065a741d121250bc71c",
+        "signature": "21df2e0059f14dcb4c3a0e125859f6b6ff01332ee24b0065a741d121250bc71c"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.intl.d.ts": {
+        "version": "c1759cb171c7619af0d2234f2f8fb2a871ee88e956e2ed91bb61778e41f272c6",
+        "signature": "c1759cb171c7619af0d2234f2f8fb2a871ee88e956e2ed91bb61778e41f272c6"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": {
+        "version": "28569d59e07d4378cb3d54979c4c60f9f06305c9bb6999ffe6cab758957adc46",
+        "signature": "28569d59e07d4378cb3d54979c4c60f9f06305c9bb6999ffe6cab758957adc46"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": {
+        "version": "42102aaeb1bfec213be1e9777466a6d551eeba8567fed18c0cdbca8c35e3c6e4",
+        "signature": "42102aaeb1bfec213be1e9777466a6d551eeba8567fed18c0cdbca8c35e3c6e4"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.intl.d.ts": {
+        "version": "1b820b57379c726f94af50cd60053674af53ff9d079c1563cc70071e8b757dd0",
+        "signature": "1b820b57379c726f94af50cd60053674af53ff9d079c1563cc70071e8b757dd0"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.promise.d.ts": {
+        "version": "efe049114bad1035b0aa9a4a0359f50ab776e3897c411521e51d3013079cbd62",
+        "signature": "efe049114bad1035b0aa9a4a0359f50ab776e3897c411521e51d3013079cbd62"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.regexp.d.ts": {
+        "version": "e7780d04cd4120ee554c665829db2bbdd6b947cbaa3c150b7d9ea74df3beb2e8",
+        "signature": "e7780d04cd4120ee554c665829db2bbdd6b947cbaa3c150b7d9ea74df3beb2e8"
+      },
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.esnext.intl.d.ts": {
+        "version": "f6e0c89daaf72eac38dfb1d5ef0972183f7f26a68da15bfe5bcb7cfccf0c7db8",
+        "signature": "f6e0c89daaf72eac38dfb1d5ef0972183f7f26a68da15bfe5bcb7cfccf0c7db8"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts": {
+        "version": "314c65a53d6528a77cadc4ee66b523ac952fe5d019f983c4c20826a418a0be6c",
+        "signature": "c24b422d636a18b9f597aa4782b981c2afe30bb5376152d03895437b16ba6cba"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts": {
+        "version": "d2c9a09417dfeeb1116c074c1f37393fa3df498a4096c22ac65f09b23f8c4595",
+        "signature": "c09b98688423cb9c026445126c3e08f24b482a273e1b564a0eda2c977b59b29e"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts": {
+        "version": "87bc2f4f9fe85fea7c47d755bff64e41a2fa510e5fe92b5df81c94120fd43148",
+        "signature": "23cfb575bf49bc4631543e7a71f30a119b00e7c9a299c19dd8f0ceb2d04a3228"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts": {
+        "version": "f641d3bee0c5f5cb15f65dc17fce92f4aac983c7da4896c85b41c004f53e4eb0",
+        "signature": "0348a2551197dd09ea53706c097ff2a2bfcdbe1523f7bc9d5ee01c097041dffb"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts": {
+        "version": "4156f0d6d7cbee984dbf3d489822b7600f5c3b37a3577ac7e7f959051eb2e865",
+        "signature": "d6da8857c15e0398db1569763bc2f4971409bcd862785b8dc0970f967b52ec5c"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts": {
+        "version": "c22fc407625000fd66e3d66380eba423fa473299011f461bc8cee88d89817433",
+        "signature": "f18b8ed4894a26276ae6e4170633fc3994a3e104a419ac2da14ef6a2a9e74de8"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts": {
+        "version": "b7d998d8636972952caf6648570bbd033d19c9018fe947abc92e79124ba26cf5",
+        "signature": "97c93fe9b516d6d68304c1793d3977cedbe05802cbf74f614250505d1c835725"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts": {
+        "version": "018007dddc93893ae9f93f5cd6355a7493500fddd9907088b4964ed662d26dc9",
+        "signature": "7d927f29a38405939562292dae6a4ec4bef83575bef2420cbd71d78e1ea578b9"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts": {
+        "version": "098cbd9013120b8d6d2a6e37bcc5e577b145bf9c9f09818e5a4e2c430653ad58",
+        "signature": "2023f523d0120abdc94f7907ea1077a150e69801bf379a5ab2aa2435452c7a12"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts": {
+        "version": "cd3d1f430d209ecb4e83d0ff99c954e7f4e97f5f9b0bcc310e9804f02b230048",
+        "signature": "5077c4d77d6beabf690633cf8245155e5633cf3afd51393750eb89d9a2a1312b"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts": {
+        "version": "8e65e2c1657a68f4b33d65ba351596111c69d16c9371692404bffd214016b70e",
+        "signature": "1f043c13efa7d1a6be030fcdd7679e9380242c9579266ee505fb47aebe0d288b"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts": {
+        "version": "a443e2a60e888843c6dcdbe4501ac632379654678833576a1bd9166b2cd0986b",
+        "signature": "147aa378ea513ed86b7e84338806a67a49fc5e2dee9a61c8527983eaf9050423"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/parser/parser.ts": {
+        "version": "c4102cb596bc5d27cf77f8440d62ebfc3b4b04ebd22f4a43f6c4cc5d158e68b2",
+        "signature": "c88e2f92ef79beaa4ed2eb97b93d7c2e38f43486916e83611126d490b894cbf2"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts": {
+        "version": "7470d5adc9e027e3b40aaa93b01848b14355940841cd1b9482e6d998c5a382cd",
+        "signature": "6d5ed4e25aadfd02cb872d1c9e36ef2edc4cc5d7e11d525a7d69f0f13693fcd2"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts": {
+        "version": "921cb3e5f091da8eee33804e292813537f066252c3f829d5889ef7c703f86cd6",
+        "signature": "fe5838998b073455f0ee5a56eec3ad38521bb0ab40dc2efcff8c904fef5601ad"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts": {
+        "version": "1a9c3ea3eba3e850d8b1effb99f5c310246576958413e9c2345bcdc7c6876e3d",
+        "signature": "d98192582239797b8646bbc3787dd8d86c401f72b1d064727fa1df8be2156be7"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts": {
+        "version": "0caa16d3b1d817526d248d65932379b708bc852ab929567dbef314ec11e5bf21",
+        "signature": "b308782fe8348d67148a7e81d81904b91a5c14a485a52e9b28a4cc7e5ac13051"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts": {
+        "version": "8bf471220912f43bf56d1675cdd49a9820c667604fe6685d0f59dcb2108056d9",
+        "signature": "13025c7f71668c97f96ad0359ad0d6c41e2a4576b71c6e5f4838c7876735072e"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts": {
+        "version": "5135ce8001ac39fcc075bbb644d35fb118d41b38b2a02cd876a82c9f4045840a",
+        "signature": "ed43191668744a11714479b52ccbc90c4899706fd2aaa827f6a3775c456a3c1b"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts": {
+        "version": "1f387c640dc8da32b84ec6c5d37680786dac141629d9ff40db77bfa2ef2470fb",
+        "signature": "134c83da801a5745cc395d3f3240eeedb141d5052dd800d30593c7077539f89f"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts": {
+        "version": "6d775fd28eee31a6b4f4b3f677fc3ab7ede7996560770b1ab70eec4959afa6c1",
+        "signature": "902c9ad92b3df84595676394e2ddc5cc3e0ca6e607558f3184588e4e5a68c548"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts": {
+        "version": "f014018a6b0960bbfb35f2ea9ced352bd71595911a4c02076e97633457bd48e1",
+        "signature": "d648899df90cdd0e5738a272c91934c0992d4383d70b1cc1a00c32e7a052bef8"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts": {
+        "version": "c9cd0a5e7b2c0ac46763868e4a3bd8698b91a0a0fc4d969ce87016e77296059b",
+        "signature": "31e9feb9a80c7abfc288b9992dc66771a2f7a7a8b528dc4c9ef68736431e86dc"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts": {
+        "version": "d936cb9a1de5c3446f5191d13cb42e8e3b3318bc8449d88e86981d6ef2d77c8f",
+        "signature": "4f1d66a98d749859b50cf0ab4884b6476b1626a027122f0ea1d8416de12ee6e7"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts": {
+        "version": "663a8c3b1ed301a7cdc7578bf42d7c665cfa611bef16438eb026487398d780b4",
+        "signature": "24a2e702471583c0d80dbe23ef9cf2e60e7f1be84b119ca20d4c618c77f82735"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts": {
+        "version": "6dfded0c409cc13cfbf1e459b68aeef46a48e5daed1260510ae8e343658901ad",
+        "signature": "8b3ce0fffb13bbcddbac99186d9ae8da1dcdd5bf1e65983d8c4125ca2a178fb2"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts": {
+        "version": "2a572575e16b5c3f707f0b51ea5a60ef6f2a0ea9dd3b0618e2451ac436fb99cc",
+        "signature": "937d7779978996b3c1bc08a09c26d434b56df0cf5285e13af5a1132acf8612d6"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts": {
+        "version": "25c6bb070b992c01e47d527fef10bb9ee6862eb8556a380114121f6fd4033abc",
+        "signature": "aca357e32e34683ba53ddbcbc295c7f04cfca44adbb97467104b5d70c588bd82"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts": {
+        "version": "8e1c604f9ab794ca47ac86f8c9c76f3e0ee0bf1f39b1924950c2c0d38708a21b",
+        "signature": "b40fce5b6ceb34276d255db0dfd10e20710ef7e67b2d7cb683da5067050e6550"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts": {
+        "version": "f30ac8151fc81a3e4926f9c8c61eb157efe26428f73ca780e5f0c4c14485df1b",
+        "signature": "2f516042039f7d6d6affeb9444aff47fc63d7f5577fa6240ccca1d969ea7a1fd"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts": {
+        "version": "29ceb3a5b7fa98aec4cd790b9a815df34319ec6bd46a6c92d05b7a4d09806b94",
+        "signature": "4bf029b0a7a19519c10a5d2815ebbb44e208377303d5a5fab0c8e05ca90538d9"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts": {
+        "version": "584128389448804bae6c83f24e04bbfe8824fc29f8ed6b22e5d93614bb13d3c1",
+        "signature": "8416e126b50b121ae8e249e9eba7e0e0d75cd281e87b035ba013fc93c8ad7308"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/index.ts": {
+        "version": "73ff6ceba37b89c94bb0c6c286287e7c64614f1f4d810caef04c8bbabc874d53",
+        "signature": "24358bb0d2dad4e1ef170ac91b046d328cff5e6bc9ca39c9756d20b47ecdc187"
+      },
+      "/home/liam/inst/projects/lambdulus-core/src/test.ts": {
+        "version": "4b3198d757baeb3cb7604e0f5c5a996412c6d9559984b9448f8b5dc6ccea2ce7",
+        "signature": "04eb4ebf794b20bae199a925ecd80327d8e1713421a9d239320dd11b73e60dd0"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts": {
+        "version": "005aa5a187b04abb9ffb9bf009ec459954a203c5b99a662685b49ff5f5519a43",
+        "signature": "005aa5a187b04abb9ffb9bf009ec459954a203c5b99a662685b49ff5f5519a43"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts": {
+        "version": "e37e4814461321ef67cbb2f4c9def6be18ff85670e6c665131b320e052905b75",
+        "signature": "e37e4814461321ef67cbb2f4c9def6be18ff85670e6c665131b320e052905b75"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts": {
+        "version": "138476cfdccbb9e2c7e06602bc216af843a56c4f3469a79106bc660ba94bd66a",
+        "signature": "138476cfdccbb9e2c7e06602bc216af843a56c4f3469a79106bc660ba94bd66a"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts": {
+        "version": "b748a54b6e3a13000ca38e180de90c262fa7350b72e9eb5f0b476637743f1594",
+        "signature": "b748a54b6e3a13000ca38e180de90c262fa7350b72e9eb5f0b476637743f1594"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts": {
+        "version": "189c3bedd42b030955dd8a3fe2bca8eb5c8c9780ef9d6a4daa02e9f1c67f3f8c",
+        "signature": "189c3bedd42b030955dd8a3fe2bca8eb5c8c9780ef9d6a4daa02e9f1c67f3f8c"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts": {
+        "version": "d2704553f735d9b9cf31a26cbf4dd085e89b0ec3eec33d684b2517555370b665",
+        "signature": "d2704553f735d9b9cf31a26cbf4dd085e89b0ec3eec33d684b2517555370b665"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts": {
+        "version": "525c8fc510d9632d2a0a9de2d41c3ac1cdd79ff44d3b45c6d81cacabb683528d",
+        "signature": "525c8fc510d9632d2a0a9de2d41c3ac1cdd79ff44d3b45c6d81cacabb683528d"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts": {
+        "version": "b952021e804dcd9cb5e5552e1ec8bf9f479b61e20da5641e2a542fe77db9a598",
+        "signature": "b952021e804dcd9cb5e5552e1ec8bf9f479b61e20da5641e2a542fe77db9a598"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts": {
+        "version": "6b956acd0fa4df8f2723012d18498954438874cc63a0bd639dc470135a782101",
+        "signature": "6b956acd0fa4df8f2723012d18498954438874cc63a0bd639dc470135a782101"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts": {
+        "version": "525f8306266375b46334fcfa9d7b62fdcfed5171b2a76c98b278b230419437c6",
+        "signature": "525f8306266375b46334fcfa9d7b62fdcfed5171b2a76c98b278b230419437c6"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts": {
+        "version": "92bd533d635f967b198fde9bc789996370f0db3322306646d961f64e67ed5b7a",
+        "signature": "92bd533d635f967b198fde9bc789996370f0db3322306646d961f64e67ed5b7a"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts": {
+        "version": "ae3487bdb9b50c1d8bbeb6b55c8b2b9aa79bbc46d7afbc3483169ad8750c4304",
+        "signature": "ae3487bdb9b50c1d8bbeb6b55c8b2b9aa79bbc46d7afbc3483169ad8750c4304"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts": {
+        "version": "4a419878f025046ff6748d073123b0451849f83b7dbca907037a53e3eaa9bbbb",
+        "signature": "4a419878f025046ff6748d073123b0451849f83b7dbca907037a53e3eaa9bbbb"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts": {
+        "version": "c3c4f0875544378188c840f167a35aa511365b047286ec2c4e985ed49c78d19c",
+        "signature": "c3c4f0875544378188c840f167a35aa511365b047286ec2c4e985ed49c78d19c"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts": {
+        "version": "b4ad987ec4e8a5bc59b6db553a3e549574603225443f011b5d9fc413c838692d",
+        "signature": "b4ad987ec4e8a5bc59b6db553a3e549574603225443f011b5d9fc413c838692d"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts": {
+        "version": "1567893fe36abc061c38051864351e59ed078fc22827d44bfaee82125f02a0dd",
+        "signature": "1567893fe36abc061c38051864351e59ed078fc22827d44bfaee82125f02a0dd"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts": {
+        "version": "2fc95fdc500d9f3b2b947376290eeb71cdc623d375515378b9048e41b440727e",
+        "signature": "2fc95fdc500d9f3b2b947376290eeb71cdc623d375515378b9048e41b440727e"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts": {
+        "version": "0d668f73487c0d16fd6c1051c61b76d3b590cd986fadea91da08dff459dbec45",
+        "signature": "0d668f73487c0d16fd6c1051c61b76d3b590cd986fadea91da08dff459dbec45"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts": {
+        "version": "03394bf8deb8781b490ae9266a843fbdf00647947d79e25fcbf1d89a9e9c8a66",
+        "signature": "03394bf8deb8781b490ae9266a843fbdf00647947d79e25fcbf1d89a9e9c8a66"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts": {
+        "version": "78154d684d766f20887b83f9edaf3cce6cdc98b1c95ae57a009f9304ba544aa3",
+        "signature": "78154d684d766f20887b83f9edaf3cce6cdc98b1c95ae57a009f9304ba544aa3"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts": {
+        "version": "0ab49f803fa1d0f26682096e87ae239be05fee89ac538d30c59ab5a15bd38e6a",
+        "signature": "0ab49f803fa1d0f26682096e87ae239be05fee89ac538d30c59ab5a15bd38e6a"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts": {
+        "version": "61c84c3b0eb6e60196d15ae5e21793a1d4241c547f0bdd0529ffae838d1a073c",
+        "signature": "61c84c3b0eb6e60196d15ae5e21793a1d4241c547f0bdd0529ffae838d1a073c"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts": {
+        "version": "981192e57b0e159c977f1d8e8b8576e9d6b4e013b902e9c0d4b178cb47e2dc86",
+        "signature": "981192e57b0e159c977f1d8e8b8576e9d6b4e013b902e9c0d4b178cb47e2dc86"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts": {
+        "version": "3a8848a9c307429b861402cc69bc472ffe0c05b86474fc158723169161e16389",
+        "signature": "3a8848a9c307429b861402cc69bc472ffe0c05b86474fc158723169161e16389"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts": {
+        "version": "eeb0d1ad28e70773ac57ae9fe939c3bad6af2525a463c28f9ec31b5953de6735",
+        "signature": "eeb0d1ad28e70773ac57ae9fe939c3bad6af2525a463c28f9ec31b5953de6735"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts": {
+        "version": "8969e0b4d22ca77ad011c8fc4a25ec5d515bdfae4ecbd22608ed0d5c38829c1e",
+        "signature": "8969e0b4d22ca77ad011c8fc4a25ec5d515bdfae4ecbd22608ed0d5c38829c1e"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts": {
+        "version": "544728a999d35afc7b9e6d7420fb10046c16fcc5cb54fef21d2f5de78bf98830",
+        "signature": "544728a999d35afc7b9e6d7420fb10046c16fcc5cb54fef21d2f5de78bf98830"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts": {
+        "version": "d0b0b533dc34ff7ffd019665fdc2b2aeae717bc1347e17a5bdc4d6572b5c109a",
+        "signature": "d0b0b533dc34ff7ffd019665fdc2b2aeae717bc1347e17a5bdc4d6572b5c109a"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts": {
+        "version": "6e04fe987766b22afe0b959da7145f904c164fe2c17586b218b8fcdad5792d51",
+        "signature": "6e04fe987766b22afe0b959da7145f904c164fe2c17586b218b8fcdad5792d51"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts": {
+        "version": "17e157df6125098a1a34eb4d201ee4ac03bbe97e471ab5627bb2c40fce555948",
+        "signature": "17e157df6125098a1a34eb4d201ee4ac03bbe97e471ab5627bb2c40fce555948"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts": {
+        "version": "b40652bf8ce4a18133b31349086523b219724dca8df3448c1a0742528e7ad5b9",
+        "signature": "b40652bf8ce4a18133b31349086523b219724dca8df3448c1a0742528e7ad5b9"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts": {
+        "version": "68f639766f4b9d5c832bbca1203955969a8686137a4a197285dd64519cc26e58",
+        "signature": "68f639766f4b9d5c832bbca1203955969a8686137a4a197285dd64519cc26e58"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts": {
+        "version": "978aecd2e6bc2ac094e9a35eda98ff8586713857b3655e7c98ca5ed8f7d50662",
+        "signature": "978aecd2e6bc2ac094e9a35eda98ff8586713857b3655e7c98ca5ed8f7d50662"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts": {
+        "version": "3a59044813b24482ad7a7963bbee6b62507561969e273fbdc992ed9bc948fe13",
+        "signature": "3a59044813b24482ad7a7963bbee6b62507561969e273fbdc992ed9bc948fe13"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts": {
+        "version": "431151f55411c3f27cf539b987a7d1de453188ed58e54bc946183d280d3444a2",
+        "signature": "431151f55411c3f27cf539b987a7d1de453188ed58e54bc946183d280d3444a2"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts": {
+        "version": "9467f298b7d7f6f9819937eaae0eabbf45186163dd300a25f65a83d8652b0daf",
+        "signature": "9467f298b7d7f6f9819937eaae0eabbf45186163dd300a25f65a83d8652b0daf"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts": {
+        "version": "e880a08fbb0d9ee2f733f9183f4d1bdb75bc9e0e64060a8a1fc30540791fcded",
+        "signature": "e880a08fbb0d9ee2f733f9183f4d1bdb75bc9e0e64060a8a1fc30540791fcded"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts": {
+        "version": "f98df5ec124f441b465332271d0b083aeec815cd3c92d9249b9739e6318477a9",
+        "signature": "f98df5ec124f441b465332271d0b083aeec815cd3c92d9249b9739e6318477a9"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts": {
+        "version": "e761c833140e3ab6f9deab37fe034154f3eb15547dce61395d9b0b1f130f3fa3",
+        "signature": "e761c833140e3ab6f9deab37fe034154f3eb15547dce61395d9b0b1f130f3fa3"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts": {
+        "version": "58257a0147702ab415ed18164557a0feb9c5d1351792ea293a876e6b7ed0c559",
+        "signature": "58257a0147702ab415ed18164557a0feb9c5d1351792ea293a876e6b7ed0c559"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts": {
+        "version": "6622f76993bdfeaacb947ba7c4cf26f2e5c5194194d02d792c3cba4174cd8fce",
+        "signature": "6622f76993bdfeaacb947ba7c4cf26f2e5c5194194d02d792c3cba4174cd8fce"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts": {
+        "version": "a06a47025b1ea25370d5d04ceea844d0d5eed4036b404456804a4d11900867ad",
+        "signature": "a06a47025b1ea25370d5d04ceea844d0d5eed4036b404456804a4d11900867ad"
+      },
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/index.d.ts": {
+        "version": "2365013be8a9c28d5bb1a5b3a24ce3bb215452f8b4e0864d7a80bd91a0abc6a9",
+        "signature": "2365013be8a9c28d5bb1a5b3a24ce3bb215452f8b4e0864d7a80bd91a0abc6a9"
+      }
+    },
+    "options": {
+      "incremental": true,
+      "target": 2,
+      "module": 1,
+      "declaration": true,
+      "outDir": "/home/liam/inst/projects/lambdulus-core/dist/",
+      "rootDir": "/home/liam/inst/projects/lambdulus-core/src/",
+      "strict": true,
+      "noImplicitAny": true,
+      "strictFunctionTypes": true,
+      "strictPropertyInitialization": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "esModuleInterop": true,
+      "configFilePath": "/home/liam/inst/projects/lambdulus-core/tsconfig.json"
+    },
+    "referencedMap": {
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es6.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es5.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.scripthost.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.core.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.object.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.string.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.promise.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.regexp.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.esnext.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/parser/parser.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/parser.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/test.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/index.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es6.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es5.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.scripthost.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.core.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.object.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.string.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.promise.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.regexp.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.esnext.intl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/parser/parser.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/index.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts",
+        "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/src/test.ts": [
+        "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts"
+      ],
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/index.d.ts": [
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts",
+        "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es6.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es5.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.dom.iterable.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.scripthost.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2016.array.include.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.object.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.string.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.intl.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2017.typedarrays.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.asynciterable.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.intl.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.promise.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.es2018.regexp.d.ts",
+      "/home/liam/.nvm/versions/node/v10.13.0/lib/node_modules/typescript/lib/lib.esnext.intl.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/counter.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/lexer.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/token.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/errors.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/lexer/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/application.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/variable.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/lambda.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/churchnumber.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/macro.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/ast/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/parser/parser.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/parser/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/alpha.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/beta.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/expansion.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/none.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reductions/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/alphaconvertor.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/betareducer.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/expandor.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/emptyreducer.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/reducerfactory.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/reducers/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/basicprinter.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/boundingfinder.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/freevarsfinder.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalevaluator.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/applicativeevaluator.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/normalabstractionevaluator.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/visitors/varbindfinder.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/index.ts",
+      "/home/liam/inst/projects/lambdulus-core/src/test.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/globals.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/assert.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/async_hooks.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/buffer.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/child_process.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/cluster.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/console.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/constants.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/crypto.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dgram.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/dns.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/domain.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/events.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/fs.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/http2.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/https.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/inspector.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/module.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/net.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/os.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/path.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/perf_hooks.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/process.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/punycode.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/querystring.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/readline.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/repl.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/stream.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/string_decoder.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/timers.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tls.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/trace_events.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/tty.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/url.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/util.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/v8.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/vm.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/worker_threads.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/zlib.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/base.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/util.d.ts",
+      "/home/liam/inst/projects/lambdulus-core/node_modules/@types/node/ts3.1/index.d.ts"
+    ]
+  },
+  "version": "3.4.5"
+}
