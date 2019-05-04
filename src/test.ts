@@ -11,13 +11,7 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
-  'A `:` (B `:` (C `:` [] ]',
-  'A `::` (B `::` (C `::` [] ]',
-  '(:: A (:: B (:: C []]',
-  '(:: A (:: B (:: C [] ]',
-  '(:: A (:: B (:: C [] )))',
-  'A `::` (B `::` (C `::` NIL]',
-  '(3 `*` 2) `-` (1 `+` 2)',
+  '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 7', // factorial with accumulator
   'QUICKSORT SHORTLIST',
   'QUICKSORT MESSLIST',
   'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
