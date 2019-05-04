@@ -189,38 +189,38 @@ class Lexer {
           this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
           break
         }
-        case '`' : {
-          const operator : string = this.pop()
-          const topPosition : PositionRecord = this.position.toRecord()
+        // case '`' : {
+        //   const operator : string = this.pop()
+        //   const topPosition : PositionRecord = this.position.toRecord()
 
-          this.tokens.push(new Token(TokenType.BackTick, operator, topPosition))
-          break
-        }
-        case ':' : {
-          const operator : string = this.pop()
-          let topPosition : PositionRecord = this.position.toRecord()
+        //   this.tokens.push(new Token(TokenType.BackTick, operator, topPosition))
+        //   break
+        // }
+        // case ':' : {
+        //   const operator : string = this.pop()
+        //   let topPosition : PositionRecord = this.position.toRecord()
 
-          this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
-          break
-        }
-        case '[' : {
-          let id : string = this.pop()
-          let topPosition = this.position.toRecord()
+        //   this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+        //   break
+        // }
+        // case '[' : {
+        //   let id : string = this.pop()
+        //   let topPosition = this.position.toRecord()
 
-          if (this.top() === ']') {
-            id += this.pop()
-          }
-          else {
-            // TODO: potentialy can be [ ] --- which may be also correct
-            throw(new Error(`Invalid character ${ this.position.toRecord() } \
-          at row ${ this.position.row } column ${ this.position.column }.`))
-          }
+        //   if (this.top() === ']') {
+        //     id += this.pop()
+        //   }
+        //   else {
+        //     // TODO: potentialy can be [ ] --- which may be also correct
+        //     throw(new Error(`Invalid character ${ this.position.toRecord() } \
+        //   at row ${ this.position.row } column ${ this.position.column }.`))
+        //   }
         
-          const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+        //   const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
 
-          this.tokens.push(identifier)
-          break
-        }
+        //   this.tokens.push(identifier)
+        //   break
+        // }
         default  :
         if (this.mayBeNumber(this.top()))
           this.readNumber()

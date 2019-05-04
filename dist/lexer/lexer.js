@@ -145,33 +145,33 @@ class Lexer {
                     this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
                     break;
                 }
-                case '`': {
-                    const operator = this.pop();
-                    const topPosition = this.position.toRecord();
-                    this.tokens.push(new _1.Token(_1.TokenType.BackTick, operator, topPosition));
-                    break;
-                }
-                case ':': {
-                    const operator = this.pop();
-                    let topPosition = this.position.toRecord();
-                    this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
-                    break;
-                }
-                case '[': {
-                    let id = this.pop();
-                    let topPosition = this.position.toRecord();
-                    if (this.top() === ']') {
-                        id += this.pop();
-                    }
-                    else {
-                        // TODO: potentialy can be [ ] --- which may be also correct
-                        throw (new Error(`Invalid character ${this.position.toRecord()} \
-          at row ${this.position.row} column ${this.position.column}.`));
-                    }
-                    const identifier = new _1.Token(_1.TokenType.Identifier, id, topPosition);
-                    this.tokens.push(identifier);
-                    break;
-                }
+                // case '`' : {
+                //   const operator : string = this.pop()
+                //   const topPosition : PositionRecord = this.position.toRecord()
+                //   this.tokens.push(new Token(TokenType.BackTick, operator, topPosition))
+                //   break
+                // }
+                // case ':' : {
+                //   const operator : string = this.pop()
+                //   let topPosition : PositionRecord = this.position.toRecord()
+                //   this.tokens.push(new Token(TokenType.Operator, operator, topPosition))
+                //   break
+                // }
+                // case '[' : {
+                //   let id : string = this.pop()
+                //   let topPosition = this.position.toRecord()
+                //   if (this.top() === ']') {
+                //     id += this.pop()
+                //   }
+                //   else {
+                //     // TODO: potentialy can be [ ] --- which may be also correct
+                //     throw(new Error(`Invalid character ${ this.position.toRecord() } \
+                //   at row ${ this.position.row } column ${ this.position.column }.`))
+                //   }
+                //   const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+                //   this.tokens.push(identifier)
+                //   break
+                // }
                 default:
                     if (this.mayBeNumber(this.top()))
                         this.readNumber();

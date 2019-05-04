@@ -40,8 +40,6 @@ exports.builtinMacros = {
     'CONS': '(λ car cdr . (λ g . g car cdr))',
     'NIL': '(λx. T)',
     'NULL': '(λp.p (λx y.F))',
-    ':': 'CONS',
-    '[]': '(λx. T)'
 };
 function toAst(definition, macroTable) {
     const codeStyle = { singleLetterVars: false, lambdaLetters: ['λ'] };

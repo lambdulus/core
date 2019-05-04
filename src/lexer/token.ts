@@ -10,7 +10,7 @@ export enum TokenType {
   LeftParen = 'left paren',
   RightParen = 'right paren',
   RightBracket = 'right bracket',
-  BackTick = 'backtick',
+  // BackTick = 'backtick',
 }
 
 // TODO: discard readonly?
