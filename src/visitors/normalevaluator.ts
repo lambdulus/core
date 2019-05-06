@@ -40,7 +40,7 @@ export class NormalEvaluator extends ASTVisitor {
         this.nextReduction = new Alpha(lambdas)
       }
       else {
-        this.nextReduction = new Beta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
+        this.nextReduction = new Beta(application, this.parent, this.child, application.left.body, application.left.argument.name(), application.right)
       }
     }
 
