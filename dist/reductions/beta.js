@@ -5,10 +5,11 @@ const _1 = require(".");
 // pak bude navic drzet mnozinu values a mnozinu arguments
 // spis mnozinu tuples
 class Beta extends _1.ASTReduction {
-    constructor(parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
+    constructor(redex, parent, treeSide, // na jaky strane pro parenta je redukovanej uzel
     target, // EXPR ve kterem se provede nahrada
     argName, value) {
         super();
+        this.redex = redex;
         this.parent = parent;
         this.treeSide = treeSide;
         this.target = target;

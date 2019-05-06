@@ -32,7 +32,7 @@ class NormalAbstractionEvaluator extends _1.ASTVisitor {
                 this.nextReduction = new reductions_1.Alpha(lambdas);
             }
             else {
-                this.nextReduction = new reductions_1.Beta(this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
+                this.nextReduction = new reductions_1.Beta(application, this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
             }
         }
         // (this.left instanceof Macro || this.left instanceof ChurchNumber || this.left instanceof Application)

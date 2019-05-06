@@ -44,7 +44,7 @@ export class ApplicativeEvaluator extends ASTVisitor {
           this.nextReduction = new Alpha(lambdas)
         }
         else {
-          this.nextReduction = new Beta(parent, child, application.left.body, application.left.argument.name(), application.right)
+          this.nextReduction = new Beta(application, parent, child, application.left.body, application.left.argument.name(), application.right)
         }
       }
     }

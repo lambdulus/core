@@ -1,4 +1,4 @@
-import { AST, Child, Binary } from "../ast";
+import { AST, Child, Binary, Application } from "../ast";
 import { ASTReduction } from ".";
 
 
@@ -7,6 +7,7 @@ import { ASTReduction } from ".";
 // spis mnozinu tuples
 export class Beta extends ASTReduction {
   constructor (
+    public readonly redex : Application,
     public readonly parent : Binary | null,
     public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
     public readonly target : AST, // EXPR ve kterem se provede nahrada
