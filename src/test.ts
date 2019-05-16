@@ -12,6 +12,7 @@ import { None } from './reductions/none';
 
 const inputs : Array<string> = [
   `'()`,
+  `'(+ 1 2)`,
   `'(A)`,
   `'(A B)`,
   `'(A B C D E)`,
