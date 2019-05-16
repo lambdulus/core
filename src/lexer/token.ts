@@ -10,6 +10,7 @@ export enum TokenType {
   LeftParen = 'left paren',
   RightParen = 'right paren',
   RightBracket = 'right bracket',
+  Quote = 'quote'
   // BackTick = 'backtick',
 }
 
