@@ -34,7 +34,7 @@ class Expandor extends visitors_1.ASTVisitor {
     }
     onMacro(macro) {
         // TODO: here I lose token - useful for location and origin of macro - should solve this
-        // also consider not clonning
+        // also consider not clonning - not good idea because of breakpoints - right?
         this.expanded = macro.definition.ast.clone();
     }
     perform() {

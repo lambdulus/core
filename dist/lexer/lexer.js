@@ -145,6 +145,12 @@ class Lexer {
                     this.tokens.push(new _1.Token(_1.TokenType.Operator, operator, topPosition));
                     break;
                 }
+                case '\'': {
+                    let operator = this.pop();
+                    const topPosition = this.position.toRecord();
+                    this.tokens.push(new _1.Token(_1.TokenType.Quote, operator, topPosition));
+                    break;
+                }
                 // case '`' : {
                 //   const operator : string = this.pop()
                 //   const topPosition : PositionRecord = this.position.toRecord()

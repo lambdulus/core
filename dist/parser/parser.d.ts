@@ -20,12 +20,14 @@ export declare class Parser {
          := number
          := operator
          := ident
-         := '(' λ ident { ident } '.' LEXPR ')'
-         := '(' LEXPR ')'
+         := ( λ ident { ident } . LEXPR )
+         := ( LEXPR )
+         := '( LEXPR )
      */
     parseExpression(): AST;
     /**
      * LEXPR := SINGLE { SINGLE }
      */
     parse(leftSide: AST | null): AST;
+    parseQuoted(leftSide: AST | null): AST;
 }
