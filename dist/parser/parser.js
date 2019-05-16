@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
+const _1 = require("./");
 const ast_1 = require("../ast");
 class Parser {
     constructor(tokens, macroTable) {
@@ -168,23 +169,19 @@ class Parser {
             if (this.eof() && this.openSubexpressions !== 0) {
                 throw "It seems like you forgot to write one or more closing parentheses.";
             }
-            // if (leftSide === null) {
-            //   throw "You are trying to parse empty expression, which is forbidden. " +
-            //   "Check your λ expression for empty perenthesis."
-            // }
-            return new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', {
-                column: 0,
-                row: 0,
-                position: 0,
-            }));
+            return _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', {
+                    column: 0,
+                    row: 0,
+                    position: 0,
+                })], {});
         }
         else {
             const expr = this.parseExpression();
-            const left = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', {
-                column: 0,
-                row: 0,
-                position: 0,
-            }));
+            const left = _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', {
+                    column: 0,
+                    row: 0,
+                    position: 0,
+                })], {});
             const app = new ast_1.Application(left, expr);
             return new ast_1.Application(app, this.parseQuoted(null));
         }

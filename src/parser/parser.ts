@@ -1,5 +1,5 @@
 import { Token, TokenType } from "../lexer";
-import { MacroTable } from "./";
+import { MacroTable, parse } from "./";
 import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
 
 
@@ -217,24 +217,21 @@ export class Parser {
       if (this.eof() && this.openSubexpressions !== 0) {
         throw "It seems like you forgot to write one or more closing parentheses."
       }
-      // if (leftSide === null) {
-      //   throw "You are trying to parse empty expression, which is forbidden. " +
-      //   "Check your λ expression for empty perenthesis."
-      // }
 
-      return new Variable(new Token(TokenType.Identifier, 'NIL',{
+      return parse([new Token(TokenType.Identifier, 'NIL',{
         column : 0,
         row : 0,
         position : 0,
-      }))
+      })], {})
     }
     else {
       const expr : AST = this.parseExpression()
-      const left : Variable = new Variable(new Token(TokenType.Identifier, 'CONS', {
+      const left : AST = parse([new Token(TokenType.Identifier, 'CONS',{
         column : 0,
         row : 0,
         position : 0,
-      }))
+      })], {})
+
       const app : AST = new Application(left, expr)
       return new Application(app, this.parseQuoted(null))
     }
