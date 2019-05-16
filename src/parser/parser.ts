@@ -100,8 +100,9 @@ export class Parser {
        := number 
        := operator 
        := ident
-       := '(' λ ident { ident } '.' LEXPR ')'
-       := '(' LEXPR ')'
+       := ( λ ident { ident } . LEXPR )
+       := ( LEXPR )
+       := '( LEXPR )
    */
   parseExpression () : AST {
     if (this.canAccept(TokenType.Number)) {
@@ -151,6 +152,17 @@ export class Parser {
         return expr
       }
     }
+    if (this.canAccept(TokenType.Quote)) {
+      this.accept(TokenType.Quote)
+      this.accept(TokenType.LeftParen)
+      this.openSubexpressions++
+
+      const expr : AST = this.parseQuoted(null)
+
+      this.acceptClosing()
+
+      return expr
+    }
 
     throw "Was expecting one of: Number, Operator, Identifier or `(` but got " + this.top().type
   }
@@ -160,8 +172,6 @@ export class Parser {
    */
   parse (leftSide : AST | null, ) : AST {
     // TODO: refactor error catching - this if if if is insane
-
-
     // TODO: uvaha
     // pokud se nachazim na top level urovni a narazim na zaviraci zavorku
     // striktne receno - pokud je pocet mejch otevrenejch zavorek 0
@@ -186,34 +196,47 @@ export class Parser {
       // could it be caught by simply checking if leftSide is never null in this place?
     }
     else {
-      // mohl bych `` treatovat jako zavorky, akorat se syntaktickym vyznamem, takze bych je proste pridal
-      // do gramatiky - otevrou a uzavrou expression, do AST by se ale nedostaly
-      // takze bych je musel identifikovat uz pred ASTckem
-      // let isInfix : boolean = this.canAccept(TokenType.BackTick)
-
-      // if (isInfix) {
-        // this.accept(TokenType.BackTick)
-      // }
-
       const expr : AST = this.parseExpression()
-
-      // if (isInfix) {
-        // this.accept(TokenType.BackTick)
-      // }
-      
+    
       if (leftSide === null) {
         return this.parse(expr)
       }
       else {
-        // if (isInfix) {
-        //   const app : AST = new Application(expr, leftSide)
-        //   return this.parse(app)
-        // }
-        // else {
         const app : AST = new Application(leftSide, expr)
         return this.parse(app)
-        // }
       }
+    }
+  }
+
+  parseQuoted (leftSide : AST | null, ) : AST {
+    if (this.exprEnd()) {
+      if (! this.eof() && this.openSubexpressions === 0) {
+        throw "It seems you have one or more closing parenthesis non matching."
+      }
+
+      if (this.eof() && this.openSubexpressions !== 0) {
+        throw "It seems like you forgot to write one or more closing parentheses."
+      }
+      // if (leftSide === null) {
+      //   throw "You are trying to parse empty expression, which is forbidden. " +
+      //   "Check your λ expression for empty perenthesis."
+      // }
+
+      return new Variable(new Token(TokenType.Identifier, 'NIL',{
+        column : 0,
+        row : 0,
+        position : 0,
+      }))
+    }
+    else {
+      const expr : AST = this.parseExpression()
+      const left : Variable = new Variable(new Token(TokenType.Identifier, 'CONS', {
+        column : 0,
+        row : 0,
+        position : 0,
+      }))
+      const app : AST = new Application(left, expr)
+      return new Application(app, this.parseQuoted(null))
     }
   }
 }

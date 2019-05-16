@@ -11,6 +11,10 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  `'()`,
+  `'(A)`,
+  `'(A B)`,
+  `'(A B C D E)`,
   '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 7', // factorial with accumulator
   'QUICKSORT SHORTLIST',
   'QUICKSORT MESSLIST',
