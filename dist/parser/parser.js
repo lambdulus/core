@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
+const _1 = require("./");
 const ast_1 = require("../ast");
 class Parser {
     constructor(tokens, macroTable) {
@@ -75,8 +76,9 @@ class Parser {
          := number
          := operator
          := ident
-         := '(' λ ident { ident } '.' LEXPR ')'
-         := '(' LEXPR ')'
+         := ( λ ident { ident } . LEXPR )
+         := ( LEXPR )
+         := '( LEXPR )
      */
     parseExpression() {
         if (this.canAccept(lexer_1.TokenType.Number)) {
@@ -112,6 +114,14 @@ class Parser {
                 return expr;
             }
         }
+        if (this.canAccept(lexer_1.TokenType.Quote)) {
+            this.accept(lexer_1.TokenType.Quote);
+            this.accept(lexer_1.TokenType.LeftParen);
+            this.openSubexpressions++;
+            const expr = this.parseQuoted(null);
+            this.acceptClosing();
+            return expr;
+        }
         throw "Was expecting one of: Number, Operator, Identifier or `(` but got " + this.top().type;
     }
     /**
@@ -141,30 +151,39 @@ class Parser {
             // could it be caught by simply checking if leftSide is never null in this place?
         }
         else {
-            // mohl bych `` treatovat jako zavorky, akorat se syntaktickym vyznamem, takze bych je proste pridal
-            // do gramatiky - otevrou a uzavrou expression, do AST by se ale nedostaly
-            // takze bych je musel identifikovat uz pred ASTckem
-            // let isInfix : boolean = this.canAccept(TokenType.BackTick)
-            // if (isInfix) {
-            // this.accept(TokenType.BackTick)
-            // }
             const expr = this.parseExpression();
-            // if (isInfix) {
-            // this.accept(TokenType.BackTick)
-            // }
             if (leftSide === null) {
                 return this.parse(expr);
             }
             else {
-                // if (isInfix) {
-                //   const app : AST = new Application(expr, leftSide)
-                //   return this.parse(app)
-                // }
-                // else {
                 const app = new ast_1.Application(leftSide, expr);
                 return this.parse(app);
-                // }
             }
+        }
+    }
+    parseQuoted(leftSide) {
+        if (this.exprEnd()) {
+            if (!this.eof() && this.openSubexpressions === 0) {
+                throw "It seems you have one or more closing parenthesis non matching.";
+            }
+            if (this.eof() && this.openSubexpressions !== 0) {
+                throw "It seems like you forgot to write one or more closing parentheses.";
+            }
+            return _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', {
+                    column: 0,
+                    row: 0,
+                    position: 0,
+                })], {});
+        }
+        else {
+            const expr = this.parseExpression();
+            const left = _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', {
+                    column: 0,
+                    row: 0,
+                    position: 0,
+                })], {});
+            const app = new ast_1.Application(left, expr);
+            return new ast_1.Application(app, this.parseQuoted(null));
         }
     }
 }
