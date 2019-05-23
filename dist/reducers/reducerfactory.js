@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require("./");
 // import { Reducer } from "../visitors/normalevaluator"
 const reductions_1 = require("../reductions");
+const eta_1 = require("../reductions/eta");
+const etaconvertor_1 = require("./etaconvertor");
 // TODO: implement for AbstractionApplication
 function constructFor(tree, nextReduction) {
     if (nextReduction instanceof reductions_1.Beta) {
@@ -13,6 +15,9 @@ function constructFor(tree, nextReduction) {
     }
     else if (nextReduction instanceof reductions_1.Expansion) {
         return new _1.Expandor(nextReduction, tree);
+    }
+    else if (nextReduction instanceof eta_1.Eta) {
+        return new etaconvertor_1.EtaConvertor(nextReduction, tree);
     }
     else {
         return new _1.EmptyReducer(tree); // for None

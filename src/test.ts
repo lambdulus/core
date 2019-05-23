@@ -3,6 +3,7 @@ import Parser from './parser'
 
 import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './visitors/normalevaluator'
+import { OptimizeEvaluator } from './visitors/optimizeevaluator'
 import { ApplicativeEvaluator } from './visitors/applicativeevaluator'
 import { NormalAbstractionEvaluator } from './visitors/normalabstractionevaluator';
 import { AST } from './ast'
@@ -11,6 +12,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  `(λ y . (λ x . (+ 2) x) y)`,
+  `(λ x . (+ 2) x)`,
   `'()`,
   `'(+ 1 2)`,
   `'(A)`,
@@ -142,6 +145,25 @@ console.log(printTree(root))
 
 //   console.log(printTree(root))
 // }
+
+
+while (true) {
+  const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
+
+  if (optimize.nextReduction instanceof None) {
+    break
+  }
+
+  root = optimize.perform() // perform next reduction
+
+  e++
+
+  console.log(printTree(root))
+}
+
+console.log('====================')
+console.log('====================')
+console.log('====================')
 
 
 while (true) {

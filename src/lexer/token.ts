@@ -11,7 +11,6 @@ export enum TokenType {
   RightParen = 'right paren',
   RightBracket = 'right bracket',
   Quote = 'quote'
-  // BackTick = 'backtick',
 }
 
 // TODO: discard readonly?

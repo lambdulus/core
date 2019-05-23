@@ -50,7 +50,7 @@ export class BetaReducer extends ASTVisitor {
       
       this.substituted = lambda
       // TODO: clone or not clone ? i'd say CLONE but consider not clonning
-      // this.substituted = new Lasmbda(lambda.argument.clone(), body, lambda.identifier)
+      // this.substituted = new Lambda(lambda.argument.clone(), body, lambda.identifier)
     }
   }
 
