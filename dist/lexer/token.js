@@ -11,7 +11,6 @@ var TokenType;
     TokenType["RightParen"] = "right paren";
     TokenType["RightBracket"] = "right bracket";
     TokenType["Quote"] = "quote";
-    // BackTick = 'backtick',
 })(TokenType = exports.TokenType || (exports.TokenType = {}));
 // TODO: discard readonly?
 class Token {

@@ -7,6 +7,7 @@ export class FreeVarsFinder extends ASTVisitor {
   private bound : Set<string> = new Set
 
   public freeVars : Set<string> = new Set
+
   constructor (private readonly tree : AST) {
     super()
     tree.visit(this)

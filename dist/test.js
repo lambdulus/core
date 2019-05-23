@@ -7,8 +7,11 @@ const lexer_1 = require("./lexer");
 const parser_1 = __importDefault(require("./parser"));
 const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
+const optimizeevaluator_1 = require("./visitors/optimizeevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    `(λ y . (λ x . (+ 2) x) y)`,
+    `(λ x . (+ 2) x)`,
     `'()`,
     `'(+ 1 2)`,
     `'(A)`,
@@ -120,6 +123,18 @@ console.log(printTree(root));
 //   e++
 //   console.log(printTree(root))
 // }
+while (true) {
+    const optimize = new optimizeevaluator_1.OptimizeEvaluator(root);
+    if (optimize.nextReduction instanceof none_1.None) {
+        break;
+    }
+    root = optimize.perform(); // perform next reduction
+    e++;
+    console.log(printTree(root));
+}
+console.log('====================');
+console.log('====================');
+console.log('====================');
 while (true) {
     const normal = new normalevaluator_1.NormalEvaluator(root);
     if (normal.nextReduction instanceof none_1.None) {
