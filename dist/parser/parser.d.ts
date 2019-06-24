@@ -13,6 +13,8 @@ export declare class Parser {
     accept(type: TokenType): Token;
     acceptClosing(): void;
     exprEnd(): boolean;
+    canAcceptClosing(): boolean;
+    allClosed(): boolean;
     eof(): boolean;
     parseLambda(): AST;
     /**
@@ -29,5 +31,5 @@ export declare class Parser {
      * LEXPR := SINGLE { SINGLE }
      */
     parse(leftSide: AST | null): AST;
-    parseQuoted(leftSide: AST | null): AST;
+    parseQuoted(): AST;
 }

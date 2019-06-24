@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const counter_1 = require("./counter");
 const _1 = require("./");
+const errors_1 = require("./errors");
 class Lexer {
     constructor(source, config) {
         this.source = source;
@@ -80,8 +81,6 @@ class Lexer {
         while (this.isNumeric(this.top())) {
             id += this.pop();
         }
-        // whitespace neni nutny
-        // kontrolovat to co vadi [ alphabetic ]
         if (this.isAlphabetic(this.top())) {
             throw new _1.InvalidIdentifier(`${id}`, topPosition);
         }
@@ -104,7 +103,7 @@ class Lexer {
         return this.config.lambdaLetters.indexOf(char) !== -1;
     }
     mayBeIdentifier(char) {
-        return this.isAlphabetic(this.top());
+        return this.isAlphabetic(char);
     }
     mayBeNumber(char) {
         return this.isNumeric(char);
@@ -146,7 +145,7 @@ class Lexer {
                     break;
                 }
                 case '\'': {
-                    let operator = this.pop();
+                    const operator = this.pop();
                     const topPosition = this.position.toRecord();
                     this.tokens.push(new _1.Token(_1.TokenType.Quote, operator, topPosition));
                     break;
@@ -161,60 +160,13 @@ class Lexer {
                     else if (this.isWhiteSpace(this.top()))
                         this.pop();
                     else {
-                        // console.error(`Invalid character ${ this.position.toRecord() } \
-                        // at row ${ this.position.row } column ${ this.position.column }.`)
-                        // TODO: refactor
-                        // I need to send custom Error class containing all information in structured way not string
-                        throw (new Error(`Invalid character ${this.position.toRecord()} \
-          at row ${this.position.row} column ${this.position.column}.`));
+                        throw new errors_1.InvalidCharacter(`${this.top()}`, this.position.toRecord());
                     }
             }
-            // TODO: implement error handling already
-            // nechytat chybu tady
-            // nechat ji probublat ven z tohohle modulu
-            // odchyti si ji super modul kerej tohle pouziva
-            // hint nech v erroru a super modul uz jenom vypise chybu a hint a zaformatuje
-            // catch (error) {
-            //   if (error instanceof InvalidNumber) {
-            //     const { value } = error
-            //     const { row, column } = this.position.toRecord()
-            //     console.error(`Invalid character when expecting valid Number \
-            //     at row ${ row } column ${ column }
-            //     you probably misstyped ${ value }`)
-            //   }
-            //   if (error instanceof InvalidOperator) {
-            //     const { value } = error
-            //     const { row, column } = this.position.toRecord()
-            //     console.error(`Invalid character when expecting valid Operator \
-            //     at row ${ row } column ${ column }
-            //     you probably misstyped ${ value }
-            //     ${ hintOperator(error, this.operators) }`)
-            //   }
-            //   if (error instanceof InvalidIdentifier) {
-            //     // TODO: implement
-            //   }
-            //   throw error      
-            // }
         }
         return this.tokens;
     }
 }
-// function hintOperator (error : InvalidOperator, operators : Array<string>) : string {
-//   const { value : invalid } = error
-//   const relevant : Array<string> = operators.filter(
-//     (operator) =>
-//       operator.indexOf(invalid) !== -1
-//       ||
-//       invalid.indexOf(operator) !== -1
-//   )
-//   if ( ! relevant.length) {
-//     return ''
-//   }
-//   return (
-//     `Hint: Did you mean to write one of these?
-//     ${ relevant.map((operator) => `${ operator }\n`) }`
-//   )
-// }
 function tokenize(input, config) {
     const lexer = new Lexer(input + ' ', config);
     return lexer.tokenize();

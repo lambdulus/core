@@ -1,7 +1,6 @@
 import { Token, CodeStyle, tokenize } from '../lexer'
-import { Parser } from './parser';
-import { AST, Application, Lambda, Macro, Variable } from '../ast';
-
+import { Parser } from './parser'
+import { AST } from '../ast'
 
 export class MacroDef {
   constructor (
@@ -28,8 +27,6 @@ export const builtinMacros : MacroMap = {
   'T' : '(λ t f . t)',
   'F' : '(λ t f . f)',
   'NOT' : '(λ p . p F T)',
-  // 'NOT' : '(λ p a b . p b a)',
-  // 'NOTapp' : '(λ p a b . p b a)',
   '+' : '(λ x y s z . x s (y s z))',
   '-' : '(λ m n . (n PRED) m)',
   '*' : '(λ x y z . x (y z))',
@@ -49,8 +46,6 @@ export const builtinMacros : MacroMap = {
   'CONS' : '(λ car cdr . (λ g . g car cdr))',
   'NIL' : '(λx. T)',
   'NULL' : '(λp.p (λx y.F))',
-  // ':' : 'CONS',
-  // '[]' : '(λx. T)'
 }
 
 function toAst (definition : string, macroTable : MacroTable) : AST {
@@ -60,7 +55,6 @@ function toAst (definition : string, macroTable : MacroTable) : AST {
   return parser.parse(null)
 }
 
-// TODO: refactor macroTable for usage with user defined macro definitions
 export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   const macroTable : MacroTable = {}
 
@@ -68,25 +62,11 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
     macroTable[name] = new MacroDef(toAst(definition, macroTable))
   }
 
-  // TODO: chtel bych LIST, CONS, APPEND, GET NTH ITEM, MAP, ...
-
-  // QUICK MACROS - non recursively defined
-  // macroTable['NOT'] = new MacroDef(toAst(`(λ p . p (λ t f . f) (λ t f . t))`, macroTable))
-  // macroTable['-'] = new MacroDef(toAst(`(λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m)`, macroTable))
-  // macroTable['/'] = new MacroDef(toAst(`(λ n . (λ f . (λ x . f (x x)) (λ x . f (x x))) (λ c n m f x . (λ d . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) d (0 f x) (f (c d m f x))) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) ((λ n s z . s (n s z)) n))`, macroTable))
-  // macroTable['DELTA'] = new MacroDef(toAst(`(λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m))`, macroTable))
-  // macroTable['='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (λ x y s z . x s (y s z)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) n m)) m n))`, macroTable))
-  // macroTable['>'] = new MacroDef(toAst(`(λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n)))`, macroTable))
-  // macroTable['<'] = new MacroDef(toAst(`(λ m n . (λ m n . (λ p . p (λ t f . f) (λ t f . t)) ((λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))) n m )`, macroTable))
-  // macroTable['>='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) (- n m))`, macroTable))  
-  // macroTable['<='] = new MacroDef(toAst(`(λ m n . (λ n . n (λ x . (λ t f . f)) (λ t f . t)) ((λ m n . (n (λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))) m) m n))`, macroTable))
-
   for (const [ name, definition ] of Object.entries(userMacros)) {
     if (name in builtinMacros) {
-      // TODO: maybe dont throw? better throw, just to be sure :D
-      // zvazit - dovoluju predefinovat cisla
-      throw new Error('Cannot redefine built-in Macro ' + name)
+      throw new Error('Cannot redefine built-in Macro [ ' + name + ' ]')
     }
+
     macroTable[name] = new MacroDef(toAst(definition, macroTable))
   }
 
@@ -95,11 +75,6 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   return parser.parse(null)
 }
 
-// TODO: delete?
 export default {
-  parse,
-  Lambda,
-  Variable,
-  Macro,
-  Application,
+  parse
 }

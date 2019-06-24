@@ -55,6 +55,14 @@ class Parser {
             ||
                 this.top().type === lexer_1.TokenType.RightBracket);
     }
+    canAcceptClosing() {
+        return (this.top().type === lexer_1.TokenType.RightParen
+            ||
+                this.top().type === lexer_1.TokenType.RightBracket);
+    }
+    allClosed() {
+        return this.openSubexpressions === 0;
+    }
     eof() {
         return this.position === this.tokens.length;
     }
@@ -118,7 +126,7 @@ class Parser {
             this.accept(lexer_1.TokenType.Quote);
             this.accept(lexer_1.TokenType.LeftParen);
             this.openSubexpressions++;
-            const expr = this.parseQuoted(null);
+            const expr = this.parseQuoted();
             this.acceptClosing();
             return expr;
         }
@@ -128,26 +136,28 @@ class Parser {
      * LEXPR := SINGLE { SINGLE }
      */
     parse(leftSide) {
-        // TODO: refactor error catching - this if if if is insane
-        // TODO: uvaha
-        // pokud se nachazim na top level urovni a narazim na zaviraci zavorku
-        // striktne receno - pokud je pocet mejch otevrenejch zavorek 0
-        // a narazim na zaviraci zavorku, tak je neco spatne
+        if (!this.eof() && this.canAcceptClosing() && this.allClosed()) {
+            throw "It seems you have one or more closing parenthesis not matching.";
+        }
+        if (this.eof() && this.openSubexpressions !== 0) {
+            throw "It seems like you forgot to write one or more closing parentheses.";
+        }
         if (this.exprEnd()) {
-            if (!this.eof() && this.openSubexpressions === 0) {
-                throw "It seems you have one or more closing parenthesis non matching.";
-            }
-            // TODO: taky by bylo fajn rict, kde
-            if (this.eof() && this.openSubexpressions !== 0) {
-                throw "It seems like you forgot to write one or more closing parentheses.";
-            }
+            // if (! this.eof() && this.openSubexpressions === 0) {
+            //   throw "It seems you have one or more closing parenthesis non matching."
+            // }
+            // TODO: throw new MissingParenError(position)
+            // if (this.eof() && this.openSubexpressions !== 0) {
+            //   throw "It seems like you forgot to write one or more closing parentheses."
+            // }
             if (leftSide === null) {
+                // TODO: log position and stuff
                 throw "You are trying to parse empty expression, which is forbidden. " +
-                    "Check your λ expression for empty perenthesis.";
+                    "Check your λ expression for empty perenthesis. " + this.position;
             }
             return leftSide;
             // TODO: lefSide should never ever happen to be null -> check again
-            // TODO: it can be empty if parsing `( )`
+            // TODO: it can be empty if parsing `( )` - handled
             // could it be caught by simply checking if leftSide is never null in this place?
         }
         else {
@@ -161,7 +171,7 @@ class Parser {
             }
         }
     }
-    parseQuoted(leftSide) {
+    parseQuoted() {
         if (this.exprEnd()) {
             if (!this.eof() && this.openSubexpressions === 0) {
                 throw "It seems you have one or more closing parenthesis non matching.";
@@ -169,21 +179,15 @@ class Parser {
             if (this.eof() && this.openSubexpressions !== 0) {
                 throw "It seems like you forgot to write one or more closing parentheses.";
             }
-            return _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', {
-                    column: 0,
-                    row: 0,
-                    position: 0,
-                })], {});
+            return _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', lexer_1.BLANK_POSITION)], {});
         }
         else {
+            // TODO: There would be real fun if I used parser itself to handle two of the applications.
+            // like return Parser.parse(`${this.parseExpression()} CONS ${this.parseQuoted}`)
             const expr = this.parseExpression();
-            const left = _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', {
-                    column: 0,
-                    row: 0,
-                    position: 0,
-                })], {});
+            const left = _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', lexer_1.BLANK_POSITION)], {});
             const app = new ast_1.Application(left, expr);
-            return new ast_1.Application(app, this.parseQuoted(null));
+            return new ast_1.Application(app, this.parseQuoted());
         }
     }
 }

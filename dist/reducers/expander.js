@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
-class Expandor extends visitors_1.ASTVisitor {
+class Expander extends visitors_1.ASTVisitor {
     constructor({ parent, treeSide, target }, tree) {
         super();
         this.tree = tree;
@@ -47,4 +47,4 @@ class Expandor extends visitors_1.ASTVisitor {
         }
     }
 }
-exports.Expandor = Expandor;
+exports.Expander = Expander;

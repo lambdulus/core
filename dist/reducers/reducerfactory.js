@@ -4,20 +4,20 @@ const _1 = require("./");
 // import { Reducer } from "../visitors/normalevaluator"
 const reductions_1 = require("../reductions");
 const eta_1 = require("../reductions/eta");
-const etaconvertor_1 = require("./etaconvertor");
+const etaconverter_1 = require("./etaconverter");
 // TODO: implement for AbstractionApplication
 function constructFor(tree, nextReduction) {
     if (nextReduction instanceof reductions_1.Beta) {
         return new _1.BetaReducer(nextReduction, tree);
     }
     else if (nextReduction instanceof reductions_1.Alpha) {
-        return new _1.AlphaConvertor(nextReduction, tree);
+        return new _1.AlphaConverter(nextReduction, tree);
     }
     else if (nextReduction instanceof reductions_1.Expansion) {
-        return new _1.Expandor(nextReduction, tree);
+        return new _1.Expander(nextReduction, tree);
     }
     else if (nextReduction instanceof eta_1.Eta) {
-        return new etaconvertor_1.EtaConvertor(nextReduction, tree);
+        return new etaconverter_1.EtaConverter(nextReduction, tree);
     }
     else {
         return new _1.EmptyReducer(tree); // for None

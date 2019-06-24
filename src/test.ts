@@ -12,6 +12,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
+  `'(+ 1 2)`,
+
   `(λ y . (λ x . (+ 2) x) y)`,
   `(λ x . (+ 2) x)`,
   `'()`,
@@ -121,7 +123,7 @@ const ast : AST = Parser.parse(tokens, {
   'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
   'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
   'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-  'CONNECT' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+  'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
   'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
 })
 let root : AST = ast
@@ -147,23 +149,23 @@ console.log(printTree(root))
 // }
 
 
-while (true) {
-  const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
+// while (true) {
+//   const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
 
-  if (optimize.nextReduction instanceof None) {
-    break
-  }
+//   if (optimize.nextReduction instanceof None) {
+//     break
+//   }
 
-  root = optimize.perform() // perform next reduction
+//   root = optimize.perform() // perform next reduction
 
-  e++
+//   e++
 
-  console.log(printTree(root))
-}
+//   console.log(printTree(root))
+// }
 
-console.log('====================')
-console.log('====================')
-console.log('====================')
+// console.log('====================')
+// console.log('====================')
+// console.log('====================')
 
 
 while (true) {
@@ -177,7 +179,7 @@ while (true) {
 
   e++
 
-  // console.log(printTree(root))
+  console.log(printTree(root))
 }
 
 // while (true) {

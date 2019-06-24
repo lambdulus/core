@@ -1,9 +1,9 @@
 import { AST } from "../ast";
-import { AlphaConvertor, BetaReducer, Expandor, EmptyReducer, Reducer } from './'
+import { AlphaConverter, BetaReducer, Expander, EmptyReducer, Reducer } from './'
 // import { Reducer } from "../visitors/normalevaluator"
 import { ASTReduction, Alpha, Beta, Expansion } from "../reductions";
 import { Eta } from "../reductions/eta";
-import { EtaConvertor } from "./etaconvertor";
+import { EtaConverter } from "./etaconverter";
 
 
 // TODO: implement for AbstractionApplication
@@ -12,13 +12,13 @@ export function constructFor (tree : AST, nextReduction : ASTReduction) : Reduce
     return new BetaReducer(nextReduction, tree)
   }
   else if (nextReduction instanceof Alpha) {
-    return new AlphaConvertor(nextReduction, tree)
+    return new AlphaConverter(nextReduction, tree)
   }
   else if (nextReduction instanceof Expansion) {
-    return new Expandor(nextReduction, tree)
+    return new Expander(nextReduction, tree)
   }
   else if (nextReduction instanceof Eta) {
-    return new EtaConvertor(nextReduction, tree)
+    return new EtaConverter(nextReduction, tree)
   }
   else {
     return new EmptyReducer(tree) // for None

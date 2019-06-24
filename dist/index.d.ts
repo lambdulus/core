@@ -2,7 +2,7 @@ export { Token, TokenType, CodeStyle, tokenize } from './lexer';
 export { MacroDef, MacroTable, parse, builtinMacros, MacroMap } from './parser';
 export { AST, Binary, Application, Lambda, ChurchNumber, Macro, Variable } from './ast';
 export { ASTReduction, Alpha, Beta, Expansion, None } from './reductions';
-export { AlphaConvertor, BetaReducer, Expandor, EmptyReducer, constructFor, Reducer } from './reducers';
+export { AlphaConverter, BetaReducer, Expander, EtaConverter, EmptyReducer, constructFor, Reducer } from './reducers';
 export { ASTVisitor } from './visitors';
 export { BasicPrinter } from './visitors/basicprinter';
 export { BoundingFinder } from './visitors/boundingfinder';
