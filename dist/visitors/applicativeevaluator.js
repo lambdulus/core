@@ -48,7 +48,7 @@ class ApplicativeEvaluator extends _1.ASTVisitor {
                 application.right.visit(this);
             }
         }
-        // (application.left instanceof Macro || application.left instanceof ChurchNumber || application.left instanceof Variable)
+        // (application.left instanceof Macro || application.left instanceof ChurchNumeral || application.left instanceof Variable)
         else {
             this.parent = application;
             this.child = ast_1.Child.Right;

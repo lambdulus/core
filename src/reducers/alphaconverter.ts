@@ -1,5 +1,5 @@
 import { Token } from "../lexer";
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Alpha } from "../reductions";
 
@@ -47,7 +47,7 @@ export class AlphaConverter extends ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
+  onChurchNumber(churchNumber : ChurchNumeral) : void {
     this.converted = churchNumber
   }
 

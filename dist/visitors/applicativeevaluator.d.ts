@@ -1,5 +1,5 @@
 import { ASTVisitor } from ".";
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { Reducer } from "../reducers";
 import { ASTReduction } from "../reductions";
 export declare class ApplicativeEvaluator extends ASTVisitor {
@@ -11,7 +11,7 @@ export declare class ApplicativeEvaluator extends ASTVisitor {
     constructor(tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumber): void;
+    onChurchNumber(churchNumber: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): AST;

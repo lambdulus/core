@@ -1,4 +1,4 @@
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
 
@@ -71,7 +71,7 @@ export class BasicPrinter extends ASTVisitor {
     }
   }
   
-  onChurchNumber(churchNumber: ChurchNumber): void {
+  onChurchNumber(churchNumber: ChurchNumeral): void {
     this.expression += churchNumber.name()
   }
   

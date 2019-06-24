@@ -1,4 +1,4 @@
-import { Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from ".";
 
 
@@ -26,7 +26,7 @@ export class VarBindFinder implements ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
+  onChurchNumber(churchNumber : ChurchNumeral) : void {
     // nothing
   }
 

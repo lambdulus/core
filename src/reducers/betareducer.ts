@@ -1,4 +1,4 @@
-import { AST, Binary, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Binary, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Beta } from "../reductions";
 
@@ -54,7 +54,7 @@ export class BetaReducer extends ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
+  onChurchNumber(churchNumber : ChurchNumeral) : void {
     this.substituted = churchNumber
   }
 
