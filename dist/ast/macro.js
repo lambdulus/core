@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Macro {
-    // public readonly identifier : symbol = Symbol()
+const _1 = require("./");
+class Macro extends _1.AST {
     constructor(token, definition, identifier = Symbol()) {
+        super();
         this.token = token;
         this.definition = definition;
         this.identifier = identifier;

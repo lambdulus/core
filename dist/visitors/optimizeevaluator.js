@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const freevarsfinder_1 = require("./freevarsfinder");
 const ast_1 = require("../ast");
+// import { BoundingFinder } from "./boundingfinder"
 const reducers_1 = require("../reducers");
 const reductions_1 = require("../reductions");
 const eta_1 = require("../reductions/eta");

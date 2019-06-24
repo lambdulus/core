@@ -1,9 +1,9 @@
 import { ASTVisitor } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
-import { Binary, AST, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
-import { BoundingFinder } from "./boundingfinder"
+import { Binary, AST, Child, Application, Lambda, Variable } from "../ast"
+// import { BoundingFinder } from "./boundingfinder"
 import { constructFor, Reducer } from "../reducers";
-import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
+import { ASTReduction, None } from "../reductions";
 import { Eta } from "../reductions/eta";
 
 

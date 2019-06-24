@@ -1,6 +1,6 @@
 import { Token, TokenType, BLANK_POSITION } from "../lexer";
 import { MacroTable, parse } from "./";
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 
 
 export class Parser {
@@ -120,7 +120,7 @@ export class Parser {
     if (this.canAccept(TokenType.Number)) {
       const num : Token = this.accept(TokenType.Number)
 
-      return new ChurchNumber(num)
+      return new ChurchNumeral(num)
     }
 
     if (this.canAccept(TokenType.Operator)) {

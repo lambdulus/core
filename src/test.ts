@@ -12,7 +12,8 @@ import { None } from './reductions/none';
 
 
 const inputs : Array<string> = [
-  `'(+ 1 2)`,
+  `FACCT 3`,
+  `A B '(+ 1 2)`,
 
   `(λ y . (λ x . (+ 2) x) y)`,
   `(λ x . (+ 2) x)`,
@@ -117,6 +118,7 @@ console.log(tokens.map((token) => token.value).join(' '))
 console.log('--------------------')
 
 const ast : AST = Parser.parse(tokens, {
+  'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
   'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
   'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
   'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',

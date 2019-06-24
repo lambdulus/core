@@ -4,14 +4,12 @@ import { MacroDef } from '../parser';
 import { ASTVisitor } from '../visitors';
 
 
-export class Macro implements AST {
-  // public readonly identifier : symbol = Symbol()
-
+export class Macro extends AST {
   constructor (
     public readonly token : Token,
     public readonly definition : MacroDef,
     public readonly identifier : symbol = Symbol(),
-  ) {}
+  ) { super() }
 
   name () : string {
     return `${ this.token.value }`

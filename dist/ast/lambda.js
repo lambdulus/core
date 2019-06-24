@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Lambda {
-    // public readonly identifier : symbol = Symbol()
+const _1 = require("./");
+class Lambda extends _1.AST {
     constructor(argument, body, identifier = Symbol()) {
+        super();
         this.argument = argument;
         this.body = body;
         this.identifier = identifier;

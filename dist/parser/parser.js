@@ -91,7 +91,7 @@ class Parser {
     parseExpression() {
         if (this.canAccept(lexer_1.TokenType.Number)) {
             const num = this.accept(lexer_1.TokenType.Number);
-            return new ast_1.ChurchNumber(num);
+            return new ast_1.ChurchNumeral(num);
         }
         if (this.canAccept(lexer_1.TokenType.Operator)) {
             const op = this.accept(lexer_1.TokenType.Operator);

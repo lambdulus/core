@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class Variable {
-    // public readonly identifier : symbol = Symbol()
+const _1 = require("./");
+class Variable extends _1.AST {
     constructor(token, identifier = Symbol()) {
+        super();
         this.token = token;
         this.identifier = identifier;
     }

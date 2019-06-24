@@ -1,4 +1,4 @@
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Alpha } from "../reductions";
 export declare class AlphaConverter extends ASTVisitor {
@@ -10,7 +10,7 @@ export declare class AlphaConverter extends ASTVisitor {
     constructor({ conversions }: Alpha, tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumber): void;
+    onChurchNumber(churchNumber: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): void;
