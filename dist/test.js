@@ -7,9 +7,9 @@ const lexer_1 = require("./lexer");
 const parser_1 = __importDefault(require("./parser"));
 const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./visitors/normalevaluator");
-const optimizeevaluator_1 = require("./visitors/optimizeevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
+    `'(+ 1 2)`,
     `(λ y . (λ x . (+ 2) x) y)`,
     `(λ x . (+ 2) x)`,
     `'()`,
@@ -107,7 +107,7 @@ const ast = parser_1.default.parse(tokens, {
     'LISTLESS': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
     'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
     'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-    'CONNECT': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+    'APPEND': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
     'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
 });
 let root = ast;
@@ -123,18 +123,18 @@ console.log(printTree(root));
 //   e++
 //   console.log(printTree(root))
 // }
-while (true) {
-    const optimize = new optimizeevaluator_1.OptimizeEvaluator(root);
-    if (optimize.nextReduction instanceof none_1.None) {
-        break;
-    }
-    root = optimize.perform(); // perform next reduction
-    e++;
-    console.log(printTree(root));
-}
-console.log('====================');
-console.log('====================');
-console.log('====================');
+// while (true) {
+//   const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
+//   if (optimize.nextReduction instanceof None) {
+//     break
+//   }
+//   root = optimize.perform() // perform next reduction
+//   e++
+//   console.log(printTree(root))
+// }
+// console.log('====================')
+// console.log('====================')
+// console.log('====================')
 while (true) {
     const normal = new normalevaluator_1.NormalEvaluator(root);
     if (normal.nextReduction instanceof none_1.None) {
@@ -142,7 +142,7 @@ while (true) {
     }
     root = normal.perform(); // perform next reduction
     e++;
-    // console.log(printTree(root))
+    console.log(printTree(root));
 }
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)

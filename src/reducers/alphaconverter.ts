@@ -4,7 +4,7 @@ import { ASTVisitor } from "../visitors";
 import { Alpha } from "../reductions";
 
 
-export class AlphaConvertor extends ASTVisitor {
+export class AlphaConverter extends ASTVisitor {
   // Need to do this Nonsense Dance
   private converted : AST | null = null
 
