@@ -3,8 +3,7 @@ import { ASTVisitor } from ".";
 export declare class BasicPrinter extends ASTVisitor {
     readonly tree: AST;
     private expression;
-    private printLambdaBody;
-    private printLambdaArguments;
+    private printMultilambda;
     constructor(tree: AST);
     print(): string;
     onApplication(application: Application): void;

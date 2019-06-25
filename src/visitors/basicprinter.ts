@@ -5,25 +5,13 @@ import { ASTVisitor } from ".";
 export class BasicPrinter extends ASTVisitor {
   private expression : string = ''
 
-  // TODO: this looks like nonsense
-  // maybe solve it with another Visitor
-  private printLambdaBody (lambda : Lambda) : void {
+  private printMultilambda (lambda : Lambda, accumulator : string) : void {
     if (lambda.body instanceof Lambda) {
-      this.printLambdaBody(lambda.body)
+      this.printMultilambda(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
     }
     else {
+      this.expression += accumulator + ` . `
       lambda.body.visit(this)
-    }
-  }
-
-  // TODO: this looks like nonsense
-  // maybe solve it with another Visitor
-  private printLambdaArguments (lambda : Lambda, accumulator : string) : void {
-    if (lambda.body instanceof Lambda) {
-      this.printLambdaArguments(lambda.body, `${ accumulator } ${ lambda.body.argument.name() }`)
-    }
-    else {
-      this.expression += accumulator
     }
   }
 
@@ -38,7 +26,7 @@ export class BasicPrinter extends ASTVisitor {
     return this.expression
   }
 
-  // TODO: this is ugly as hell
+  // TODO: try to refactor this
   onApplication(application: Application): void {
     if (application.right instanceof Application) {
       application.left.visit(this)
@@ -52,14 +40,12 @@ export class BasicPrinter extends ASTVisitor {
       application.right.visit(this)
     }
   }
-  
-  // TODO: this is ugly as hell
+
+  // TODO: try to refactor this
   onLambda(lambda: Lambda): void {
     if (lambda.body instanceof Lambda) {
       this.expression += `(λ `
-      this.printLambdaArguments(lambda, lambda.argument.name())
-      this.expression += ` . `
-      this.printLambdaBody(lambda)
+      this.printMultilambda(lambda, lambda.argument.name())
       this.expression += `)`
     }
     else {

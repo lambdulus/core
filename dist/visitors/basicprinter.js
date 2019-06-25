@@ -9,30 +9,19 @@ class BasicPrinter extends _1.ASTVisitor {
         this.expression = '';
         this.tree.visit(this);
     }
-    // TODO: this looks like nonsense
-    // maybe solve it with another Visitor
-    printLambdaBody(lambda) {
+    printMultilambda(lambda, accumulator) {
         if (lambda.body instanceof ast_1.Lambda) {
-            this.printLambdaBody(lambda.body);
+            this.printMultilambda(lambda.body, `${accumulator} ${lambda.body.argument.name()}`);
         }
         else {
+            this.expression += accumulator + ` . `;
             lambda.body.visit(this);
-        }
-    }
-    // TODO: this looks like nonsense
-    // maybe solve it with another Visitor
-    printLambdaArguments(lambda, accumulator) {
-        if (lambda.body instanceof ast_1.Lambda) {
-            this.printLambdaArguments(lambda.body, `${accumulator} ${lambda.body.argument.name()}`);
-        }
-        else {
-            this.expression += accumulator;
         }
     }
     print() {
         return this.expression;
     }
-    // TODO: this is ugly as hell
+    // TODO: try to refactor this
     onApplication(application) {
         if (application.right instanceof ast_1.Application) {
             application.left.visit(this);
@@ -46,13 +35,11 @@ class BasicPrinter extends _1.ASTVisitor {
             application.right.visit(this);
         }
     }
-    // TODO: this is ugly as hell
+    // TODO: try to refactor this
     onLambda(lambda) {
         if (lambda.body instanceof ast_1.Lambda) {
             this.expression += `(λ `;
-            this.printLambdaArguments(lambda, lambda.argument.name());
-            this.expression += ` . `;
-            this.printLambdaBody(lambda);
+            this.printMultilambda(lambda, lambda.argument.name());
             this.expression += `)`;
         }
         else {

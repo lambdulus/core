@@ -13,6 +13,8 @@ import { None } from './reductions/none';
 
 const inputs : Array<string> = [
   `FACCT 3`,
+  `(λ z y x . + (+ 2 x) y) Z 2 3`,
+
   `A B '(+ 1 2)`,
 
   `(λ y . (λ x . (+ 2) x) y)`,
