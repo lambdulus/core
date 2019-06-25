@@ -34,8 +34,8 @@ class BetaReducer extends visitors_1.ASTVisitor {
             // this.substituted = new Lambda(lambda.argument.clone(), body, lambda.identifier)
         }
     }
-    onChurchNumber(churchNumber) {
-        this.substituted = churchNumber;
+    onChurchNumeral(churchNumeral) {
+        this.substituted = churchNumeral;
     }
     onMacro(macro) {
         this.substituted = macro;

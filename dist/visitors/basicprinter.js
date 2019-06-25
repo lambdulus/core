@@ -63,8 +63,8 @@ class BasicPrinter extends _1.ASTVisitor {
             this.expression += `)`;
         }
     }
-    onChurchNumber(churchNumber) {
-        this.expression += churchNumber.name();
+    onChurchNumeral(churchNumeral) {
+        this.expression += churchNumeral.name();
     }
     onMacro(macro) {
         this.expression += macro.name();

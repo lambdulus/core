@@ -12,24 +12,24 @@ class Expander extends visitors_1.ASTVisitor {
         this.treeSide = treeSide;
         this.target = target;
     }
-    churchNumberBody(n) {
+    onChurchNumeralBody(n) {
         if (n === 0) {
             return new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', lexer_1.BLANK_POSITION));
         }
         const left = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', lexer_1.BLANK_POSITION));
-        const right = this.churchNumberBody(n - 1);
+        const right = this.onChurchNumeralBody(n - 1);
         return new ast_1.Application(left, right);
     }
     // TODO: creating dummy token, there should be something like NoPosition
-    churchNumberHeader(tree) {
+    onChurchNumeralHeader(tree) {
         const s = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', lexer_1.BLANK_POSITION));
         const z = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', lexer_1.BLANK_POSITION));
         const body = new ast_1.Lambda(z, tree);
         return new ast_1.Lambda(s, body);
     }
-    onChurchNumber(churchNumber) {
-        const value = churchNumber.token.value;
-        const churchLiteral = this.churchNumberHeader(this.churchNumberBody(value));
+    onChurchNumeral(churchNumeral) {
+        const value = churchNumeral.token.value;
+        const churchLiteral = this.onChurchNumeralHeader(this.onChurchNumeralBody(value));
         this.expanded = churchLiteral;
     }
     onMacro(macro) {

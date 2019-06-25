@@ -21,18 +21,18 @@ export class Expander extends ASTVisitor {
     this.target = target
   }
 
-  churchNumberBody (n : number) : AST {
+  onChurchNumeralBody (n : number) : AST {
     if (n === 0) {
       return new Variable(new Token(TokenType.Identifier, 'z', BLANK_POSITION))
     }
 
     const left : Variable = new Variable(new Token(TokenType.Identifier, 's', BLANK_POSITION))
-    const right : AST = this.churchNumberBody(n - 1)
+    const right : AST = this.onChurchNumeralBody(n - 1)
     return new Application(left, right)
   }
 
   // TODO: creating dummy token, there should be something like NoPosition
-  churchNumberHeader (tree : AST) : AST {
+  onChurchNumeralHeader (tree : AST) : AST {
     const s : Variable = new Variable(new Token(TokenType.Identifier, 's', BLANK_POSITION))
     const z : Variable = new Variable(new Token(TokenType.Identifier, 'z', BLANK_POSITION))
     
@@ -40,14 +40,14 @@ export class Expander extends ASTVisitor {
     return new Lambda(s, body)
   }
 
-  onChurchNumber(churchNumber : ChurchNumeral) : void {
-    const value : number = <number> churchNumber.token.value
-    const churchLiteral : AST = this.churchNumberHeader(this.churchNumberBody(value))
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    const value : number = <number> churchNumeral.token.value
+    const churchLiteral : AST = this.onChurchNumeralHeader(this.onChurchNumeralBody(value))
 
     this.expanded = churchLiteral
   }
 
-  onMacro(macro : Macro) : void {
+  onMacro (macro : Macro) : void {
     // TODO: here I lose token - useful for location and origin of macro - should solve this
     // also consider not clonning - not good idea because of breakpoints - right?
     this.expanded = macro.definition.ast.clone()

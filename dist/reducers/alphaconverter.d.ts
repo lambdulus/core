@@ -10,7 +10,7 @@ export declare class AlphaConverter extends ASTVisitor {
     constructor({ conversions }: Alpha, tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumeral): void;
+    onChurchNumeral(churchNumeral: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): void;

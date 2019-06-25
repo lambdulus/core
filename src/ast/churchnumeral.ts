@@ -18,6 +18,6 @@ export class ChurchNumeral extends AST {
   }
 
   visit (visitor : ASTVisitor) : void {
-    visitor.onChurchNumber(this)
+    visitor.onChurchNumeral(this)
   }
 }

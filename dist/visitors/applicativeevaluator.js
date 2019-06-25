@@ -66,8 +66,8 @@ class ApplicativeEvaluator extends _1.ASTVisitor {
         // this.child = Child.Right
         // lambda.body.visit(this)
     }
-    onChurchNumber(churchNumber) {
-        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumber);
+    onChurchNumeral(churchNumeral) {
+        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, macro);

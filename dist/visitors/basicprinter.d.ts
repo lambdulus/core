@@ -9,7 +9,7 @@ export declare class BasicPrinter extends ASTVisitor {
     print(): string;
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumeral): void;
+    onChurchNumeral(churchNumeral: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
 }

@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
+const _1 = require(".");
 // TODO: mozna vubec nebude potreba -> DELETE
-class VarBindFinder {
+class VarBindFinder extends _1.ASTVisitor {
     constructor(tree, varName) {
+        super();
         this.tree = tree;
         this.varName = varName;
         this.lambda = null;
@@ -19,15 +21,6 @@ class VarBindFinder {
         else if (lambda.body instanceof ast_1.Lambda) {
             lambda.body.visit(this);
         }
-    }
-    onChurchNumber(churchNumber) {
-        // nothing
-    }
-    onMacro(macro) {
-        // nothing
-    }
-    onVariable(variable) {
-        // nothing
     }
 }
 exports.VarBindFinder = VarBindFinder;

@@ -14,7 +14,7 @@ class ChurchNumeral extends _1.AST {
         return new ChurchNumeral(this.token, this.identifier);
     }
     visit(visitor) {
-        visitor.onChurchNumber(this);
+        visitor.onChurchNumeral(this);
     }
 }
 exports.ChurchNumeral = ChurchNumeral;

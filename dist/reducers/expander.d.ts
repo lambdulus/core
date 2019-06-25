@@ -8,9 +8,9 @@ export declare class Expander extends ASTVisitor {
     private treeSide;
     private target;
     constructor({ parent, treeSide, target }: Expansion, tree: AST);
-    churchNumberBody(n: number): AST;
-    churchNumberHeader(tree: AST): AST;
-    onChurchNumber(churchNumber: ChurchNumeral): void;
+    onChurchNumeralBody(n: number): AST;
+    onChurchNumeralHeader(tree: AST): AST;
+    onChurchNumeral(churchNumeral: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     perform(): void;
 }
