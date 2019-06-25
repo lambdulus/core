@@ -1,6 +1,6 @@
 import { Binary, Child, AST } from "../ast";
 import { ASTReduction } from ".";
-export declare class Expansion extends ASTReduction {
+export declare class Expansion implements ASTReduction {
     readonly parent: Binary | null;
     readonly treeSide: Child | null;
     readonly target: AST;
