@@ -10,6 +10,7 @@ const normalevaluator_1 = require("./visitors/normalevaluator");
 const none_1 = require("./reductions/none");
 const inputs = [
     `FACCT 3`,
+    `(λ z y x . + (+ 2 x) y) Z 2 3`,
     `A B '(+ 1 2)`,
     `(λ y . (λ x . (+ 2) x) y)`,
     `(λ x . (+ 2) x)`,

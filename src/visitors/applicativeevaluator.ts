@@ -80,6 +80,7 @@ export class ApplicativeEvaluator extends ASTVisitor {
   }
   
   onLambda (lambda : Lambda) : void {
+    // TODO: just experimenting
     this.nextReduction = new None
     // this.parent = lambda
     // this.child = Child.Right
