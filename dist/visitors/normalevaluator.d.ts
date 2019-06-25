@@ -11,7 +11,7 @@ export declare class NormalEvaluator extends ASTVisitor {
     constructor(tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumeral): void;
+    onChurchNumeral(churchNumeral: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): AST;

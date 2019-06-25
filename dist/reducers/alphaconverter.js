@@ -31,8 +31,8 @@ class AlphaConverter extends visitors_1.ASTVisitor {
             this.converted = lambda;
         }
     }
-    onChurchNumber(churchNumber) {
-        this.converted = churchNumber;
+    onChurchNumeral(churchNumeral) {
+        this.converted = churchNumeral;
     }
     onMacro(macro) {
         this.converted = macro;

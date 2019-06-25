@@ -87,8 +87,8 @@ export class ApplicativeEvaluator extends ASTVisitor {
     // lambda.body.visit(this)
   }
 
-  onChurchNumber (churchNumber : ChurchNumeral) : void {
-    this.nextReduction = new Expansion(this.parent, this.child, churchNumber)
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
   }
 
   onMacro (macro : Macro) : void {

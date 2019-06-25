@@ -47,15 +47,15 @@ export class AlphaConverter extends ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumeral) : void {
-    this.converted = churchNumber
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    this.converted = churchNumeral
   }
 
   onMacro(macro : Macro) : void {
     this.converted = macro
   }
 
-  onVariable(variable : Variable) : void {
+  onVariable (variable : Variable) : void {
     if (variable.name() === this.oldName) {
       const token : Token = new Token(variable.token.type, this.newName, variable.token.position)
     

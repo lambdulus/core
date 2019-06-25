@@ -12,7 +12,7 @@ export declare class BetaReducer extends ASTVisitor {
     constructor({ parent, treeSide, target, argName, value }: Beta, tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;
-    onChurchNumber(churchNumber: ChurchNumeral): void;
+    onChurchNumeral(churchNumeral: ChurchNumeral): void;
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): void;

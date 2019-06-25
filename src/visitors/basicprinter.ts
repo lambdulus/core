@@ -71,15 +71,15 @@ export class BasicPrinter extends ASTVisitor {
     }
   }
   
-  onChurchNumber(churchNumber: ChurchNumeral): void {
-    this.expression += churchNumber.name()
+  onChurchNumeral (churchNumeral: ChurchNumeral): void {
+    this.expression += churchNumeral.name()
   }
   
-  onMacro(macro: Macro): void {
+  onMacro (macro: Macro): void {
     this.expression += macro.name()
   }
   
-  onVariable(variable: Variable): void {
+  onVariable (variable: Variable): void {
     this.expression += variable.name()
   }
 }
