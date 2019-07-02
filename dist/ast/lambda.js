@@ -21,7 +21,6 @@ class Lambda extends _1.AST {
         this.body = body;
     }
     clone() {
-        // TODO: consider not clonning
         return new Lambda(this.argument.clone(), this.body.clone(), this.identifier);
     }
     visit(visitor) {
