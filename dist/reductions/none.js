@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const _1 = require(".");
-class None extends _1.ASTReduction {
+class None {
 }
 exports.None = None;

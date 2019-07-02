@@ -1,4 +1,4 @@
-import { AST, Binary, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Binary, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Beta } from "../reductions";
 
@@ -25,7 +25,7 @@ export class BetaReducer extends ASTVisitor {
     this.tree = tree
   }
 
-  onApplication(application : Application) : void {
+  onApplication (application : Application) : void {
     application.left.visit(this)
     
     const left : AST = <AST> this.substituted
@@ -37,7 +37,7 @@ export class BetaReducer extends ASTVisitor {
     this.substituted = new Application(left, right, application.identifier)
   }
 
-  onLambda(lambda : Lambda) : void {
+  onLambda (lambda : Lambda) : void {
     if (lambda.argument.name() === this.argName) {
       this.substituted = lambda
     }
@@ -54,15 +54,15 @@ export class BetaReducer extends ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
-    this.substituted = churchNumber
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    this.substituted = churchNumeral
   }
 
-  onMacro(macro : Macro) : void {
+  onMacro (macro : Macro) : void {
     this.substituted = macro
   }
 
-  onVariable(variable : Variable) : void {
+  onVariable (variable : Variable) : void {
     if (variable.name() === this.argName) {
       this.substituted = this.value.clone()
     }

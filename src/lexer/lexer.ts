@@ -1,5 +1,7 @@
-import { Counter, PositionRecord } from './counter'
+import { Counter } from './counter'
 import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './';
+import { InvalidCharacter } from './errors';
+import { PositionRecord } from './postion';
 
 
 class Lexer {
@@ -109,8 +111,6 @@ class Lexer {
       id += this.pop()
     }
   
-    // whitespace neni nutny
-    // kontrolovat to co vadi [ alphabetic ]
     if (this.isAlphabetic(this.top())) {
       throw new InvalidIdentifier(`${ id }`, topPosition)
     }
@@ -132,7 +132,6 @@ class Lexer {
       throw new InvalidNumber(`${ n }${ this.top() }`, topPosition)
     }
   
-    
     const number : Token = new Token(TokenType.Number, n, topPosition)
 
     this.tokens.push(number)
@@ -143,7 +142,7 @@ class Lexer {
   }
 
   mayBeIdentifier (char : string) : boolean {
-    return this.isAlphabetic(this.top())
+    return this.isAlphabetic(char)
   }
  
   mayBeNumber (char : string) : boolean {
@@ -190,7 +189,7 @@ class Lexer {
           break
         }
         case '\'' : {
-          let operator : string = this.pop()
+          const operator : string = this.pop()
           const topPosition : PositionRecord = this.position.toRecord()
 
           this.tokens.push(new Token(TokenType.Quote, operator, topPosition))
@@ -206,72 +205,15 @@ class Lexer {
         else if (this.isWhiteSpace(this.top()))
           this.pop()
         else {
-          // console.error(`Invalid character ${ this.position.toRecord() } \
-          // at row ${ this.position.row } column ${ this.position.column }.`)
-
-          // TODO: refactor
-          // I need to send custom Error class containing all information in structured way not string
-          throw(new Error(`Invalid character ${ this.position.toRecord() } \
-          at row ${ this.position.row } column ${ this.position.column }.`))
+          throw new InvalidCharacter(`${this.top()}`, this.position.toRecord())
         }
       }
-      // TODO: implement error handling already
-      // nechytat chybu tady
-      // nechat ji probublat ven z tohohle modulu
-      // odchyti si ji super modul kerej tohle pouziva
-      // hint nech v erroru a super modul uz jenom vypise chybu a hint a zaformatuje
-      // catch (error) {
-      //   if (error instanceof InvalidNumber) {
-      //     const { value } = error
-      //     const { row, column } = this.position.toRecord()
-  
-      //     console.error(`Invalid character when expecting valid Number \
-      //     at row ${ row } column ${ column }
-          
-      //     you probably misstyped ${ value }`)
-      //   }
-      //   if (error instanceof InvalidOperator) {
-      //     const { value } = error
-      //     const { row, column } = this.position.toRecord()
-  
-      //     console.error(`Invalid character when expecting valid Operator \
-      //     at row ${ row } column ${ column }
-  
-      //     you probably misstyped ${ value }
-          
-      //     ${ hintOperator(error, this.operators) }`)
-      //   }
-      //   if (error instanceof InvalidIdentifier) {
-      //     // TODO: implement
-      //   }
-      //   throw error      
-      // }
     }
 
     return this.tokens
   }
 
 }
-
-// function hintOperator (error : InvalidOperator, operators : Array<string>) : string {
-//   const { value : invalid } = error
-//   const relevant : Array<string> = operators.filter(
-//     (operator) =>
-//       operator.indexOf(invalid) !== -1
-//       ||
-//       invalid.indexOf(operator) !== -1
-//   )
-
-//   if ( ! relevant.length) {
-//     return ''
-//   }
-
-//   return (
-//     `Hint: Did you mean to write one of these?
-//     ${ relevant.map((operator) => `${ operator }\n`) }`
-//   )
-// }
-
 
 export function tokenize (input : string, config : CodeStyle) : Array<Token> {
   const lexer : Lexer = new Lexer(input + ' ', config)

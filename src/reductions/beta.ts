@@ -5,7 +5,8 @@ import { ASTReduction } from ".";
 // TODO: vyresit pro pripady kdy jde o multilambdu
 // pak bude navic drzet mnozinu values a mnozinu arguments
 // spis mnozinu tuples
-export class Beta extends ASTReduction {
+// mozna ani vicekrokovou Betu delat nikdy nebudu
+export class Beta implements ASTReduction {
   constructor (
     public readonly redex : Application,
     public readonly parent : Binary | null,
@@ -13,7 +14,5 @@ export class Beta extends ASTReduction {
     public readonly target : AST, // EXPR ve kterem se provede nahrada
     public readonly argName : string,
     public readonly value : AST,
-  ) {
-    super()
-  }
+  ) {}
 }

@@ -14,16 +14,16 @@ class Expandor extends visitors_1.ASTVisitor {
     }
     churchNumberBody(n) {
         if (n === 0) {
-            return new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', { column: 0, position: 0, row: 0 }));
+            return new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', lexer_1.BLANK_POSITION));
         }
-        const left = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', { column: 0, position: 0, row: 0 }));
+        const left = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', lexer_1.BLANK_POSITION));
         const right = this.churchNumberBody(n - 1);
         return new ast_1.Application(left, right);
     }
     // TODO: creating dummy token, there should be something like NoPosition
     churchNumberHeader(tree) {
-        const s = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', { column: 0, position: 0, row: 0 }));
-        const z = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', { column: 0, position: 0, row: 0 }));
+        const s = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 's', lexer_1.BLANK_POSITION));
+        const z = new ast_1.Variable(new lexer_1.Token(lexer_1.TokenType.Identifier, 'z', lexer_1.BLANK_POSITION));
         const body = new ast_1.Lambda(z, tree);
         return new ast_1.Lambda(s, body);
     }

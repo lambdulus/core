@@ -3,13 +3,11 @@ import { AST } from './'
 import { ASTVisitor } from '../visitors';
 
 
-export class Variable implements AST {
-  // public readonly identifier : symbol = Symbol()
-
+export class Variable extends AST {
   constructor (
     public readonly token : Token,
     public readonly identifier : symbol = Symbol(),
-  ) {}
+  ) { super() }
     
   name () : string {
     return `${ this.token.value }`

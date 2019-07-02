@@ -24,3 +24,23 @@ class InvalidOperator extends Error {
     }
 }
 exports.InvalidOperator = InvalidOperator;
+class InvalidCharacter extends Error {
+    constructor(value, position) {
+        super();
+        this.value = value;
+        this.position = position;
+    }
+}
+exports.InvalidCharacter = InvalidCharacter;
+function hintOperator(error, operators) {
+    const { value: invalid } = error;
+    const relevant = operators.filter((operator) => operator.indexOf(invalid) !== -1
+        ||
+            invalid.indexOf(operator) !== -1);
+    if (!relevant.length) {
+        return '';
+    }
+    return (`Hint: Did you mean to write one of these?
+    ${relevant.map((operator) => `${operator}\n`)}`);
+}
+exports.hintOperator = hintOperator;

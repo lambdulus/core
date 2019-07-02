@@ -1,4 +1,4 @@
-export declare abstract class ASTReduction {
+export interface ASTReduction {
 }
 export { Alpha } from './alpha';
 export { Beta } from './beta';

@@ -1,7 +1,7 @@
 import { Token } from '../lexer';
 import { AST } from './';
 import { ASTVisitor } from '../visitors';
-export declare class Variable implements AST {
+export declare class Variable extends AST {
     readonly token: Token;
     readonly identifier: symbol;
     constructor(token: Token, identifier?: symbol);

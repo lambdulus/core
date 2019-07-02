@@ -1,8 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class ASTReduction {
-}
-exports.ASTReduction = ASTReduction;
 var alpha_1 = require("./alpha");
 exports.Alpha = alpha_1.Alpha;
 var beta_1 = require("./beta");

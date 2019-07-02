@@ -1,6 +1,6 @@
 import { ASTVisitor } from "."
 import { FreeVarsFinder } from "./freevarsfinder"
-import { Binary, AST, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast"
+import { Binary, AST, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 import { BoundingFinder } from "./boundingfinder"
 import { constructFor, Reducer } from "../reducers";
 import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
@@ -63,7 +63,7 @@ export class ApplicativeEvaluator extends ASTVisitor {
       }
     }
 
-    // (application.left instanceof Macro || application.left instanceof ChurchNumber || application.left instanceof Variable)
+    // (application.left instanceof Macro || application.left instanceof ChurchNumeral || application.left instanceof Variable)
     else {
       this.parent = application
       this.child = Child.Right
@@ -80,6 +80,7 @@ export class ApplicativeEvaluator extends ASTVisitor {
   }
   
   onLambda (lambda : Lambda) : void {
+    // TODO: just experimenting
     this.nextReduction = new None
     // this.parent = lambda
     // this.child = Child.Right
@@ -87,8 +88,8 @@ export class ApplicativeEvaluator extends ASTVisitor {
     // lambda.body.visit(this)
   }
 
-  onChurchNumber (churchNumber : ChurchNumber) : void {
-    this.nextReduction = new Expansion(this.parent, this.child, churchNumber)
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
   }
 
   onMacro (macro : Macro) : void {

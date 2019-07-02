@@ -1,10 +1,10 @@
 import { Token } from "../lexer";
-import { AST, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Alpha } from "../reductions";
 
 
-export class AlphaConvertor extends ASTVisitor {
+export class AlphaConverter extends ASTVisitor {
   // Need to do this Nonsense Dance
   private converted : AST | null = null
 
@@ -47,15 +47,15 @@ export class AlphaConvertor extends ASTVisitor {
     }
   }
 
-  onChurchNumber(churchNumber : ChurchNumber) : void {
-    this.converted = churchNumber
+  onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    this.converted = churchNumeral
   }
 
   onMacro(macro : Macro) : void {
     this.converted = macro
   }
 
-  onVariable(variable : Variable) : void {
+  onVariable (variable : Variable) : void {
     if (variable.name() === this.oldName) {
       const token : Token = new Token(variable.token.type, this.newName, variable.token.position)
     

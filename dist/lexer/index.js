@@ -9,3 +9,7 @@ var errors_1 = require("./errors");
 exports.InvalidIdentifier = errors_1.InvalidIdentifier;
 exports.InvalidNumber = errors_1.InvalidNumber;
 exports.InvalidOperator = errors_1.InvalidOperator;
+exports.InvalidCharacter = errors_1.InvalidCharacter;
+exports.hintOperator = errors_1.hintOperator;
+var postion_1 = require("./postion");
+exports.BLANK_POSITION = postion_1.BLANK_POSITION;

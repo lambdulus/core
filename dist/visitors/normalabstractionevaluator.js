@@ -35,7 +35,7 @@ class NormalAbstractionEvaluator extends _1.ASTVisitor {
                 this.nextReduction = new reductions_1.Beta(application, this.parent, this.child, application.left.body, application.left.argument.name(), application.right);
             }
         }
-        // (this.left instanceof Macro || this.left instanceof ChurchNumber || this.left instanceof Application)
+        // (this.left instanceof Macro || this.left instanceof ChurchNumeral || this.left instanceof Application)
         else {
             this.parent = application;
             this.child = ast_1.Child.Left;
@@ -52,8 +52,8 @@ class NormalAbstractionEvaluator extends _1.ASTVisitor {
         this.child = ast_1.Child.Right;
         lambda.body.visit(this);
     }
-    onChurchNumber(churchNumber) {
-        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumber);
+    onChurchNumeral(churchNumeral) {
+        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, macro);
