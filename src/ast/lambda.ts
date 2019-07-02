@@ -26,7 +26,6 @@ export class Lambda extends AST implements Binary {
   }
 
   clone () : Lambda {
-    // TODO: consider not clonning
     return new Lambda(this.argument.clone(), this.body.clone(), this.identifier)
   }
 
