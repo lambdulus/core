@@ -1,6 +1,6 @@
 import { AST, Binary } from './';
 import { ASTVisitor } from '../visitors';
-export declare class Application implements AST, Binary {
+export declare class Application extends AST implements Binary {
     left: AST;
     right: AST;
     readonly identifier: symbol;

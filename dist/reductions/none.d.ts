@@ -1,3 +1,3 @@
 import { ASTReduction } from ".";
-export declare class None extends ASTReduction {
+export declare class None implements ASTReduction {
 }

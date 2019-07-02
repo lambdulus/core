@@ -1,7 +1,6 @@
-import { AST, Binary } from './';
-import { Variable } from './variable';
+import { AST, Binary, Variable } from './';
 import { ASTVisitor } from '../visitors';
-export declare class Lambda implements AST, Binary {
+export declare class Lambda extends AST implements Binary {
     argument: Variable;
     body: AST;
     readonly identifier: symbol;

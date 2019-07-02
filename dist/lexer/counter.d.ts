@@ -1,13 +1,4 @@
-export interface PositionRecord {
-    column: number;
-    row: number;
-    position: number;
-}
-export declare const BlankPosition: {
-    column: number;
-    row: number;
-    position: number;
-};
+import { PositionRecord } from "./postion";
 export declare class Counter {
     column: number;
     row: number;

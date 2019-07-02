@@ -1,9 +1,9 @@
-import { AST, Binary, Child, Application, Lambda, ChurchNumber, Macro, Variable } from "../ast";
+import { AST, Binary, Child } from "../ast";
 import { ASTVisitor } from "../visitors";
 import { Eta } from "../reductions/eta";
 
 
-export class EtaConvertor extends ASTVisitor {
+export class EtaConverter extends ASTVisitor {
   private parent : Binary | null
   private treeSide : Child | null
   private target : AST

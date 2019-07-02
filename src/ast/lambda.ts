@@ -1,16 +1,13 @@
-import { AST, Binary } from './'
-import { Variable } from './variable'
+import { AST, Binary, Variable } from './'
 import { ASTVisitor } from '../visitors';
 
 
-export class Lambda implements AST, Binary {
-  // public readonly identifier : symbol = Symbol()
-
+export class Lambda extends AST implements Binary {
   constructor (
     public argument : Variable,
     public body : AST,
     public readonly identifier : symbol = Symbol(),
-  ) {}
+  ) { super() }
 
   public get left () {
     return this.argument
@@ -29,7 +26,6 @@ export class Lambda implements AST, Binary {
   }
 
   clone () : Lambda {
-    // TODO: consider not clonning
     return new Lambda(this.argument.clone(), this.body.clone(), this.identifier)
   }
 

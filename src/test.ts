@@ -10,8 +10,12 @@ import { AST } from './ast'
 import { None } from './reductions/none';
 
 
+const valids : Array<string> = [
+  `FACCT 3`,
+  `(λ z y x . + (+ 2 x) y) Z 2 3`,
 
-const inputs : Array<string> = [
+  `A B '(+ 1 2)`,
+
   `(λ y . (λ x . (+ 2) x) y)`,
   `(λ x . (+ 2) x)`,
   `'()`,
@@ -43,7 +47,7 @@ const inputs : Array<string> = [
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci
-  '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
+  // '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
   'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
   'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
   '(x 2) (2 s z)',
@@ -73,24 +77,10 @@ const inputs : Array<string> = [
   '3',
   '4',
   
-  // invalid exprs
-  '11111111111111111111111111111111111111111111111111', // TODO: fail on too much recursion or heap out of memory
-  '(λ a b . + a b) )) abc', // TODO: one or more ) non matching         OK
-  '((', // TODO: one or more missing `)`                                OK
-  '( +', // TODO: one or more missing `)`                               OK
-  '( 23', // TODO: one or more missing `)`                              OK
-  '( a ( b )', // TODO: one or more missing `)`                         OK
-  '( a ( b ', // TODO: one or more missing `)`                          OK
-  '( a ( ', // TODO: one or more missing `)`                            OK
-  '(', // TODO: one or more missing `)`                                 OK
-  '(  )',// TODO: trying to parse empty expression - forbidden          OK
+   // ] bracket
+   '+ (+ 23 (- 42 23] 4', // OK
+   '+ (+ 23 (- 42 23)) 4', // OK
 
-  // ] bracket
-  '+ (+ 23 (- 42 23] 4', // OK
-  '+ (+ 23 (- 42 23)) 4', // OK
-  '(  ]', // SHOULD FAIL
-  '(]', // SHOULD FAIL
-  '( a ( ]', // SHOULD FAIL
   '( a ( b ]',
   '( a ( b )]',
   '( + ]',
@@ -103,31 +93,99 @@ const inputs : Array<string> = [
   // 'A (B C) D ()', // ani tohle netusim NECHCI
 ]
 
-console.log(inputs[0])
+const invalids : Array<string> = [
+  // invalid exprs
+  '11111111111111111111111111111111111111111111111111', // TODO: fail on too much recursion or heap out of memory
+  '(λ a b . + a b) )) abc', // TODO: one or more ) non matching         OK
+  '((', // TODO: one or more missing `)`                                OK
+  '( +', // TODO: one or more missing `)`                               OK
+  '( 23', // TODO: one or more missing `)`                              OK
+  '( a ( b )', // TODO: one or more missing `)`                         OK
+  '( a ( b ', // TODO: one or more missing `)`                          OK
+  '( a ( ', // TODO: one or more missing `)`                            OK
+  '(', // TODO: one or more missing `)`                                 OK
+  '(  )',// TODO: trying to parse empty expression - forbidden          OK
 
-const tokens : Array<Token> = tokenize(inputs[0], {
-  singleLetterVars : false,
-  lambdaLetters : [ 'λ', '\\', '~' ],
-})
 
-console.log(tokens.map((token) => token.value).join(' '))
+   // ] bracket 
+  '(  ]', // SHOULD FAIL
+  '(]', // SHOULD FAIL
+  '( a ( ]', // SHOULD FAIL
+]
 
-console.log('--------------------')
+function testValids () {
+  for (const expr of valids) {
+    try {
+      const tokens : Array<Token> = tokenize(expr, {
+        singleLetterVars : false,
+        lambdaLetters : [ 'λ', '\\', '~' ],
+      })
+  
+      const ast : AST = Parser.parse(tokens, {
+        'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+        'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+        'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+        'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+      })
+      let root : AST = ast
+      let e = 0
+    }
+    catch (exception) {
+      console.log('INVALID:')
+      console.log(expr)
+      console.log('--------------------------------')
+    }
+  }
+}
 
-const ast : AST = Parser.parse(tokens, {
-  'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
-  'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
-  'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-  'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-  'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-  'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-  'CONNECT' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
-})
-let root : AST = ast
-let e = 0
+function testInvalids () {
+  for (const expr of invalids) {
+    try {
+      const tokens : Array<Token> = tokenize(expr, {
+        singleLetterVars : false,
+        lambdaLetters : [ 'λ', '\\', '~' ],
+      })
+  
+      const ast : AST = Parser.parse(tokens, {
+        'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+        'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+        'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+        'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+        'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+      })
+      let root : AST = ast
+      let e = 0
 
-console.log(printTree(root))
+      console.log('SHOULD BE INVALID:')
+      console.log(expr)
+      console.log('--------------------------------')
+    }
+    catch (exception) {
+      console.log('IS CORRECTLY INVALID')
+      console.log(expr)
+      console.log(exception)
+      console.log('--------------------------------')
+    }
+  }
+}
+
+testValids()
+
+console.log('..........................................')
+console.log('..........................................')
+console.log('..........................................')
+console.log('..........................................')
+
+testInvalids()
 
 
 // while (true) {
@@ -147,38 +205,38 @@ console.log(printTree(root))
 // }
 
 
-while (true) {
-  const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
+// while (true) {
+//   const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
 
-  if (optimize.nextReduction instanceof None) {
-    break
-  }
+//   if (optimize.nextReduction instanceof None) {
+//     break
+//   }
 
-  root = optimize.perform() // perform next reduction
+//   root = optimize.perform() // perform next reduction
 
-  e++
+//   e++
 
-  console.log(printTree(root))
-}
+//   console.log(printTree(root))
+// }
 
-console.log('====================')
-console.log('====================')
-console.log('====================')
+// console.log('====================')
+// console.log('====================')
+// console.log('====================')
 
 
-while (true) {
-  const normal : NormalEvaluator = new NormalEvaluator(root)
+// while (true) {
+//   const normal : NormalEvaluator = new NormalEvaluator(root)
 
-  if (normal.nextReduction instanceof None) {
-    break
-  }
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
 
-  root = normal.perform() // perform next reduction
+//   root = normal.perform() // perform next reduction
 
-  e++
+//   e++
 
-  // console.log(printTree(root))
-}
+//   console.log(printTree(root))
+// }
 
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
@@ -202,12 +260,12 @@ while (true) {
 
 
 
-export function printTree (tree : AST) : string {
-  const printer : BasicPrinter = new BasicPrinter(tree)
-  return printer.print()
-}
+// export function printTree (tree : AST) : string {
+//   const printer : BasicPrinter = new BasicPrinter(tree)
+//   return printer.print()
+// }
 
 
-console.log('steps: ' + e)
+// console.log('steps: ' + e)
 
-console.log(printTree(root))
+// console.log(printTree(root))

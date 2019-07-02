@@ -5,11 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("./lexer");
 const parser_1 = __importDefault(require("./parser"));
-const basicprinter_1 = require("./visitors/basicprinter");
-const normalevaluator_1 = require("./visitors/normalevaluator");
-const optimizeevaluator_1 = require("./visitors/optimizeevaluator");
-const none_1 = require("./reductions/none");
-const inputs = [
+const valids = [
+    `FACCT 3`,
+    `(λ z y x . + (+ 2 x) y) Z 2 3`,
+    `A B '(+ 1 2)`,
     `(λ y . (λ x . (+ 2) x) y)`,
     `(λ x . (+ 2) x)`,
     `'()`,
@@ -41,7 +40,7 @@ const inputs = [
     '+ (23) 4',
     '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)',
     '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)',
-    '(~ xyz . zyx ) 1 2 3',
+    // '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
     'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
     'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
     '(x 2) (2 s z)',
@@ -70,6 +69,16 @@ const inputs = [
     '2',
     '3',
     '4',
+    // ] bracket
+    '+ (+ 23 (- 42 23] 4',
+    '+ (+ 23 (- 42 23)) 4',
+    '( a ( b ]',
+    '( a ( b )]',
+    '( + ]',
+    '( 23 ]',
+    '(( a ]',
+];
+const invalids = [
     // invalid exprs
     '11111111111111111111111111111111111111111111111111',
     '(λ a b . + a b) )) abc',
@@ -81,38 +90,77 @@ const inputs = [
     '( a ( ',
     '(',
     '(  )',
-    // ] bracket
-    '+ (+ 23 (- 42 23] 4',
-    '+ (+ 23 (- 42 23)) 4',
+    // ] bracket 
     '(  ]',
     '(]',
     '( a ( ]',
-    '( a ( b ]',
-    '( a ( b )]',
-    '( + ]',
-    '( 23 ]',
-    '(( a ]',
 ];
-console.log(inputs[0]);
-const tokens = lexer_1.tokenize(inputs[0], {
-    singleLetterVars: false,
-    lambdaLetters: ['λ', '\\', '~'],
-});
-console.log(tokens.map((token) => token.value).join(' '));
-console.log('--------------------');
-const ast = parser_1.default.parse(tokens, {
-    'SHORTLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
-    'MESSLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
-    'LISTGREQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-    'LISTLESS': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-    'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-    'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
-    'CONNECT': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-    'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
-});
-let root = ast;
-let e = 0;
-console.log(printTree(root));
+function testValids() {
+    for (const expr of valids) {
+        try {
+            const tokens = lexer_1.tokenize(expr, {
+                singleLetterVars: false,
+                lambdaLetters: ['λ', '\\', '~'],
+            });
+            const ast = parser_1.default.parse(tokens, {
+                'FACCT': '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+                'SHORTLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+                'MESSLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+                'LISTGREQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTLESS': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'APPEND': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+                'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+            });
+            let root = ast;
+            let e = 0;
+        }
+        catch (exception) {
+            console.log('INVALID:');
+            console.log(expr);
+            console.log('--------------------------------');
+        }
+    }
+}
+function testInvalids() {
+    for (const expr of invalids) {
+        try {
+            const tokens = lexer_1.tokenize(expr, {
+                singleLetterVars: false,
+                lambdaLetters: ['λ', '\\', '~'],
+            });
+            const ast = parser_1.default.parse(tokens, {
+                'FACCT': '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+                'SHORTLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+                'MESSLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+                'LISTGREQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTLESS': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+                'APPEND': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+                'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+            });
+            let root = ast;
+            let e = 0;
+            console.log('SHOULD BE INVALID:');
+            console.log(expr);
+            console.log('--------------------------------');
+        }
+        catch (exception) {
+            console.log('IS CORRECTLY INVALID');
+            console.log(expr);
+            console.log(exception);
+            console.log('--------------------------------');
+        }
+    }
+}
+testValids();
+console.log('..........................................');
+console.log('..........................................');
+console.log('..........................................');
+console.log('..........................................');
+testInvalids();
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 //   console.log(normal.nextReduction)
@@ -123,27 +171,27 @@ console.log(printTree(root));
 //   e++
 //   console.log(printTree(root))
 // }
-while (true) {
-    const optimize = new optimizeevaluator_1.OptimizeEvaluator(root);
-    if (optimize.nextReduction instanceof none_1.None) {
-        break;
-    }
-    root = optimize.perform(); // perform next reduction
-    e++;
-    console.log(printTree(root));
-}
-console.log('====================');
-console.log('====================');
-console.log('====================');
-while (true) {
-    const normal = new normalevaluator_1.NormalEvaluator(root);
-    if (normal.nextReduction instanceof none_1.None) {
-        break;
-    }
-    root = normal.perform(); // perform next reduction
-    e++;
-    // console.log(printTree(root))
-}
+// while (true) {
+//   const optimize : OptimizeEvaluator = new OptimizeEvaluator(root)
+//   if (optimize.nextReduction instanceof None) {
+//     break
+//   }
+//   root = optimize.perform() // perform next reduction
+//   e++
+//   console.log(printTree(root))
+// }
+// console.log('====================')
+// console.log('====================')
+// console.log('====================')
+// while (true) {
+//   const normal : NormalEvaluator = new NormalEvaluator(root)
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
+//   root = normal.perform() // perform next reduction
+//   e++
+//   console.log(printTree(root))
+// }
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
 //   if (
@@ -157,10 +205,9 @@ while (true) {
 //   // console.log(printTree(root))
 //   console.log('-----------------------' + e + '--------------------------')
 // }
-function printTree(tree) {
-    const printer = new basicprinter_1.BasicPrinter(tree);
-    return printer.print();
-}
-exports.printTree = printTree;
-console.log('steps: ' + e);
-console.log(printTree(root));
+// export function printTree (tree : AST) : string {
+//   const printer : BasicPrinter = new BasicPrinter(tree)
+//   return printer.print()
+// }
+// console.log('steps: ' + e)
+// console.log(printTree(root))

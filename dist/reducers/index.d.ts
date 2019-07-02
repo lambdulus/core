@@ -1,7 +1,8 @@
 import { AST } from '../ast';
-export { AlphaConvertor } from './alphaconvertor';
+export { AlphaConverter } from './alphaconverter';
 export { BetaReducer } from './betareducer';
-export { Expandor } from './expandor';
+export { EtaConverter } from './etaconverter';
+export { Expander } from './expander';
 export { EmptyReducer } from './emptyreducer';
 export { constructFor } from './reducerfactory';
 export interface Reducer {

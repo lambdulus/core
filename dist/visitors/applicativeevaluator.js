@@ -48,7 +48,7 @@ class ApplicativeEvaluator extends _1.ASTVisitor {
                 application.right.visit(this);
             }
         }
-        // (application.left instanceof Macro || application.left instanceof ChurchNumber || application.left instanceof Variable)
+        // (application.left instanceof Macro || application.left instanceof ChurchNumeral || application.left instanceof Variable)
         else {
             this.parent = application;
             this.child = ast_1.Child.Right;
@@ -61,13 +61,14 @@ class ApplicativeEvaluator extends _1.ASTVisitor {
         }
     }
     onLambda(lambda) {
+        // TODO: just experimenting
         this.nextReduction = new reductions_1.None;
         // this.parent = lambda
         // this.child = Child.Right
         // lambda.body.visit(this)
     }
-    onChurchNumber(churchNumber) {
-        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumber);
+    onChurchNumeral(churchNumeral) {
+        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, macro);
