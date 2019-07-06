@@ -11,6 +11,7 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
+  `+ 2 3`,
   `FACCT 3`,
   `(λ z y x . + (+ 2 x) y) Z 2 3`,
 
@@ -178,14 +179,14 @@ function testInvalids () {
   }
 }
 
-testValids()
+// testValids()
 
-console.log('..........................................')
-console.log('..........................................')
-console.log('..........................................')
-console.log('..........................................')
+// console.log('..........................................')
+// console.log('..........................................')
+// console.log('..........................................')
+// console.log('..........................................')
 
-testInvalids()
+// testInvalids()
 
 
 // while (true) {
@@ -223,20 +224,37 @@ testInvalids()
 // console.log('====================')
 // console.log('====================')
 
+const tokens : Array<Token> = tokenize(valids[0], {
+  singleLetterVars : false,
+  lambdaLetters : [ 'λ', '\\', '~' ],
+})
+const ast : AST = Parser.parse(tokens, {
+  'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+  'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+  'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+  'LISTGREQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTLESS' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+  'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+})
+let root : AST = ast
+let e = 0
 
-// while (true) {
-//   const normal : NormalEvaluator = new NormalEvaluator(root)
+while (true) {
+  const normal : NormalEvaluator = new NormalEvaluator(root)
 
-//   if (normal.nextReduction instanceof None) {
-//     break
-//   }
+  if (normal.nextReduction instanceof None) {
+    break
+  }
 
-//   root = normal.perform() // perform next reduction
+  root = normal.perform() // perform next reduction
 
-//   e++
+  e++
 
-//   console.log(printTree(root))
-// }
+  console.log(printTree(root))
+}
 
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
@@ -260,12 +278,12 @@ testInvalids()
 
 
 
-// export function printTree (tree : AST) : string {
-//   const printer : BasicPrinter = new BasicPrinter(tree)
-//   return printer.print()
-// }
+export function printTree (tree : AST) : string {
+  const printer : BasicPrinter = new BasicPrinter(tree)
+  return printer.print()
+}
 
 
-// console.log('steps: ' + e)
+console.log('steps: ' + e)
 
-// console.log(printTree(root))
+console.log(printTree(root))
