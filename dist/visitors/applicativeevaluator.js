@@ -62,10 +62,10 @@ class ApplicativeEvaluator extends _1.ASTVisitor {
     }
     onLambda(lambda) {
         // TODO: just experimenting
-        this.nextReduction = new reductions_1.None;
-        // this.parent = lambda
-        // this.child = Child.Right
-        // lambda.body.visit(this)
+        // this.nextReduction = new None
+        this.parent = lambda;
+        this.child = ast_1.Child.Right;
+        lambda.body.visit(this);
     }
     onChurchNumeral(churchNumeral) {
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);

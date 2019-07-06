@@ -81,11 +81,11 @@ export class ApplicativeEvaluator extends ASTVisitor {
   
   onLambda (lambda : Lambda) : void {
     // TODO: just experimenting
-    this.nextReduction = new None
-    // this.parent = lambda
-    // this.child = Child.Right
+    // this.nextReduction = new None
+    this.parent = lambda
+    this.child = Child.Right
 
-    // lambda.body.visit(this)
+    lambda.body.visit(this)
   }
 
   onChurchNumeral (churchNumeral : ChurchNumeral) : void {
