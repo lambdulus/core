@@ -11,6 +11,7 @@ export { BoundingFinder } from './visitors/boundingfinder'
 export { FreeVarsFinder } from './visitors/freevarsfinder'
 export { NormalEvaluator } from './visitors/normalevaluator'
 export { ApplicativeEvaluator } from './visitors/applicativeevaluator'
+export { OptimizeEvaluator } from './visitors/optimizeevaluator'
 export { NormalAbstractionEvaluator } from './visitors/normalabstractionevaluator'
 
 export { VarBindFinder } from './visitors/varbindfinder' // TODO: tohle asi neni potreba

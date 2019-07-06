@@ -5,7 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("./lexer");
 const parser_1 = __importDefault(require("./parser"));
+const basicprinter_1 = require("./visitors/basicprinter");
+const normalevaluator_1 = require("./visitors/normalevaluator");
+const none_1 = require("./reductions/none");
 const valids = [
+    `+ 2 3`,
     `FACCT 3`,
     `(λ z y x . + (+ 2 x) y) Z 2 3`,
     `A B '(+ 1 2)`,
@@ -155,12 +159,12 @@ function testInvalids() {
         }
     }
 }
-testValids();
-console.log('..........................................');
-console.log('..........................................');
-console.log('..........................................');
-console.log('..........................................');
-testInvalids();
+// testValids()
+// console.log('..........................................')
+// console.log('..........................................')
+// console.log('..........................................')
+// console.log('..........................................')
+// testInvalids()
 // while (true) {
 //   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 //   console.log(normal.nextReduction)
@@ -183,15 +187,32 @@ testInvalids();
 // console.log('====================')
 // console.log('====================')
 // console.log('====================')
-// while (true) {
-//   const normal : NormalEvaluator = new NormalEvaluator(root)
-//   if (normal.nextReduction instanceof None) {
-//     break
-//   }
-//   root = normal.perform() // perform next reduction
-//   e++
-//   console.log(printTree(root))
-// }
+const tokens = lexer_1.tokenize(valids[0], {
+    singleLetterVars: false,
+    lambdaLetters: ['λ', '\\', '~'],
+});
+const ast = parser_1.default.parse(tokens, {
+    'FACCT': '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
+    'SHORTLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+    'MESSLIST': '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
+    'LISTGREQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (>= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+    'LISTLESS': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (< (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+    'LISTGR': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+    'LISTEQ': 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
+    'APPEND': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
+    'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+});
+let root = ast;
+let e = 0;
+while (true) {
+    const normal = new normalevaluator_1.NormalEvaluator(root);
+    if (normal.nextReduction instanceof none_1.None) {
+        break;
+    }
+    root = normal.perform(); // perform next reduction
+    e++;
+    console.log(printTree(root));
+}
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
 //   if (
@@ -205,9 +226,10 @@ testInvalids();
 //   // console.log(printTree(root))
 //   console.log('-----------------------' + e + '--------------------------')
 // }
-// export function printTree (tree : AST) : string {
-//   const printer : BasicPrinter = new BasicPrinter(tree)
-//   return printer.print()
-// }
-// console.log('steps: ' + e)
-// console.log(printTree(root))
+function printTree(tree) {
+    const printer = new basicprinter_1.BasicPrinter(tree);
+    return printer.print();
+}
+exports.printTree = printTree;
+console.log('steps: ' + e);
+console.log(printTree(root));
