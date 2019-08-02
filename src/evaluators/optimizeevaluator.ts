@@ -1,5 +1,5 @@
-import { ASTVisitor } from "."
-import { FreeVarsFinder } from "./freevarsfinder"
+import { ASTVisitor } from "../visitors"
+import { FreeVarsFinder } from "../visitors/freevarsfinder"
 import { Binary, AST, Child, Application, Lambda, Variable } from "../ast"
 // import { BoundingFinder } from "./boundingfinder"
 import { constructFor, Reducer } from "../reducers";

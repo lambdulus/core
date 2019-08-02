@@ -2,17 +2,18 @@ import { Token, tokenize } from './lexer'
 import Parser from './parser'
 
 import { BasicPrinter } from './visitors/basicprinter'
-import { NormalEvaluator } from './visitors/normalevaluator'
-import { OptimizeEvaluator } from './visitors/optimizeevaluator'
-import { ApplicativeEvaluator } from './visitors/applicativeevaluator'
-import { NormalAbstractionEvaluator } from './visitors/normalabstractionevaluator';
+import { NormalEvaluator } from './evaluators/normalevaluator'
+import { OptimizeEvaluator } from './evaluators/optimizeevaluator'
+import { ApplicativeEvaluator } from './evaluators/applicativeevaluator'
+import { NormalAbstractionEvaluator } from './evaluators/normalabstractionevaluator';
 import { AST } from './ast'
 import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
-  `+ 2 3`,
   `FACCT 3`,
+  `QUICKSORT '(3 1 2)`,
+  `+ 2 3`,
   `(λ z y x . + (+ 2 x) y) Z 2 3`,
 
   `A B '(+ 1 2)`,
@@ -131,7 +132,7 @@ function testValids () {
         'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
         'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
         'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
       })
       let root : AST = ast
       let e = 0
@@ -161,7 +162,7 @@ function testInvalids () {
         'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
         'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
         'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+        'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
       })
       let root : AST = ast
       let e = 0
@@ -237,7 +238,7 @@ const ast : AST = Parser.parse(tokens, {
   'LISTGR' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (> (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
   'LISTEQ' : 'Y (λ fn piv list . IF (NULL list) (NIL) ( IF (= (FIRST list) piv) (CONS (FIRST list) (fn piv (SECOND list))) (fn piv (SECOND list)) ) )',
   'APPEND' : 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
-  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( CONNECT (fn (LISTLESS (FIRST list) list)) ( CONNECT (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
+  'QUICKSORT' : 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
 })
 let root : AST = ast
 let e = 0
@@ -274,8 +275,6 @@ while (true) {
 //   console.log('-----------------------' + e + '--------------------------')
 
 // }
-
-
 
 
 export function printTree (tree : AST) : string {
