@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Taskkill/lambdulus-core.git"
+    "url": "git+https://github.com/lambdulus/core.git"
   },
   "keywords": [
     "lambdulus",
@@ -21,12 +21,17 @@
     "lambda",
     "calculus",
     "λ",
-    "evaluator"
+    "evaluator",
+    "interpreter",
+    "debugger",
+    "teaching",
+    "tool",
+    "interactive"
   ],
   "author": "Taskkill",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Taskkill/lambdulus-core/issues"
+    "url": "https://github.com/lambdulus/core/issues"
   },
-  "homepage": "https://github.com/Taskkill/lambdulus-core#readme"
+  "homepage": "https://lambdulus.github.io"
 }
