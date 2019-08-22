@@ -25,8 +25,8 @@ class NormalEvaluator extends visitors_1.ASTVisitor {
         else if (application.left instanceof ast_1.Lambda) {
             const freeVarsFinder = new freevarsfinder_1.FreeVarsFinder(application.right);
             const freeVars = freeVarsFinder.freeVars;
-            const boundingfinder = new boundingfinder_1.BoundingFinder(application.left, freeVars);
-            const lambdas = boundingfinder.lambdas;
+            const boundingFinder = new boundingfinder_1.BoundingFinder(application.left, freeVars);
+            const lambdas = boundingFinder.lambdas;
             if (lambdas.size) {
                 this.nextReduction = new reductions_1.Alpha(lambdas);
             }

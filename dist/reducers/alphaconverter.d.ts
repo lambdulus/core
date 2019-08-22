@@ -14,4 +14,5 @@ export declare class AlphaConverter extends ASTVisitor {
     onMacro(macro: Macro): void;
     onVariable(variable: Variable): void;
     perform(): void;
+    createUniqueName(original: string, usedNames: Set<string>): string;
 }

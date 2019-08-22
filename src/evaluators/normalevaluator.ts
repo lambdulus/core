@@ -33,8 +33,8 @@ export class NormalEvaluator extends ASTVisitor {
       const freeVarsFinder : FreeVarsFinder = new FreeVarsFinder(application.right)
       const freeVars : Set<string> = freeVarsFinder.freeVars
 
-      const boundingfinder : BoundingFinder = new BoundingFinder(application.left, freeVars)
-      const lambdas : Set<Lambda> = boundingfinder.lambdas
+      const boundingFinder : BoundingFinder = new BoundingFinder(application.left, freeVars)
+      const lambdas : Set<Lambda> = boundingFinder.lambdas
 
       if (lambdas.size) {
         this.nextReduction = new Alpha(lambdas)

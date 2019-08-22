@@ -41,5 +41,7 @@ var boundingfinder_1 = require("./visitors/boundingfinder");
 exports.BoundingFinder = boundingfinder_1.BoundingFinder;
 var freevarsfinder_1 = require("./visitors/freevarsfinder");
 exports.FreeVarsFinder = freevarsfinder_1.FreeVarsFinder;
+var usedvarnamesfinder_1 = require("./visitors/usedvarnamesfinder");
+exports.UsedVarNamesFinder = usedvarnamesfinder_1.UsedVarNamesFinder;
 var varbindfinder_1 = require("./visitors/varbindfinder"); // TODO: tohle asi neni potreba
 exports.VarBindFinder = varbindfinder_1.VarBindFinder;

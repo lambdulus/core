@@ -10,5 +10,6 @@ export { ASTVisitor } from './visitors'
 export { BasicPrinter } from './visitors/basicprinter'
 export { BoundingFinder } from './visitors/boundingfinder'
 export { FreeVarsFinder } from './visitors/freevarsfinder'
+export { UsedVarNamesFinder } from './visitors/usedvarnamesfinder'
 
 export { VarBindFinder } from './visitors/varbindfinder' // TODO: tohle asi neni potreba

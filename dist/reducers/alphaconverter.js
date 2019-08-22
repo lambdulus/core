@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
+const usedvarnamesfinder_1 = require("../visitors/usedvarnamesfinder");
 class AlphaConverter extends visitors_1.ASTVisitor {
     constructor({ conversions }, tree) {
         super();
@@ -48,13 +49,27 @@ class AlphaConverter extends visitors_1.ASTVisitor {
     }
     perform() {
         for (const lambda of this.conversions) {
+            const usedVarNamesFinder = new usedvarnamesfinder_1.UsedVarNamesFinder(lambda);
+            const usedNames = usedVarNamesFinder.used;
             this.oldName = lambda.argument.name();
-            this.newName = `_${this.oldName}`; // TODO: create original name
+            // najit uplne unikatni jmeno uvnitr lambda
+            // nejdriv najit vsechna pouzita jmena uvnitr lambda
+            // pak vygenerovat nejakou jednoduchou iterativni metodou novej retezec a zkontrolovat na shodu
+            this.newName = this.createUniqueName(this.oldName, usedNames);
+            // this.newName = `_${this.oldName}` // TODO: create original name
             lambda.argument.visit(this);
             lambda.argument = this.converted;
             lambda.body.visit(this);
             lambda.body = this.converted;
         }
+    }
+    createUniqueName(original, usedNames) {
+        // TODO: this is dirty quick fix/implementation - possibly refactor later
+        let suffix = 1;
+        while (usedNames.has(`${original}00${suffix}`)) {
+            suffix++;
+        }
+        return `${original}00${suffix}`;
     }
 }
 exports.AlphaConverter = AlphaConverter;
