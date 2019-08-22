@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@lambdulus/core",
   "version": "0.0.1",
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
