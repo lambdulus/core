@@ -1,7 +1,10 @@
 export { tokenize } from './lexer'
 export { Token, TokenType } from './token'
 export {
-  InvalidIdentifier, InvalidNumber, InvalidOperator, InvalidCharacter,
+  InvalidIdentifier,
+  InvalidNumber,
+  InvalidOperator,
+  InvalidCharacter,
   hintOperator,
 } from './errors'
 export { BLANK_POSITION } from './postion'

@@ -5,6 +5,7 @@ const _1 = require("./");
 const reductions_1 = require("../reductions");
 const eta_1 = require("../reductions/eta");
 const etaconverter_1 = require("./etaconverter");
+const gamareducer_1 = require("./gamareducer");
 // TODO: implement for AbstractionApplication
 function constructFor(tree, nextReduction) {
     if (nextReduction instanceof reductions_1.Beta) {
@@ -18,6 +19,14 @@ function constructFor(tree, nextReduction) {
     }
     else if (nextReduction instanceof eta_1.Eta) {
         return new etaconverter_1.EtaConverter(nextReduction, tree);
+    }
+    else if (nextReduction instanceof reductions_1.Gama) {
+        if (gamareducer_1.GamaReducer.assertReduction(nextReduction)) {
+            return new gamareducer_1.GamaReducer(nextReduction, tree);
+        }
+        else {
+            throw new Error(`Invalid arguments of ${nextReduction.abstraction[0]}.`);
+        }
     }
     else {
         return new _1.EmptyReducer(tree); // for None

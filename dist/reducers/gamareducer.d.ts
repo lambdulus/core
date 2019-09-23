@@ -1,0 +1,16 @@
+import { AST, Binary, Child, Application, Macro } from "../ast";
+import { ASTVisitor } from "../visitors";
+import { arity, GamaArg, Gama } from "../reductions";
+export declare class GamaReducer extends ASTVisitor {
+    tree: AST;
+    private substituted;
+    readonly redexes: Array<Macro | Application>;
+    readonly args: Array<GamaArg>;
+    readonly parent: Binary | null;
+    readonly treeSide: Child | null;
+    readonly abstraction: [string, arity];
+    private static knownAbstraction;
+    constructor({ redexes, args, parent, treeSide, abstraction }: Gama, tree: AST);
+    perform(): void;
+    static assertReduction({ redexes, args, parent, treeSide, abstraction }: Gama): boolean;
+}

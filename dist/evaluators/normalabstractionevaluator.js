@@ -13,9 +13,45 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         this.tree = tree;
         this.parent = null;
         this.child = null;
+        this.originalReduction = new reductions_1.None;
         this.nextReduction = new reductions_1.None;
+        // TODO: refactor this out - to reducer file
+        // make it { [ name : string ] : pair<arity, function> }
+        // then create helper functions for getting parts of it -> for Gama constructor and so on
+        // this will solve the redundancy of identifiers
+        // NOPE
+        // udelam z toho normalne class
+        // bude mit normalne metodu knows() / has()
+        // bude mit neco getArity(name : string) : number
+        // bude mit neco jako getAssertion(name : string, arguments : Array<GamaArg>) : boolean
+        // getEvaluation(name : string) : Function
+        this.knownAbstraction = {
+            'ZERO': 1,
+            'PRED': 1,
+            'SUC': 1,
+            'AND': 2,
+            'OR': 2,
+            'NOT': 1,
+            '+': 2,
+            '-': 2,
+            '*': 2,
+            '/': 2,
+            '^': 2,
+            'DELTA': 2,
+            '=': 2,
+            '>': 2,
+            '<': 2,
+            '>=': 2,
+            '<=': 2,
+        };
         this.tree.visit(this);
-        this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        try {
+            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        }
+        catch (exception) {
+            this.nextReduction = this.originalReduction;
+            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        }
     }
     onApplication(application) {
         if (application.left instanceof ast_1.Variable) {
@@ -40,6 +76,23 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             this.parent = application;
             this.child = ast_1.Child.Left;
             application.left.visit(this);
+            if (this.nextReduction instanceof reductions_1.Gama
+                &&
+                    this.nextReduction.redexes.includes(application.left)
+                &&
+                    this.nextReduction.args.length < this.nextReduction.abstraction[1]) {
+                this.nextReduction.redexes.push(application);
+                // TODO: refactor this please
+                if (application.right instanceof ast_1.Variable
+                    ||
+                        application.right instanceof ast_1.Macro
+                    ||
+                        application.right instanceof ast_1.ChurchNumeral
+                    ||
+                        application.right instanceof ast_1.Lambda) {
+                    this.nextReduction.args.push(application.right);
+                }
+            }
             if (this.nextReduction instanceof reductions_1.None) {
                 this.parent = application;
                 this.child = ast_1.Child.Right;
@@ -47,6 +100,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             }
         }
     }
+    // na lambde bych se zastavil - to se stane samo - tim, ze se lambda neulozi do sequence redexu
     onLambda(lambda) {
         this.parent = lambda;
         this.child = ast_1.Child.Right;
@@ -56,7 +110,13 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
-        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, macro);
+        this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);
+        this.nextReduction = this.originalReduction;
+        const macroName = macro.name();
+        if (macroName in this.knownAbstraction) {
+            this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, this.knownAbstraction[macroName]] // TODO: refactor with some helper function
+            );
+        }
     }
     onVariable(variable) {
         this.nextReduction = new reductions_1.None;
