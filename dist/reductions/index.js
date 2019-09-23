@@ -8,3 +8,5 @@ var expansion_1 = require("./expansion");
 exports.Expansion = expansion_1.Expansion;
 var none_1 = require("./none");
 exports.None = none_1.None;
+var gama_1 = require("./gama");
+exports.Gama = gama_1.Gama;
