@@ -4,6 +4,7 @@ import { Reducer } from "../reducers";
 import { ASTReduction } from "../reductions";
 export declare class NormalAbstractionEvaluator extends ASTVisitor {
     readonly tree: AST;
+    private originalParent;
     private parent;
     private child;
     private originalReduction;

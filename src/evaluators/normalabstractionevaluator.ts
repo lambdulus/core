@@ -11,6 +11,7 @@ import { ASTReduction, Beta, Alpha, Expansion, None, Gama, arity } from "../redu
 
 ////////////////////////////////////////////////////////////
 export class NormalAbstractionEvaluator extends ASTVisitor {
+  private originalParent : Binary | null = null
   private parent : Binary | null = null
   private child : Child | null = null
 
@@ -58,12 +59,18 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
       this.reducer = constructFor(tree, this.nextReduction)
     }
     catch (exception) {
+      if (this.nextReduction instanceof Gama) {
+        this.nextReduction.parent = this.originalParent
+      }
+
       this.nextReduction = this.originalReduction
       this.reducer = constructFor(tree, this.nextReduction)
     }
   }
 
   onApplication (application : Application) : void {
+    const parent : Binary | null = this.parent // backup
+
     if (application.left instanceof Variable) {
       this.parent = application
       this.child = Child.Right
@@ -110,6 +117,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
             application.right instanceof Lambda          
             ) {
               this.nextReduction.args.push(application.right)
+              this.nextReduction.parent = parent
           }        
       }
 
@@ -137,6 +145,8 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   onMacro (macro : Macro) : void {
     this.originalReduction = new Expansion(this.parent, this.child, macro)
     this.nextReduction = this.originalReduction
+
+    this.originalParent = this.parent
     
     const macroName : string = macro.name()
     

@@ -11,6 +11,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
     constructor(tree) {
         super();
         this.tree = tree;
+        this.originalParent = null;
         this.parent = null;
         this.child = null;
         this.originalReduction = new reductions_1.None;
@@ -49,11 +50,15 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             this.reducer = reducers_1.constructFor(tree, this.nextReduction);
         }
         catch (exception) {
+            if (this.nextReduction instanceof reductions_1.Gama) {
+                this.nextReduction.parent = this.originalParent;
+            }
             this.nextReduction = this.originalReduction;
             this.reducer = reducers_1.constructFor(tree, this.nextReduction);
         }
     }
     onApplication(application) {
+        const parent = this.parent; // backup
         if (application.left instanceof ast_1.Variable) {
             this.parent = application;
             this.child = ast_1.Child.Right;
@@ -91,6 +96,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                     ||
                         application.right instanceof ast_1.Lambda) {
                     this.nextReduction.args.push(application.right);
+                    this.nextReduction.parent = parent;
                 }
             }
             if (this.nextReduction instanceof reductions_1.None) {
@@ -112,6 +118,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
     onMacro(macro) {
         this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);
         this.nextReduction = this.originalReduction;
+        this.originalParent = this.parent;
         const macroName = macro.name();
         if (macroName in this.knownAbstraction) {
             this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, this.knownAbstraction[macroName]] // TODO: refactor with some helper function
