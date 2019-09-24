@@ -1,7 +1,8 @@
 import { AST, Binary, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 import { ASTVisitor } from "../visitors"
 import { Beta, arity, GamaArg, Gama } from "../reductions"
-import { Token, TokenType, BLANK_POSITION } from "../lexer";
+import { Token, TokenType, BLANK_POSITION, tokenize } from "../lexer";
+import { MacroDef, parse } from "../parser";
 
 
 export class GamaReducer extends ASTVisitor {
@@ -15,29 +16,135 @@ export class GamaReducer extends ASTVisitor {
 
   //                                               validator evaluator
   private static knownAbstraction : { [name : string] : [ Function, Function ] } = {
-    'ZERO' : [ () => true, () => {} ],
+    'ZERO' : [ (args : Array<GamaArg>) => {
+      const [ first ] = args
+      return args.length === 1 && first instanceof ChurchNumeral
+    },
+    (args : Array<GamaArg>) => {
+    const [ first ] = args
+
+    const value : boolean = 0 === Number((<ChurchNumeral>first).name())
+    const lambdaValue = value ? 'T' : 'F'
+
+    return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
     'PRED' : [ () => true, () => {} ],
     'SUC' : [ () => true, () => {} ],
     'AND' : [ () => true, () => {} ],
     'OR' : [ () => true, () => {} ],
     'NOT' : [ () => true, () => {} ],
-    '+' : [ () => true, (args : Array<GamaArg>) => {
+    '+' : [
+      (args : Array<GamaArg>) => {
+        const [ first, second ] = args
+        return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+      },
+      (args : Array<GamaArg>) => {
       const [ first, second ] = args
 
       const value : number = Number((<ChurchNumeral>first).name()) + Number((<ChurchNumeral>second).name())
       const dummyToken : Token = new Token(TokenType.Number, `${value}`, BLANK_POSITION)
       return new ChurchNumeral(dummyToken)
     } ],
-    '-' : [ () => true, () => {} ],
-    '*' : [ () => true, () => {} ],
-    '/' : [ () => true, () => {} ],
-    '^' : [ () => true, () => {} ],
-    'DELTA' : [ () => true, () => {} ],
-    '=' : [ () => true, () => {} ],
-    '>' : [ () => true, () => {} ],
-    '<' : [ () => true, () => {} ],
-    '>=' : [ () => true, () => {} ],
-    '<=' : [ () => true, () => {} ],
+    '-' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    },
+    (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : number = Number((<ChurchNumeral>first).name()) - Number((<ChurchNumeral>second).name())
+      const dummyToken : Token = new Token(TokenType.Number, `${value}`, BLANK_POSITION)
+      return new ChurchNumeral(dummyToken)
+    } ],
+    '*' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, () => (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : number = Number((<ChurchNumeral>first).name()) * Number((<ChurchNumeral>second).name())
+      const dummyToken : Token = new Token(TokenType.Number, `${value}`, BLANK_POSITION)
+      return new ChurchNumeral(dummyToken)
+    } ],
+    '/' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : number = Number((<ChurchNumeral>first).name()) / Number((<ChurchNumeral>second).name())
+      const dummyToken : Token = new Token(TokenType.Number, `${value}`, BLANK_POSITION)
+      return new ChurchNumeral(dummyToken)
+    } ],
+    '^' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, () => {} ],
+    'DELTA' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : number = Math.abs( Number((<ChurchNumeral>first).name()) - Number((<ChurchNumeral>second).name()) )
+      const dummyToken : Token = new Token(TokenType.Number, `${value}`, BLANK_POSITION)
+      return new ChurchNumeral(dummyToken)
+    } ],
+    '=' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : boolean = Number((<ChurchNumeral>first).name()) === Number((<ChurchNumeral>second).name())
+      const lambdaValue = value ? 'T' : 'F'
+
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
+    '>' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : boolean = Number((<ChurchNumeral>first).name()) > Number((<ChurchNumeral>second).name())
+      const lambdaValue = value ? 'T' : 'F'
+
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
+    '<' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : boolean = Number((<ChurchNumeral>first).name()) < Number((<ChurchNumeral>second).name())
+      const lambdaValue = value ? 'T' : 'F'
+
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
+    '>=' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : boolean = Number((<ChurchNumeral>first).name()) >= Number((<ChurchNumeral>second).name())
+      const lambdaValue = value ? 'T' : 'F'
+
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
+    '<=' : [ (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+    }, (args : Array<GamaArg>) => {
+      const [ first, second ] = args
+
+      const value : boolean = Number((<ChurchNumeral>first).name()) <= Number((<ChurchNumeral>second).name())
+      const lambdaValue = value ? 'T' : 'F'
+
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    } ],
   }
   
   constructor (

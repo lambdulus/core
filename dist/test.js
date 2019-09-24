@@ -6,12 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("./lexer");
 const parser_1 = __importDefault(require("./parser"));
 const basicprinter_1 = require("./visitors/basicprinter");
-const normalevaluator_1 = require("./evaluators/normalevaluator");
+const normalabstractionevaluator_1 = require("./evaluators/normalabstractionevaluator");
 const none_1 = require("./reductions/none");
 const valids = [
+    `ZERO 0`,
+    `<= 2 4`,
+    `+ 2 1`,
+    `+ 2 (λ s z . s z)`,
     `FACCT 3`,
     `QUICKSORT '(3 1 2)`,
-    `+ 2 3`,
     `(λ z y x . + (+ 2 x) y) Z 2 3`,
     `A B '(+ 1 2)`,
     `(λ y . (λ x . (+ 2) x) y)`,
@@ -205,8 +208,9 @@ const ast = parser_1.default.parse(tokens, {
 });
 let root = ast;
 let e = 0;
+console.log(printTree(root));
 while (true) {
-    const normal = new normalevaluator_1.NormalEvaluator(root);
+    const normal = new normalabstractionevaluator_1.NormalAbstractionEvaluator(root);
     if (normal.nextReduction instanceof none_1.None) {
         break;
     }
@@ -214,6 +218,15 @@ while (true) {
     e++;
     console.log(printTree(root));
 }
+// while (true) {
+//   const normal : NormalEvaluator = new NormalEvaluator(root)
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
+//   root = normal.perform() // perform next reduction
+//   e++
+//   console.log(printTree(root))
+// }
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
 //   if (

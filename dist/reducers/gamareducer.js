@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
 const lexer_1 = require("../lexer");
+const parser_1 = require("../parser");
 class GamaReducer extends visitors_1.ASTVisitor {
     constructor({ redexes, args, parent, treeSide, abstraction }, tree) {
         super();
@@ -39,26 +40,117 @@ class GamaReducer extends visitors_1.ASTVisitor {
 exports.GamaReducer = GamaReducer;
 //                                               validator evaluator
 GamaReducer.knownAbstraction = {
-    'ZERO': [() => true, () => { }],
+    'ZERO': [(args) => {
+            const [first] = args;
+            return args.length === 1 && first instanceof ast_1.ChurchNumeral;
+        },
+        (args) => {
+            const [first] = args;
+            const value = 0 === Number(first.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
     'PRED': [() => true, () => { }],
     'SUC': [() => true, () => { }],
     'AND': [() => true, () => { }],
     'OR': [() => true, () => { }],
     'NOT': [() => true, () => { }],
-    '+': [() => true, (args) => {
+    '+': [
+        (args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        },
+        (args) => {
             const [first, second] = args;
             const value = Number(first.name()) + Number(second.name());
             const dummyToken = new lexer_1.Token(lexer_1.TokenType.Number, `${value}`, lexer_1.BLANK_POSITION);
             return new ast_1.ChurchNumeral(dummyToken);
+        }
+    ],
+    '-': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        },
+        (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) - Number(second.name());
+            const dummyToken = new lexer_1.Token(lexer_1.TokenType.Number, `${value}`, lexer_1.BLANK_POSITION);
+            return new ast_1.ChurchNumeral(dummyToken);
         }],
-    '-': [() => true, () => { }],
-    '*': [() => true, () => { }],
-    '/': [() => true, () => { }],
-    '^': [() => true, () => { }],
-    'DELTA': [() => true, () => { }],
-    '=': [() => true, () => { }],
-    '>': [() => true, () => { }],
-    '<': [() => true, () => { }],
-    '>=': [() => true, () => { }],
-    '<=': [() => true, () => { }],
+    '*': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, () => (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) * Number(second.name());
+            const dummyToken = new lexer_1.Token(lexer_1.TokenType.Number, `${value}`, lexer_1.BLANK_POSITION);
+            return new ast_1.ChurchNumeral(dummyToken);
+        }],
+    '/': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) / Number(second.name());
+            const dummyToken = new lexer_1.Token(lexer_1.TokenType.Number, `${value}`, lexer_1.BLANK_POSITION);
+            return new ast_1.ChurchNumeral(dummyToken);
+        }],
+    '^': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, () => { }],
+    'DELTA': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Math.abs(Number(first.name()) - Number(second.name()));
+            const dummyToken = new lexer_1.Token(lexer_1.TokenType.Number, `${value}`, lexer_1.BLANK_POSITION);
+            return new ast_1.ChurchNumeral(dummyToken);
+        }],
+    '=': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) === Number(second.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
+    '>': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) > Number(second.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
+    '<': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) < Number(second.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
+    '>=': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) >= Number(second.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
+    '<=': [(args) => {
+            const [first, second] = args;
+            return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
+        }, (args) => {
+            const [first, second] = args;
+            const value = Number(first.name()) <= Number(second.name());
+            const lambdaValue = value ? 'T' : 'F';
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }],
 };

@@ -11,9 +11,12 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
+  `ZERO 0`,
+  `<= 2 4`,
+  `+ 2 1`,
+  `+ 2 (λ s z . s z)`,
   `FACCT 3`,
   `QUICKSORT '(3 1 2)`,
-  `+ 2 3`,
   `(λ z y x . + (+ 2 x) y) Z 2 3`,
 
   `A B '(+ 1 2)`,
@@ -243,8 +246,10 @@ const ast : AST = Parser.parse(tokens, {
 let root : AST = ast
 let e = 0
 
+console.log(printTree(root))
+
 while (true) {
-  const normal : NormalEvaluator = new NormalEvaluator(root)
+  const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 
   if (normal.nextReduction instanceof None) {
     break
@@ -256,6 +261,20 @@ while (true) {
 
   console.log(printTree(root))
 }
+
+// while (true) {
+//   const normal : NormalEvaluator = new NormalEvaluator(root)
+
+//   if (normal.nextReduction instanceof None) {
+//     break
+//   }
+
+//   root = normal.perform() // perform next reduction
+
+//   e++
+
+//   console.log(printTree(root))
+// }
 
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
