@@ -10,7 +10,6 @@ export declare class NormalAbstractionEvaluator extends ASTVisitor {
     private originalReduction;
     nextReduction: ASTReduction;
     reducer: Reducer;
-    private knownAbstraction;
     constructor(tree: AST);
     onApplication(application: Application): void;
     onLambda(lambda: Lambda): void;

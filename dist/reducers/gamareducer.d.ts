@@ -9,7 +9,6 @@ export declare class GamaReducer extends ASTVisitor {
     readonly parent: Binary | null;
     readonly treeSide: Child | null;
     readonly abstraction: [string, arity];
-    private static knownAbstraction;
     constructor({ redexes, args, parent, treeSide, abstraction }: Gama, tree: AST);
     perform(): void;
     static assertReduction({ redexes, args, parent, treeSide, abstraction }: Gama): boolean;

@@ -11,10 +11,10 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
-  `ZERO 0`,
-  `<= 2 4`,
-  `+ 2 1`,
   `+ 2 (λ s z . s z)`,
+  `+ 2 1`,
+  `<= 2 4`,
+  `ZERO 0`,
   `FACCT 3`,
   `QUICKSORT '(3 1 2)`,
   `(λ z y x . + (+ 2 x) y) Z 2 3`,
