@@ -24,9 +24,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             if (this.nextReduction instanceof reductions_1.Gama) {
                 this.nextReduction.parent = this.originalParent;
             }
-            // this.nextReduction = this.originalReduction
-            // this.reducer = constructFor(tree, this.nextReduction)
-            this.nextReduction = new reductions_1.None;
+            this.nextReduction = this.originalReduction;
             this.reducer = reducers_1.constructFor(tree, this.nextReduction);
         }
     }
@@ -58,8 +56,8 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                 &&
                     this.nextReduction.redexes.includes(application.left)
                 &&
-                    this.nextReduction.args.length < this.nextReduction.abstraction[1]) {
-                this.nextReduction.redexes.push(application);
+                    this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
+            ) {
                 // TODO: refactor this please
                 if (application.right instanceof ast_1.Variable
                     ||
@@ -70,6 +68,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                         application.right instanceof ast_1.Lambda) {
                     this.nextReduction.args.push(application.right);
                     this.nextReduction.parent = parent;
+                    this.nextReduction.redexes.push(application);
                 }
             }
             if (this.nextReduction instanceof reductions_1.None) {
@@ -86,8 +85,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         lambda.body.visit(this);
     }
     onChurchNumeral(churchNumeral) {
-        this.nextReduction = new reductions_1.None;
-        // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
+        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
         this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);

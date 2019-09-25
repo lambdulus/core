@@ -30,11 +30,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
         this.nextReduction.parent = this.originalParent
       }
 
-      // TODO: uncomment for normal evaluation when unable to evalaute abstraction
-      // this.nextReduction = this.originalReduction
-      // this.reducer = constructFor(tree, this.nextReduction)
-
-      this.nextReduction = new None
+      this.nextReduction = this.originalReduction
       this.reducer = constructFor(tree, this.nextReduction)
     }
   }
@@ -74,9 +70,8 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
           &&
           this.nextReduction.redexes.includes(<Macro>application.left)
           &&
-          this.nextReduction.args.length < this.nextReduction.abstraction[1]
+          this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
         ) {
-          this.nextReduction.redexes.push(application)
           // TODO: refactor this please
           if (
             application.right instanceof Variable
@@ -89,6 +84,8 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
             ) {
               this.nextReduction.args.push(application.right)
               this.nextReduction.parent = parent
+              this.nextReduction.redexes.push(application)
+
           }        
       }
 
@@ -110,10 +107,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onChurchNumeral (churchNumeral : ChurchNumeral) : void {
-    // TODO: uncomment for normal evaluation when unable to evalaute abstraction    
-    // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
-    
-    this.nextReduction = new None
+    this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
   }
 
   onMacro (macro : Macro) : void {
@@ -123,7 +117,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
     this.originalParent = this.parent
     
     const macroName : string = macro.name()
-    
+
     if (Abstractions.has(macroName)) {
       this.nextReduction = new Gama(
         [ macro ],
