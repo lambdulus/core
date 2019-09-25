@@ -4,12 +4,9 @@ import { Binary, AST, Child, Application, Lambda, ChurchNumeral, Macro, Variable
 import { BoundingFinder } from "../visitors/boundingfinder"
 import { constructFor, Reducer } from "../reducers"
 import { ASTReduction, Beta, Alpha, Expansion, None, Gama, arity } from "../reductions"
+import { Abstractions } from "../reducers/abstractions";
 
 
-
-
-
-////////////////////////////////////////////////////////////
 export class NormalAbstractionEvaluator extends ASTVisitor {
   private originalParent : Binary | null = null
   private parent : Binary | null = null
@@ -18,36 +15,6 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   private originalReduction : ASTReduction = new None
   public nextReduction : ASTReduction = new None
   public reducer : Reducer
-
-  // TODO: refactor this out - to reducer file
-  // make it { [ name : string ] : pair<arity, function> }
-  // then create helper functions for getting parts of it -> for Gama constructor and so on
-  // this will solve the redundancy of identifiers
-  // NOPE
-  // udelam z toho normalne class
-  // bude mit normalne metodu knows() / has()
-  // bude mit neco getArity(name : string) : number
-  // bude mit neco jako getAssertion(name : string, arguments : Array<GamaArg>) : boolean
-  // getEvaluation(name : string) : Function
-  private knownAbstraction : { [name : string] : arity } = {
-    'ZERO' : 1,
-    'PRED' : 1,
-    'SUC' : 1,
-    'AND' : 2,
-    'OR' : 2,
-    'NOT' : 1,
-    '+' : 2,
-    '-' : 2,
-    '*' : 2,
-    '/' : 2,
-    '^' : 2,
-    'DELTA' : 2,
-    '=' : 2,
-    '>' : 2,
-    '<' : 2,
-    '>=' : 2,
-    '<=' : 2,
-  }
 
   constructor (
     public readonly tree : AST
@@ -63,7 +30,11 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
         this.nextReduction.parent = this.originalParent
       }
 
-      this.nextReduction = this.originalReduction
+      // TODO: uncomment for normal evaluation when unable to evalaute abstraction
+      // this.nextReduction = this.originalReduction
+      // this.reducer = constructFor(tree, this.nextReduction)
+
+      this.nextReduction = new None
       this.reducer = constructFor(tree, this.nextReduction)
     }
   }
@@ -139,7 +110,10 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onChurchNumeral (churchNumeral : ChurchNumeral) : void {
-    this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
+    // TODO: uncomment for normal evaluation when unable to evalaute abstraction    
+    // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
+    
+    this.nextReduction = new None
   }
 
   onMacro (macro : Macro) : void {
@@ -150,13 +124,13 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
     
     const macroName : string = macro.name()
     
-    if (macroName in this.knownAbstraction) {
+    if (Abstractions.has(macroName)) {
       this.nextReduction = new Gama(
         [ macro ],
         [],
         this.parent,
         this.child,
-        [ macroName, this.knownAbstraction[macroName] ] // TODO: refactor with some helper function
+        [ macroName, Abstractions.getArity(macroName) ] // TODO: refactor with some helper function
       )
     }
   }

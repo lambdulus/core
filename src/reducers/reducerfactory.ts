@@ -1,10 +1,9 @@
 import { AST } from "../ast"
 import { AlphaConverter, BetaReducer, Expander, EmptyReducer, Reducer } from './'
-// import { Reducer } from "../visitors/normalevaluator"
 import { ASTReduction, Alpha, Beta, Expansion, Gama } from "../reductions"
 import { Eta } from "../reductions/eta"
 import { EtaConverter } from "./etaconverter"
-import { GamaReducer } from "./gamareducer";
+import { GamaReducer } from "./gamareducer"
 
 
 // TODO: implement for AbstractionApplication

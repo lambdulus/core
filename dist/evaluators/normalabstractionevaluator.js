@@ -6,7 +6,7 @@ const ast_1 = require("../ast");
 const boundingfinder_1 = require("../visitors/boundingfinder");
 const reducers_1 = require("../reducers");
 const reductions_1 = require("../reductions");
-////////////////////////////////////////////////////////////
+const abstractions_1 = require("../reducers/abstractions");
 class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
     constructor(tree) {
         super();
@@ -16,35 +16,6 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         this.child = null;
         this.originalReduction = new reductions_1.None;
         this.nextReduction = new reductions_1.None;
-        // TODO: refactor this out - to reducer file
-        // make it { [ name : string ] : pair<arity, function> }
-        // then create helper functions for getting parts of it -> for Gama constructor and so on
-        // this will solve the redundancy of identifiers
-        // NOPE
-        // udelam z toho normalne class
-        // bude mit normalne metodu knows() / has()
-        // bude mit neco getArity(name : string) : number
-        // bude mit neco jako getAssertion(name : string, arguments : Array<GamaArg>) : boolean
-        // getEvaluation(name : string) : Function
-        this.knownAbstraction = {
-            'ZERO': 1,
-            'PRED': 1,
-            'SUC': 1,
-            'AND': 2,
-            'OR': 2,
-            'NOT': 1,
-            '+': 2,
-            '-': 2,
-            '*': 2,
-            '/': 2,
-            '^': 2,
-            'DELTA': 2,
-            '=': 2,
-            '>': 2,
-            '<': 2,
-            '>=': 2,
-            '<=': 2,
-        };
         this.tree.visit(this);
         try {
             this.reducer = reducers_1.constructFor(tree, this.nextReduction);
@@ -53,7 +24,9 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             if (this.nextReduction instanceof reductions_1.Gama) {
                 this.nextReduction.parent = this.originalParent;
             }
-            this.nextReduction = this.originalReduction;
+            // this.nextReduction = this.originalReduction
+            // this.reducer = constructFor(tree, this.nextReduction)
+            this.nextReduction = new reductions_1.None;
             this.reducer = reducers_1.constructFor(tree, this.nextReduction);
         }
     }
@@ -113,15 +86,16 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         lambda.body.visit(this);
     }
     onChurchNumeral(churchNumeral) {
-        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
+        this.nextReduction = new reductions_1.None;
+        // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
     }
     onMacro(macro) {
         this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);
         this.nextReduction = this.originalReduction;
         this.originalParent = this.parent;
         const macroName = macro.name();
-        if (macroName in this.knownAbstraction) {
-            this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, this.knownAbstraction[macroName]] // TODO: refactor with some helper function
+        if (abstractions_1.Abstractions.has(macroName)) {
+            this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, abstractions_1.Abstractions.getArity(macroName)] // TODO: refactor with some helper function
             );
         }
     }
