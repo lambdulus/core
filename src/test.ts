@@ -11,6 +11,9 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
+  `= ( - 3 1 ) 1`,
+
+
   `+ 2 (λ s z . s z)`,
   `+ 2 1`,
   `<= 2 4`,

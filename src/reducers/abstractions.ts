@@ -106,8 +106,9 @@ export class Abstractions {
     '=' : [
       2,
       (args : Array<GamaArg>) => {
-      const [ first, second ] = args
-      return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
+        const [ first, second ] = args
+
+        return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
     }, (args : Array<GamaArg>) => {
       const [ first, second ] = args
 
