@@ -10,6 +10,7 @@ const normalabstractionevaluator_1 = require("./evaluators/normalabstractioneval
 const none_1 = require("./reductions/none");
 const valids = [
     `+ (+ 2 1) ((λ x . + x x) 2)`,
+    `+ (+ 2 1) (+ 2 2)`,
     `+ (+ 2 1) 1`,
     `= ( - 3 1 ) 1`,
     `+ 2 (λ s z . s z)`,
@@ -217,6 +218,7 @@ while (true) {
     if (normal.nextReduction instanceof none_1.None) {
         break;
     }
+    // console.log(normal.nextReduction)
     root = normal.perform(); // perform next reduction
     e++;
     console.log(printTree(root));

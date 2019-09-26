@@ -5,7 +5,7 @@ export declare class Gama implements ASTReduction {
     readonly redexes: Array<Macro | Application>;
     readonly args: Array<AST>;
     parent: Binary | null;
-    readonly treeSide: Child | null;
+    treeSide: Child | null;
     readonly abstraction: [string, arity];
     constructor(redexes: Array<Macro | Application>, // TODO: consider redexes : List<Application>
     args: Array<AST>, parent: Binary | null, treeSide: Child | null, // na jaky strane pro parenta je redukovanej uzel

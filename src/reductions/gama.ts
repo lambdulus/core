@@ -9,7 +9,7 @@ export class Gama implements ASTReduction {
     public readonly redexes : Array<Macro | Application>, // TODO: consider redexes : List<Application>
     public readonly args : Array<AST>,
     public parent : Binary | null,
-    public readonly treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
+    public treeSide : Child | null, // na jaky strane pro parenta je redukovanej uzel
     public readonly abstraction : [ string, arity ],
     // public readonly target : AST, // EXPR ve kterem se provede nahrada
   ) {}

@@ -7,7 +7,7 @@ const boundingfinder_1 = require("../visitors/boundingfinder");
 const reducers_1 = require("../reducers");
 const reductions_1 = require("../reductions");
 const abstractions_1 = require("../reducers/abstractions");
-class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
+class SimplifiedNormalEvaluator extends visitors_1.ASTVisitor {
     constructor(tree) {
         super();
         this.tree = tree;
@@ -30,7 +30,6 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
     }
     onApplication(application) {
         const parent = this.parent; // backup
-        let treeSide = this.child;
         if (application.left instanceof ast_1.Variable) {
             this.parent = application;
             this.child = ast_1.Child.Right;
@@ -55,19 +54,22 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
             application.left.visit(this);
             if (this.nextReduction instanceof reductions_1.Gama
                 &&
-                    this.nextReduction.redexes.includes(application.left) // TODO: nalevo nebude vzdycky macro
+                    this.nextReduction.redexes.includes(application.left)
                 &&
                     this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
             ) {
                 if (application.right instanceof ast_1.Application) {
-                    this.nextReduction = new reductions_1.None;
+                    while (true) {
+                        const evaluator = new SimplifiedNormalEvaluator(application.right);
+                        if (evaluator.nextReduction instanceof reductions_1.None) {
+                            break;
+                        }
+                        application.right = evaluator.perform();
+                    }
                 }
-                else {
-                    this.nextReduction.args.push(application.right);
-                    this.nextReduction.parent = parent;
-                    this.nextReduction.treeSide = treeSide;
-                    this.nextReduction.redexes.push(application);
-                }
+                this.nextReduction.args.push(application.right);
+                this.nextReduction.parent = parent;
+                this.nextReduction.redexes.push(application);
             }
             if (this.nextReduction instanceof reductions_1.None) {
                 this.parent = application;
@@ -83,12 +85,11 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         lambda.body.visit(this);
     }
     onChurchNumeral(churchNumeral) {
-        this.nextReduction = new reductions_1.None;
-        // if (this.parent === null) {
-        //   this.nextReduction = new None
-        //   return
-        // }
-        // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
+        if (this.parent === null) {
+            this.nextReduction = new reductions_1.None;
+            return;
+        }
+        this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
         this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);
@@ -107,4 +108,4 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         return this.reducer.tree;
     }
 }
-exports.NormalAbstractionEvaluator = NormalAbstractionEvaluator;
+exports.SimplifiedNormalEvaluator = SimplifiedNormalEvaluator;
