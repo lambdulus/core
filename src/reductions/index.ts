@@ -5,4 +5,4 @@ export { Beta } from './beta'
 export { Expansion } from './expansion'
 export { None } from './none'
 
-export { Gama, arity, GamaArg } from './gama'
+export { Gama, arity } from './gama'

@@ -9,7 +9,8 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalabstractionevaluator_1 = require("./evaluators/normalabstractionevaluator");
 const none_1 = require("./reductions/none");
 const valids = [
-    `+ 2 1`,
+    `+ (+ 2 1) ((λ x . + x x) 2)`,
+    `+ (+ 2 1) 1`,
     `= ( - 3 1 ) 1`,
     `+ 2 (λ s z . s z)`,
     `+ 2 1`,

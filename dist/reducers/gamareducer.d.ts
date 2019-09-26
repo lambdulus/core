@@ -1,11 +1,11 @@
 import { AST, Binary, Child, Application, Macro } from "../ast";
 import { ASTVisitor } from "../visitors";
-import { arity, GamaArg, Gama } from "../reductions";
+import { arity, Gama } from "../reductions";
 export declare class GamaReducer extends ASTVisitor {
     tree: AST;
     private substituted;
     readonly redexes: Array<Macro | Application>;
-    readonly args: Array<GamaArg>;
+    readonly args: Array<AST>;
     readonly parent: Binary | null;
     readonly treeSide: Child | null;
     readonly abstraction: [string, arity];
