@@ -91,7 +91,8 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
     }
     onMacro(macro) {
-        this.originalReduction = new reductions_1.Expansion(this.parent, this.child, macro);
+        // this.originalReduction = new Expansion(this.parent, this.child, macro)
+        this.originalReduction = new reductions_1.None;
         this.nextReduction = this.originalReduction;
         this.originalParent = this.parent;
         const macroName = macro.name();

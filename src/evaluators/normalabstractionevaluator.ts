@@ -113,7 +113,8 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onMacro (macro : Macro) : void {
-    this.originalReduction = new Expansion(this.parent, this.child, macro)
+    // this.originalReduction = new Expansion(this.parent, this.child, macro)
+    this.originalReduction = new None
     this.nextReduction = this.originalReduction
 
     this.originalParent = this.parent
