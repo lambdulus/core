@@ -9,14 +9,15 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalabstractionevaluator_1 = require("./evaluators/normalabstractionevaluator");
 const none_1 = require("./reductions/none");
 const valids = [
-    `+ (+ 2 1) ((λ x . + x x) 2)`,
-    `+ (+ 2 1) (+ 2 2)`,
-    `+ (+ 2 1) 1`,
-    `= ( - 3 1 ) 1`,
+    `+ 1`,
+    `ZERO 0`,
     `+ 2 (λ s z . s z)`,
+    `= ( - 3 1 ) 1`,
+    `+ (+ 2 1) 1`,
+    `+ (+ 2 1) (+ 2 2)`,
+    `+ (+ 2 1) ((λ x . + x x) 2)`,
     `+ 2 1`,
     `<= 2 4`,
-    `ZERO 0`,
     `FACCT 3`,
     `QUICKSORT '(3 1 2)`,
     `(λ z y x . + (+ 2 x) y) Z 2 3`,
