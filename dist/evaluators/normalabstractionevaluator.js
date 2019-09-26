@@ -58,18 +58,18 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                 &&
                     this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
             ) {
-                // TODO: refactor this please
-                if (application.right instanceof ast_1.Variable
-                    ||
-                        application.right instanceof ast_1.Macro
-                    ||
-                        application.right instanceof ast_1.ChurchNumeral
-                    ||
-                        application.right instanceof ast_1.Lambda) {
-                    this.nextReduction.args.push(application.right);
-                    this.nextReduction.parent = parent;
-                    this.nextReduction.redexes.push(application);
+                if (application.right instanceof ast_1.Application) {
+                    while (true) {
+                        const evaluator = new NormalAbstractionEvaluator(application.right);
+                        if (evaluator.nextReduction instanceof reductions_1.None) {
+                            break;
+                        }
+                        application.right = evaluator.perform();
+                    }
                 }
+                this.nextReduction.args.push(application.right);
+                this.nextReduction.parent = parent;
+                this.nextReduction.redexes.push(application);
             }
             if (this.nextReduction instanceof reductions_1.None) {
                 this.parent = application;
@@ -97,8 +97,7 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         this.originalParent = this.parent;
         const macroName = macro.name();
         if (abstractions_1.Abstractions.has(macroName)) {
-            this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, abstractions_1.Abstractions.getArity(macroName)] // TODO: refactor with some helper function
-            );
+            this.nextReduction = new reductions_1.Gama([macro], [], this.parent, this.child, [macroName, abstractions_1.Abstractions.getArity(macroName)]);
         }
     }
     onVariable(variable) {

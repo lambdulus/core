@@ -72,21 +72,21 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
           &&
           this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
         ) {
-          // TODO: refactor this please
-          if (
-            application.right instanceof Variable
-            ||
-            application.right instanceof Macro
-            ||
-            application.right instanceof ChurchNumeral
-            ||
-            application.right instanceof Lambda          
-            ) {
-              this.nextReduction.args.push(application.right)
-              this.nextReduction.parent = parent
-              this.nextReduction.redexes.push(application)
+            if (application.right instanceof Application) {
+              while (true) {
+                const evaluator : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(application.right)
+                
+                if (evaluator.nextReduction instanceof None) {
+                  break
+                }
+              
+                application.right = evaluator.perform()
+              }
+            }
 
-          }        
+            this.nextReduction.args.push(application.right)
+            this.nextReduction.parent = parent
+            this.nextReduction.redexes.push(application)
       }
 
       if (this.nextReduction instanceof None) {
@@ -129,7 +129,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
         [],
         this.parent,
         this.child,
-        [ macroName, Abstractions.getArity(macroName) ] // TODO: refactor with some helper function
+        [ macroName, Abstractions.getArity(macroName) ], // TODO: refactor with some helper function
       )
     }
   }

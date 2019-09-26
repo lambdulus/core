@@ -1,14 +1,15 @@
 import { AST, Binary, Child, Application, Macro } from "../ast"
 import { ASTVisitor } from "../visitors"
-import { arity, GamaArg, Gama } from "../reductions"
+import { arity, Gama } from "../reductions"
 import { Abstractions } from "./abstractions"
+import { Evaluator } from "../evaluators"
 
 
 export class GamaReducer extends ASTVisitor {
   private substituted : AST | null = null
 
   public readonly redexes : Array<Macro | Application> // TODO: consider redexes : List<Application>
-  public readonly args : Array<GamaArg>
+  public readonly args : Array<AST>
   public readonly parent : Binary | null
   public readonly treeSide : Child | null // na jaky strane pro parenta je redukovanej uzel
   public readonly abstraction : [ string, arity ]
