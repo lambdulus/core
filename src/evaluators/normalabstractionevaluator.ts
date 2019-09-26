@@ -107,6 +107,11 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onChurchNumeral (churchNumeral : ChurchNumeral) : void {
+    if (this.parent === null) {
+      this.nextReduction = new None
+      return
+    }
+
     this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
   }
 

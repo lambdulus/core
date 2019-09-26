@@ -85,6 +85,10 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
         lambda.body.visit(this);
     }
     onChurchNumeral(churchNumeral) {
+        if (this.parent === null) {
+            this.nextReduction = new reductions_1.None;
+            return;
+        }
         this.nextReduction = new reductions_1.Expansion(this.parent, this.child, churchNumeral);
     }
     onMacro(macro) {
