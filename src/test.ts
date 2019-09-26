@@ -11,9 +11,10 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
-  `+ (+ 2 1) ((λ x . + x x) 2)`,  
+  `+ (+ 2 1) ((λ x . + x x) 2)`,
+  `+ (+ 2 1) (+ 2 2)`,
 
-  `+ (+ 2 1) 1`,  
+  `+ (+ 2 1) 1`,
   `= ( - 3 1 ) 1`,
 
 
@@ -260,6 +261,8 @@ while (true) {
   if (normal.nextReduction instanceof None) {
     break
   }
+
+  // console.log(normal.nextReduction)
 
   root = normal.perform() // perform next reduction
 

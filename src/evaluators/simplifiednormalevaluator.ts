@@ -7,7 +7,7 @@ import { ASTReduction, Beta, Alpha, Expansion, None, Gama, arity } from "../redu
 import { Abstractions } from "../reducers/abstractions";
 
 
-export class NormalAbstractionEvaluator extends ASTVisitor {
+export class SimplifiedNormalEvaluator extends ASTVisitor {
   private originalParent : Binary | null = null
   private parent : Binary | null = null
   private child : Child | null = null
@@ -37,7 +37,6 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
 
   onApplication (application : Application) : void {
     const parent : Binary | null = this.parent // backup
-    let treeSide : Child | null = this.child
 
     if (application.left instanceof Variable) {
       this.parent = application
@@ -69,19 +68,25 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
 
       if (this.nextReduction instanceof Gama
           &&
-          this.nextReduction.redexes.includes(<Macro>application.left) // TODO: nalevo nebude vzdycky macro
+          this.nextReduction.redexes.includes(<Macro>application.left)
           &&
           this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
         ) {
             if (application.right instanceof Application) {
-              this.nextReduction = new None
+              while (true) {
+                const evaluator : SimplifiedNormalEvaluator = new SimplifiedNormalEvaluator(application.right)
+                
+                if (evaluator.nextReduction instanceof None) {
+                  break
+                }
+              
+                application.right = evaluator.perform()
+              }
             }
-            else {
-              this.nextReduction.args.push(application.right)
-              this.nextReduction.parent = parent
-              this.nextReduction.treeSide = treeSide
-              this.nextReduction.redexes.push(application)
-            }
+
+            this.nextReduction.args.push(application.right)
+            this.nextReduction.parent = parent
+            this.nextReduction.redexes.push(application)
       }
 
       if (this.nextReduction instanceof None) {
@@ -102,14 +107,12 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onChurchNumeral (churchNumeral : ChurchNumeral) : void {
-    this.nextReduction = new None
+    if (this.parent === null) {
+      this.nextReduction = new None
+      return
+    }
 
-    // if (this.parent === null) {
-    //   this.nextReduction = new None
-    //   return
-    // }
-
-    // this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
+    this.nextReduction = new Expansion(this.parent, this.child, churchNumeral)
   }
 
   onMacro (macro : Macro) : void {
