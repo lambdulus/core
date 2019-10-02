@@ -2,6 +2,7 @@ import { Counter } from './counter'
 import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './';
 import { InvalidCharacter } from './errors';
 import { PositionRecord } from './postion';
+import { builtinMacros } from '../parser';
 
 
 class Lexer {
@@ -47,6 +48,13 @@ class Lexer {
     )
   }
 
+  couldBeMacro (str : string) : boolean {
+    const delimiter : string = ':'
+    const allMacros : string = Object.keys(builtinMacros).join(delimiter)
+
+    return allMacros.indexOf(str) !== -1
+  }
+
   getCharToken (kind : TokenType) : Token {
     const position : PositionRecord = this.position.toRecord()
     const char = this.pop()
@@ -84,20 +92,68 @@ class Lexer {
     this.tokens.push(lambda)
   }
 
+  readSLINonMacro (id : string, position : PositionRecord) : void {
+    const chars : Array<string> = id.split('')
+
+    if (this.isNumeric(id[id.length - 1])) {
+      if (this.isNumeric(id[id.length - 2])) {
+        throw new InvalidIdentifier(`${ id }`, position)
+      }
+      else {
+        const numericPart : string = chars.pop() as string // I know it will be there
+        chars[chars.length - 1] += numericPart
+
+        
+      }
+    }
+    // else and also if
+    chars.forEach((id : string, i : number) =>
+      this.tokens.push(new Token(TokenType.Identifier, id, position)))
+    // TODO: position is not correct - fix this!
+
+    let topPosition = this.position.toRecord()
+
+    while (this.isAlphabetic(this.top())) {
+      id = this.pop()
+
+      if (this.isNumeric(this.top())) {
+        id += this.pop()
+      }
+
+      const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+      this.tokens.push(identifier)
+    }
+
+    if (this.isNumeric(this.top())) {
+      throw new InvalidIdentifier(`${ id }`, topPosition)
+    }
+  }
+
   readIdentifier () : void {
     let id : string = ''
     let topPosition = this.position.toRecord()
   
     if (this.config.singleLetterVars) {
       while (this.isAlphabetic(this.top())) {
-        id = this.pop()
+        id += this.pop()
 
         if (this.isNumeric(this.top())) {
           id += this.pop()
         }
 
-        const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
-        this.tokens.push(identifier)
+        if (id in builtinMacros && this.isWhiteSpace(this.top())) {
+          // normalne vytvorit id -> vynulovat -> pushnout
+          const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+          id = ''
+          this.tokens.push(identifier)
+          continue
+        }
+        else if (this.couldBeMacro(id)) {
+          continue
+        }
+        else {
+          this.readSLINonMacro(id, topPosition)
+        }
       }
 
       if (this.isNumeric(this.top())) {

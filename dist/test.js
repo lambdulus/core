@@ -9,8 +9,9 @@ const basicprinter_1 = require("./visitors/basicprinter");
 const normalevaluator_1 = require("./evaluators/normalevaluator");
 const none_1 = require("./reductions/none");
 const valids = [
+    `ZERO1ZERO0ZERO2 0`,
+    `(~ ZERO . ZERO 0)`,
     `(~ x1x2x. + x1 x2 x3)`,
-    `ZERO 0`,
     `+ 1`,
     `+ 2 (λ s z . s z)`,
     `= ( - 3 1 ) 1`,

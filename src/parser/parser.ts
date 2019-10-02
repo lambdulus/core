@@ -1,5 +1,5 @@
 import { Token, TokenType, BLANK_POSITION } from "../lexer";
-import { MacroTable, parse } from "./";
+import { MacroTable, parse, builtinMacros } from "./";
 import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
 
 
@@ -98,6 +98,10 @@ export class Parser {
     if (this.canAccept(TokenType.Identifier)) {
       const id : Token = this.accept(TokenType.Identifier)
 
+      if (id.value in builtinMacros) {
+        throw new Error('Known Macro name can not stand as an argument name.')
+      }
+
       const argument : Variable = new Variable(id)
       const body : AST = this.parseLambda()
       
@@ -147,6 +151,10 @@ export class Parser {
         this.accept(TokenType.Lambda)
           
         const id : Token = this.accept(TokenType.Identifier)
+
+        if (id.value in builtinMacros) {
+          throw new Error('Known Macro name can not stand as an argument name.')
+        }
 
         const argument : Variable = new Variable(id)
         const body : AST = this.parseLambda()
