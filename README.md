@@ -5,14 +5,14 @@
 ### SLI - Single Letter Identifiers
 
 Lambdulus allows shorthand syntax for quicker typing. It looks for example like this:
-`(λ x y z . y z x)`
+`(λ x y z . y z x)`.
 
-this is known as MultiLambda. This convention is purely syntactic sugar. It is simplification for:
-`(λ x . (λ y . (λ z . (y z x) )))`
+This is known as MultiLambda. This convention is purely syntactic sugar. It is simplification for:
+`(λ x . (λ y . (λ z . (y z x) )))`.
 
 Hovewer this example can be written in even shorter way. With SLI enabled we can write it like:
 `(λxyz.yzx)`
-It means the same thing - this whitespace-omitting practice originated from white-board writing.
+It means the same thing - this whitespace-omitting practice originated from the times teachers and students of PPA used to write on white-boards.
 On the white-board there is no simple way to properly write whitespaces - so we used to omit them altogether.
 
 ### SLI - Rules:
