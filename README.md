@@ -32,7 +32,7 @@ On the white-board there is no simple way to properly write whitespaces - so we 
   To succesfully use multi-char Macros in SLI mode they must be followed by whitespace. For example: `ZERO 0` is valid SLI expression
   utilising Macro `ZERO`.
   
-  On the other hand expression `ZEROZERO 0` is not understood as `ZERO ZERO 0` but as `Z E R O Z E R O`.
+  On the other hand expression `ZEROZERO 0` is not understood as `ZERO ZERO 0` but as `Z E R O Z E R O 0`.
   
   Same goes for expressions as `ZERO1ZERO2 0`. It is understood as `Z E R O1 Z E R O2 0`.
   
