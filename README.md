@@ -10,7 +10,7 @@ Lambdulus allows shorthand syntax for quicker typing. It looks for example like 
 this is known as MultiLambda. This convention is purely syntactic sugar. It is simplification for:
 `(λ x . (λ y . (λ z . (y z x) )))`
 
-Hovewer this example can be written even shortly. With SLI enabled we can write it like:
+Hovewer this example can be written in even shorter way. With SLI enabled we can write it like:
 `(λxyz.yzx)`
 It means the same thing - this whitespace-omitting practice originated from white-board writing.
 On the white-board there is no simple way to properly write whitespaces - so we used to omit them altogether.
