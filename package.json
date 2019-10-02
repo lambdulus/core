@@ -4,12 +4,15 @@
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^12.7.9"
+  },
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./dist/ ; tsc",
     "test": "npm run build ; node dist/test.js",
-    "bench": "npm run build ; time node dist/test.js"
+    "bench": "npm run build ; time node dist/test.js",
+    "repl": "npm run build ; node dist/repl.js"
   },
   "repository": {
     "type": "git",
