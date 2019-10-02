@@ -22,9 +22,9 @@ On the white-board there is no simple way to properly write whitespaces - so we 
   - it can also be single character followed be single numeric literal like `c2`
   - it can be sequence of alphabetic characters - like `abc` then it is understood like `a b c`
   - it can also be sequence of alphanumeric characters -
-  there each numeric character must be preceeded by at least one alphabetic character
-  and there must not be more than one numeric character standing immediately next to another numeric character
-  like this expression: `A1BB2C3DDD` - it is understood as: `A1 B B2 C3 D D D`
+  in that case each numeric character must be preceeded by at least one alphabetic character
+  and there must not be more than one numeric character standing immediately next to other -
+  example of valid expression: `A1BB2C3DDD` - it is understood as: `A1 B B2 C3 D D D`
   
   Hovewer, Lambdulus also implements Macros - known abstractions. They are typically named with all upper-case letters.
   Like: `ZERO` or `PREV` and so on. These are also available in SLI mode.
