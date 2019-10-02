@@ -11,8 +11,9 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
+  `ZERO1ZERO0ZERO2 0`,
+  `(~ ZERO . ZERO 0)`,
   `(~ x1x2x. + x1 x2 x3)`,
-  `ZERO 0`,
   `+ 1`,
   `+ 2 (λ s z . s z)`,
   

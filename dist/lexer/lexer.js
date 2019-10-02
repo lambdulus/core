@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const counter_1 = require("./counter");
 const _1 = require("./");
 const errors_1 = require("./errors");
+const parser_1 = require("../parser");
 class Lexer {
     constructor(source, config) {
         this.source = source;
@@ -34,6 +35,11 @@ class Lexer {
             ||
                 char >= 'A' && char <= 'Z');
     }
+    couldBeMacro(str) {
+        const delimiter = ':';
+        const allMacros = Object.keys(parser_1.builtinMacros).join(delimiter);
+        return allMacros.indexOf(str) !== -1;
+    }
     getCharToken(kind) {
         const position = this.position.toRecord();
         const char = this.pop();
@@ -59,17 +65,55 @@ class Lexer {
         const lambda = this.getCharToken(_1.TokenType.Lambda);
         this.tokens.push(lambda);
     }
+    readSLINonMacro(id, position) {
+        const chars = id.split('');
+        if (this.isNumeric(id[id.length - 1])) {
+            if (this.isNumeric(id[id.length - 2])) {
+                throw new _1.InvalidIdentifier(`${id}`, position);
+            }
+            else {
+                const numericPart = chars.pop(); // I know it will be there
+                chars[chars.length - 1] += numericPart;
+            }
+        }
+        // else and also if
+        chars.forEach((id, i) => this.tokens.push(new _1.Token(_1.TokenType.Identifier, id, position)));
+        // TODO: position is not correct - fix this!
+        let topPosition = this.position.toRecord();
+        while (this.isAlphabetic(this.top())) {
+            id = this.pop();
+            if (this.isNumeric(this.top())) {
+                id += this.pop();
+            }
+            const identifier = new _1.Token(_1.TokenType.Identifier, id, topPosition);
+            this.tokens.push(identifier);
+        }
+        if (this.isNumeric(this.top())) {
+            throw new _1.InvalidIdentifier(`${id}`, topPosition);
+        }
+    }
     readIdentifier() {
         let id = '';
         let topPosition = this.position.toRecord();
         if (this.config.singleLetterVars) {
             while (this.isAlphabetic(this.top())) {
-                id = this.pop();
+                id += this.pop();
                 if (this.isNumeric(this.top())) {
                     id += this.pop();
                 }
-                const identifier = new _1.Token(_1.TokenType.Identifier, id, topPosition);
-                this.tokens.push(identifier);
+                if (id in parser_1.builtinMacros && this.isWhiteSpace(this.top())) {
+                    // normalne vytvorit id -> vynulovat -> pushnout
+                    const identifier = new _1.Token(_1.TokenType.Identifier, id, topPosition);
+                    id = '';
+                    this.tokens.push(identifier);
+                    continue;
+                }
+                else if (this.couldBeMacro(id)) {
+                    continue;
+                }
+                else {
+                    this.readSLINonMacro(id, topPosition);
+                }
             }
             if (this.isNumeric(this.top())) {
                 throw new _1.InvalidIdentifier(`${id}`, topPosition);

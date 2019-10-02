@@ -73,6 +73,9 @@ class Parser {
         }
         if (this.canAccept(lexer_1.TokenType.Identifier)) {
             const id = this.accept(lexer_1.TokenType.Identifier);
+            if (id.value in _1.builtinMacros) {
+                throw new Error('Known Macro name can not stand as an argument name.');
+            }
             const argument = new ast_1.Variable(id);
             const body = this.parseLambda();
             return new ast_1.Lambda(argument, body);
@@ -110,6 +113,9 @@ class Parser {
             if (this.canAccept(lexer_1.TokenType.Lambda)) {
                 this.accept(lexer_1.TokenType.Lambda);
                 const id = this.accept(lexer_1.TokenType.Identifier);
+                if (id.value in _1.builtinMacros) {
+                    throw new Error('Known Macro name can not stand as an argument name.');
+                }
                 const argument = new ast_1.Variable(id);
                 const body = this.parseLambda();
                 const lambda = new ast_1.Lambda(argument, body);
