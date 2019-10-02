@@ -65,6 +65,9 @@ class Lexer {
         if (this.config.singleLetterVars) {
             while (this.isAlphabetic(this.top())) {
                 id = this.pop();
+                if (this.isNumeric(this.top())) {
+                    id += this.pop();
+                }
                 const identifier = new _1.Token(_1.TokenType.Identifier, id, topPosition);
                 this.tokens.push(identifier);
             }

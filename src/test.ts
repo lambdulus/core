@@ -11,8 +11,9 @@ import { None } from './reductions/none';
 
 
 const valids : Array<string> = [
-  `+ 1`,
+  `(~ x1x2x. + x1 x2 x3)`,
   `ZERO 0`,
+  `+ 1`,
   `+ 2 (λ s z . s z)`,
   
   `= ( - 3 1 ) 1`,
@@ -239,7 +240,7 @@ function testInvalids () {
 // console.log('====================')
 
 const tokens : Array<Token> = tokenize(valids[0], {
-  singleLetterVars : false,
+  singleLetterVars : true,
   lambdaLetters : [ 'λ', '\\', '~' ],
 })
 const ast : AST = Parser.parse(tokens, {
@@ -258,28 +259,14 @@ let e = 0
 
 console.log(printTree(root))
 
-while (true) {
-  const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
-
-  if (normal.nextReduction instanceof None) {
-    break
-  }
-
-  // console.log(normal.nextReduction)
-
-  root = normal.perform() // perform next reduction
-
-  e++
-
-  console.log(printTree(root))
-}
-
 // while (true) {
-//   const normal : NormalEvaluator = new NormalEvaluator(root)
+//   const normal : NormalAbstractionEvaluator = new NormalAbstractionEvaluator(root)
 
 //   if (normal.nextReduction instanceof None) {
 //     break
 //   }
+
+//   // console.log(normal.nextReduction)
 
 //   root = normal.perform() // perform next reduction
 
@@ -287,6 +274,20 @@ while (true) {
 
 //   console.log(printTree(root))
 // }
+
+while (true) {
+  const normal : NormalEvaluator = new NormalEvaluator(root)
+
+  if (normal.nextReduction instanceof None) {
+    break
+  }
+
+  root = normal.perform() // perform next reduction
+
+  e++
+
+  console.log(printTree(root))
+}
 
 // while (true) {
 //   const applicative : ApplicativeEvaluator = new ApplicativeEvaluator(root)
