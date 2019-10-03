@@ -1,5 +1,5 @@
 import { arity } from "../reductions"
-import { ChurchNumeral, AST } from "../ast"
+import { ChurchNumeral, AST, Macro } from "../ast"
 import { parse } from "../parser"
 import { tokenize, TokenType, Token, BLANK_POSITION } from "../lexer"
 
@@ -16,16 +16,100 @@ export class Abstractions {
         const [ first ] = args
 
         const value : boolean = 0 === Number((<ChurchNumeral>first).name())
-        const lambdaValue = value ? 'T' : 'F'
+        const lambdaValue : string = value ? 'T' : 'F'
 
         return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
       }
     ],
-    // 'PRED' : [ 1, () => true, () => {} ],
-    // 'SUC' : [ 1, () => true, () => {} ],
-    // 'AND' : [ 2, () => true, () => {} ],
-    // 'OR' : [ 2, () => true, () => {} ],
-    // 'NOT' : [ 1, () => true, () => {} ],
+    'PRED' : [
+      1,
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        return args.length === 1 && first instanceof ChurchNumeral
+      },
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        const value : number = Math.max(0, Number(first) - 1)
+        const lambdaValue : string = `${value}`
+
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
+    'SUC' : [
+      1,
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        return args.length === 1 && first instanceof ChurchNumeral
+      },
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        const value : number = Number(first) + 1
+        const lambdaValue : string = `${value}`
+
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
+    'AND' : [
+      2,
+      (args : Array<AST>) => {
+        const [ first, second ] = args
+        return args.length === 2 && first instanceof Macro && second instanceof Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F')
+      },
+      (args : Array<AST>) => {
+        const [ first, second ] = args
+
+
+        const firstBoolean : boolean = (<Macro>first).name() === 'T' ? true : false
+        const secondBoolean : boolean = (<Macro>second).name() === 'T' ? true : false
+
+        const value : boolean = firstBoolean && secondBoolean
+        const lambdaValue : string = value ? 'T' : 'F'
+
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
+    'OR' : [
+      2,
+      (args : Array<AST>) => {
+        const [ first, second ] = args
+        return args.length === 2 && first instanceof Macro && second instanceof Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F')
+      },
+      (args : Array<AST>) => {
+        const [ first, second ] = args
+
+
+        const firstBoolean : boolean = (<Macro>first).name() === 'T' ? true : false
+        const secondBoolean : boolean = (<Macro>second).name() === 'T' ? true : false
+
+        const value : boolean = firstBoolean || secondBoolean
+        const lambdaValue : string = value ? 'T' : 'F'
+
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
+    'NOT' : [
+      1,
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        return args.length === 1 && first instanceof Macro && (first.name() === 'F' || first.name() === 'T')
+      },
+      (args : Array<AST>) => {
+        const [ first ] = args
+
+        const name : string = (<Macro>first).name()
+        const value : boolean = name === 'T' ? true : false
+        const negative : boolean = ! value
+        const lambdaValue : string = negative ? 'T' : 'F'
+        // TODO: if I create Boolean offspring of Macro - this place is to get more simple
+
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
     '+' : [
       2,
       (args : Array<AST>) => {
