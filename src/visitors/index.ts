@@ -1,4 +1,4 @@
-import { Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
+import { Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 
 
 export abstract class ASTVisitor {

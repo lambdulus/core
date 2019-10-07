@@ -5,7 +5,7 @@ import { NormalEvaluator, NormalAbstractionEvaluator, Evaluator } from './evalua
 import { AST } from './ast'
 import * as Parser from './parser/'
 import { Token, tokenize } from './lexer'
-import { BasicPrinter } from './visitors/basicprinter';
+import { BasicPrinter } from './visitors/basicprinter'
 
 const lineReader = readline.createInterface({
   input: process.stdin,

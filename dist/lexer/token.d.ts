@@ -1,4 +1,4 @@
-import { PositionRecord } from "./postion";
+import { PositionRecord } from "./position";
 export declare enum TokenType {
     Lambda = "lambda",
     Dot = "dot",

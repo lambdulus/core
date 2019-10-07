@@ -2,8 +2,8 @@ import { ASTVisitor } from "../visitors"
 import { FreeVarsFinder } from "../visitors/freevarsfinder"
 import { Binary, AST, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 import { BoundingFinder } from "../visitors/boundingfinder"
-import { constructFor, Reducer } from "../reducers";
-import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions";
+import { constructFor, Reducer } from "../reducers"
+import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions"
 
 
 export class NormalEvaluator extends ASTVisitor {

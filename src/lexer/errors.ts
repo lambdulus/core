@@ -1,4 +1,4 @@
-import { PositionRecord } from "./postion"
+import { PositionRecord } from "./position"
 
 
 export class InvalidIdentifier extends Error {

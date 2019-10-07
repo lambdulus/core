@@ -1,5 +1,5 @@
-import { ASTVisitor } from "../visitors";
-import { AST } from "../ast";
+import { ASTVisitor } from "../visitors"
+import { AST } from "../ast"
 
 
 export class EmptyReducer extends ASTVisitor {

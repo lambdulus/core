@@ -1,6 +1,6 @@
-import { Token, TokenType, BLANK_POSITION } from "../lexer";
-import { MacroTable, parse, builtinMacros } from "./";
-import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
+import { Token, TokenType, BLANK_POSITION } from "../lexer"
+import { MacroTable, parse, builtinMacros } from "./"
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 
 
 export class Parser {

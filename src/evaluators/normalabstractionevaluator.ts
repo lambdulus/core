@@ -3,8 +3,8 @@ import { FreeVarsFinder } from "../visitors/freevarsfinder"
 import { Binary, AST, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
 import { BoundingFinder } from "../visitors/boundingfinder"
 import { constructFor, Reducer } from "../reducers"
-import { ASTReduction, Beta, Alpha, Expansion, None, Gama, arity } from "../reductions"
-import { Abstractions } from "../reducers/abstractions";
+import { ASTReduction, Beta, Alpha, Expansion, None, Gama } from "../reductions"
+import { Abstractions } from "../reducers/abstractions"
 
 
 export class NormalAbstractionEvaluator extends ASTVisitor {

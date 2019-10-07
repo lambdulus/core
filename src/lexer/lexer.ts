@@ -1,8 +1,8 @@
 import { Counter } from './counter'
-import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './';
-import { InvalidCharacter } from './errors';
-import { PositionRecord } from './postion';
-import { builtinMacros } from '../parser';
+import { Token, TokenType, CodeStyle, InvalidIdentifier, InvalidNumber, InvalidOperator } from './'
+import { InvalidCharacter } from './errors'
+import { PositionRecord } from './position'
+import { builtinMacros } from '../parser'
 
 
 class Lexer {

@@ -1,4 +1,4 @@
-import { PositionRecord } from "./postion";
+import { PositionRecord } from "./position";
 export declare class InvalidIdentifier extends Error {
     readonly value: string;
     readonly position: PositionRecord;
