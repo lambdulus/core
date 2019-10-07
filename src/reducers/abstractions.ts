@@ -16,7 +16,7 @@ export class Abstractions {
     //   (args : Array<AST>) => {
     //     const [ first ] = args
 
-    //     const lambdaValue : string = `Y (Y ${first.toString()})`
+    //     const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
 
     //     return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
     //   }
