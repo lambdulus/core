@@ -114,6 +114,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
 
   onMacro (macro : Macro) : void {
     // this.originalReduction = new Expansion(this.parent, this.child, macro)
+    // TODO: if it is not in builtIn macros - than it is user-defined macro - and I should maybe expand it
     this.originalReduction = new None
     this.nextReduction = this.originalReduction
 

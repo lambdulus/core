@@ -22,6 +22,19 @@ class Abstractions {
 }
 exports.Abstractions = Abstractions;
 Abstractions.knownAbstractions = {
+    // TODO: consider implementing Y combinator
+    // 'Y' : [
+    //   1,
+    //   (args : Array<AST>) => {
+    //     const [ first ] = args
+    //     return args.length === 1 && first instanceof Lambda
+    //   },
+    //   (args : Array<AST>) => {
+    //     const [ first ] = args
+    //     const lambdaValue : string = `Y (Y ${first.toString()})`
+    //     return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    //   }
+    // ],
     'ZERO': [
         1,
         (args) => {
