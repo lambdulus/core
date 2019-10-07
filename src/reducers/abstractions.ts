@@ -1,10 +1,26 @@
 import { arity } from "../reductions"
-import { ChurchNumeral, AST, Macro } from "../ast"
+import { ChurchNumeral, AST, Macro, Lambda } from "../ast"
 import { parse } from "../parser"
 import { tokenize, TokenType, Token, BLANK_POSITION } from "../lexer"
 
 export class Abstractions {
   private static knownAbstractions : { [ name : string ] : [ arity, (args : Array<AST>) => boolean, (args : Array<AST>) => AST ] } = {
+    // TODO: consider implementing Y combinator
+    // 'Y' : [
+    //   1,
+    //   (args : Array<AST>) => {
+    //     const [ first ] = args
+
+    //     return args.length === 1 && first instanceof Lambda
+    //   },
+    //   (args : Array<AST>) => {
+    //     const [ first ] = args
+
+    //     const lambdaValue : string = `Y (Y ${first.toString()})`
+
+    //     return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+    //   }
+    // ],
     'ZERO' : [
       1,
       (args : Array<AST>) => {

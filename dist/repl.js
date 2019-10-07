@@ -23,7 +23,7 @@ const lineReader = readline_1.default.createInterface({
 });
 lineReader.on('line', (line) => {
     const tokens = lexer_1.tokenize(line, {
-        singleLetterVars: true,
+        singleLetterVars: false,
         lambdaLetters: ['λ', '\\', '~'],
     });
     const ast = Parser.parse(tokens, {

@@ -15,7 +15,7 @@ const lineReader = readline.createInterface({
 
 lineReader.on('line', (line) => {
   const tokens : Array<Token> = tokenize(line, {
-    singleLetterVars : true,
+    singleLetterVars : false,
     lambdaLetters : [ 'λ', '\\', '~' ],
   })
   
