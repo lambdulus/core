@@ -1,7 +1,7 @@
-import { Token, TokenType, BLANK_POSITION } from "../lexer";
-import { AST, Binary, Child, ChurchNumeral, Macro, Application, Variable, Lambda } from "../ast";
-import { ASTVisitor } from "../visitors";
-import { Expansion } from "../reductions";
+import { Token, TokenType, BLANK_POSITION } from "../lexer"
+import { AST, Binary, Child, ChurchNumeral, Macro, Application, Variable, Lambda } from "../ast"
+import { ASTVisitor } from "../visitors"
+import { Expansion } from "../reductions"
 
 
 export class Expander extends ASTVisitor {

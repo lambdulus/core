@@ -1,5 +1,5 @@
-import { ASTVisitor } from ".";
-import { Application, Lambda, Variable } from "../ast/";
+import { ASTVisitor } from "."
+import { Application, Lambda, Variable } from "../ast/"
 
 
 export class BoundingFinder extends ASTVisitor {

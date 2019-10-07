@@ -1,5 +1,5 @@
-import { Binary, Child, AST } from "../ast";
-import { ASTReduction } from ".";
+import { Binary, Child, AST } from "../ast"
+import { ASTReduction } from "."
 
 
 export class Expansion implements ASTReduction {

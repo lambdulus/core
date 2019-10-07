@@ -1,7 +1,7 @@
 import { Token } from '../lexer'
 import { AST } from './'
-import { MacroDef } from '../parser';
-import { ASTVisitor } from '../visitors';
+import { MacroDef } from '../parser'
+import { ASTVisitor } from '../visitors'
 
 
 export class Macro extends AST {

@@ -1,6 +1,6 @@
-import { AST, Binary, Child } from "../ast";
-import { ASTVisitor } from "../visitors";
-import { Eta } from "../reductions/eta";
+import { AST, Binary, Child } from "../ast"
+import { ASTVisitor } from "../visitors"
+import { Eta } from "../reductions/eta"
 
 
 export class EtaConverter extends ASTVisitor {

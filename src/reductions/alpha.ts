@@ -1,5 +1,5 @@
-import { Lambda } from "../ast";
-import { ASTReduction } from ".";
+import { Lambda } from "../ast"
+import { ASTReduction } from "."
 
 
 export class Alpha implements ASTReduction {

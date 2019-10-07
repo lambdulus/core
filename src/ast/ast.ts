@@ -1,5 +1,5 @@
-import { ASTVisitor } from "../visitors";
-import { BasicPrinter } from "../visitors/basicprinter";
+import { ASTVisitor } from "../visitors"
+import { BasicPrinter } from "../visitors/basicprinter"
 
 
 export enum Child {

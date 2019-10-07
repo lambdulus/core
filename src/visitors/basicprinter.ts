@@ -1,5 +1,5 @@
-import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
-import { ASTVisitor } from ".";
+import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
+import { ASTVisitor } from "."
 
 
 export class BasicPrinter extends ASTVisitor {

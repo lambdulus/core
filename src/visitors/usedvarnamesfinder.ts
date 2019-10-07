@@ -1,6 +1,6 @@
-import { AST } from "../ast";
-import { Application, Lambda, Variable } from "../ast";
-import { ASTVisitor } from ".";
+import { AST } from "../ast"
+import { Application, Lambda, Variable } from "../ast"
+import { ASTVisitor } from "."
 
 
 export class UsedVarNamesFinder extends ASTVisitor {

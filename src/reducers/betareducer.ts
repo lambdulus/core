@@ -1,6 +1,6 @@
-import { AST, Binary, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
-import { ASTVisitor } from "../visitors";
-import { Beta } from "../reductions";
+import { AST, Binary, Child, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
+import { ASTVisitor } from "../visitors"
+import { Beta } from "../reductions"
 
 
 export class BetaReducer extends ASTVisitor {

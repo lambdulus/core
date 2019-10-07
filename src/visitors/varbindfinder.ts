@@ -1,5 +1,5 @@
-import { Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast";
-import { ASTVisitor } from ".";
+import { Application, Lambda } from "../ast"
+import { ASTVisitor } from "."
 
 
 // TODO: mozna vubec nebude potreba -> DELETE

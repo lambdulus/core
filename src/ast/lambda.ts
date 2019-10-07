@@ -1,5 +1,5 @@
 import { AST, Binary, Variable } from './'
-import { ASTVisitor } from '../visitors';
+import { ASTVisitor } from '../visitors'
 
 
 export class Lambda extends AST implements Binary {

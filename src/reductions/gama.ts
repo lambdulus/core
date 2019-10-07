@@ -1,5 +1,5 @@
 import { ASTReduction } from "."
-import { Binary, Child, AST, Macro, Application, Variable, ChurchNumeral, Lambda } from "../ast"
+import { Binary, Child, AST, Macro, Application } from "../ast"
 
 
 export type arity = number

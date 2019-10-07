@@ -7,7 +7,7 @@ export {
   InvalidCharacter,
   hintOperator,
 } from './errors'
-export { BLANK_POSITION } from './postion'
+export { BLANK_POSITION } from './position'
 
 // TODO: I may not need LambdaLetters - frontend could work that for me
 export type CodeStyle = {

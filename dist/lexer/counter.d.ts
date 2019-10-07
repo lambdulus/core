@@ -1,4 +1,4 @@
-import { PositionRecord } from "./postion";
+import { PositionRecord } from "./position";
 export declare class Counter {
     column: number;
     row: number;

@@ -1,5 +1,5 @@
-import { AST, Child, Binary, Application } from "../ast";
-import { ASTReduction } from ".";
+import { AST, Child, Binary, Application } from "../ast"
+import { ASTReduction } from "."
 
 
 export class Eta implements ASTReduction {
