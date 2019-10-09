@@ -1,6 +1,6 @@
 {
   "name": "@lambdulus/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
   "dependencies": {},
