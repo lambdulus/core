@@ -21,6 +21,7 @@ exports.Beta = reductions_1.Beta;
 exports.Expansion = reductions_1.Expansion;
 exports.None = reductions_1.None;
 exports.Gama = reductions_1.Gama;
+exports.Eta = reductions_1.Eta;
 var reducers_1 = require("./reducers");
 exports.AlphaConverter = reducers_1.AlphaConverter;
 exports.BetaReducer = reducers_1.BetaReducer;
