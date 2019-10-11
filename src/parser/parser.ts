@@ -130,14 +130,16 @@ export class Parser {
     if (this.canAccept(TokenType.Operator)) {
       const op : Token = this.accept(TokenType.Operator)
 
-      return new Macro(op, this.macroTable[op.value])
+      // TODO: @dynamic-macros
+      return new Macro(op, this.macroTable)
     }
 
     if (this.canAccept(TokenType.Identifier)) {
       const id : Token = this.accept(TokenType.Identifier)
 
       if (this.isMacro(id)) {
-        return new Macro(id, this.macroTable[id.value])
+        // TODO: @dynamic-macros
+        return new Macro(id, this.macroTable)
       }
 
       return new Variable(id)
