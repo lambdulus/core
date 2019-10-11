@@ -5,7 +5,7 @@ export declare class MacroDef {
     constructor(ast: AST);
 }
 export interface MacroTable {
-    [name: string]: MacroDef;
+    [name: string]: string;
 }
 export interface MacroMap {
     [name: string]: string;
