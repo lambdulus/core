@@ -98,12 +98,14 @@ class Parser {
         }
         if (this.canAccept(lexer_1.TokenType.Operator)) {
             const op = this.accept(lexer_1.TokenType.Operator);
-            return new ast_1.Macro(op, this.macroTable[op.value]);
+            // TODO: @dynamic-macros
+            return new ast_1.Macro(op, this.macroTable);
         }
         if (this.canAccept(lexer_1.TokenType.Identifier)) {
             const id = this.accept(lexer_1.TokenType.Identifier);
             if (this.isMacro(id)) {
-                return new ast_1.Macro(id, this.macroTable[id.value]);
+                // TODO: @dynamic-macros
+                return new ast_1.Macro(id, this.macroTable);
             }
             return new ast_1.Variable(id);
         }

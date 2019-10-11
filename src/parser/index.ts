@@ -9,7 +9,8 @@ export class MacroDef {
 }
 
 export interface MacroTable {
-  [ name : string ] : MacroDef
+  // [ name : string ] : MacroDef
+  [ name : string ] : string
 }
 
 export interface MacroMap {
@@ -18,8 +19,8 @@ export interface MacroMap {
 
 export const builtinMacros : MacroMap = {
   // TODO: uncomment these once PPA students reach them
-  // 'Y' : '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
-  // 'Z' : '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
+  'Y' : '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
+  'Z' : '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
   'ZERO' : '(λ n . n (λ x . (λ t f . f)) (λ t f . t))',
   // TODO: uncomment these once PPA students reach them
   'PRED' : '(λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))',
@@ -41,14 +42,14 @@ export const builtinMacros : MacroMap = {
   '>=' : '(λ m n . ZERO (- n m))',
   '<=' : '(λ m n . ZERO (- m n))',
   // TODO: uncomment these once PPA students reach them
-  // 'IF' : '(λ p t e . p t e)',
-  // 'PAIR' : '(λ f s . (λ g . g f s))',
-  // 'FIRST' : '(λ p . p (λ f s . f))',
-  // 'SECOND' : '(λ p . p (λ f s . s))',
+  'IF' : '(λ p t e . p t e)',
+  'PAIR' : '(λ f s . (λ g . g f s))',
+  'FIRST' : '(λ p . p (λ f s . f))',
+  'SECOND' : '(λ p . p (λ f s . s))',
   
-  // 'CONS' : '(λ car cdr . (λ g . g car cdr))',
-  // 'NIL' : '(λx. T)',
-  // 'NULL' : '(λp.p (λx y.F))',
+  'CONS' : '(λ car cdr . (λ g . g car cdr))',
+  'NIL' : '(λx. T)',
+  'NULL' : '(λp.p (λx y.F))',
 }
 
 function toAst (definition : string, macroTable : MacroTable) : AST {
@@ -61,8 +62,13 @@ function toAst (definition : string, macroTable : MacroTable) : AST {
 export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   const macroTable : MacroTable = {}
 
+  // TODO: @dynamic-macros
+  // TODO: tohle by eventuelne nebylo potreba delat - zbytecny kopirovani
+  // na druhou stranu - macroTable slouci built-iny a user-definy takze asi proc ne?
   for (const [ name, definition ] of Object.entries(builtinMacros)) {
-    macroTable[name] = new MacroDef(toAst(definition, macroTable))
+    // TODO: @dynamic-macros
+    // macroTable[name] = new MacroDef(toAst(definition, macroTable))
+    macroTable[name] = definition
   }
 
   for (const [ name, definition ] of Object.entries(userMacros)) {
@@ -70,7 +76,9 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
       throw new Error('Cannot redefine built-in Macro [ ' + name + ' ]')
     }
 
-    macroTable[name] = new MacroDef(toAst(definition, macroTable))
+    // TODO: @dynamic-macros
+    // macroTable[name] = new MacroDef(toAst(definition, macroTable))
+    macroTable[name] = definition
   }
 
   const parser : Parser = new Parser(tokens, macroTable)
