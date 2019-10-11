@@ -1,7 +1,9 @@
-import { Token, TokenType, BLANK_POSITION } from "../lexer"
+import { Token, TokenType, BLANK_POSITION, tokenize } from "../lexer"
 import { AST, Binary, Child, ChurchNumeral, Macro, Application, Variable, Lambda } from "../ast"
 import { ASTVisitor } from "../visitors"
 import { Expansion } from "../reductions"
+import { parse } from "../parser";
+import { Parser } from "../parser/parser"
 
 
 export class Expander extends ASTVisitor {
@@ -48,9 +50,27 @@ export class Expander extends ASTVisitor {
   }
 
   onMacro (macro : Macro) : void {
+    // TODO: @dynamic-macros
+
     // TODO: here I lose token - useful for location and origin of macro - should solve this
     // also consider not clonning - not good idea because of breakpoints - right?
-    this.expanded = macro.definition.ast.clone()
+    // this.expanded = macro.definition.ast.clone() // TODO: commented out in @dynamic-macros
+
+    const value : string = <string> macro.token.value
+    const definition : string = macro.macroTable[value]
+    // TODO: I dont really like that lambdaLetters part
+    // macros should be lexed and parsed in parsing time
+    // not completely though - if there is macro in macro definition
+    // let it be - I will just parse its definition and - oh!
+    // now this IS a problem - I can not do that - it would be infinite!
+    // if I am parsing macro definition of the same macro I just found in that definition
+    // then I have infinite recursion right? - prolly
+    // so I wont parse it - for now!
+
+    const parser : Parser = new Parser(tokenize(definition, { lambdaLetters : [ '\\', 'λ' ], singleLetterVars : false }), macro.macroTable)
+
+    const expression : AST = parser.parse(null)
+    this.expanded = expression
   }
 
   perform () : void {

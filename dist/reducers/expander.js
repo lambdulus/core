@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const lexer_1 = require("../lexer");
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
+const parser_1 = require("../parser/parser");
 class Expander extends visitors_1.ASTVisitor {
     constructor({ parent, treeSide, target }, tree) {
         super();
@@ -33,9 +34,23 @@ class Expander extends visitors_1.ASTVisitor {
         this.expanded = churchLiteral;
     }
     onMacro(macro) {
+        // TODO: @dynamic-macros
         // TODO: here I lose token - useful for location and origin of macro - should solve this
         // also consider not clonning - not good idea because of breakpoints - right?
-        this.expanded = macro.definition.ast.clone();
+        // this.expanded = macro.definition.ast.clone() // TODO: commented out in @dynamic-macros
+        const value = macro.token.value;
+        const definition = macro.macroTable[value];
+        // TODO: I dont really like that lambdaLetters part
+        // macros should be lexed and parsed in parsing time
+        // not completely though - if there is macro in macro definition
+        // let it be - I will just parse its definition and - oh!
+        // now this IS a problem - I can not do that - it would be infinite!
+        // if I am parsing macro definition of the same macro I just found in that definition
+        // then I have infinite recursion right? - prolly
+        // so I wont parse it - for now!
+        const parser = new parser_1.Parser(lexer_1.tokenize(definition, { lambdaLetters: ['\\', 'λ'], singleLetterVars: false }), macro.macroTable);
+        const expression = parser.parse(null);
+        this.expanded = expression;
     }
     perform() {
         this.target.visit(this);
