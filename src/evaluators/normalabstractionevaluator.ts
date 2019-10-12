@@ -5,6 +5,7 @@ import { BoundingFinder } from "../visitors/boundingfinder"
 import { constructFor, Reducer } from "../reducers"
 import { ASTReduction, Beta, Alpha, Expansion, None, Gama } from "../reductions"
 import { Abstractions } from "../reducers/abstractions"
+import { builtinMacros } from "../parser";
 
 
 export class NormalAbstractionEvaluator extends ASTVisitor {
@@ -69,11 +70,29 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
 
       if (this.nextReduction instanceof Gama
           &&
-          this.nextReduction.redexes.includes(<Macro>application.left) // TODO: nalevo nebude vzdycky macro
+          this.nextReduction.redexes.includes(<Macro>application.left) // TODO: nalevo nebude vzdycky macro // TODO: jakto ze to bude vzdycky makro?
           &&
           this.nextReduction.args.length < this.nextReduction.abstraction[1] // TODO: udelej z toho vlastni prop nextReduction.arity
         ) {
+          // TODO: tohle je spatne - vubec mi nemusi vadit, ze right je APP
+          // jsou makra ktera to nezajima [T, F]
+          // proto musim zmenit Abstraction a mit tam misto/navic funkce assert
+          // jeste list typu argumentu nebo tak neco
+            // if (application.right instanceof Application) {
+            //   this.nextReduction = new None
+            // }
+            // TODO: tohle je jenom prozatim - ted je problem aplikaci kdyz je right - tak to rovnou
+            // testnu pokud je right applikace - v budoucnu to chci lip - nejak univerzalne bez ifu
+            const macroName : string = (<Macro> this.nextReduction.redexes[0]).name()
+            const argumentIndex : number = this.nextReduction.args.length - 1
+
             if (application.right instanceof Application) {
+              console.log('budu delat nejaky testy')
+              console.log(Abstractions.inAllowedTypesFor(macroName, argumentIndex, Application))
+              console.log()
+            }
+
+            if (application.right instanceof Application && ! Abstractions.inAllowedTypesFor(macroName, argumentIndex, Application)) {
               this.nextReduction = new None
             }
             else {
@@ -113,6 +132,12 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onMacro (macro : Macro) : void {
+    if ( ! (macro.name() in builtinMacros)) {
+      this.originalReduction = new Expansion(this.parent, this.child, macro)
+      this.nextReduction = this.originalReduction
+      this.originalParent = this.parent
+      return
+    }
     // this.originalReduction = new Expansion(this.parent, this.child, macro)
     // TODO: if it is not in builtIn macros - than it is user-defined macro - and I should maybe expand it
     this.originalReduction = new None

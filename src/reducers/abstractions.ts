@@ -1,28 +1,33 @@
 import { arity } from "../reductions"
-import { ChurchNumeral, AST, Macro, Lambda } from "../ast"
+import { ChurchNumeral, AST, Macro, Lambda, Application, Variable } from "../ast"
 import { parse } from "../parser"
 import { tokenize, TokenType, Token, BLANK_POSITION } from "../lexer"
 
+export type AlowedTypes = Array<any> 
+export type ArgumentConstraints = Array<AlowedTypes>
+
 export class Abstractions {
-  private static knownAbstractions : { [ name : string ] : [ arity, (args : Array<AST>) => boolean, (args : Array<AST>) => AST ] } = {
+  private static knownAbstractions : { [ name : string ] : [ arity, ArgumentConstraints , (args : Array<AST>) => boolean, (args : Array<AST>) => AST ] } = {
     // TODO: consider implementing Y combinator
-    // 'Y' : [
-    //   1,
-    //   (args : Array<AST>) => {
-    //     const [ first ] = args
+    'Y' : [
+      1,
+      [ [ Lambda, Macro ] ],
+      (args : Array<AST>) => {
+        const [ first ] = args
 
-    //     return args.length === 1 && first instanceof Lambda
-    //   },
-    //   (args : Array<AST>) => {
-    //     const [ first ] = args
+        return args.length === 1 && (first instanceof Lambda || first instanceof Macro)
+      },
+      (args : Array<AST>) => {
+        const [ first ] = args
 
-    //     const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
+        const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
 
-    //     return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
-    //   }
-    // ],
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      }
+    ],
     'ZERO' : [
       1,
+      [ [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first ] = args
 
@@ -39,6 +44,7 @@ export class Abstractions {
     ],
     'PRED' : [
       1,
+      [ [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first ] = args
 
@@ -55,6 +61,7 @@ export class Abstractions {
     ],
     'SUC' : [
       1,
+      [ [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first ] = args
 
@@ -71,6 +78,7 @@ export class Abstractions {
     ],
     'AND' : [
       2,
+      [ [ Macro ], [ Macro ] ],
       (args : Array<AST>) => {
         const [ first, second ] = args
         return args.length === 2 && first instanceof Macro && second instanceof Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F')
@@ -90,6 +98,7 @@ export class Abstractions {
     ],
     'OR' : [
       2,
+      [ [ Macro ], [ Macro ] ],
       (args : Array<AST>) => {
         const [ first, second ] = args
         return args.length === 2 && first instanceof Macro && second instanceof Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F')
@@ -109,6 +118,7 @@ export class Abstractions {
     ],
     'NOT' : [
       1,
+      [ [ Macro ] ],
       (args : Array<AST>) => {
         const [ first ] = args
 
@@ -126,8 +136,31 @@ export class Abstractions {
         return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
       }
     ],
+    'T' : [
+      2,
+      [ [ Lambda, Application, Variable, ChurchNumeral, Macro ], [ Lambda, Application, Variable, ChurchNumeral, Macro ] ],
+      (args : Array<AST>) => {
+        return args.length === 2
+      },
+      (args : Array<AST>) => {
+      const [ first ] = args
+
+      return first
+    } ],
+    'F' : [
+      2,
+      [ [ Lambda, Application, Variable, ChurchNumeral, Macro ], [ Lambda, Application, Variable, ChurchNumeral, Macro ] ],
+      (args : Array<AST>) => {
+        return args.length === 2
+      },
+      (args : Array<AST>) => {
+      const [ _, second ] = args
+
+      return second
+    } ],
     '+' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first, second ] = args
         return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -141,6 +174,7 @@ export class Abstractions {
     } ],
     '-' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -154,6 +188,7 @@ export class Abstractions {
     } ],
     '*' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -167,6 +202,7 @@ export class Abstractions {
     } ],
     '/' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -180,6 +216,7 @@ export class Abstractions {
     } ],
     '^' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first, second ] = args
         return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -193,6 +230,7 @@ export class Abstractions {
     } ],
     'DELTA' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -205,6 +243,7 @@ export class Abstractions {
     } ],
     '=' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
         const [ first, second ] = args
 
@@ -219,6 +258,7 @@ export class Abstractions {
     } ],
     '>' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -232,6 +272,7 @@ export class Abstractions {
     } ],
     '<' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -245,6 +286,7 @@ export class Abstractions {
     } ],
     '>=' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -258,6 +300,7 @@ export class Abstractions {
     } ],
     '<=' : [
       2,
+      [ [ ChurchNumeral ], [ ChurchNumeral ] ],
       (args : Array<AST>) => {
       const [ first, second ] = args
       return args.length === 2 && first instanceof ChurchNumeral && second instanceof ChurchNumeral
@@ -282,14 +325,21 @@ export class Abstractions {
   }
 
   public static assert (name : string, args : Array<AST>) : boolean {
-    const [ _, assert ] = this.knownAbstractions[name]
+    const [ _, __, assert ] = this.knownAbstractions[name]
 
     return assert(args)
   }
 
   public static evaluate (name : string, args : Array<AST>) : AST {
-    const [ _, __, evaluation ] = this.knownAbstractions[name]
+    const [ _, __, ___, evaluation ] = this.knownAbstractions[name]
 
     return evaluation(args)
+  }
+
+  public static inAllowedTypesFor (name : string, n : number, type : any) : boolean {
+    const [ _, allowedTypesList ] = this.knownAbstractions[name]
+    const allowedForN = allowedTypesList[n]
+
+    return allowedForN.includes(type)
   }
 }

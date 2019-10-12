@@ -27,6 +27,7 @@ lineReader.on('line', (line) => {
         lambdaLetters: ['λ', '\\', '~'],
     });
     const ast = Parser.parse(tokens, {
+        'R': '(λ f n . = n 1 1 (+ n (f (- n 1))))',
         'FACT': '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1)))))',
         'FIB': '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))))',
         'INFLISTOF': '(λ n . (Y (λ x . (λ f s g . g f s) n x)))',
@@ -56,16 +57,20 @@ lineReader.on('line', (line) => {
     });
     let root = ast;
     let e = 0;
+    // console.log(tokens)
+    // console.log(root)
     console.log(printTree(root));
     while (true) {
-        const evaluator = new evaluators_1.NormalEvaluator(root);
-        // const evaluator : Evaluator = new NormalAbstractionEvaluator(root)
+        // const evaluator : Evaluator = new NormalEvaluator(root)
+        const evaluator = new evaluators_1.NormalAbstractionEvaluator(root);
         if (evaluator.nextReduction instanceof reductions_1.None) {
             break;
         }
         root = evaluator.perform(); // perform next reduction
         e++;
         console.log(printTree(root));
+        if (e > 5)
+            break;
     }
 });
 function printTree(tree) {
