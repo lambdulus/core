@@ -70,9 +70,9 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                 // TODO: tohle je jenom prozatim - ted je problem aplikaci kdyz je right - tak to rovnou
                 // testnu pokud je right applikace - v budoucnu to chci lip - nejak univerzalne bez ifu
                 const macroName = this.nextReduction.redexes[0].name();
-                const argumentIndex = this.nextReduction.args.length - 1;
+                const argumentIndex = this.nextReduction.args.length;
                 if (application.right instanceof ast_1.Application) {
-                    console.log('budu delat nejaky testy');
+                    console.log('budu delat nejaky testy ' + argumentIndex + ' ' + macroName);
                     console.log(abstractions_1.Abstractions.inAllowedTypesFor(macroName, argumentIndex, ast_1.Application));
                     console.log();
                 }

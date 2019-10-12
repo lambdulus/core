@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ast_1 = require("../ast");
 const parser_1 = require("../parser");
 const lexer_1 = require("../lexer");
+const parser_2 = require("../parser/parser");
 class Abstractions {
     static has(name) {
         return name in this.knownAbstractions;
@@ -37,8 +38,13 @@ Abstractions.knownAbstractions = {
         },
         (args) => {
             const [first] = args;
+            let macroTable = {};
+            if (first instanceof ast_1.Macro) {
+                macroTable = first.macroTable;
+            }
             const lambdaValue = `${first.toString()} (Y ${first.toString()})`;
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+            const parser = new parser_2.Parser(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ'], singleLetterVars: false }), macroTable);
+            return parser.parse(null);
         }
     ],
     'ZERO': [

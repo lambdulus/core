@@ -84,10 +84,10 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
             // TODO: tohle je jenom prozatim - ted je problem aplikaci kdyz je right - tak to rovnou
             // testnu pokud je right applikace - v budoucnu to chci lip - nejak univerzalne bez ifu
             const macroName : string = (<Macro> this.nextReduction.redexes[0]).name()
-            const argumentIndex : number = this.nextReduction.args.length - 1
+            const argumentIndex : number = this.nextReduction.args.length
 
             if (application.right instanceof Application) {
-              console.log('budu delat nejaky testy')
+              console.log('budu delat nejaky testy ' + argumentIndex + ' ' + macroName)
               console.log(Abstractions.inAllowedTypesFor(macroName, argumentIndex, Application))
               console.log()
             }

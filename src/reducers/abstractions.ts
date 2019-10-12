@@ -2,6 +2,7 @@ import { arity } from "../reductions"
 import { ChurchNumeral, AST, Macro, Lambda, Application, Variable } from "../ast"
 import { parse } from "../parser"
 import { tokenize, TokenType, Token, BLANK_POSITION } from "../lexer"
+import { Parser } from "../parser/parser";
 
 export type AlowedTypes = Array<any> 
 export type ArgumentConstraints = Array<AlowedTypes>
@@ -19,10 +20,17 @@ export class Abstractions {
       },
       (args : Array<AST>) => {
         const [ first ] = args
+        let macroTable = {}
+
+        if (first instanceof Macro) {
+          macroTable = first.macroTable
+        }
 
         const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        const parser : Parser = new Parser(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ' ], singleLetterVars : false }), macroTable)
+
+        return parser.parse(null)
       }
     ],
     'ZERO' : [
