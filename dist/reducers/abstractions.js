@@ -12,31 +12,38 @@ class Abstractions {
         return arity;
     }
     static assert(name, args) {
-        const [_, assert] = this.knownAbstractions[name];
+        const [_, __, assert] = this.knownAbstractions[name];
         return assert(args);
     }
     static evaluate(name, args) {
-        const [_, __, evaluation] = this.knownAbstractions[name];
+        const [_, __, ___, evaluation] = this.knownAbstractions[name];
         return evaluation(args);
+    }
+    static inAllowedTypesFor(name, n, type) {
+        const [_, allowedTypesList] = this.knownAbstractions[name];
+        const allowedForN = allowedTypesList[n];
+        return allowedForN.includes(type);
     }
 }
 exports.Abstractions = Abstractions;
 Abstractions.knownAbstractions = {
     // TODO: consider implementing Y combinator
-    // 'Y' : [
-    //   1,
-    //   (args : Array<AST>) => {
-    //     const [ first ] = args
-    //     return args.length === 1 && first instanceof Lambda
-    //   },
-    //   (args : Array<AST>) => {
-    //     const [ first ] = args
-    //     const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
-    //     return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
-    //   }
-    // ],
+    'Y': [
+        1,
+        [[ast_1.Lambda, ast_1.Macro]],
+        (args) => {
+            const [first] = args;
+            return args.length === 1 && (first instanceof ast_1.Lambda || first instanceof ast_1.Macro);
+        },
+        (args) => {
+            const [first] = args;
+            const lambdaValue = `${first.toString()} (Y ${first.toString()})`;
+            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
+        }
+    ],
     'ZERO': [
         1,
+        [[ast_1.ChurchNumeral]],
         (args) => {
             const [first] = args;
             return args.length === 1 && first instanceof ast_1.ChurchNumeral;
@@ -50,6 +57,7 @@ Abstractions.knownAbstractions = {
     ],
     'PRED': [
         1,
+        [[ast_1.ChurchNumeral]],
         (args) => {
             const [first] = args;
             return args.length === 1 && first instanceof ast_1.ChurchNumeral;
@@ -63,6 +71,7 @@ Abstractions.knownAbstractions = {
     ],
     'SUC': [
         1,
+        [[ast_1.ChurchNumeral]],
         (args) => {
             const [first] = args;
             return args.length === 1 && first instanceof ast_1.ChurchNumeral;
@@ -76,6 +85,7 @@ Abstractions.knownAbstractions = {
     ],
     'AND': [
         2,
+        [[ast_1.Macro], [ast_1.Macro]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.Macro && second instanceof ast_1.Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F');
@@ -91,6 +101,7 @@ Abstractions.knownAbstractions = {
     ],
     'OR': [
         2,
+        [[ast_1.Macro], [ast_1.Macro]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.Macro && second instanceof ast_1.Macro && (first.name() === 'T' || first.name() === 'F') && (second.name() === 'T' || second.name() === 'F');
@@ -106,6 +117,7 @@ Abstractions.knownAbstractions = {
     ],
     'NOT': [
         1,
+        [[ast_1.Macro]],
         (args) => {
             const [first] = args;
             return args.length === 1 && first instanceof ast_1.Macro && (first.name() === 'F' || first.name() === 'T');
@@ -120,8 +132,31 @@ Abstractions.knownAbstractions = {
             return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\'], singleLetterVars: false }), {});
         }
     ],
+    'T': [
+        2,
+        [[ast_1.Lambda, ast_1.Application, ast_1.Variable, ast_1.ChurchNumeral, ast_1.Macro], [ast_1.Lambda, ast_1.Application, ast_1.Variable, ast_1.ChurchNumeral, ast_1.Macro]],
+        (args) => {
+            return args.length === 2;
+        },
+        (args) => {
+            const [first] = args;
+            return first;
+        }
+    ],
+    'F': [
+        2,
+        [[ast_1.Lambda, ast_1.Application, ast_1.Variable, ast_1.ChurchNumeral, ast_1.Macro], [ast_1.Lambda, ast_1.Application, ast_1.Variable, ast_1.ChurchNumeral, ast_1.Macro]],
+        (args) => {
+            return args.length === 2;
+        },
+        (args) => {
+            const [_, second] = args;
+            return second;
+        }
+    ],
     '+': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -135,6 +170,7 @@ Abstractions.knownAbstractions = {
     ],
     '-': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -148,6 +184,7 @@ Abstractions.knownAbstractions = {
     ],
     '*': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -161,6 +198,7 @@ Abstractions.knownAbstractions = {
     ],
     '/': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -174,6 +212,7 @@ Abstractions.knownAbstractions = {
     ],
     '^': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -187,6 +226,7 @@ Abstractions.knownAbstractions = {
     ],
     'DELTA': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -199,6 +239,7 @@ Abstractions.knownAbstractions = {
     ],
     '=': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -211,6 +252,7 @@ Abstractions.knownAbstractions = {
     ],
     '>': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -223,6 +265,7 @@ Abstractions.knownAbstractions = {
     ],
     '<': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -235,6 +278,7 @@ Abstractions.knownAbstractions = {
     ],
     '>=': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
@@ -247,6 +291,7 @@ Abstractions.knownAbstractions = {
     ],
     '<=': [
         2,
+        [[ast_1.ChurchNumeral], [ast_1.ChurchNumeral]],
         (args) => {
             const [first, second] = args;
             return args.length === 2 && first instanceof ast_1.ChurchNumeral && second instanceof ast_1.ChurchNumeral;
