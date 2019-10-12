@@ -52,7 +52,7 @@ class Lexer {
     const delimiter : string = ':'
     const allMacros : string = Object.keys(builtinMacros).join(delimiter)
 
-    return allMacros.indexOf(str) !== -1
+    return allMacros.indexOf(':' + str) !== -1
   }
 
   getCharToken (kind : TokenType) : Token {
