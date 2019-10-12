@@ -86,12 +86,6 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
             const macroName : string = (<Macro> this.nextReduction.redexes[0]).name()
             const argumentIndex : number = this.nextReduction.args.length
 
-            if (application.right instanceof Application) {
-              console.log('budu delat nejaky testy ' + argumentIndex + ' ' + macroName)
-              console.log(Abstractions.inAllowedTypesFor(macroName, argumentIndex, Application))
-              console.log()
-            }
-
             if (application.right instanceof Application && ! Abstractions.inAllowedTypesFor(macroName, argumentIndex, Application)) {
               this.nextReduction = new None
             }
