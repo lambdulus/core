@@ -70,8 +70,6 @@ lineReader.on('line', (line) => {
     e++
   
     console.log(printTree(root))
-
-    if (e > 5) break
   }
 })
 

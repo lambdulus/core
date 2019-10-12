@@ -71,11 +71,6 @@ class NormalAbstractionEvaluator extends visitors_1.ASTVisitor {
                 // testnu pokud je right applikace - v budoucnu to chci lip - nejak univerzalne bez ifu
                 const macroName = this.nextReduction.redexes[0].name();
                 const argumentIndex = this.nextReduction.args.length;
-                if (application.right instanceof ast_1.Application) {
-                    console.log('budu delat nejaky testy ' + argumentIndex + ' ' + macroName);
-                    console.log(abstractions_1.Abstractions.inAllowedTypesFor(macroName, argumentIndex, ast_1.Application));
-                    console.log();
-                }
                 if (application.right instanceof ast_1.Application && !abstractions_1.Abstractions.inAllowedTypesFor(macroName, argumentIndex, ast_1.Application)) {
                     this.nextReduction = new reductions_1.None;
                 }

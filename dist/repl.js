@@ -69,8 +69,6 @@ lineReader.on('line', (line) => {
         root = evaluator.perform(); // perform next reduction
         e++;
         console.log(printTree(root));
-        if (e > 5)
-            break;
     }
 });
 function printTree(tree) {
