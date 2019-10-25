@@ -10,8 +10,8 @@ class MacroDef {
 exports.MacroDef = MacroDef;
 exports.builtinMacros = {
     // TODO: uncomment these once PPA students reach them
-    'Y': '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
-    'Z': '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
+    // 'Y' : '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
+    // 'Z' : '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
     'ZERO': '(λ n . n (λ x . (λ t f . f)) (λ t f . t))',
     // TODO: uncomment these once PPA students reach them
     'PRED': '(λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))',
