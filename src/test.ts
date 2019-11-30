@@ -23,7 +23,7 @@ const valids : Array<string> = [
   `+ (+ 2 1) (+ 2 2)`,
   `+ (+ 2 1) ((λ x . + x x) 2)`,
 
-
+  `FACCT 6`,
 
   `+ 2 1`,
   `<= 2 4`,
@@ -241,7 +241,7 @@ function testInvalids () {
 // console.log('====================')
 
 const tokens : Array<Token> = tokenize(valids[0], {
-  singleLetterVars : true,
+  singleLetterVars : true, // false
   lambdaLetters : [ 'λ', '\\', '~' ],
 })
 const ast : AST = Parser.parse(tokens, {
