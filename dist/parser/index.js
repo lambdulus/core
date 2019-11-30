@@ -23,7 +23,7 @@ exports.builtinMacros = {
     'NOT': '(λ p . p F T)',
     '+': '(λ x y s z . x s (y s z))',
     '-': '(λ m n . (n PRED) m)',
-    '*': '(λ x y z . x (y z))',
+    '*': '(λ x y s . x (y s))',
     '/': '(λ n . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))',
     '^': '(λ x y . y x)',
     'DELTA': '(λ m n . + (- m n) (- n m))',
