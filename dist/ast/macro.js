@@ -10,6 +10,7 @@ class Macro extends _1.AST {
         this.token = token;
         this.macroTable = macroTable;
         this.identifier = identifier;
+        this.type = 'macro';
     }
     name() {
         return `${this.token.value}`;

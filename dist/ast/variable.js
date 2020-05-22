@@ -6,6 +6,7 @@ class Variable extends _1.AST {
         super();
         this.token = token;
         this.identifier = identifier;
+        this.type = 'variable';
     }
     name() {
         return `${this.token.value}`;

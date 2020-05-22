@@ -6,6 +6,7 @@ class ChurchNumeral extends _1.AST {
         super();
         this.token = token;
         this.identifier = identifier;
+        this.type = 'churchnumeral';
     }
     name() {
         return `${this.token.value}`;

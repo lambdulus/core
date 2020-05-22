@@ -47,3 +47,5 @@ var usedvarnamesfinder_1 = require("./visitors/usedvarnamesfinder");
 exports.UsedVarNamesFinder = usedvarnamesfinder_1.UsedVarNamesFinder;
 var varbindfinder_1 = require("./visitors/varbindfinder"); // TODO: tohle asi neni potreba
 exports.VarBindFinder = varbindfinder_1.VarBindFinder;
+var decoder_1 = require("./decoder");
+exports.decode = decoder_1.decode;

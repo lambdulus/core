@@ -5,6 +5,8 @@ import { ASTVisitor } from '../visitors'
 
 
 export class Macro extends AST {
+  type : string = 'macro'
+
   constructor (
     public readonly token : Token,
     // TODO: @dynamic-macros

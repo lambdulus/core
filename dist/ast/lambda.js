@@ -7,6 +7,7 @@ class Lambda extends _1.AST {
         this.argument = argument;
         this.body = body;
         this.identifier = identifier;
+        this.type = 'lambda';
     }
     get left() {
         return this.argument;

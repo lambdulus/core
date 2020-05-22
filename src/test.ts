@@ -11,6 +11,7 @@ import { None } from './reductions/none'
 
 
 const valids : Array<string> = [
+  `Y FACT 6`,
   `ZERO1ZERO0ZERO2 0`,
   `(~ ZERO . ZERO 0)`,
   `(~ x1x2x. + x1 x2 x3)`,
@@ -241,10 +242,11 @@ function testInvalids () {
 // console.log('====================')
 
 const tokens : Array<Token> = tokenize(valids[0], {
-  singleLetterVars : true, // false
+  singleLetterVars : false, // false
   lambdaLetters : [ 'λ', '\\', '~' ],
 })
 const ast : AST = Parser.parse(tokens, {
+  'FACT' : '(λ f n . ZERO n 1 (* n (f (- n 1))))',
   'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
   'SHORTLIST' : '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
   'MESSLIST' :  '(CONS 3 (CONS 5 (CONS 1 (CONS 10 (CONS 7 (CONS 2 (CONS 4 (CONS 9 (CONS 4 (CONS 6 (CONS 8 NIL)))))))))))',
@@ -287,7 +289,7 @@ while (true) {
 
   e++
 
-  console.log(printTree(root))
+  // console.log(printTree(root))
 }
 
 // while (true) {
