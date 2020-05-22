@@ -1,11 +1,11 @@
 {
   "name": "@lambdulus/core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
   "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.7.9"
+    "@types/node": "^12.12.28"
   },
   "types": "./dist/index.d.ts",
   "scripts": {

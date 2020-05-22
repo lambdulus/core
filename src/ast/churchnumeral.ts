@@ -4,6 +4,8 @@ import { ASTVisitor } from '../visitors'
 
 
 export class ChurchNumeral extends AST {
+  type : string = 'churchnumeral'
+
   constructor (
     public readonly token : Token,
     public readonly identifier : symbol = Symbol(),

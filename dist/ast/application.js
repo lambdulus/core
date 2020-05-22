@@ -7,6 +7,7 @@ class Application extends _1.AST {
         this.left = left;
         this.right = right;
         this.identifier = identifier;
+        this.type = 'application';
     }
     clone() {
         return new Application(this.left.clone(), this.right.clone(), this.identifier);

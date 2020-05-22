@@ -3,6 +3,8 @@ import { ASTVisitor } from '../visitors'
 
 
 export class Lambda extends AST implements Binary {
+  type : string = 'lambda'
+
   constructor (
     public argument : Variable,
     public body : AST,

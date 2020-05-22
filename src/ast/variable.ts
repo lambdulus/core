@@ -4,6 +4,8 @@ import { ASTVisitor } from '../visitors'
 
 
 export class Variable extends AST {
+  type : string = 'variable'
+
   constructor (
     public readonly token : Token,
     public readonly identifier : symbol = Symbol(),

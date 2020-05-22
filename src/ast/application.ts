@@ -3,6 +3,8 @@ import { ASTVisitor } from '../visitors'
 
 
 export class Application extends AST implements Binary {
+  type : string = 'application'
+
   constructor (
     public left : AST,
     public right : AST,
