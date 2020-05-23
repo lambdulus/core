@@ -6,7 +6,7 @@ interface Plain {
   left? : Plain
   right? : Plain
   token? : any
-  macroTable : any
+  macroTable? : any
 }
 
 // TODO: in the future - decode even nested members like Token and such
