@@ -14,4 +14,4 @@ export { UsedVarNamesFinder } from './visitors/usedvarnamesfinder'
 
 export { VarBindFinder } from './visitors/varbindfinder' // TODO: tohle asi neni potreba
 
-export { decode } from './decoder'
+export { decodeSafe, decodeFast } from './decoder'
