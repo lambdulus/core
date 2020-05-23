@@ -3,6 +3,8 @@ interface Plain {
     type: string;
     left?: Plain;
     right?: Plain;
+    argument?: Plain;
+    body?: Plain;
     token?: any;
     macroTable?: any;
 }

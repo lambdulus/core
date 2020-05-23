@@ -5,6 +5,8 @@ interface Plain {
   type : string
   left? : Plain
   right? : Plain
+  argument? : Plain
+  body? : Plain
   token? : any
   macroTable? : any
 }
@@ -26,13 +28,13 @@ export function decode (tree : Plain) : AST | null {
     }
 
     case 'lambda': {
-      const left : any = tree.left
-      const right : any = tree.right
+      const argument : any = tree.argument
+      const body : any = tree.body
 
-      const leftNode : Variable | null = decode(left) as Variable
-      const rightNode : AST | null = decode(right)
+      const leftNode : Variable | null = decode(argument) as Variable
+      const rightNode : AST | null = decode(body)
 
-      if (left.type === 'variable' && leftNode !== null && rightNode !== null) {
+      if (argument.type === 'variable' && leftNode !== null && rightNode !== null) {
         return new Lambda(leftNode, rightNode)      
       }
       return null
