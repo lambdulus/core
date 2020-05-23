@@ -1,4 +1,6 @@
-import { ASTReduction } from "."
+import { ASTReduction, ASTReductionType } from "."
 
 
-export class None implements ASTReduction {}
+export class None implements ASTReduction {
+  type : ASTReductionType = ASTReductionType.NONE
+}

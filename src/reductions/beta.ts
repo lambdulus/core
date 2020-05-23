@@ -1,5 +1,5 @@
 import { AST, Child, Binary, Application } from "../ast"
-import { ASTReduction } from "."
+import { ASTReduction, ASTReductionType } from "."
 
 
 // TODO: vyresit pro pripady kdy jde o multilambdu
@@ -7,6 +7,8 @@ import { ASTReduction } from "."
 // spis mnozinu tuples
 // mozna ani vicekrokovou Betu delat nikdy nebudu
 export class Beta implements ASTReduction {
+  type : ASTReductionType = ASTReductionType.BETA
+
   constructor (
     public readonly redex : Application,
     public readonly parent : Binary | null,

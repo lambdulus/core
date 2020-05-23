@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const _1 = require(".");
 // TODO: vyresit pro pripady kdy jde o multilambdu
 // pak bude navic drzet mnozinu values a mnozinu arguments
 // spis mnozinu tuples
@@ -14,6 +15,7 @@ class Beta {
         this.target = target;
         this.argName = argName;
         this.value = value;
+        this.type = _1.ASTReductionType.BETA;
     }
 }
 exports.Beta = Beta;

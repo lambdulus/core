@@ -1,4 +1,6 @@
-export interface ASTReduction {}
+export interface ASTReduction {
+  type : ASTReductionType
+}
 
 export { Alpha } from './alpha'
 export { Beta } from './beta'
