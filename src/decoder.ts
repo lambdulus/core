@@ -1,8 +1,16 @@
 import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "./ast"
 
 
+interface Plain {
+  type : string
+  left? : Plain
+  right? : Plain
+  token? : any
+  macroTable : any
+}
+
 // TODO: in the future - decode even nested members like Token and such
-export function decode (tree : any) : AST | null {
+export function decode (tree : Plain) : AST | null {
   switch (tree.type) {
     case 'application': {
       const left : any = tree.left

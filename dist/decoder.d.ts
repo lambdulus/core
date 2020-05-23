@@ -1,2 +1,10 @@
 import { AST } from "./ast";
-export declare function decode(tree: any): AST | null;
+interface Plain {
+    type: string;
+    left?: Plain;
+    right?: Plain;
+    token?: any;
+    macroTable: any;
+}
+export declare function decode(tree: Plain): AST | null;
+export {};
