@@ -15,11 +15,11 @@ function decode(tree) {
             return null;
         }
         case 'lambda': {
-            const left = tree.left;
-            const right = tree.right;
-            const leftNode = decode(left);
-            const rightNode = decode(right);
-            if (left.type === 'variable' && leftNode !== null && rightNode !== null) {
+            const argument = tree.argument;
+            const body = tree.body;
+            const leftNode = decode(argument);
+            const rightNode = decode(body);
+            if (argument.type === 'variable' && leftNode !== null && rightNode !== null) {
                 return new ast_1.Lambda(leftNode, rightNode);
             }
             return null;
