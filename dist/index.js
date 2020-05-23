@@ -16,6 +16,7 @@ exports.ChurchNumeral = ast_1.ChurchNumeral;
 exports.Macro = ast_1.Macro;
 exports.Variable = ast_1.Variable;
 var reductions_1 = require("./reductions");
+exports.ASTReductionType = reductions_1.ASTReductionType;
 exports.Alpha = reductions_1.Alpha;
 exports.Beta = reductions_1.Beta;
 exports.Expansion = reductions_1.Expansion;
