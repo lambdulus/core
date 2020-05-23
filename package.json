@@ -9,7 +9,7 @@
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist/ ; tsc",
+    "build": "rm -rf ./dist/ ; rm tsbuildinfo ; tsc",
     "test": "npm run build ; node dist/test.js",
     "bench": "npm run build ; time node dist/test.js",
     "repl": "npm run build ; node dist/repl.js"
