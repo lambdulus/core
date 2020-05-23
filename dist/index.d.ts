@@ -10,4 +10,4 @@ export { BoundingFinder } from './visitors/boundingfinder';
 export { FreeVarsFinder } from './visitors/freevarsfinder';
 export { UsedVarNamesFinder } from './visitors/usedvarnamesfinder';
 export { VarBindFinder } from './visitors/varbindfinder';
-export { decode } from './decoder';
+export { decodeSafe, decodeFast } from './decoder';
