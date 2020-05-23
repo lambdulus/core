@@ -7,3 +7,12 @@ export { Eta } from './eta'
 export { None } from './none'
 
 export { Gama, arity } from './gama'
+
+export enum ASTReductionType {
+  ALPHA,
+  BETA,
+  EXPANSION,
+  ETA,
+  NONE,
+  GAMA
+}
