@@ -1,7 +1,7 @@
 import readline from 'readline'
 
 import { None } from './reductions'
-import { NormalEvaluator, NormalAbstractionEvaluator, Evaluator } from './evaluators'
+import { NormalEvaluator, /*NormalAbstractionEvaluator,*/ Evaluator } from './evaluators'
 import { AST } from './ast'
 import * as Parser from './parser/'
 import { Token, tokenize } from './lexer'
