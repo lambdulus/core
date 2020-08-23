@@ -83,6 +83,8 @@ lineReader.on('line', (line) => {
   
     console.log(printTree(root))
   }
+  console.log('')
+  console.log('Normalized in ' + e + ' steps.')
 })
 
 export function printTree (tree : AST) : string {

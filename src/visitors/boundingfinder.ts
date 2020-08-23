@@ -29,6 +29,10 @@ export class BoundingFinder extends ASTVisitor {
   }
   
   onLambda (lambda : Lambda) : void {
+    if (lambda.argument.name() === this.argName) {
+      return
+    }
+
     lambda.body.visit(this)
 
     this.unboundVars.delete(lambda.argument.name()) // binding argument name

@@ -73,6 +73,8 @@ lineReader.on('line', (line) => {
         e++;
         console.log(printTree(root));
     }
+    console.log('');
+    console.log('Normalized in ' + e + ' steps.');
 });
 function printTree(tree) {
     const printer = new basicprinter_1.BasicPrinter(tree);
