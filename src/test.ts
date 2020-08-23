@@ -5,7 +5,7 @@ import { BasicPrinter } from './visitors/basicprinter'
 import { NormalEvaluator } from './evaluators/normalevaluator'
 import { OptimizeEvaluator } from './evaluators/optimizeevaluator'
 import { ApplicativeEvaluator } from './evaluators/applicativeevaluator'
-import { NormalAbstractionEvaluator } from './evaluators/normalabstractionevaluator'
+// import { NormalAbstractionEvaluator } from './evaluators/normalabstractionevaluator' // To Be Deleted
 import { AST } from './ast'
 import { None } from './reductions/none'
 

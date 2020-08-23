@@ -8,7 +8,7 @@ export { Expansion } from './expansion'
 export { Eta } from './eta'
 export { None } from './none'
 
-export { Gama, arity } from './gama'
+// export { Gama, arity } from './gama' // To Be Deleted
 
 export enum ASTReductionType {
   ALPHA,

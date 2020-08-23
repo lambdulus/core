@@ -1,12 +1,12 @@
 import { AST } from "../ast"
 import { AlphaConverter, BetaReducer, Expander, EmptyReducer, Reducer } from './'
-import { ASTReduction, Alpha, Beta, Expansion, Gama } from "../reductions"
+import { ASTReduction, Alpha, Beta, Expansion, /* Gama */ } from "../reductions"
 import { Eta } from "../reductions/eta"
 import { EtaConverter } from "./etaconverter"
-import { GamaReducer } from "./gamareducer"
+// import { GamaReducer } from "./gamareducer" // To Be Deleted
 
 
-// TODO: implement for AbstractionApplication
+// TODO: implement for AbstractionApplication // To Be Deleted
 export function constructFor (tree : AST, nextReduction : ASTReduction) : Reducer {
   if (nextReduction instanceof Beta) {
     return new BetaReducer(nextReduction, tree)
@@ -20,14 +20,19 @@ export function constructFor (tree : AST, nextReduction : ASTReduction) : Reduce
   else if (nextReduction instanceof Eta) {
     return new EtaConverter(nextReduction, tree)
   }
-  else if (nextReduction instanceof Gama) {
-    if (GamaReducer.assertReduction(nextReduction)) {
-      return new GamaReducer(nextReduction, tree)
-    }
-    else {
-      throw new Error(`Invalid arguments of ${nextReduction.abstraction[0]}.`)
-    }
-  }
+  // To Be Deleted
+  // else if (nextReduction instanceof Gama) {
+  //   // maybe nothing of this will prevail
+  //   // I may implement everything including Gama reduction in the REPL - frontend side
+  //   // check arity - ofc
+  //   // but instead of throwing -> just return Gama with warning
+  //   if (GamaReducer.assertReduction(nextReduction)) {
+  //     return new GamaReducer(nextReduction, tree)
+  //   }
+  //   else {
+  //     throw new Error(`Invalid arguments of ${nextReduction.abstraction[0]}.`)
+  //   }
+  // }
   else {
     return new EmptyReducer(tree) // for None
   }
