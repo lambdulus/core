@@ -6,7 +6,6 @@ export { Beta } from './beta';
 export { Expansion } from './expansion';
 export { Eta } from './eta';
 export { None } from './none';
-export { Gama, arity } from './gama';
 export declare enum ASTReductionType {
     ALPHA = 0,
     BETA = 1,

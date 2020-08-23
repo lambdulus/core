@@ -10,8 +10,7 @@ var eta_1 = require("./eta");
 exports.Eta = eta_1.Eta;
 var none_1 = require("./none");
 exports.None = none_1.None;
-var gama_1 = require("./gama");
-exports.Gama = gama_1.Gama;
+// export { Gama, arity } from './gama' // To Be Deleted
 var ASTReductionType;
 (function (ASTReductionType) {
     ASTReductionType[ASTReductionType["ALPHA"] = 0] = "ALPHA";
