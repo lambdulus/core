@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AST = exports.Child = void 0;
 const basicprinter_1 = require("../visitors/basicprinter");
 var Child;
 (function (Child) {

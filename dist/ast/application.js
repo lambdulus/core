@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Application = void 0;
 const _1 = require("./");
 class Application extends _1.AST {
     constructor(left, right, identifier = Symbol()) {

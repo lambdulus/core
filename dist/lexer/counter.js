@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Counter = void 0;
 class Counter {
     constructor() {
         this.column = 0;

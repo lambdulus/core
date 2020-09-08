@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NormalAbstractionEvaluator = void 0;
 const visitors_1 = require("../visitors");
 const freevarsfinder_1 = require("../visitors/freevarsfinder");
 const ast_1 = require("../ast");

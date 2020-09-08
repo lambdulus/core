@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Macro = void 0;
 const _1 = require("./");
 class Macro extends _1.AST {
     constructor(token, 

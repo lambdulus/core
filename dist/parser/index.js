@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.parse = exports.builtinMacros = exports.MacroDef = void 0;
 const lexer_1 = require("../lexer");
 const parser_1 = require("./parser");
 class MacroDef {

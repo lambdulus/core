@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BetaReducer = void 0;
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");
 class BetaReducer extends visitors_1.ASTVisitor {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.VarBindFinder = void 0;
 const ast_1 = require("../ast");
 const _1 = require(".");
 // TODO: mozna vubec nebude potreba -> DELETE

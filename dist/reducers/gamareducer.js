@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GamaReducer = void 0;
 const visitors_1 = require("../visitors");
 const abstractions_1 = require("./abstractions");
 class GamaReducer extends visitors_1.ASTVisitor {

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.constructFor = void 0;
 const _1 = require("./");
 const reductions_1 = require("../reductions");
 const eta_1 = require("../reductions/eta");
