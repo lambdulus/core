@@ -36,9 +36,10 @@ const lineReader = readline_1.default.createInterface({
 });
 lineReader.on('line', (line) => {
     const tokens = lexer_1.tokenize(line, {
-        singleLetterVars: false,
+        singleLetterVars: true,
         lambdaLetters: ['λ', '\\', '~'],
     });
+    console.log(tokens);
     const ast = Parser.parse(tokens, {
         'R': '(λ f n . = n 1 1 (+ n (f (- n 1))))',
         'FACCT': '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
