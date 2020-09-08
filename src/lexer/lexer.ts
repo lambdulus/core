@@ -153,7 +153,14 @@ class Lexer {
         }
         else {
           this.readSLINonMacro(id, topPosition)
+          id = ''
         }
+      }
+
+      if (id !== '') {
+        const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
+        id = ''
+        this.tokens.push(identifier)
       }
 
       if (this.isNumeric(this.top())) {
