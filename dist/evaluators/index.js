@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NormalAbstractionEvaluator = exports.OptimizeEvaluator = exports.ApplicativeEvaluator = exports.NormalEvaluator = void 0;
 var normalevaluator_1 = require("./normalevaluator");
-exports.NormalEvaluator = normalevaluator_1.NormalEvaluator;
+Object.defineProperty(exports, "NormalEvaluator", { enumerable: true, get: function () { return normalevaluator_1.NormalEvaluator; } });
 var applicativeevaluator_1 = require("./applicativeevaluator");
-exports.ApplicativeEvaluator = applicativeevaluator_1.ApplicativeEvaluator;
+Object.defineProperty(exports, "ApplicativeEvaluator", { enumerable: true, get: function () { return applicativeevaluator_1.ApplicativeEvaluator; } });
 var optimizeevaluator_1 = require("./optimizeevaluator");
-exports.OptimizeEvaluator = optimizeevaluator_1.OptimizeEvaluator;
+Object.defineProperty(exports, "OptimizeEvaluator", { enumerable: true, get: function () { return optimizeevaluator_1.OptimizeEvaluator; } });
 var normalabstractionevaluator_1 = require("./normalabstractionevaluator");
-exports.NormalAbstractionEvaluator = normalabstractionevaluator_1.NormalAbstractionEvaluator;
+Object.defineProperty(exports, "NormalAbstractionEvaluator", { enumerable: true, get: function () { return normalabstractionevaluator_1.NormalAbstractionEvaluator; } });

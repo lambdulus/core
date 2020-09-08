@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.hintOperator = exports.InvalidCharacter = exports.InvalidOperator = exports.InvalidNumber = exports.InvalidIdentifier = void 0;
 class InvalidIdentifier extends Error {
     constructor(value, position) {
         super();

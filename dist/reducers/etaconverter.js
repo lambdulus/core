@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EtaConverter = void 0;
 const visitors_1 = require("../visitors");
 class EtaConverter extends visitors_1.ASTVisitor {
     constructor({ parent, treeSide, target }, tree) {

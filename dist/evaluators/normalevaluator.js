@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NormalEvaluator = void 0;
 const visitors_1 = require("../visitors");
 const freevarsfinder_1 = require("../visitors/freevarsfinder");
 const ast_1 = require("../ast");
 const boundingfinder_1 = require("../visitors/boundingfinder");
 const reducers_1 = require("../reducers");
 const reductions_1 = require("../reductions");
+const optimizeevaluator_1 = require("./optimizeevaluator");
 class NormalEvaluator extends visitors_1.ASTVisitor {
     constructor(tree) {
         super();
@@ -14,7 +16,14 @@ class NormalEvaluator extends visitors_1.ASTVisitor {
         this.child = null;
         this.nextReduction = new reductions_1.None;
         this.tree.visit(this);
-        this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        if (this.nextReduction instanceof reductions_1.None) {
+            const normal = new optimizeevaluator_1.OptimizeEvaluator(tree);
+            this.nextReduction = normal.nextReduction;
+            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        }
+        else {
+            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        }
     }
     onApplication(application) {
         if (application.left instanceof ast_1.Variable) {

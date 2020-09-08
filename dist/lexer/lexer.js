@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.tokenize = void 0;
 const counter_1 = require("./counter");
 const _1 = require("./");
 const errors_1 = require("./errors");

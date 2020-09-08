@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Beta = void 0;
 const _1 = require(".");
 // TODO: vyresit pro pripady kdy jde o multilambdu
 // pak bude navic drzet mnozinu values a mnozinu arguments

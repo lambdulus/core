@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Expander = void 0;
 const lexer_1 = require("../lexer");
 const ast_1 = require("../ast");
 const visitors_1 = require("../visitors");

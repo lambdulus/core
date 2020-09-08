@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ChurchNumeral = void 0;
 const _1 = require(".");
 class ChurchNumeral extends _1.AST {
     constructor(token, identifier = Symbol()) {
