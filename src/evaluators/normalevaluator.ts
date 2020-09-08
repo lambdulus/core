@@ -4,6 +4,7 @@ import { Binary, AST, Child, Application, Lambda, ChurchNumeral, Macro, Variable
 import { BoundingFinder } from "../visitors/boundingfinder"
 import { constructFor, Reducer } from "../reducers"
 import { ASTReduction, Beta, Alpha, Expansion, None } from "../reductions"
+import { OptimizeEvaluator } from "./optimizeevaluator"
 
 
 export class NormalEvaluator extends ASTVisitor {
@@ -19,7 +20,15 @@ export class NormalEvaluator extends ASTVisitor {
     super()
     this.tree.visit(this)
 
-    this.reducer = constructFor(tree, this.nextReduction)
+    if (this.nextReduction instanceof None) {
+      const normal : OptimizeEvaluator = new OptimizeEvaluator(tree)
+
+      this.nextReduction = normal.nextReduction
+      this.reducer = constructFor(tree, this.nextReduction)
+    }
+    else {
+      this.reducer = constructFor(tree, this.nextReduction)
+    }
   }
 
   onApplication (application : Application) : void {
