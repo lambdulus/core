@@ -20,16 +20,17 @@ export class ApplicativeEvaluator extends ASTVisitor {
     super()
     this.tree.visit(this)
 
-    if (this.nextReduction instanceof None) {
-      const normal : OptimizeEvaluator = new OptimizeEvaluator(tree)
+    // if (this.nextReduction instanceof None) {
+    //   const normal : OptimizeEvaluator = new OptimizeEvaluator(tree)
 
-      this.nextReduction = normal.nextReduction
-      this.reducer = constructFor(tree, this.nextReduction)
-    }
-    else {
-      this.reducer = constructFor(tree, this.nextReduction)
-    }
+    //   this.nextReduction = normal.nextReduction
+    //   this.reducer = constructFor(tree, this.nextReduction)
+    // }
+    // else {
+    //   this.reducer = constructFor(tree, this.nextReduction)
+    // }
 
+    this.reducer = constructFor(tree, this.nextReduction)
   }
 
   onApplication (application : Application) : void {
