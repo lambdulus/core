@@ -38,7 +38,7 @@ class Lexer {
     }
     couldBeMacro(str) {
         const delimiter = ':';
-        const allMacros = Object.keys(parser_1.builtinMacros).join(delimiter);
+        const allMacros = [...Object.keys(parser_1.builtinMacros), ...Object.keys(this.config.macromap)].join(delimiter);
         return allMacros.indexOf(':' + str) !== -1;
     }
     getCharToken(kind) {

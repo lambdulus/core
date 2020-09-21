@@ -49,7 +49,7 @@ class Expander extends visitors_1.ASTVisitor {
         // if I am parsing macro definition of the same macro I just found in that definition
         // then I have infinite recursion right? - prolly
         // so I wont parse it - for now!
-        const parser = new parser_1.Parser(lexer_1.tokenize(definition, { lambdaLetters: ['\\', 'λ'], singleLetterVars: false }), macro.macroTable);
+        const parser = new parser_1.Parser(lexer_1.tokenize(definition, { lambdaLetters: ['\\', 'λ'], singleLetterVars: false, macromap: macro.macroTable }), macro.macroTable);
         const expression = parser.parse(null);
         this.expanded = expression;
     }
