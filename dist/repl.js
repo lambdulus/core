@@ -35,11 +35,7 @@ const lineReader = readline_1.default.createInterface({
     terminal: false
 });
 lineReader.on('line', (line) => {
-    const tokens = lexer_1.tokenize(line, {
-        singleLetterVars: false,
-        lambdaLetters: ['λ', '\\', '~'],
-    });
-    const ast = Parser.parse(tokens, {
+    const macromap = {
         'R': '(λ f n . = n 1 1 (+ n (f (- n 1))))',
         'FACCT': '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
         'FACT': '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1)))))',
@@ -70,7 +66,13 @@ lineReader.on('line', (line) => {
         'FILTER': '(λ f l p r . NULL l r (p (CAR l) (f (CDR l) p (CONS (CAR l) r)) (f (CDR l) p r) ))',
         'CAR': '(λ p . p (λ f s . f))',
         'CDR': '(λ p . p (λ f s . s))',
+    };
+    const tokens = lexer_1.tokenize(line, {
+        singleLetterVars: false,
+        lambdaLetters: ['λ', '\\', '~'],
+        macromap,
     });
+    const ast = Parser.parse(tokens, macromap);
     let root = ast;
     let e = 0;
     // console.log(tokens)

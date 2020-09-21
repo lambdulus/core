@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parse = exports.builtinMacros = exports.MacroDef = void 0;
-const lexer_1 = require("../lexer");
 const parser_1 = require("./parser");
 class MacroDef {
     constructor(ast) {
@@ -42,11 +41,12 @@ exports.builtinMacros = {
     'NIL': '(λx. T)',
     'NULL': '(λp.p (λx y.F))',
 };
-function toAst(definition, macroTable) {
-    const codeStyle = { singleLetterVars: false, lambdaLetters: ['λ'] };
-    const parser = new parser_1.Parser(lexer_1.tokenize(definition, codeStyle), macroTable);
-    return parser.parse(null);
-}
+// TODO: remove
+// function toAst (definition : string, macroTable : MacroTable) : AST {
+//   const codeStyle : CodeStyle = { singleLetterVars : false, lambdaLetters : [ 'λ' ], macromap : {} }
+//   const parser : Parser = new Parser(tokenize(definition, codeStyle), macroTable)
+//   return parser.parse(null)
+// }
 function parse(tokens, userMacros) {
     const macroTable = {};
     // TODO: @dynamic-macros
