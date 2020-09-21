@@ -1,3 +1,5 @@
+import { MacroMap } from '../parser'
+
 export { tokenize } from './lexer'
 export { Token, TokenType } from './token'
 export {
@@ -13,4 +15,5 @@ export { BLANK_POSITION } from './position'
 export type CodeStyle = {
   singleLetterVars : boolean,
   lambdaLetters : Array<string>,
+  macromap : MacroMap,
 }

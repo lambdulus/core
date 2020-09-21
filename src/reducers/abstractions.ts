@@ -28,7 +28,7 @@ export class Abstractions {
 
         const lambdaValue : string = `${first.toString()} (Y ${first.toString()})`
 
-        const parser : Parser = new Parser(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ' ], singleLetterVars : false }), macroTable)
+        const parser : Parser = new Parser(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), macroTable)
 
         return parser.parse(null)
       }
@@ -47,7 +47,7 @@ export class Abstractions {
         const value : boolean = 0 === Number((<ChurchNumeral>first).name())
         const lambdaValue : string = value ? 'T' : 'F'
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'PRED' : [
@@ -64,7 +64,7 @@ export class Abstractions {
         const value : number = Math.max(0, Number(first) - 1)
         const lambdaValue : string = `${value}`
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'SUC' : [
@@ -81,7 +81,7 @@ export class Abstractions {
         const value : number = Number(first) + 1
         const lambdaValue : string = `${value}`
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'AND' : [
@@ -101,7 +101,7 @@ export class Abstractions {
         const value : boolean = firstBoolean && secondBoolean
         const lambdaValue : string = value ? 'T' : 'F'
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'OR' : [
@@ -121,7 +121,7 @@ export class Abstractions {
         const value : boolean = firstBoolean || secondBoolean
         const lambdaValue : string = value ? 'T' : 'F'
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'NOT' : [
@@ -141,7 +141,7 @@ export class Abstractions {
         const lambdaValue : string = negative ? 'T' : 'F'
         // TODO: if I create Boolean offspring of Macro - this place is to get more simple
 
-        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+        return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
       }
     ],
     'T' : [
@@ -262,7 +262,7 @@ export class Abstractions {
       const value : boolean = Number((<ChurchNumeral>first).name()) === Number((<ChurchNumeral>second).name())
       const lambdaValue = value ? 'T' : 'F'
 
-      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
     } ],
     '>' : [
       2,
@@ -276,7 +276,7 @@ export class Abstractions {
       const value : boolean = Number((<ChurchNumeral>first).name()) > Number((<ChurchNumeral>second).name())
       const lambdaValue = value ? 'T' : 'F'
 
-      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
     } ],
     '<' : [
       2,
@@ -290,7 +290,7 @@ export class Abstractions {
       const value : boolean = Number((<ChurchNumeral>first).name()) < Number((<ChurchNumeral>second).name())
       const lambdaValue = value ? 'T' : 'F'
 
-      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
     } ],
     '>=' : [
       2,
@@ -304,7 +304,7 @@ export class Abstractions {
       const value : boolean = Number((<ChurchNumeral>first).name()) >= Number((<ChurchNumeral>second).name())
       const lambdaValue = value ? 'T' : 'F'
 
-      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
     } ],
     '<=' : [
       2,
@@ -318,7 +318,7 @@ export class Abstractions {
       const value : boolean = Number((<ChurchNumeral>first).name()) <= Number((<ChurchNumeral>second).name())
       const lambdaValue = value ? 'T' : 'F'
 
-      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\' ], singleLetterVars : false }), {})
+      return parse(tokenize(lambdaValue, { lambdaLetters : [ '\\', 'λ', ], singleLetterVars : false, macromap : {} }), {})
     } ],
   }
 
