@@ -2,7 +2,7 @@ import readline from 'readline'
 
 import { None } from './reductions'
 import { NormalEvaluator, NormalAbstractionEvaluator, Evaluator } from './evaluators'
-import { AST } from './ast'
+import { AST, Macro } from './ast'
 import * as Parser from './parser/'
 import { Token, tokenize } from './lexer'
 import { BasicPrinter } from './visitors/basicprinter'
@@ -14,12 +14,7 @@ const lineReader = readline.createInterface({
 });
 
 lineReader.on('line', (line) => {
-  const tokens : Array<Token> = tokenize(line, {
-    singleLetterVars : false,
-    lambdaLetters : [ 'λ', '\\', '~' ],
-  })
-  
-  const ast : AST = Parser.parse(tokens, {
+  const macromap : Parser.MacroMap = {
     'R' : '(λ f n . = n 1 1 (+ n (f (- n 1))))',
     
     'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
@@ -59,7 +54,14 @@ lineReader.on('line', (line) => {
     'FILTER' : '(λ f l p r . NULL l r (p (CAR l) (f (CDR l) p (CONS (CAR l) r)) (f (CDR l) p r) ))',
     'CAR' : '(λ p . p (λ f s . f))',
     'CDR' : '(λ p . p (λ f s . s))',
+  }
+  const tokens : Array<Token> = tokenize(line, {
+    singleLetterVars : false,
+    lambdaLetters : [ 'λ', '\\', '~' ],
+    macromap,
   })
+  
+  const ast : AST = Parser.parse(tokens, macromap)
   let root : AST = ast
   let e = 0
 

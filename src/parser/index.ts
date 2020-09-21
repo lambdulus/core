@@ -52,12 +52,13 @@ export const builtinMacros : MacroMap = {
   'NULL' : '(λp.p (λx y.F))',
 }
 
-function toAst (definition : string, macroTable : MacroTable) : AST {
-  const codeStyle : CodeStyle = { singleLetterVars : false, lambdaLetters : [ 'λ' ] }
-  const parser : Parser = new Parser(tokenize(definition, codeStyle), macroTable)
+// TODO: remove
+// function toAst (definition : string, macroTable : MacroTable) : AST {
+//   const codeStyle : CodeStyle = { singleLetterVars : false, lambdaLetters : [ 'λ' ], macromap : {} }
+//   const parser : Parser = new Parser(tokenize(definition, codeStyle), macroTable)
   
-  return parser.parse(null)
-}
+//   return parser.parse(null)
+// }
 
 export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   const macroTable : MacroTable = {}

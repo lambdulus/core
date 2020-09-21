@@ -67,7 +67,7 @@ export class Expander extends ASTVisitor {
     // then I have infinite recursion right? - prolly
     // so I wont parse it - for now!
 
-    const parser : Parser = new Parser(tokenize(definition, { lambdaLetters : [ '\\', 'λ' ], singleLetterVars : false }), macro.macroTable)
+    const parser : Parser = new Parser(tokenize(definition, { lambdaLetters : [ '\\', 'λ' ], singleLetterVars : false, macromap : macro.macroTable }), macro.macroTable)
 
     const expression : AST = parser.parse(null)
     this.expanded = expression

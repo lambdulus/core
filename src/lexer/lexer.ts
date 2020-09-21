@@ -50,7 +50,7 @@ class Lexer {
 
   couldBeMacro (str : string) : boolean {
     const delimiter : string = ':'
-    const allMacros : string = Object.keys(builtinMacros).join(delimiter)
+    const allMacros : string = [...Object.keys(builtinMacros), ...Object.keys(this.config.macromap)].join(delimiter)
 
     return allMacros.indexOf(':' + str) !== -1
   }
