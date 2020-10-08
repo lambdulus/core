@@ -8,10 +8,10 @@ export { Eta } from './eta';
 export { None } from './none';
 export { Gama, arity } from './gama';
 export declare enum ASTReductionType {
-    ALPHA = 0,
-    BETA = 1,
-    EXPANSION = 2,
-    ETA = 3,
-    NONE = 4,
-    GAMA = 5
+    ALPHA = "ALPHA",
+    BETA = "BETA",
+    EXPANSION = "EXPANSION",
+    ETA = "ETA",
+    NONE = "NONE",
+    GAMA = "GAMA"
 }

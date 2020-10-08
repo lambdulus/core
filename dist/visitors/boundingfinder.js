@@ -13,11 +13,14 @@ class BoundingFinder extends _1.ASTVisitor {
         tree.body.visit(this);
     }
     onApplication(application) {
-        const unbounds = this.unboundVars;
+        const unbounds = new Set(this.unboundVars);
+        let combined = new Set;
         application.left.visit(this);
+        combined = new Set([...combined.values(), ...this.unboundVars.values()]);
         this.unboundVars = unbounds;
         application.right.visit(this);
-        this.unboundVars = unbounds;
+        combined = new Set([...combined.values(), ...this.unboundVars.values()]);
+        this.unboundVars = combined;
     }
     onLambda(lambda) {
         if (lambda.argument.name() === this.argName) {

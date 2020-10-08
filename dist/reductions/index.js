@@ -15,10 +15,10 @@ var gama_1 = require("./gama");
 Object.defineProperty(exports, "Gama", { enumerable: true, get: function () { return gama_1.Gama; } });
 var ASTReductionType;
 (function (ASTReductionType) {
-    ASTReductionType[ASTReductionType["ALPHA"] = 0] = "ALPHA";
-    ASTReductionType[ASTReductionType["BETA"] = 1] = "BETA";
-    ASTReductionType[ASTReductionType["EXPANSION"] = 2] = "EXPANSION";
-    ASTReductionType[ASTReductionType["ETA"] = 3] = "ETA";
-    ASTReductionType[ASTReductionType["NONE"] = 4] = "NONE";
-    ASTReductionType[ASTReductionType["GAMA"] = 5] = "GAMA";
+    ASTReductionType["ALPHA"] = "ALPHA";
+    ASTReductionType["BETA"] = "BETA";
+    ASTReductionType["EXPANSION"] = "EXPANSION";
+    ASTReductionType["ETA"] = "ETA";
+    ASTReductionType["NONE"] = "NONE";
+    ASTReductionType["GAMA"] = "GAMA";
 })(ASTReductionType = exports.ASTReductionType || (exports.ASTReductionType = {}));
