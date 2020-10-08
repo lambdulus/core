@@ -11,10 +11,10 @@ export { None } from './none'
 export { Gama, arity } from './gama'
 
 export enum ASTReductionType {
-  ALPHA,
-  BETA,
-  EXPANSION,
-  ETA,
-  NONE,
-  GAMA
+  ALPHA = 'ALPHA',
+  BETA = 'BETA',
+  EXPANSION = 'EXPANSION',
+  ETA = 'ETA',
+  NONE = 'NONE',
+  GAMA = 'GAMA',
 }

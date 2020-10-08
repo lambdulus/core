@@ -82,7 +82,7 @@ lineReader.on('line', (line) => {
     root = evaluator.perform() // perform next reduction
   
     e++
-  
+    // console.log(evaluator.nextReduction.type)
     console.log(printTree(root))
   }
   console.log('')

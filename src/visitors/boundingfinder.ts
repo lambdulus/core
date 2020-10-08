@@ -19,13 +19,16 @@ export class BoundingFinder extends ASTVisitor {
   }
 
   onApplication (application : Application) : void {
-    const unbounds : Set<string> = this.unboundVars
+    const unbounds : Set<string> = new Set(this.unboundVars)
+    let combined : Set<string> = new Set
 
     application.left.visit(this)
+    combined = new Set([...combined.values(), ...this.unboundVars.values()])
     this.unboundVars = unbounds
 
     application.right.visit(this)
-    this.unboundVars = unbounds
+    combined = new Set([...combined.values(), ...this.unboundVars.values()])
+    this.unboundVars = combined
   }
   
   onLambda (lambda : Lambda) : void {
