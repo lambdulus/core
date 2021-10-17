@@ -1,4 +1,4 @@
-#dist # only non ignored because I need to "publish" on GIT instead of NPM
+dist
 node_modules
 tsbuildinfo
 .vscode
