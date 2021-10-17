@@ -44,7 +44,7 @@ Abstractions.knownAbstractions = {
                 macroTable = first.macroTable;
             }
             const lambdaValue = `${first.toString()} (Y ${first.toString()})`;
-            const parser = new parser_2.Parser(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), macroTable);
+            const parser = new parser_2.Parser((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), macroTable);
             return parser.parse(null);
         }
     ],
@@ -59,7 +59,7 @@ Abstractions.knownAbstractions = {
             const [first] = args;
             const value = 0 === Number(first.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'PRED': [
@@ -73,7 +73,7 @@ Abstractions.knownAbstractions = {
             const [first] = args;
             const value = Math.max(0, Number(first) - 1);
             const lambdaValue = `${value}`;
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'SUC': [
@@ -87,7 +87,7 @@ Abstractions.knownAbstractions = {
             const [first] = args;
             const value = Number(first) + 1;
             const lambdaValue = `${value}`;
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'AND': [
@@ -103,7 +103,7 @@ Abstractions.knownAbstractions = {
             const secondBoolean = second.name() === 'T' ? true : false;
             const value = firstBoolean && secondBoolean;
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'OR': [
@@ -119,7 +119,7 @@ Abstractions.knownAbstractions = {
             const secondBoolean = second.name() === 'T' ? true : false;
             const value = firstBoolean || secondBoolean;
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'NOT': [
@@ -136,7 +136,7 @@ Abstractions.knownAbstractions = {
             const negative = !value;
             const lambdaValue = negative ? 'T' : 'F';
             // TODO: if I create Boolean offspring of Macro - this place is to get more simple
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     'T': [
@@ -254,7 +254,7 @@ Abstractions.knownAbstractions = {
             const [first, second] = args;
             const value = Number(first.name()) === Number(second.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     '>': [
@@ -267,7 +267,7 @@ Abstractions.knownAbstractions = {
             const [first, second] = args;
             const value = Number(first.name()) > Number(second.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     '<': [
@@ -280,7 +280,7 @@ Abstractions.knownAbstractions = {
             const [first, second] = args;
             const value = Number(first.name()) < Number(second.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     '>=': [
@@ -293,7 +293,7 @@ Abstractions.knownAbstractions = {
             const [first, second] = args;
             const value = Number(first.name()) >= Number(second.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
     '<=': [
@@ -306,7 +306,7 @@ Abstractions.knownAbstractions = {
             const [first, second] = args;
             const value = Number(first.name()) <= Number(second.name());
             const lambdaValue = value ? 'T' : 'F';
-            return parser_1.parse(lexer_1.tokenize(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
+            return (0, parser_1.parse)((0, lexer_1.tokenize)(lambdaValue, { lambdaLetters: ['\\', 'λ',], singleLetterVars: false, macromap: {} }), {});
         }
     ],
 };

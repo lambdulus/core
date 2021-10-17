@@ -34,6 +34,14 @@ exports.builtinMacros = {
     '<': '(λ m n . > n m )',
     '>=': '(λ m n . ZERO (- n m))',
     '<=': '(λ m n . ZERO (- m n))',
+    // TODO: uncomment these once PPA students reach them
+    // 'IF' : '(λ p t e . p t e)',
+    // 'PAIR' : '(λ f s . (λ g . g f s))',
+    // 'FIRST' : '(λ p . p (λ f s . f))',
+    // 'SECOND' : '(λ p . p (λ f s . s))',
+    // 'CONS' : '(λ car cdr . (λ g . g car cdr))',
+    // 'NIL' : '(λx. T)',
+    // 'NULL' : '(λp.p (λx y.F))',
 };
 // TODO: remove
 // function toAst (definition : string, macroTable : MacroTable) : AST {

@@ -19,14 +19,14 @@ class SimplifiedNormalEvaluator extends visitors_1.ASTVisitor {
         this.nextReduction = new reductions_1.None;
         this.tree.visit(this);
         try {
-            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+            this.reducer = (0, reducers_1.constructFor)(tree, this.nextReduction);
         }
         catch (exception) {
             if (this.nextReduction instanceof reductions_1.Gama) {
                 this.nextReduction.parent = this.originalParent;
             }
             this.nextReduction = this.originalReduction;
-            this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+            this.reducer = (0, reducers_1.constructFor)(tree, this.nextReduction);
         }
     }
     onApplication(application) {

@@ -188,13 +188,13 @@ class Parser {
             if (this.eof() && this.openSubexpressions !== 0) {
                 throw "It seems like you forgot to write one or more closing parentheses.";
             }
-            return _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', lexer_1.BLANK_POSITION)], {});
+            return (0, _1.parse)([new lexer_1.Token(lexer_1.TokenType.Identifier, 'NIL', lexer_1.BLANK_POSITION)], {});
         }
         else {
             // TODO: There would be real fun if I used parser itself to handle two of the applications.
             // like return Parser.parse(`${this.parseExpression()} CONS ${this.parseQuoted}`)
             const expr = this.parseExpression();
-            const left = _1.parse([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', lexer_1.BLANK_POSITION)], {});
+            const left = (0, _1.parse)([new lexer_1.Token(lexer_1.TokenType.Identifier, 'CONS', lexer_1.BLANK_POSITION)], {});
             const app = new ast_1.Application(left, expr);
             return new ast_1.Application(app, this.parseQuoted());
         }
