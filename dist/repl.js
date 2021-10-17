@@ -67,7 +67,7 @@ lineReader.on('line', (line) => {
         'CAR': '(λ p . p (λ f s . f))',
         'CDR': '(λ p . p (λ f s . s))',
     };
-    const tokens = lexer_1.tokenize(line, {
+    const tokens = (0, lexer_1.tokenize)(line, {
         singleLetterVars: false,
         lambdaLetters: ['λ', '\\', '~'],
         macromap,

@@ -16,7 +16,7 @@ class OptimizeEvaluator extends visitors_1.ASTVisitor {
         this.child = null;
         this.nextReduction = new reductions_1.None;
         this.tree.visit(this);
-        this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        this.reducer = (0, reducers_1.constructFor)(tree, this.nextReduction);
     }
     onApplication(application) {
         this.parent = application;

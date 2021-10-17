@@ -3,9 +3,8 @@
   "version": "0.0.3",
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
-  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^12.12.28"
+    "@types/node": "^12.20.33"
   },
   "types": "./dist/index.d.ts",
   "scripts": {

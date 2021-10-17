@@ -95,6 +95,10 @@ const valids = [
     '( + ]',
     '( 23 ]',
     '(( a ]',
+    // invalids
+    // '(λ _x . x x)', // invalid cause of _x
+    // 'A B C () E', // netusim jestli tohle chci mit jako validni NECHCI
+    // 'A (B C) D ()', // ani tohle netusim NECHCI
 ];
 const invalids = [
     // invalid exprs
@@ -111,7 +115,7 @@ const invalids = [
     // ] bracket 
     '(  ]',
     '(]',
-    '( a ( ]',
+    '( a ( ]', // SHOULD FAIL
 ];
 function testValids() {
     for (const expr of valids) {
@@ -127,7 +131,7 @@ function testValids() {
             'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
         };
         try {
-            const tokens = lexer_1.tokenize(expr, {
+            const tokens = (0, lexer_1.tokenize)(expr, {
                 singleLetterVars: false,
                 lambdaLetters: ['λ', '\\', '~'],
                 macromap,
@@ -157,7 +161,7 @@ function testInvalids() {
             'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
         };
         try {
-            const tokens = lexer_1.tokenize(expr, {
+            const tokens = (0, lexer_1.tokenize)(expr, {
                 singleLetterVars: false,
                 lambdaLetters: ['λ', '\\', '~'],
                 macromap
@@ -216,7 +220,7 @@ const macromap = {
     'APPEND': 'Y (λ fn listA listB . IF (NULL listA) (listB) (CONS (FIRST listA) (fn (SECOND listA) listB)))',
     'QUICKSORT': 'Y (λ fn list . IF (NULL list) (NIL) ( IF (NULL (SECOND list)) (list) ( APPEND (fn (LISTLESS (FIRST list) list)) ( APPEND (LISTEQ (FIRST list) list) (fn (LISTGR (FIRST list) list)) ) ) ) )',
 };
-const tokens = lexer_1.tokenize(valids[0], {
+const tokens = (0, lexer_1.tokenize)(valids[0], {
     singleLetterVars: false,
     lambdaLetters: ['λ', '\\', '~'],
     macromap,

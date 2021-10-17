@@ -23,7 +23,7 @@ class ApplicativeEvaluator extends visitors_1.ASTVisitor {
         // else {
         //   this.reducer = constructFor(tree, this.nextReduction)
         // }
-        this.reducer = reducers_1.constructFor(tree, this.nextReduction);
+        this.reducer = (0, reducers_1.constructFor)(tree, this.nextReduction);
     }
     onApplication(application) {
         if (application.left instanceof ast_1.Lambda) {
