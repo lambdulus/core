@@ -92,7 +92,7 @@ export class AlphaConverter extends ASTVisitor {
     // TODO: this is dirty quick fix/implementation - possibly refactor later
     let suffix : number = 1
     let varname : string = 'a'
-    while (suffix <= 8 && usedNames.has(`${original}${suffix}`)) { // because 9 can't be incremented to 10
+    while (suffix <= 9 && usedNames.has(`${original}${suffix}`)) {
       suffix++
     }
     if (suffix >= 10) {
