@@ -91,10 +91,18 @@ export class AlphaConverter extends ASTVisitor {
   createUniqueName(original : string, usedNames : Set<string>) : string {
     // TODO: this is dirty quick fix/implementation - possibly refactor later
     let suffix : number = 1
-    while (usedNames.has(`${original}00${suffix}`)) {
+    let varname : string = 'a'
+    while (suffix <= 8 && usedNames.has(`${original}${suffix}`)) { // because 9 can't be incremented to 10
       suffix++
     }
-
-    return `${original}00${suffix}`
+    if (suffix >= 10) {
+      while (usedNames.has(varname)) {
+        varname = String.fromCharCode(varname.charCodeAt(0) + 1)
+      }
+      return varname
+    }
+    else {
+      return `${original}${suffix}`
+    }
   }
 }
