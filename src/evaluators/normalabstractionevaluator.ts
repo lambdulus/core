@@ -126,7 +126,7 @@ export class NormalAbstractionEvaluator extends ASTVisitor {
   }
 
   onMacro (macro : Macro) : void {
-    if ( ! (macro.name() in builtinMacros)) {
+    if ( ! Object.prototype.hasOwnProperty.call(builtinMacros, macro.name())) {
       this.originalReduction = new Expansion(this.parent, this.child, macro)
       this.nextReduction = this.originalReduction
       this.originalParent = this.parent

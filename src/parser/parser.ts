@@ -8,7 +8,7 @@ export class Parser {
   private openSubexpressions : number = 0
 
   private isMacro (token : Token) : boolean {
-    return token.value in this.macroTable
+    return Object.prototype.hasOwnProperty.call(this.macroTable, token.value)
   }
 
   constructor (
@@ -98,7 +98,7 @@ export class Parser {
     if (this.canAccept(TokenType.Identifier)) {
       const id : Token = this.accept(TokenType.Identifier)
 
-      if (id.value in builtinMacros) {
+      if (Object.prototype.hasOwnProperty.call(builtinMacros, id.value)) {
         throw new Error('Known Macro name can not stand as an argument name.')
       }
 
@@ -154,7 +154,7 @@ export class Parser {
           
         const id : Token = this.accept(TokenType.Identifier)
 
-        if (id.value in builtinMacros) {
+        if (Object.prototype.hasOwnProperty.call(builtinMacros, id.value)) {
           throw new Error('Known Macro name can not stand as an argument name.')
         }
 

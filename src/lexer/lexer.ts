@@ -141,7 +141,7 @@ class Lexer {
           id += this.pop()
         }
 
-        if (id in builtinMacros && this.isWhiteSpace(this.top())) {
+        if (Object.prototype.hasOwnProperty.call(builtinMacros, id) && this.isWhiteSpace(this.top())) {
           // normalne vytvorit id -> vynulovat -> pushnout
           const identifier : Token = new Token(TokenType.Identifier, id, topPosition)
           id = ''
