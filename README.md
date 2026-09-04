@@ -1,5 +1,44 @@
 # This is Core module of project Lambdulus
 
+The lambda-calculus engine behind Lambdulus: lexer, parser, AST,
+reducers, step-by-step evaluators, and AST visitors. Consumed by
+`@lambdulus/frontend` as `@lambdulus/core` from npm.
+
+## Development
+
+Requires Node 20+.
+
+- `npm ci` — install dependencies
+- `npm run build` — typecheck and emit to `dist/` (regenerated, never committed)
+- `npm test` — run the vitest suite (`src/expressions.test.ts`: every valid
+  example must parse, every invalid one must throw)
+- `npm run repl` — stdin REPL: type an expression per line, watch it normalize
+
+CI (`.github/workflows/nodejs.yml`) runs build + tests on Node 20 and 22
+for every push and pull request.
+
+## Publishing
+
+`dist/` is rebuilt automatically on `npm run prepack`, so `npm publish`
+always ships code matching `src/`. Bump `version` in `package.json` and
+regenerate the lockfile when releasing.
+
+## API overview
+
+- `lexer`: `tokenize(input, { singleLetterVars, lambdaLetters, macromap })`
+- `parser`: `parse(tokens, macromap)`, `builtinMacros`, `MacroTable`
+- `ast`: `Application`, `Lambda`, `Variable`, `Macro`, `ChurchNumeral`
+- `evaluators`: `NormalEvaluator`, `ApplicativeEvaluator`,
+  `NormalAbstractionEvaluator`, `OptimizeEvaluator` (plus the simplified
+  normal evaluator) — each exposes `nextReduction` and `perform()` for
+  single-stepping
+- `reducers` / `reductions`: alpha, beta, eta, gamma, expansion, none
+- `visitors`: `BasicPrinter`, `FreeVarsFinder`, `BoundingFinder`,
+  `UsedVarNamesFinder`
+- `macros.ts`: `demoMacroTable`, the demo macro table shared by the REPL
+  (the test suite deliberately uses a smaller table — extra entries change
+  how expressions lex)
+
 ## Documentation of some features (will be growing with time)
 
 ### SLI - Single Letter Identifiers
