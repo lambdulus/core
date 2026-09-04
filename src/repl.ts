@@ -18,7 +18,7 @@ lineReader.on('line', (line) => {
   const macromap : Parser.MacroMap = demoMacroTable
   const tokens : Array<Token> = tokenize(line, {
     singleLetterVars : false,
-    lambdaLetters : [ 'λ', '\\', '~' ],
+    lambdaLetters : [ 'λ', '\\' ],
     macromap,
   })
   
