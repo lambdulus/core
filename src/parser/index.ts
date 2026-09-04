@@ -2,20 +2,12 @@ import { Token, CodeStyle, tokenize } from '../lexer'
 import { Parser } from './parser'
 import { AST } from '../ast'
 
-export class MacroDef {
-  constructor (
-    public readonly ast : AST,
-  ) {}
-}
-
-export interface MacroTable {
-  // [ name : string ] : MacroDef
-  [ name : string ] : string
-}
-
 export interface MacroMap {
   [ name : string ] : string
 }
+
+// Historical alias kept so existing imports keep working.
+export type MacroTable = MacroMap
 
 export const builtinMacros : MacroMap = {
   // TODO: uncomment these once PPA students reach them
@@ -75,7 +67,7 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   }
 
   for (const [ name, definition ] of Object.entries(userMacros)) {
-    if (name in builtinMacros) {
+    if (Object.prototype.hasOwnProperty.call(builtinMacros, name)) {
       throw new Error('Cannot redefine built-in Macro [ ' + name + ' ]')
     }
 

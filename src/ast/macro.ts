@@ -1,6 +1,6 @@
 import { Token } from '../lexer'
 import { AST } from './'
-import { MacroDef, MacroTable } from '../parser'
+import { MacroTable } from '../parser'
 import { ASTVisitor } from '../visitors'
 
 
