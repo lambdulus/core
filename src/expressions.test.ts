@@ -18,7 +18,7 @@ const macromap : MacroMap = {
 
 const style : CodeStyle = {
   singleLetterVars : false,
-  lambdaLetters : [ 'λ', '\\', '~' ],
+  lambdaLetters : [ 'λ', '\\' ],
   macromap,
 }
 
@@ -50,42 +50,42 @@ const valids : Array<string> = [
   `'(A)`,
   `'(A B)`,
   `'(A B C D E)`,
-  '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 7', // factorial with accumulator
+  '(\\ n . (Y (\\ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 7', // factorial with accumulator
   'QUICKSORT SHORTLIST',
   'QUICKSORT MESSLIST',
-  'Z (~ f n . (NOT n) 1 (f (- n 1))) 1',
+  'Z (\\ f n . (NOT n) 1 (f (- n 1))) 1',
   'Z (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 2',
-  'Z (~ f n . (NOT n) (f (NOT n)) E) F',
+  'Z (\\ f n . (NOT n) (f (NOT n)) E) F',
   '(λ p q . q) (   (λ x y z. (x y) z)  (λ w v. w)   )',
-  '(~ x y f . f x y) ((~ y . y m) (n e))',
+  '(\\ x y f . f x y) ((\\ y . y m) (n e))',
   '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
-  'Z (~ f n . (= n 1) 1 (+ n (f (- n 1) )) ) 1',
+  'Z (\\ f n . (= n 1) 1 (+ n (f (- n 1) )) ) 1',
   'NOT (ZERO 3)',
-  '(~ m . (~ n . = n 1) m) 1',
+  '(\\ m . (\\ n . = n 1) m) 1',
   '< 1 2',
   '(λx. + x x)((λp. + p 4) 3)',
-  '(~ n . + n 1)(+ 3 2)',
+  '(\\ n . + n 1)(+ 3 2)',
   '(λ x y. (< x y) x y) 2 3',
   '5 4',
   '^ 4 5',
   '+ 4 4',
   '(λ n . (Z (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n)) 3',
-  '(~ n . (Y (~ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
+  '(\\ n . (Y (\\ f n a . (<= n 1) a (f (- n 1) (* n a)))) (- n 1) (n) ) 6', // factorial with accumulator
   '+ (23) 4',
   '(Y (λ f n . (<= n 1) 1 (* n (f (- n 1))) ) 5)', // factorial without accumulator
   '(Y (λ f n . (= n 0) 0 ((= n 1) 1 ( + (f (- n 1)) (f (- n 2))))) 4)', // fibonacci
-  // '(~ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
+  // '(\\ xyz . zyx ) 1 2 3', // TEST with singlelettervars set to true
   'x (λ s z . s (s z)) ((λ b . k (k b)) l)',
   'x (λ s z . s (s z)) ((λ a b . a (a b)) k l)',
   '(x 2) (2 s z)',
-  '(~ x y . (~ z . x) z ) (x y)',
-  '(~ z . z (~ x . (~ x . z))) (x z) 1 2',
-  '(~ z . z (~ x . z)) (x y z)',
-  '((~ x y z . (~ y . y y) x x y y z) (x y z) A z)',
-  '(~ x y z . x y z) y z x',
+  '(\\ x y . (\\ z . x) z ) (x y)',
+  '(\\ z . z (\\ x . (\\ x . z))) (x z) 1 2',
+  '(\\ z . z (\\ x . z)) (x y z)',
+  '((\\ x y z . (\\ y . y y) x x y y z) (x y z) A z)',
+  '(\\ x y z . x y z) y z x',
   '1 a',
   '^ 4 4',
-  '(~ x y z . x y z) 1 2 3',
+  '(\\ x y z . x y z) 1 2 3',
   '(\\ x y z . x y z)',
   '(λ x . x x) A',
   '(λ x . x x)',
@@ -158,14 +158,14 @@ describe('invalid expressions throw', () => {
 })
 
 // These three were listed among the valid examples in the original script,
-// but the parser rejects them today (macro-as-binder is forbidden; SLI-style
-// digit runs need singleLetterVars). Locked in as currently-rejected so the
-// discrepancy stays visible; deciding their intended validity is future work.
+// but the parser rejects them, which is the intended behavior: macro names
+// are not legal lambda parameters, and SLI-style digit runs need
+// singleLetterVars. Locked in so the rule stays guarded.
 describe('listed-as-valid but currently rejected', () => {
   const disputed : Array<string> = [
     `ZERO1ZERO0ZERO2 0`,
-    `(~ ZERO . ZERO 0)`,
-    `(~ x1x2x. + x1 x2 x3)`,
+    `(\\ ZERO . ZERO 0)`,
+    `(\\ x1x2x. + x1 x2 x3)`,
   ]
 
   for (const expr of disputed) {
