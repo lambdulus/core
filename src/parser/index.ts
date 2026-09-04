@@ -10,11 +10,8 @@ export interface MacroMap {
 export type MacroTable = MacroMap
 
 export const builtinMacros : MacroMap = {
-  // TODO: uncomment these once PPA students reach them
   'Y' : '(λ f . (λ x . f (x x)) (λ x . f (x x)))',
-  // 'Z' : '(λ f . (λ y . f (λ z . y y z)) (λ y . f (λ z . y y z)))',
   'ZERO' : '(λ n . n (λ x . (λ t f . f)) (λ t f . t))',
-  // TODO: uncomment these once PPA students reach them
   'PRED' : '(λ x s z . x (λ f g . g (f s)) (λ g . z) (λ u . u))',
   'SUC' : '(λ n s z . s (n s z))',
   'AND' : '(λ x y . x y x)',
@@ -35,15 +32,6 @@ export const builtinMacros : MacroMap = {
   '<' : '(λ m n . > n m )',
   '>=' : '(λ m n . ZERO (- n m))',
   '<=' : '(λ m n . ZERO (- m n))',
-  // TODO: uncomment these once PPA students reach them
-  // 'IF' : '(λ p t e . p t e)',
-  // 'PAIR' : '(λ f s . (λ g . g f s))',
-  // 'FIRST' : '(λ p . p (λ f s . f))',
-  // 'SECOND' : '(λ p . p (λ f s . s))',
-  
-  // 'CONS' : '(λ car cdr . (λ g . g car cdr))',
-  // 'NIL' : '(λx. T)',
-  // 'NULL' : '(λp.p (λx y.F))',
 }
 
 // TODO: remove
