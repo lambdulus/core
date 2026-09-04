@@ -4,14 +4,18 @@
   "description": "Core module for Lambdulus Project.",
   "main": "./dist/index.js",
   "devDependencies": {
-    "@types/node": "^12.20.33"
+    "@types/node": "^20.12.0",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.4.5"
   },
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./dist/ ; rm tsbuildinfo ; tsc",
-    "test": "npm run build ; node dist/test.js",
-    "bench": "npm run build ; time node dist/test.js",
-    "repl": "npm run build ; node dist/repl.js"
+    "clean": "rimraf dist tsbuildinfo",
+    "build": "npm run clean && tsc",
+    "prepack": "npm run build",
+    "test": "npm run build && node dist/test.js",
+    "bench": "npm run build && node dist/test.js",
+    "repl": "npm run build && node dist/repl.js"
   },
   "repository": {
     "type": "git",
