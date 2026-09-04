@@ -2,6 +2,7 @@ import { describe, expect, test } from 'vitest'
 
 import { tokenize, CodeStyle } from './lexer'
 import { parse, MacroMap } from './parser'
+import { Variable } from './ast'
 
 const macromap : MacroMap = {
       'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
@@ -170,6 +171,20 @@ describe('listed-as-valid but currently rejected', () => {
   for (const expr of disputed) {
     test(expr.slice(0, 80), () => {
       expect(() => parse(tokenize(expr, style), macromap)).toThrow()
+    })
+  }
+})
+
+// Object-prototype names (constructor, toString, ...) must lex as plain
+// variables. The macro lookup used the `in` operator, which matches
+// inherited properties and produced bogus Macro nodes.
+describe('prototype names are variables, not macros', () => {
+  const names : Array<string> = [ 'constructor', 'toString', 'hasOwnProperty', 'valueOf' ]
+
+  for (const name of names) {
+    test(name, () => {
+      const root = parse(tokenize(name, style), macromap)
+      expect(root).toBeInstanceOf(Variable)
     })
   }
 })
