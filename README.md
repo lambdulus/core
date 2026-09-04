@@ -1,5 +1,7 @@
 # This is Core module of project Lambdulus
 
+[![Node CI](https://github.com/lambdulus/core/actions/workflows/nodejs.yml/badge.svg)](https://github.com/lambdulus/core/actions/workflows/nodejs.yml)
+
 The lambda-calculus engine behind Lambdulus: lexer, parser, AST,
 reducers, step-by-step evaluators, and AST visitors. Consumed by
 `@lambdulus/frontend` as `@lambdulus/core` from npm.
