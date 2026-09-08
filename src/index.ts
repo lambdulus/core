@@ -1,5 +1,5 @@
 export { Token, TokenType, CodeStyle, tokenize } from './lexer'
-export { MacroTable, parse, builtinMacros, MacroMap } from './parser'
+export { MacroTable, parse, builtinMacros, MacroMap, parseMacroDefinition, OpenMacroDefinition } from './parser'
 export { AST, Binary, Application, Lambda, ChurchNumeral, Macro, Variable } from './ast'
 export { ASTReduction, ASTReductionType, Alpha, Beta, Expansion, None, Gama, Eta } from './reductions'
 export { AlphaConverter, BetaReducer, Expander, EtaConverter, EmptyReducer, constructFor, Reducer } from './reducers'
