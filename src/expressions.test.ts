@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
 
 import { tokenize, CodeStyle } from './lexer'
-import { parse, MacroMap } from './parser'
-import { Variable } from './ast'
+import { parse, MacroMap, builtinMacros } from './parser'
+import { AST, Lambda, Variable } from './ast'
 
 const macromap : MacroMap = {
       'FACCT' : '(λ n . (Y (λ f n a . IF (= n 1) a (f (- n 1) (* n a)))) (- n 1) (n))',
@@ -187,4 +187,20 @@ describe('prototype names are variables, not macros', () => {
       expect(root).toBeInstanceOf(Variable)
     })
   }
+})
+
+// `/` used to bind a single argument and leave the divisor to a pending
+// outer application, which made the frontend's simplified evaluation grind
+// the divisor-less function part in isolation and freeze (frontend #60).
+// The definition must bind both dividend and divisor up front.
+describe('/ binds dividend and divisor', () => {
+  test('/', () => {
+    let node : AST = parse(tokenize(builtinMacros['/'], style), macromap)
+    const params : Array<string> = []
+    while (node instanceof Lambda) {
+      params.push(node.argument.name())
+      node = node.body
+    }
+    expect(params).toEqual([ 'n', 'k' ])
+  })
 })
