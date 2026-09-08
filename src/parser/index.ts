@@ -24,7 +24,7 @@ export const builtinMacros : MacroMap = {
   '+' : '(λ x y s z . x s (y s z))',
   '-' : '(λ m n . (n PRED) m)',
   '*' : '(λ x y s . x (y s))',
-  '/' : '(λ n . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))',
+  '/' : '(λ n k . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n) k)',
   '^' : '(λ x y . y x)',
   'DELTA' : '(λ m n . + (- m n) (- n m))',
   '=' : '(λ m n . ZERO (DELTA m n))',
