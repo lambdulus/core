@@ -4,7 +4,10 @@ import { ASTVisitor } from "."
 
 
 export class FreeVarsFinder extends ASTVisitor {
-  private bound : Set<string> = new Set
+  // Binder depth per name: a plain set leaks under shadowing (an inner
+  // binder's exit would unbind an outer binder of the same name, e.g. the
+  // inner `n` of `/` unbinding the outer one for the later `(SUC n)`).
+  private bound : Map<string, number> = new Map
 
   public freeVars : Set<string> = new Set
 
@@ -19,9 +22,16 @@ export class FreeVarsFinder extends ASTVisitor {
   }
 
   onLambda(lambda : Lambda) : void {
-    this.bound.add(lambda.argument.name())
+    const argument : string = lambda.argument.name()
+    this.bound.set(argument, (this.bound.get(argument) ?? 0) + 1)
     lambda.body.visit(this)
-    this.bound.delete(lambda.argument.name())
+    const depth : number = (this.bound.get(argument) ?? 1) - 1
+    if (depth <= 0) {
+      this.bound.delete(argument)
+    }
+    else {
+      this.bound.set(argument, depth)
+    }
   }
 
   onVariable(variable : Variable) : void {
