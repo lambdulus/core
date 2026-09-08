@@ -1,6 +1,9 @@
 import { Token, CodeStyle, tokenize } from '../lexer'
 import { Parser } from './parser'
-import { AST } from '../ast'
+import { AST, Application, Lambda, Variable } from '../ast'
+import { OpenMacroDefinition } from './errors'
+
+export { OpenMacroDefinition } from './errors'
 
 export interface MacroMap {
   [ name : string ] : string
@@ -67,6 +70,61 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   const parser : Parser = new Parser(tokens, macroTable)
 
   return parser.parse(null)
+}
+
+// Parses one macro definition body and rejects open terms: a macro may
+// only expand to a closed term, otherwise its free variables could be
+// captured by lambdas at the use site. Macro references are meta-level
+// (FreeVarsFinder ignores them), so aliases and recursion stay legal --
+// only genuine free variables are reported. Throws OpenMacroDefinition.
+export function parseMacroDefinition (name : string, tokens : Array<Token>, macroTable : MacroMap) : AST {
+  const ast : AST = parse(tokens, macroTable)
+  const freeVariables : Array<string> = freeVariablesOf(ast)
+
+  if (freeVariables.length > 0) {
+    throw new OpenMacroDefinition(name, freeVariables)
+  }
+
+  return ast
+}
+
+// Scope-correct free variables of a definition body: binders are counted
+// so shadowing doesn't leak (the inner `n` of `/` must not unbind the
+// outer one). FreeVarsFinder's name set over-reports under shadowing --
+// safe for the evaluators' conservative renaming, but it would falsely
+// reject closed macros here. Macro references are meta-level and carry
+// no variables.
+function freeVariablesOf (ast : AST) : Array<string> {
+  const bound = new Map<string, number>()
+  const free = new Set<string>()
+
+  const visit = (node : AST) : void => {
+    if (node instanceof Variable) {
+      if ( ! bound.has(node.name())) {
+        free.add(node.name())
+      }
+    }
+    else if (node instanceof Lambda) {
+      const argument : string = node.argument.name()
+      bound.set(argument, (bound.get(argument) ?? 0) + 1)
+      visit(node.body)
+      const depth : number = (bound.get(argument) ?? 1) - 1
+      if (depth <= 0) {
+        bound.delete(argument)
+      }
+      else {
+        bound.set(argument, depth)
+      }
+    }
+    else if (node instanceof Application) {
+      visit(node.left)
+      visit(node.right)
+    }
+  }
+
+  visit(ast)
+
+  return Array.from(free).sort()
 }
 
 export default {
