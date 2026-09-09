@@ -4,6 +4,7 @@ import { ASTReduction, Alpha, Beta, Expansion, Gama } from "../reductions"
 import { Eta } from "../reductions/eta"
 import { EtaConverter } from "./etaconverter"
 import { GamaReducer } from "./gamareducer"
+import { InvalidReductionArguments } from "./errors"
 
 
 // TODO: implement for AbstractionApplication
@@ -25,7 +26,7 @@ export function constructFor (tree : AST, nextReduction : ASTReduction) : Reduce
       return new GamaReducer(nextReduction, tree)
     }
     else {
-      throw new Error(`Invalid arguments of ${nextReduction.abstraction[0]}.`)
+      throw new InvalidReductionArguments(`${ nextReduction.abstraction[0] }`)
     }
   }
   else {

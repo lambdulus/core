@@ -2,9 +2,9 @@ import { Token, CodeStyle, tokenize } from '../lexer'
 import { Parser } from './parser'
 import { AST } from '../ast'
 import { FreeVarsFinder } from '../visitors/freevarsfinder'
-import { OpenMacroDefinition } from './errors'
+import { OpenMacroDefinition, RedefinedBuiltinMacro } from './errors'
 
-export { OpenMacroDefinition } from './errors'
+export { OpenMacroDefinition, UnexpectedToken, MacroAsArgument, UnmatchedParenthesis, MissingParenthesis, EmptyExpression, RedefinedBuiltinMacro } from './errors'
 
 export interface MacroMap {
   [ name : string ] : string
@@ -60,7 +60,7 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
 
   for (const [ name, definition ] of Object.entries(userMacros)) {
     if (Object.prototype.hasOwnProperty.call(builtinMacros, name)) {
-      throw new Error('Cannot redefine built-in Macro [ ' + name + ' ]')
+      throw new RedefinedBuiltinMacro(name)
     }
 
     // TODO: @dynamic-macros
