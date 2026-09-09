@@ -1,46 +1,42 @@
 # Audit — `@lambdulus/core`
 
-Date: 2026-09-04. Audited from repo HEAD (`aa0a775`, Oct 2022). Verified by reading `package.json`, `tsconfig.json`, `src/`, `.github/`, git log/branches/ls-files.
+Date: 2026-09-07. Audited from `fix/version-0.0.9` HEAD (`5d686f1`). Verified by reading `package.json`, `package-lock.json`, `tsconfig.json`, `src/`, `.github/workflows/nodejs.yml`, `README.md`, git log/status/ls-files, plus `npm outdated`, `npm audit`, `npm test` (99 passed).
+
+Supersedes the 2026-09-04 audit (v0.0.8 era: no test runner, EOL CI, committed `dist/`, stale lockfile). Nearly all of its cleanup list has since landed.
 
 ## 1. What it is
 
-TypeScript library implementing the lambda-calculus engine behind Lambdulus: lexer → parser → AST → reducers/reductions → evaluators (normal, applicative, abstraction, simplified, optimize) → visitors (printing, free/bound vars). `src/index.ts` is the public entry point; `src/repl.ts` is a stdin REPL; `src/test.ts` is a manual dev script (not a test suite). ~47 `.ts` files. MIT licensed. Consumed by frontend as `@lambdulus/core ^0.0.8` from npm.
+TypeScript library implementing the lambda-calculus engine behind Lambdulus: lexer → parser → AST → reducers/reductions → evaluators (normal, applicative, abstraction, simplified, optimize) → visitors (printing, free/bound vars). `src/index.ts` is the public entry; `src/repl.ts` is a stdin dev REPL; `src/expressions.test.ts` is the vitest suite (every valid example must parse, every invalid one must throw). ~47 `.ts` files, zero runtime dependencies. MIT licensed. Version `0.0.9`.
+
+Consumption note: frontend takes it via **git tag** (`@lambdulus/core#v0.0.9`), not the npm registry — README's "from npm" line (§6) is the one stale sentence left. Moves only on manual tag bumps; pin matches today, no drift.
 
 ## 2. Structure (`src/`)
 
-- `lexer/` (counter, errors, lexer, position, token), `parser/` (parser + macro table / builtin macros), `ast/` (application, lambda, variable, macro, churchnumeral), `reducers/` + `reductions/` (alpha/beta/eta/gamma/expansion/none), `evaluators/` (5 strategies), `visitors/` (basicprinter, bounding/freevars/usedvarnames/varbindfinder), plus `decoder.ts`, `index.ts`, `repl.ts`, `test.ts`.
-- Health notes: 30+ `TODO/FIXME` comments (several in Czech, several years old); `visitors/varbindfinder.ts` is marked `DELETE` in its own header; `test.ts`/`repl.ts` contain large commented-out blocks and hardcoded macro tables duplicated in both files; `index.ts` itself carries TODOs about export organization.
+`lexer/`, `parser/` (+ macro table / builtin macros), `ast/`, `reducers/` + `reductions/`, `evaluators/` (5 strategies), `visitors/`, plus `decoder.ts`, `macros.ts`, `index.ts`, `repl.ts`, `expressions.test.ts`. The old audit's specific corpses are gone: manual `test.ts` replaced by the asserting suite, `varbindfinder.ts` (marked DELETE) deleted. `console.log` survives in 1 file, `TODO`/`FIXME` markers in 20 — triage fodder, mostly old Czech notes and parser what-ifs.
 
 ## 3. Dependencies / build
 
-- `package.json`: version `0.0.8`, zero runtime dependencies. Single devDependency: `@types/node ^12.20.33` (Node 12 types — EOL since 2022).
-- `tsconfig.json`: `target es6`, `module commonjs`, `strict: true`, `declaration: true`, out to `dist/`. Sane for a library of this era.
-- Scripts: `build` = `rm -rf ./dist/ ; rm tsbuildinfo ; tsc` (Unix-only, no `rimraf`), `test` = build + `node dist/test.js`, `bench`, `repl` similarly. No lint, no format, no test runner.
-- `package-lock.json` is stale: it still says version `0.0.7` while `package.json` says `0.0.8`.
-- Toolchain risk: everything predates modern Node (verified env runs Node 24 / npm 11). `@types/node@12` + global-`tsc` workflow may still compile, but types and stdlib assumptions are 4+ years old.
+- Dev-only toolchain: `@types/node ^22`, `rimraf ^5`, `typescript ^5.4`, `vite ^6` (hosts vitest), `vitest ^5`. `npm audit`: **0 vulnerabilities.** `npm outdated`: all current within range; only opt-in majors (TS 7, Vite 8, rimraf 6).
+- Scripts are portable now (`rimraf`, no bare `rm`); `prepare`/`prepack` rebuild `dist/` so published tarballs always match `src/`; test files excluded from emit via tsconfig. `package-lock.json` in sync at `0.0.9`.
+- `tsconfig` is still `target es6` / `module commonjs`, strict, declarations on — dated output target for a zero-dependency lib, but a deliberate compat choice, not a bug. Revisit only alongside a major TS bump.
 
-## 4. Tests — effectively none
+## 4. Tests — real now
 
-- There is no test framework (no jest/mocha/vitest), no `*.test.*` / `*.spec.*` files, no coverage.
-- `npm test` just builds and runs `dist/test.js`, which unconditionally "passes" (exit 0 unless it crashes). Its `testValids()`/`testInvalids()` functions are defined but their invocations are **commented out**; the live path only tokenizes/parses/evaluates `valids[0]` (`Y FACT 6`) with `NormalEvaluator` and prints the result. A regression that breaks parsing of any other input would still exit 0.
-- One invalid case is even annotated `TODO: fail on too much recursion or heap out of memory`, i.e. a known crash vector with no guard.
+99 vitest tests, all passing, run in CI (`npm test`). This closes the old audit's P0: regressions in parsing/evaluation no longer exit 0 silently.
 
 ## 5. CI (`.github/workflows/nodejs.yml`)
 
-- Trigger: `on: [push]` (every branch). Matrix: Node `8.x, 10.x, 12.x` — all EOL. Steps: `actions/checkout@v1` + `actions/setup-node@v1` (both EOL/vulnerable), then `npm i -g typescript; npm i; tsc` with `CI: true`.
-- Problems: installs an **unpinned global** `typescript` instead of the project's compiler (there is none declared), so the compiled output depends on whatever `latest` happened to be; no `npm ci`, no caching, no test step (consistent with §4 — there is nothing to run), no publish step (publishing to npm is manual, matching the "bump the versions when publishing" commits).
+Trigger on push + PR, matrix Node 20/22, `npm ci` + `npm run build` + `npm test` with npm cache. Bumped to `actions/checkout@v5` + `actions/setup-node@v5` in this pass (same Node-20-runtime deprecation as frontend). Matrix floor 20 matches README's "Requires Node 20+" — no contradiction. No publish step; npm publishing stays manual, which matches the tag-bump release flow.
 
-## 6. Repo hygiene issues
+## 6. Repo hygiene
 
-- **`dist/` is committed to git** (94 tracked files under `dist/` per `git ls-files`), even though commit `890fe1c` says "stop including dist". `.gitignore` ignores only `node_modules`, `tsbuildinfo`, `.vscode` — not `dist/` — and `.npmignore` likewise omits it. Result: stale Oct-2022 build output checked in alongside source; guaranteed merge noise and risk that consumers read stale `.d.ts`.
-- Stale branches `dynamic-macros`, `simplified-strategy` unmerged; matching TODOs (`@dynamic-macros`) scattered in the parser suggest in-flight features that never landed.
-- `README.md` documents only the SLI shorthand syntax. Nothing about install/build/test/publish, API surface, evaluator strategies, or the REPL.
-- 36 `console.log` calls in `src/` (mostly the dev script, but still shipped source).
+- **`dist/` policy resolved:** untracked (`869c50c`), gitignored alongside `tsbuildinfo`, rebuilt on demand. The old P0 is closed.
+- README covers install/build/test/REPL/CI/publishing/API — except the one stale "consumed from npm" sentence (§1).
+- No lint/format config (same as frontend — a shared config for both repos would be the tidy move).
 
 ## 7. Prioritized cleanup
 
-1. **Decide the `dist/` policy and enforce it.** Either untrack it (`git rm -r --cached dist`, add `dist/` to `.gitignore`, publish from CI) or keep it and document why. Today the repo says one thing and does the other. (P0 — source of stale-artifact bugs.)
-2. **Replace `test.ts` with a real test suite.** Add jest or vitest, convert the `valids`/`invalids` arrays into asserting tests (parse succeeds/fails, evaluator reaches normal form in N steps), wire `npm test` to it, and run it in CI. Keep `repl.ts` as a dev tool, not a test. (P0 — currently zero regression protection for teaching material.)
-3. **Modernize CI minimally:** `checkout@v4` + `setup-node@v4`, matrix on Node 20/22, pin `typescript` as a devDependency, `npm ci` + `npm test`. Drop Node 8/10/12. (P1 — current workflow likely fails or builds with a random compiler.)
-4. **Sync versioning/lockfile:** regenerate `package-lock.json` at 0.0.8, add `prepack`/`prepublishOnly` build so published tarballs always match `src/`. Consider automated `npm publish` on tags. (P1.)
-5. **Pay down the small debt:** delete `varbindfinder.ts` (or unmark it), dedupe the macro tables shared by `test.ts`/`repl.ts`, resolve or file the parser TODOs, add README sections for build/test/API/evaluators. Portable `build` script (`rimraf` or `tsc --build --clean`). (P2.)
+1. **Fix the README consumption line** (git tag, not npm). (P2, one sentence.)
+2. **Triage the 20 files with TODO/FIXME** — file or delete; several predate the parser-decision lockdowns (#19, #20) and may already be answered. (P2.)
+3. **Shared lint/format config** with frontend. (P2.)
+4. **Opt-in majors** (TS 7, Vite 8) only when frontend's matching upgrade pass happens — keep the two toolchains in step. (P3, scheduled.)

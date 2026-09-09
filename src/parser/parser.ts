@@ -1,6 +1,7 @@
 import { Token, TokenType, BLANK_POSITION } from "../lexer"
 import { MacroTable, parse, builtinMacros } from "./"
 import { AST, Application, Lambda, ChurchNumeral, Macro, Variable } from "../ast"
+import { UnexpectedToken, MacroAsArgument, UnmatchedParenthesis, MissingParenthesis, EmptyExpression } from "./errors"
 
 
 export class Parser {
@@ -30,7 +31,7 @@ export class Parser {
 
   accept (type : TokenType) : Token {
     if (! this.canAccept(type)) {
-      throw "Was expecting " + type
+      throw new UnexpectedToken(`${ type }`)
     }
 
     const top : Token = this.top()
@@ -59,7 +60,7 @@ export class Parser {
       }
     }
 
-    throw "Was expecting `)` or `]`" 
+    throw new UnexpectedToken('`)` or `]`')
   }
 
   exprEnd () : boolean {
@@ -99,7 +100,7 @@ export class Parser {
       const id : Token = this.accept(TokenType.Identifier)
 
       if (Object.prototype.hasOwnProperty.call(builtinMacros, id.value)) {
-        throw new Error('Known Macro name can not stand as an argument name.')
+        throw new MacroAsArgument(`${ id.value }`)
       }
 
       const argument : Variable = new Variable(id)
@@ -108,7 +109,7 @@ export class Parser {
       return new Lambda(argument, body)
     }
 
-    throw "Was expecting either `.` or some Identifier, but got " + this.top().type
+    throw new UnexpectedToken('either `.` or some Identifier', this.foundDescription())
   }
 
   /**
@@ -155,7 +156,7 @@ export class Parser {
         const id : Token = this.accept(TokenType.Identifier)
 
         if (Object.prototype.hasOwnProperty.call(builtinMacros, id.value)) {
-          throw new Error('Known Macro name can not stand as an argument name.')
+          throw new MacroAsArgument(`${ id.value }`)
         }
 
         const argument : Variable = new Variable(id)
@@ -186,7 +187,13 @@ export class Parser {
       return expr
     }
 
-    throw "Was expecting one of: Number, Operator, Identifier or `(` but got " + this.top().type
+    throw new UnexpectedToken('one of: Number, Operator, Identifier or `(`', this.foundDescription())
+  }
+
+  // What the offending input looks like (without crashing at end of input,
+  // where the old code died on undefined instead of reporting).
+  private foundDescription () : string {
+    return this.position < this.tokens.length ? `${ this.top().type }` : 'end of input'
   }
 
   /**
@@ -194,26 +201,23 @@ export class Parser {
    */
   parse (leftSide : AST | null, ) : AST {
     if (! this.eof() && this.canAcceptClosing() && this.allClosed()) {
-      throw "It seems you have one or more closing parenthesis not matching."
+      throw new UnmatchedParenthesis()
     }
 
     if (this.eof() && this.openSubexpressions !== 0) {
-      throw "It seems like you forgot to write one or more closing parentheses."
+      throw new MissingParenthesis()
     }
 
     if (this.exprEnd()) {
       // if (! this.eof() && this.openSubexpressions === 0) {
-      //   throw "It seems you have one or more closing parenthesis non matching."
+      //   throw new UnmatchedParenthesis()
       // }
 
-      // TODO: throw new MissingParenError(position)
       // if (this.eof() && this.openSubexpressions !== 0) {
-      //   throw "It seems like you forgot to write one or more closing parentheses."
+      //   throw new MissingParenthesis()
       // }
       if (leftSide === null) {
-        // TODO: log position and stuff
-        throw "You are trying to parse empty expression, which is forbidden. " +
-        "Check your λ expression for empty perenthesis. " + this.position
+        throw new EmptyExpression(this.position)
       }
 
       return <AST> leftSide
@@ -237,11 +241,11 @@ export class Parser {
   parseQuoted () : AST {
     if (this.exprEnd()) {
       if (! this.eof() && this.openSubexpressions === 0) {
-        throw "It seems you have one or more closing parenthesis non matching."
+        throw new UnmatchedParenthesis()
       }
 
       if (this.eof() && this.openSubexpressions !== 0) {
-        throw "It seems like you forgot to write one or more closing parentheses."
+        throw new MissingParenthesis()
       }
 
       return parse([new Token(TokenType.Identifier, 'NIL', BLANK_POSITION)], {})

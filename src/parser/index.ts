@@ -1,6 +1,10 @@
 import { Token, CodeStyle, tokenize } from '../lexer'
 import { Parser } from './parser'
 import { AST } from '../ast'
+import { FreeVarsFinder } from '../visitors/freevarsfinder'
+import { OpenMacroDefinition, RedefinedBuiltinMacro } from './errors'
+
+export { OpenMacroDefinition, UnexpectedToken, MacroAsArgument, UnmatchedParenthesis, MissingParenthesis, EmptyExpression, RedefinedBuiltinMacro } from './errors'
 
 export interface MacroMap {
   [ name : string ] : string
@@ -24,7 +28,7 @@ export const builtinMacros : MacroMap = {
   '+' : '(λ x y s z . x s (y s z))',
   '-' : '(λ m n . (n PRED) m)',
   '*' : '(λ x y s . x (y s))',
-  '/' : '(λ n . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n))',
+  '/' : '(λ n k . Y (λ c n m f x . (λ d . ZERO d (0 f x) (f (c d m f x))) (- n m)) (SUC n) k)',
   '^' : '(λ x y . y x)',
   'DELTA' : '(λ m n . + (- m n) (- n m))',
   '=' : '(λ m n . ZERO (DELTA m n))',
@@ -56,7 +60,7 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
 
   for (const [ name, definition ] of Object.entries(userMacros)) {
     if (Object.prototype.hasOwnProperty.call(builtinMacros, name)) {
-      throw new Error('Cannot redefine built-in Macro [ ' + name + ' ]')
+      throw new RedefinedBuiltinMacro(name)
     }
 
     // TODO: @dynamic-macros
@@ -67,6 +71,22 @@ export function parse (tokens : Array<Token>, userMacros : MacroMap) : AST {
   const parser : Parser = new Parser(tokens, macroTable)
 
   return parser.parse(null)
+}
+
+// Parses one macro definition body and rejects open terms: a macro may
+// only expand to a closed term, otherwise its free variables could be
+// captured by lambdas at the use site. Macro references are meta-level
+// (FreeVarsFinder ignores them), so aliases and recursion stay legal --
+// only genuine free variables are reported. Throws OpenMacroDefinition.
+export function parseMacroDefinition (name : string, tokens : Array<Token>, macroTable : MacroMap) : AST {
+  const ast : AST = parse(tokens, macroTable)
+  const freeVariables : Array<string> = Array.from(new FreeVarsFinder(ast).freeVars).sort()
+
+  if (freeVariables.length > 0) {
+    throw new OpenMacroDefinition(name, freeVariables)
+  }
+
+  return ast
 }
 
 export default {
